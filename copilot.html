@@ -1,57 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Zella Copilot</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Copilot</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;min-height:100%;overflow-x:hidden}
+body{font-family:Arial,sans-serif;background:#050b12;color:#f8fafc}
+
+.app{width:100%;min-height:100vh;padding:42px 16px 120px;background:radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),linear-gradient(180deg,#07111d,#050b12)}
+
+.top-label{color:#9ca3af;font-size:12px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:36px;color:#d8ecff;margin-bottom:12px}
+h2{font-size:22px}
+.muted{color:#9ca3af;line-height:1.6}
+.blue{color:#4dabff}.green{color:#4ade80}.orange{color:#f59e0b}
+
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#111a26,#0b111a);border:1px solid #1f2937;border-radius:26px;padding:22px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.35)}
+.card::before{content:"";position:absolute;width:260px;height:260px;background:rgba(59,130,246,.08);border-radius:50%;top:-140px;right:-140px}
+.card>*{position:relative}
+.card-title{color:#38bdf8;font-size:14px;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
+
+.ai-orb{width:82px;height:82px;border-radius:50%;background:radial-gradient(circle,#7dd3fc,#2563eb,#111827);display:grid;place-items:center;font-size:34px;box-shadow:0 0 40px rgba(56,189,248,.45);margin-bottom:18px}
+
+.input-box{display:flex;gap:10px;align-items:center;background:#101722;border:1px solid #263241;border-radius:26px;padding:10px;margin-bottom:18px}
+.input-box input{flex:1;background:transparent;border:none;outline:none;color:white;font-size:15px;padding:12px}
+.send-btn{width:46px;height:46px;border:none;border-radius:50%;background:#2563eb;color:white;font-size:18px}
+
+.prompt-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.prompt{border:1px solid #263241;border-radius:20px;padding:11px 14px;color:#e5e7eb;background:#101722;font-size:14px}
+
+.chat{display:flex;gap:12px;margin-bottom:16px}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#6366f1);display:grid;place-items:center;font-weight:bold;flex-shrink:0}
+.message{background:#101722;border:1px solid #263241;border-radius:20px;padding:15px;line-height:1.6;color:#dbeafe}
+.user-message{background:rgba(37,99,235,.25);border-color:#2563eb}
+
+.status-card{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mini-card{border:1px solid #263241;border-radius:18px;padding:15px;background:#101722}
+.badge{display:inline-block;padding:6px 12px;border-radius:20px;background:rgba(34,197,94,.18);color:#4ade80;font-size:12px;letter-spacing:2px}
+
+.bottom-nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:460px;background:rgba(15,23,42,.92);border:1px solid #263241;border-radius:30px;padding:12px;display:flex;justify-content:space-between;backdrop-filter:blur(18px);z-index:50}
+.bottom-nav a{color:#9ca3af;text-decoration:none;font-size:13px;text-align:center;padding:10px 12px;border-radius:20px}
+.bottom-nav a.active{color:#4dabff;background:rgba(56,189,248,.14)}
+</style>
 </head>
+
 <body>
 
 <div class="app">
 
-  <div class="top-label">AI Copilot · Live</div>
-  <h1>Ask ZELLA.</h1>
-  <p class="muted">Trade Smarter. Profit Faster.</p>
+<div class="top-label">ZELLA AI • COPILOT</div>
 
-  <br>
+<h1>Ask Zella.</h1>
+<p class="muted">Your AI trading assistant for smarter crypto decisions.</p>
 
-  <div class="card">
-    <div class="asset">
-      <input placeholder="Ask about any coin, setup, or risk...">
-      <button class="btn">➤</button>
-    </div>
-  </div>
+<br>
 
-  <div class="grid-2">
-    <button class="btn">Best setup right now?</button>
-    <button class="btn">Should I buy BTC?</button>
-    <button class="btn">Is ETH overbought?</button>
-    <button class="btn">Lowest-risk trade today</button>
-  </div>
+<div class="card">
+<div class="ai-orb">✦</div>
 
-  <br>
+<div class="card-title">AI ASSISTANT ONLINE</div>
 
-  <div class="card">
-    <div class="asset-left">
-      <div class="coin eth">✦</div>
-      <div>
-        <h2>Hi Zeus 👋</h2>
-        <p class="muted">
-          I'm <span class="blue">ZELLA</span>. I've analyzed BTC, ETH, SOL,
-          BNB and XRP across technicals, sentiment and market structure.
-        </p>
-        <br>
-        <p class="muted">Ask me where the best risk-adjusted opportunity is right now.</p>
-      </div>
-    </div>
-  </div>
+<h2>Hello Zeus, I’m Zella.</h2>
+<br>
+<p class="muted">
+I can help you analyze BTC, ETH, SOL, BNB and XRP,
+explain trading signals, calculate risk, and guide you like a beginner-friendly trading copilot.
+</p>
 
-  <div class="bottom-nav">
-    <a href="dashboard.html">Command</a>
-    <a href="market.html">Markets</a>
-    <a href="copilot.html" class="active">Copilot</a>
-    <a href="alert.html">Alerts</a>
-    <a href="journal.html">Wallet</a>
-  </div>
+<br>
+
+<span class="badge">LIVE MARKET MODE</span>
+</div>
+
+<div class="input-box">
+<input type="text" placeholder="Ask about BTC, ETH, risk, entries...">
+<button class="send-btn">➤</button>
+</div>
+
+<div class="prompt-row">
+<div class="prompt">Best setup today?</div>
+<div class="prompt">Should I buy BTC?</div>
+<div class="prompt">Explain market risk</div>
+<div class="prompt">Lowest-risk trade?</div>
+</div>
+
+<div class="card">
+<div class="card-title">COPILOT RESPONSE</div>
+
+<div class="chat">
+<div class="avatar">Z</div>
+<div class="message">
+BTC is showing strength, but the market score is still cautious.
+I would wait for a clean breakout and confirmation before entering.
+</div>
+</div>
+
+<div class="chat">
+<div class="avatar">You</div>
+<div class="message user-message">
+What is the safest opportunity right now?
+</div>
+</div>
+
+<div class="chat">
+<div class="avatar">Z</div>
+<div class="message">
+The safest current setup is BTC because it has stronger liquidity,
+better trend structure, and lower volatility compared to smaller coins.
+</div>
+</div>
+
+</div>
+
+<div class="card">
+<div class="card-title">QUICK ANALYSIS</div>
+
+<div class="status-card">
+
+<div class="mini-card">
+<p class="muted">Best Coin</p>
+<h2 class="blue">BTC</h2>
+</div>
+
+<div class="mini-card">
+<p class="muted">Risk</p>
+<h2 class="orange">Medium</h2>
+</div>
+
+<div class="mini-card">
+<p class="muted">Signal</p>
+<h2 class="green">Wait</h2>
+</div>
+
+<div class="mini-card">
+<p class="muted">Confidence</p>
+<h2 class="blue">62%</h2>
+</div>
+
+</div>
+</div>
+
+<div class="bottom-nav">
+<a href="dashboard.html">Command</a>
+<a href="market.html">Markets</a>
+<a href="copilot.html" class="active">Copilot</a>
+<a href="alert.html">Alerts</a>
+<a href="wallet.html">Wallet</a>
+</div>
 
 </div>
 

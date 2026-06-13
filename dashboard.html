@@ -259,7 +259,13 @@ background:rgba(56,189,248,.14);
 
 <div class="card">
 
-<div class="card-title">ZELLA SCANNER</div>
+<div class="card-title">LIVE ZELLA SCANNER</div>
+
+<div id="scannerResults">
+<p class="muted">Zella is scanning live market data...</p>
+</div>
+
+</div>
 
 <div class="scanner-row">
 <div>
@@ -399,5 +405,69 @@ else{
     greeting.textContent = "Good Evening, Zeus 🌙";
 }
 </script>
+
+<script>
+async function runZellaScanner(){
+  const scanner = document.getElementById("scannerResults");
+
+  try{
+    const url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,ripple&vs_currencies=usd&include_24hr_change=true";
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const coins = [
+      {name:"BTC", id:"bitcoin"},
+      {name:"ETH", id:"ethereum"},
+      {name:"SOL", id:"solana"},
+      {name:"BNB", id:"binancecoin"},
+      {name:"XRP", id:"ripple"}
+    ];
+
+    let html = "";
+
+    coins.forEach(coin => {
+      const change = data[coin.id].usd_24h_change;
+      let signal = "";
+      let badgeClass = "";
+
+      if(change >= 3){
+        signal = "BUY";
+        badgeClass = "buy";
+      } 
+      else if(change >= 1){
+        signal = "WATCH";
+        badgeClass = "watch";
+      } 
+      else if(change >= 0){
+        signal = "HOLD";
+        badgeClass = "watch";
+      } 
+      else{
+        signal = "AVOID";
+        badgeClass = "avoid";
+      }
+
+      html += `
+        <div class="scanner-row">
+          <div>
+            <h3>${coin.name}</h3>
+            <p class="muted">24h Change: ${change.toFixed(2)}%</p>
+          </div>
+          <span class="badge ${badgeClass}">${signal}</span>
+        </div>
+      `;
+    });
+
+    scanner.innerHTML = html;
+
+  }catch(error){
+    scanner.innerHTML = "<p class='red'>Scanner failed to load. Refresh page.</p>";
+  }
+}
+
+runZellaScanner();
+setInterval(runZellaScanner, 30000);
+</script>
+
 </body>
 </html>

@@ -219,7 +219,7 @@ background:rgba(56,189,248,.14);
 
 <div class="top-label">ZELLA AI • COMMAND CENTER</div>
 
-<h1>Good Morning, Zeus.</h1>
+<h1 id="greeting">Hello, Zeus.</h1>
 
 <div class="card">
 
@@ -385,6 +385,19 @@ background:rgba(56,189,248,.14);
 </div>
 
 </div>
+<script>
+const hour = new Date().getHours();
+const greeting = document.getElementById("greeting");
 
+if(hour < 12){
+    greeting.textContent = "Good Morning, Zeus ☀️";
+}
+else if(hour < 18){
+    greeting.textContent = "Good Afternoon, Zeus 🌤️";
+}
+else{
+    greeting.textContent = "Good Evening, Zeus 🌙";
+}
+</script>
 </body>
 </html>

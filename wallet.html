@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Wallet</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;min-height:100%;overflow-x:hidden}
+body{font-family:Arial,sans-serif;background:#050b12;color:#f8fafc}
+.app{width:100%;min-height:100vh;padding:42px 16px 120px;background:radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),linear-gradient(180deg,#07111d,#050b12)}
+.top-label{color:#9ca3af;font-size:12px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:36px;color:#d8ecff;margin-bottom:20px}
+h2{font-size:22px}
+.muted{color:#9ca3af}
+.green{color:#4ade80}
+.red{color:#ef4444}
+.blue{color:#4dabff}
+
+.card{
+background:linear-gradient(145deg,#111a26,#0b111a);
+border:1px solid #1f2937;
+border-radius:26px;
+padding:22px;
+margin-bottom:18px;
+box-shadow:0 14px 35px rgba(0,0,0,.35)
+}
+
+.card-title{
+color:#38bdf8;
+font-size:14px;
+letter-spacing:4px;
+text-transform:uppercase;
+margin-bottom:16px
+}
+
+.balance{
+font-size:42px;
+font-weight:bold;
+margin-bottom:10px
+}
+
+.grid-2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+
+.mini-card{
+background:#101722;
+border:1px solid #263241;
+border-radius:18px;
+padding:15px
+}
+
+.asset{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px
+}
+
+.asset-left{
+display:flex;
+align-items:center;
+gap:14px
+}
+
+.coin{
+width:52px;
+height:52px;
+border-radius:50%;
+display:grid;
+place-items:center;
+font-weight:bold;
+font-size:22px
+}
+
+.btc{background:#f59e0b}
+.eth{background:#6366f1}
+.sol{background:linear-gradient(135deg,#8b5cf6,#5eead4)}
+
+.bottom-nav{
+position:fixed;
+bottom:18px;
+left:50%;
+transform:translateX(-50%);
+width:calc(100% - 32px);
+max-width:460px;
+background:rgba(15,23,42,.92);
+border:1px solid #263241;
+border-radius:30px;
+padding:12px;
+display:flex;
+justify-content:space-between
+}
+
+.bottom-nav a{
+color:#9ca3af;
+text-decoration:none;
+padding:10px
+}
+
+.bottom-nav a.active{
+color:#4dabff
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="top-label">ZELLA AI • WALLET</div>
+
+<h1>Portfolio</h1>
+
+<div class="card">
+
+<div class="card-title">TOTAL BALANCE</div>
+
+<div class="balance">$12,458.22</div>
+
+<p class="green">+$842.13 (+7.24%)</p>
+
+</div>
+
+<div class="grid-2">
+
+<div class="mini-card">
+<p class="muted">Today's PnL</p>
+<h2 class="green">+$152</h2>
+</div>
+
+<div class="mini-card">
+<p class="muted">Win Rate</p>
+<h2 class="blue">68%</h2>
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<div class="card-title">HOLDINGS</div>
+
+<div class="asset">
+
+<div class="asset-left">
+<div class="coin btc">₿</div>
+<div>
+<h2>BTC</h2>
+<p class="muted">0.12 BTC</p>
+</div>
+</div>
+
+<div>
+<p>$7,343</p>
+</div>
+
+</div>
+
+<div class="asset">
+
+<div class="asset-left">
+<div class="coin eth">Ξ</div>
+<div>
+<h2>ETH</h2>
+<p class="muted">1.85 ETH</p>
+</div>
+</div>
+
+<div>
+<p>$3,870</p>
+</div>
+
+</div>
+
+<div class="asset">
+
+<div class="asset-left">
+<div class="coin sol">◎</div>
+<div>
+<h2>SOL</h2>
+<p class="muted">8.5 SOL</p>
+</div>
+</div>
+
+<div>
+<p>$1,245</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">PORTFOLIO STATUS</div>
+
+<h2 class="green">Healthy</h2>
+
+<br>
+
+<p class="muted">
+Diversification looks balanced.
+Risk exposure remains moderate.
+No major concentration detected.
+</p>
+
+</div>
+
+<div class="bottom-nav">
+<a href="dashboard.html">Command</a>
+<a href="market.html">Markets</a>
+<a href="copilot.html">Copilot</a>
+<a href="alert.html">Alerts</a>
+<a href="wallet.html" class="active">Wallet</a>
+</div>
+
+</div>
+
+</body>
+</html>

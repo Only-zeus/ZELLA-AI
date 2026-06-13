@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Markets</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;min-height:100%;overflow-x:hidden}
+body{font-family:Arial,sans-serif;background:#050b12;color:#f8fafc}
+.app{width:100%;min-height:100vh;padding:42px 16px 120px;background:radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),linear-gradient(180deg,#07111d,#050b12)}
+.top-label{color:#9ca3af;font-size:12px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:36px;color:#d8ecff;margin-bottom:20px}
+h2{font-size:22px}
+.muted{color:#9ca3af;line-height:1.6}
+.green{color:#4ade80}.red{color:#ef4444}.blue{color:#4dabff}.orange{color:#f59e0b}
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#111a26,#0b111a);border:1px solid #1f2937;border-radius:26px;padding:22px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.35)}
+.card::before{content:"";position:absolute;width:260px;height:260px;background:rgba(59,130,246,.08);border-radius:50%;top:-140px;right:-140px}
+.card>*{position:relative}
+.card-title{color:#38bdf8;font-size:14px;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.mini-card{border:1px solid #263241;border-radius:18px;padding:15px;background:#101722}
+.asset{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.asset-left{display:flex;align-items:center;gap:14px}
+.coin{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:bold;font-size:22px;flex-shrink:0}
+.btc{background:#f59e0b}.eth{background:#6366f1}.sol{background:linear-gradient(135deg,#8b5cf6,#5eead4)}.bnb{background:#facc15;color:#111}.xrp{background:#94a3b8;color:#111}
+.badge{display:inline-block;padding:6px 12px;border-radius:20px;background:rgba(34,197,94,.18);color:#4ade80;font-size:12px;letter-spacing:2px}
+.badge.red-badge{background:rgba(239,68,68,.18);color:#ef4444}
+.section-title{margin:22px 0 14px}
+.bottom-nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:460px;background:rgba(15,23,42,.92);border:1px solid #263241;border-radius:30px;padding:12px;display:flex;justify-content:space-between;backdrop-filter:blur(18px);z-index:50}
+.bottom-nav a{color:#9ca3af;text-decoration:none;font-size:13px;text-align:center;padding:10px 12px;border-radius:20px}
+.bottom-nav a.active{color:#4dabff;background:rgba(56,189,248,.14)}
+</style>
+</head>
+<body>
+<div class="app">
 
+<div class="top-label">ZELLA AI • MARKETS</div>
+<h1>Market Pulse.</h1>
+
+<div class="card">
+<div class="card-title">MARKET OVERVIEW</div>
+<h2 class="green">Bullish Momentum</h2>
+<br>
+<p class="muted">The market is showing strength across major coins. BTC dominance remains strong while SOL leads short-term momentum.</p>
+<div class="grid-2">
+<div class="mini-card"><p class="muted">Fear & Greed</p><h2 class="green">71</h2></div>
+<div class="mini-card"><p class="muted">BTC Dominance</p><h2 class="blue">54%</h2></div>
+<div class="mini-card"><p class="muted">Trend</p><h2 class="green">Uptrend</h2></div>
+<div class="mini-card"><p class="muted">Funding</p><h2 class="orange">Neutral</h2></div>
+</div>
+</div>
+
+<h2 class="section-title">Watchlist</h2>
+
+<div class="card asset"><div class="asset-left"><div class="coin btc">₿</div><div><h2>BTC</h2><p class="muted">$61,195 • Bitcoin</p></div></div><div><h3 class="green">+2.34%</h3><span class="badge">BUY</span></div></div>
+<div class="card asset"><div class="asset-left"><div class="coin eth">Ξ</div><div><h2>ETH</h2><p class="muted">$3,410 • Ethereum</p></div></div><div><h3 class="green">+1.12%</h3><span class="badge">BUY</span></div></div>
+<div class="card asset"><div class="asset-left"><div class="coin sol">◎</div><div><h2>SOL</h2><p class="muted">$154 • Solana</p></div></div><div><h3 class="green">+4.22%</h3><span class="badge">BUY</span></div></div>
+<div class="card asset"><div class="asset-left"><div class="coin bnb">B</div><div><h2>BNB</h2><p class="muted">$583 • Binance Coin</p></div></div><div><h3 class="green">+1.08%</h3><span class="badge">BUY</span></div></div>
+<div class="card asset"><div class="asset-left"><div class="coin xrp">X</div><div><h2>XRP</h2><p class="muted">$0.61 • Ripple</p></div></div><div><h3 class="red">-0.84%</h3><span class="badge red-badge">HOLD</span></div></div>
+
+<div class="card">
+<div class="card-title">TOP MOVER</div>
+<h2>SOL is leading today.</h2>
+<br>
+<p class="muted">SOL has the strongest momentum today with a 4.22% move and strong buyer interest.</p>
+</div>
+
+<div class="bottom-nav">
+<a href="dashboard.html">Command</a>
+<a href="market.html" class="active">Markets</a>
+<a href="copilot.html">Copilot</a>
+<a href="alert.html">Alerts</a>
+<a href="wallet.html">Wallet</a>
+</div>
+
+</div>
+</body>
+</html>

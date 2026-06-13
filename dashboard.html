@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Dashboard V3</title>
+<title>Zella Dashboard</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -19,24 +19,14 @@ radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),
 linear-gradient(180deg,#07111d,#050b12);
 }
 
-.top-label{
-color:#9ca3af;
-font-size:12px;
-letter-spacing:5px;
-text-transform:uppercase;
-margin-bottom:10px;
-}
-
+.top-label{color:#9ca3af;font-size:12px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px}
 h1{font-size:36px;color:#d8ecff;margin-bottom:20px}
 h2{font-size:22px}
 h3{font-size:18px}
 .muted{color:#9ca3af;line-height:1.6}
-.green{color:#4ade80}
-.red{color:#ef4444}
-.blue{color:#4dabff}
-.orange{color:#f59e0b}
+.green{color:#4ade80}.red{color:#ef4444}.blue{color:#4dabff}.orange{color:#f59e0b}
 
-.card{
+.card,.fear-card{
 position:relative;
 overflow:hidden;
 background:linear-gradient(145deg,#111a26,#0b111a);
@@ -68,10 +58,7 @@ text-transform:uppercase;
 margin-bottom:16px;
 }
 
-.big-score{
-font-size:52px;
-font-weight:900;
-}
+.big-score{font-size:52px;font-weight:900}
 
 .asset{
 display:flex;
@@ -116,9 +103,7 @@ padding:14px 0;
 border-bottom:1px solid #1f2937;
 }
 
-.scanner-row:last-child{
-border-bottom:none;
-}
+.scanner-row:last-child{border-bottom:none}
 
 .badge{
 display:inline-block;
@@ -128,35 +113,9 @@ font-size:12px;
 letter-spacing:2px;
 }
 
-.buy{
-background:rgba(34,197,94,.18);
-color:#4ade80;
-}
-
-.watch{
-background:rgba(245,158,11,.18);
-color:#f59e0b;
-}
-
-.avoid{
-background:rgba(239,68,68,.18);
-color:#ef4444;
-}
-
-.coin-list{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-margin-top:8px;
-}
-
-.coin-pill{
-padding:8px 12px;
-border-radius:18px;
-background:#101722;
-border:1px solid #263241;
-font-weight:bold;
-}
+.buy{background:rgba(34,197,94,.18);color:#4ade80}
+.watch{background:rgba(245,158,11,.18);color:#f59e0b}
+.avoid{background:rgba(239,68,68,.18);color:#ef4444}
 
 .action-grid{
 display:grid;
@@ -176,9 +135,78 @@ color:#e5f3ff;
 font-weight:bold;
 }
 
-.action-btn:hover{
-background:#12375c;
+/* Fear & Greed Gauge */
+.fear-top{
+display:flex;
+justify-content:space-between;
+gap:12px;
+color:#9ca3af;
+font-size:14px;
+margin-bottom:18px;
 }
+
+.fear-body{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:18px;
+}
+
+.gauge{
+width:170px;
+height:95px;
+position:relative;
+background:
+conic-gradient(from 270deg at 50% 100%,
+#ef4444 0deg,
+#f97316 45deg,
+#facc15 85deg,
+#22c55e 140deg,
+transparent 141deg);
+border-radius:170px 170px 0 0;
+overflow:hidden;
+}
+
+.gauge::after{
+content:"";
+position:absolute;
+left:18px;
+right:18px;
+bottom:0;
+height:72px;
+background:#0b111a;
+border-radius:140px 140px 0 0;
+}
+
+.needle{
+position:absolute;
+width:4px;
+height:78px;
+background:white;
+bottom:0;
+left:50%;
+transform-origin:bottom center;
+transform:rotate(0deg);
+border-radius:20px;
+z-index:3;
+transition:.4s;
+}
+
+.dot{
+position:absolute;
+width:14px;
+height:14px;
+background:white;
+border-radius:50%;
+bottom:-1px;
+left:50%;
+transform:translateX(-50%);
+z-index:4;
+}
+
+.fear-score{text-align:right}
+.fear-score h2{font-size:42px;color:#f8fafc}
+.fear-score p{color:#4ade80;font-size:18px}
 
 .bottom-nav{
 position:fixed;
@@ -222,164 +250,89 @@ background:rgba(56,189,248,.14);
 <h1 id="greeting">Hello, Zeus.</h1>
 
 <div class="card">
-
 <div class="card-title">AI MARKET VERDICT</div>
 
 <div class="asset">
 <div>
-<div class="big-score green">74</div>
+<div class="big-score" id="marketScore">...</div>
 <p class="muted">Market Score /100</p>
 </div>
 
 <div>
-<h2 class="green">BULLISH</h2>
-<p class="muted">Momentum improving</p>
+<h2 id="marketStatus">Scanning...</h2>
+<p class="muted" id="marketSub">Checking live market data</p>
 <br>
-<h3 class="orange">Risk: Medium</h3>
+<h3 id="riskStatus">Risk: ...</h3>
 </div>
 </div>
 
 <div class="progress">
-<span style="width:74%"></span>
+<span id="scoreBar" style="width:0%"></span>
 </div>
 
 <div class="grid-2">
 <div class="mini-card">
 <p class="muted">Confidence</p>
-<h2 class="blue">84%</h2>
+<h2 class="blue" id="confidence">...</h2>
 </div>
 
 <div class="mini-card">
 <p class="muted">Best Opportunity</p>
-<h2 class="green">BTC</h2>
+<h2 class="green" id="bestOpportunity">...</h2>
 </div>
 </div>
-
 </div>
 
 <div class="card">
-
 <div class="card-title">LIVE ZELLA SCANNER</div>
-
 <div id="scannerResults">
 <p class="muted">Zella is scanning live market data...</p>
 </div>
-
-</div>
-
-<div class="scanner-row">
-<div>
-<h3>Strong Buy</h3>
-<div class="coin-list">
-<span class="coin-pill green">BTC</span>
-<span class="coin-pill green">SOL</span>
-</div>
-</div>
-<span class="badge buy">ACTIVE</span>
-</div>
-
-<div class="scanner-row">
-<div>
-<h3>Watch</h3>
-<div class="coin-list">
-<span class="coin-pill orange">ETH</span>
-<span class="coin-pill orange">BNB</span>
-</div>
-</div>
-<span class="badge watch">WAIT</span>
-</div>
-
-<div class="scanner-row">
-<div>
-<h3>Avoid</h3>
-<div class="coin-list">
-<span class="coin-pill red">XRP</span>
-</div>
-</div>
-<span class="badge avoid">RISK</span>
-</div>
-
 </div>
 
 <div class="card">
-
 <div class="card-title">TOP OPPORTUNITIES</div>
-
-<div class="scanner-row">
-<div>
-<h3>BTC</h3>
-<p class="muted">Breakout strength + liquidity</p>
+<div id="topOpportunities">
+<p class="muted">Loading opportunities...</p>
 </div>
-<span class="badge buy">BUY 87%</span>
 </div>
 
-<div class="scanner-row">
-<div>
-<h3>SOL</h3>
-<p class="muted">Volume spike + momentum</p>
-</div>
-<span class="badge buy">BUY 82%</span>
+<div class="fear-card">
+<div class="fear-top">
+<p>Fear & Greed Index</p>
+<p id="fearMeta">Live Scanner</p>
 </div>
 
-<div class="scanner-row">
-<div>
-<h3>ETH</h3>
-<p class="muted">Positive trend, wait for entry</p>
-</div>
-<span class="badge watch">WATCH 74%</span>
+<div class="fear-body">
+<div class="gauge">
+<div class="needle" id="fearNeedle"></div>
+<div class="dot"></div>
 </div>
 
+<div class="fear-score">
+<h2 id="fearScore">...</h2>
+<p id="fearStatus">Scanning</p>
+</div>
+</div>
 </div>
 
 <div class="card">
-
-<div class="card-title">FEAR & GREED</div>
-
-<div class="asset">
-<div>
-<div class="big-score orange">72</div>
-<p class="muted">Greed Zone</p>
-</div>
-
-<div>
-<h2 class="orange">GREED</h2>
-<p class="muted">Market confidence is high, avoid chasing late entries.</p>
-</div>
-</div>
-
-</div>
-
-<div class="card">
-
 <div class="card-title">DAILY BRIEFING</div>
-
-<h2>Market is improving.</h2>
-
+<h2 id="briefTitle">Analyzing market...</h2>
 <br>
-
-<p class="muted">
-• BTC remains above key support.
-<br>
-• SOL is leading short-term momentum.
-<br>
-• ETH is positive but needs cleaner confirmation.
-<br>
-• XRP remains weaker than major coins.
+<p class="muted" id="briefText">
+Zella is checking BTC, ETH, SOL, BNB and XRP.
 </p>
-
 </div>
 
 <div class="card">
-
 <div class="card-title">QUICK ACTIONS</div>
-
 <div class="action-grid">
 <a href="copilot.html" class="action-btn">Ask Zella</a>
 <a href="market.html" class="action-btn">Open Markets</a>
 <a href="alerts.html" class="action-btn">View Alerts</a>
 <a href="wallet.html" class="action-btn">Portfolio</a>
 </div>
-
 </div>
 
 <div class="bottom-nav">
@@ -391,82 +344,169 @@ background:rgba(56,189,248,.14);
 </div>
 
 </div>
+
 <script>
 const hour = new Date().getHours();
 const greeting = document.getElementById("greeting");
 
 if(hour < 12){
-    greeting.textContent = "Good Morning, Zeus ☀️";
+greeting.textContent = "Good Morning, Zeus ☀️";
 }
 else if(hour < 18){
-    greeting.textContent = "Good Afternoon, Zeus 🌤️";
+greeting.textContent = "Good Afternoon, Zeus 🌤️";
 }
 else{
-    greeting.textContent = "Good Evening, Zeus 🌙";
-}
-</script>
-
-<script>
-async function runZellaScanner(){
-  const scanner = document.getElementById("scannerResults");
-
-  try{
-    const url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,ripple&vs_currencies=usd&include_24hr_change=true";
-    const response = await fetch(url);
-    const data = await response.json();
-
-    const coins = [
-      {name:"BTC", id:"bitcoin"},
-      {name:"ETH", id:"ethereum"},
-      {name:"SOL", id:"solana"},
-      {name:"BNB", id:"binancecoin"},
-      {name:"XRP", id:"ripple"}
-    ];
-
-    let html = "";
-
-    coins.forEach(coin => {
-      const change = data[coin.id].usd_24h_change;
-      let signal = "";
-      let badgeClass = "";
-
-      if(change >= 3){
-        signal = "BUY";
-        badgeClass = "buy";
-      } 
-      else if(change >= 1){
-        signal = "WATCH";
-        badgeClass = "watch";
-      } 
-      else if(change >= 0){
-        signal = "HOLD";
-        badgeClass = "watch";
-      } 
-      else{
-        signal = "AVOID";
-        badgeClass = "avoid";
-      }
-
-      html += `
-        <div class="scanner-row">
-          <div>
-            <h3>${coin.name}</h3>
-            <p class="muted">24h Change: ${change.toFixed(2)}%</p>
-          </div>
-          <span class="badge ${badgeClass}">${signal}</span>
-        </div>
-      `;
-    });
-
-    scanner.innerHTML = html;
-
-  }catch(error){
-    scanner.innerHTML = "<p class='red'>Scanner failed to load. Refresh page.</p>";
-  }
+greeting.textContent = "Good Evening, Zeus 🌙";
 }
 
-runZellaScanner();
-setInterval(runZellaScanner, 30000);
+const coinList = [
+{name:"BTC", id:"bitcoin"},
+{name:"ETH", id:"ethereum"},
+{name:"SOL", id:"solana"},
+{name:"BNB", id:"binancecoin"},
+{name:"XRP", id:"ripple"}
+];
+
+async function runDashboardScanner(){
+try{
+const url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,ripple&vs_currencies=usd&include_24hr_change=true";
+const response = await fetch(url);
+const data = await response.json();
+
+let positiveCount = 0;
+let bestCoin = "BTC";
+let bestChange = -999;
+let totalStrength = 0;
+let rows = "";
+let opportunities = "";
+
+let sortedCoins = [];
+
+coinList.forEach(coin => {
+const change = data[coin.id].usd_24h_change;
+let signal = "";
+let badgeClass = "";
+
+if(change > bestChange){
+bestChange = change;
+bestCoin = coin.name;
+}
+
+if(change >= 0){positiveCount++}
+
+if(change >= 3){
+signal = "BUY";
+badgeClass = "buy";
+totalStrength += 20;
+}
+else if(change >= 1){
+signal = "WATCH";
+badgeClass = "watch";
+totalStrength += 14;
+}
+else if(change >= 0){
+signal = "HOLD";
+badgeClass = "watch";
+totalStrength += 9;
+}
+else{
+signal = "AVOID";
+badgeClass = "avoid";
+totalStrength += 3;
+}
+
+sortedCoins.push({
+name: coin.name,
+change: change,
+signal: signal,
+badgeClass: badgeClass
+});
+
+rows += `
+<div class="scanner-row">
+<div>
+<h3>${coin.name}</h3>
+<p class="muted">24h Change: ${change.toFixed(2)}%</p>
+</div>
+<span class="badge ${badgeClass}">${signal}</span>
+</div>
+`;
+});
+
+sortedCoins.sort((a,b) => b.change - a.change);
+
+sortedCoins.slice(0,3).forEach(coin => {
+opportunities += `
+<div class="scanner-row">
+<div>
+<h3>${coin.name}</h3>
+<p class="muted">${coin.change.toFixed(2)}% momentum</p>
+</div>
+<span class="badge ${coin.badgeClass}">${coin.signal}</span>
+</div>
+`;
+});
+
+document.getElementById("scannerResults").innerHTML = rows;
+document.getElementById("topOpportunities").innerHTML = opportunities;
+
+let scannerScore = Math.min(100, Math.max(0, Math.round(totalStrength)));
+document.getElementById("marketScore").textContent = scannerScore;
+document.getElementById("scoreBar").style.width = scannerScore + "%";
+document.getElementById("confidence").textContent = Math.min(95, scannerScore + 10) + "%";
+document.getElementById("bestOpportunity").textContent = bestCoin;
+
+document.getElementById("fearScore").textContent = scannerScore;
+let needleAngle = (scannerScore / 100) * 140 - 70;
+document.getElementById("fearNeedle").style.transform = `rotate(${needleAngle}deg)`;
+document.getElementById("fearMeta").textContent = "Updated live";
+
+if(scannerScore >= 70){
+document.getElementById("marketScore").className = "big-score green";
+document.getElementById("marketStatus").textContent = "BULLISH";
+document.getElementById("marketStatus").className = "green";
+document.getElementById("marketSub").textContent = "Momentum is improving";
+document.getElementById("riskStatus").textContent = "Risk: Medium";
+document.getElementById("riskStatus").className = "orange";
+document.getElementById("fearStatus").textContent = "Greed";
+document.getElementById("fearStatus").style.color = "#4ade80";
+document.getElementById("briefTitle").textContent = "Market is improving.";
+document.getElementById("briefText").innerHTML = "Most tracked coins are positive.<br>Best current opportunity: " + bestCoin + ".<br>Zella suggests waiting for clean entry confirmation.";
+}
+else if(scannerScore >= 40){
+document.getElementById("marketScore").className = "big-score orange";
+document.getElementById("marketStatus").textContent = "MIXED";
+document.getElementById("marketStatus").className = "orange";
+document.getElementById("marketSub").textContent = "Some coins are strong, others are weak";
+document.getElementById("riskStatus").textContent = "Risk: Medium";
+document.getElementById("riskStatus").className = "orange";
+document.getElementById("fearStatus").textContent = "Neutral";
+document.getElementById("fearStatus").style.color = "#f59e0b";
+document.getElementById("briefTitle").textContent = "Market is mixed.";
+document.getElementById("briefText").innerHTML = "Some assets are positive but confirmation is needed.<br>Zella suggests avoiding emotional entries.";
+}
+else{
+document.getElementById("marketScore").className = "big-score red";
+document.getElementById("marketStatus").textContent = "RISK-OFF";
+document.getElementById("marketStatus").className = "red";
+document.getElementById("marketSub").textContent = "Market weakness detected";
+document.getElementById("riskStatus").textContent = "Risk: High";
+document.getElementById("riskStatus").className = "red";
+document.getElementById("fearStatus").textContent = "Fear";
+document.getElementById("fearStatus").style.color = "#ef4444";
+document.getElementById("briefTitle").textContent = "Market risk is elevated.";
+document.getElementById("briefText").innerHTML = "Most tracked coins are weak.<br>Zella suggests waiting instead of forcing trades.";
+}
+
+}catch(error){
+document.getElementById("scannerResults").innerHTML = "<p class='red'>Scanner failed to load. Refresh page.</p>";
+document.getElementById("marketStatus").textContent = "DATA ERROR";
+document.getElementById("marketStatus").className = "red";
+}
+}
+
+runDashboardScanner();
+setInterval(runDashboardScanner, 30000);
 </script>
 
 </body>

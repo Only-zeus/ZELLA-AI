@@ -1,4 +1,9 @@
 * {
+  
+  html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,8 +17,8 @@ body {
 }
 
 .app {
-  max-width: 430px;
-  margin: auto;
+  max-width: 100%;
+  margin: 0;
   min-height: 100vh;
   padding: 28px 18px 100px;
   background:
@@ -129,7 +134,8 @@ h1 {
   bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(390px, 92%);
+  width: min(100%-36px);
+  max-width: 430;
   background: rgba(15, 23, 42, 0.92);
   border: 1px solid #263241;
   border-radius: 28px;

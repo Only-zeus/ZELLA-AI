@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella AI Copilot</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050816;
+color:white;
+padding:20px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.logo{
+font-size:2rem;
+font-weight:800;
+color:#00d4ff;
+text-shadow:0 0 15px #00d4ff;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.chat-box{
+background:#0b1226;
+border-radius:20px;
+padding:20px;
+height:500px;
+overflow-y:auto;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.message{
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+line-height:1.6;
+}
+
+.user{
+background:#00d4ff;
+color:black;
+margin-left:20%;
+}
+
+.bot{
+background:#111827;
+margin-right:20%;
+}
+
+.input-area{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+input{
+flex:1;
+padding:15px;
+border:none;
+border-radius:12px;
+background:#111827;
+color:white;
+}
+
+button{
+padding:15px 25px;
+background:#00d4ff;
+border:none;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+}
+
+.quick{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:15px;
+}
+
+.quick button{
+padding:10px 15px;
+}
+
+a{
+color:#00d4ff;
+text-decoration:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<div class="logo">ZELLA COPILOT</div>
+<a href="dashboard.html">← Dashboard</a>
+</div>
+
+<div class="quick">
+
+<button onclick="askPreset('Should I buy BTC now?')">
+BTC Analysis
+</button>
+
+<button onclick="askPreset('What is support and resistance?')">
+Learn Trading
+</button>
+
+<button onclick="askPreset('How much should I risk per trade?')">
+Risk Advice
+</button>
+
+</div>
+
+<div class="chat-box" id="chat">
+
+<div class="message bot">
+👋 Welcome to Zella Copilot.
+
+Ask me about trading,
+risk management,
+market analysis,
+or beginner concepts.
+</div>
+
+</div>
+
+<div class="input-area">
+
+<input
+id="userInput"
+placeholder="Ask Zella...">
+
+<button onclick="sendMessage()">
+Send
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function askPreset(text){
+document.getElementById("userInput").value = text;
+sendMessage();
+}
+
+function sendMessage(){
+
+let input =
+document.getElementById("userInput");
+
+let text =
+input.value.trim();
+
+if(text === "") return;
+
+let chat =
+document.getElementById("chat");
+
+chat.innerHTML += `
+<div class="message user">
+${text}
+</div>
+`;
+
+let reply = "";
+
+let lower = text.toLowerCase();
+
+if(lower.includes("btc")){
+
+reply =
+"BTC currently shows bullish momentum. Watch major resistance levels and always manage risk before entering a trade.";
+
+}
+
+else if(lower.includes("support")){
+
+reply =
+"Support is a price area where buyers tend to enter. Resistance is where sellers often appear.";
+
+}
+
+else if(lower.includes("risk")){
+
+reply =
+"Most traders risk only 1-2% of their account per trade. Protecting capital is the first priority.";
+
+}
+
+else if(lower.includes("eth")){
+
+reply =
+"ETH remains one of the strongest crypto assets. Watch trend direction and volume confirmation.";
+
+}
+
+else{
+
+reply =
+"Based on current trading principles, focus on trend direction, risk management and confirmation before entering any trade.";
+
+}
+
+setTimeout(()=>{
+
+chat.innerHTML += `
+<div class="message bot">
+🤖 ${reply}
+</div>
+`;
+
+chat.scrollTop =
+chat.scrollHeight;
+
+},500);
+
+input.value = "";
+
+}
+
+</script>
+
+</body>
+</html>

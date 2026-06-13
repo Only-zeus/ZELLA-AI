@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Coin Analyzer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050816;
+color:white;
+padding:30px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.logo{
+font-size:2rem;
+font-weight:800;
+color:#00d4ff;
+text-shadow:0 0 15px #00d4ff;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+}
+
+.card{
+background:#0b1226;
+padding:30px;
+border-radius:20px;
+border:1px solid rgba(255,255,255,0.08);
+margin-bottom:20px;
+}
+
+.card h2{
+margin-bottom:20px;
+color:#00d4ff;
+}
+
+input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+background:#111827;
+color:white;
+font-size:16px;
+margin-bottom:20px;
+}
+
+button{
+background:#00d4ff;
+color:black;
+border:none;
+padding:15px 25px;
+border-radius:30px;
+font-weight:700;
+cursor:pointer;
+}
+
+.result{
+margin-top:20px;
+line-height:2;
+display:none;
+}
+
+.green{
+color:#22c55e;
+}
+
+.yellow{
+color:#facc15;
+}
+
+.summary{
+background:#101a35;
+padding:15px;
+border-radius:12px;
+margin-top:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<div class="logo">ZELLA</div>
+<a href="dashboard.html" style="color:#00d4ff;">← Dashboard</a>
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h2>🧠 AI Coin Analyzer</h2>
+
+<input
+type="text"
+id="coin"
+placeholder="Enter Coin (BTC, ETH, SOL...)">
+
+<button onclick="analyzeCoin()">
+Analyze Coin
+</button>
+
+<div class="result" id="result">
+
+<h3 id="coinName"></h3>
+
+<p>
+Trend:
+<span class="green">Bullish</span>
+</p>
+
+<p>
+Confidence:
+<strong>84%</strong>
+</p>
+
+<p>
+Risk:
+<span class="yellow">Medium</span>
+</p>
+
+<p>
+Entry Zone:
+118,000 - 119,500
+</p>
+
+<p>
+Take Profit:
+123,000
+</p>
+
+<p>
+Stop Loss:
+116,500
+</p>
+
+<div class="summary">
+
+<strong>AI Summary</strong>
+
+<p>
+Momentum remains strong.
+Price is holding above key support levels.
+Watch for continuation toward the next resistance zone.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function analyzeCoin(){
+
+let coin =
+document.getElementById("coin").value;
+
+if(coin === ""){
+alert("Enter a coin symbol");
+return;
+}
+
+document.getElementById("coinName").innerHTML =
+coin.toUpperCase() + " Analysis";
+
+document.getElementById("result").style.display =
+"block";
+
+}
+
+</script>
+
+</body>
+</html>

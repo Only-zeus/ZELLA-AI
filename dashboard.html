@@ -1,275 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:#050816;
-color:white;
-padding:20px;
-}
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:30px;
-}
-
-.logo{
-font-size:2rem;
-font-weight:800;
-color:#00d4ff;
-text-shadow:0 0 15px #00d4ff;
-}
-
-.status{
-background:#0f172a;
-padding:10px 20px;
-border-radius:30px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
-}
-
-.card{
-background:#0b1226;
-padding:25px;
-border-radius:20px;
-border:1px solid rgba(255,255,255,0.08);
-}
-
-.card h3{
-margin-bottom:15px;
-color:#00d4ff;
-}
-
-.coin{
-display:flex;
-justify-content:space-between;
-margin:10px 0;
-}
-
-.green{
-color:#22c55e;
-}
-
-.red{
-color:#ef4444;
-}
-
-.analysis{
-line-height:1.8;
-}
-
-.alert{
-padding:12px;
-background:rgba(0,212,255,.1);
-margin-top:10px;
-border-radius:10px;
-}
-
-.news{
-margin-top:10px;
-padding:10px;
-border-left:3px solid #00d4ff;
-}
-
-.learn{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-margin-top:15px;
-}
-
-.lesson{
-background:#101a35;
-padding:15px;
-border-radius:12px;
-}
-
-button{
-background:#00d4ff;
-border:none;
-padding:12px 20px;
-border-radius:30px;
-font-weight:700;
-cursor:pointer;
-margin-top:15px;
-}
-
-</style>
+  <title>Zella Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="header">
-<div class="logo">ZELLA</div>
-<div class="status">🟢 Market Open</div>
-</div>
+  <div class="app">
 
-<div class="grid">
+    <div class="top-label">Command Center · Live</div>
+    <h1>Good morning.</h1>
 
-<div class="card">
-<h3>📊 Market Overview</h3>
+    <div class="card">
+      <div class="card-title">Zella AI Verdict</div>
 
-<div class="coin">
-<span>BTC</span>
-<span class="green">+3.4%</span>
-</div>
+      <div class="asset">
+        <div>
+          <div class="big-score orange">38</div>
+          <p class="muted">/100</p>
+        </div>
 
-<div class="coin">
-<span>ETH</span>
-<span class="green">+2.1%</span>
-</div>
+        <div>
+          <p class="muted">Market Status</p>
+          <h2 class="orange">CAUTIOUS</h2>
+          <br>
+          <p class="muted">Action</p>
+          <h3>WAIT FOR BREAKOUT</h3>
+        </div>
+      </div>
 
-<div class="coin">
-<span>SOL</span>
-<span class="green">+5.8%</span>
-</div>
+      <div class="grid-2">
+        <div class="mini-card">
+          <p class="muted">Confidence</p>
+          <h2 class="blue">62%</h2>
+        </div>
 
-<div class="coin">
-<span>XRP</span>
-<span class="red">-1.2%</span>
-</div>
+        <div class="mini-card">
+          <p class="muted">Best Opportunity</p>
+          <h2>BTC</h2>
+        </div>
+      </div>
+    </div>
 
-</div>
+    <div class="card">
+      <div class="card-title">Daily Briefing</div>
+      <h2>Risk-on continues as BTC reclaims strength</h2>
+      <br>
+      <p class="muted">
+        Markets opened firm with broad strength across majors.
+        Funding rates remain neutral, no overheating signals yet.
+      </p>
+    </div>
 
-<div class="card">
-<h3>😎 Fear & Greed</h3>
-<h1>72</h1>
-<p>Greed</p>
-</div>
+    <h2 style="margin: 22px 0 14px;">Top Opportunities</h2>
 
-<div class="card">
-<h3>🟢 Market Sentiment</h3>
-<h1>Bullish</h1>
-<p>Momentum remains positive.</p>
-</div>
+    <div class="card asset">
+      <div class="asset-left">
+        <div class="coin btc">₿</div>
+        <div>
+          <h2>BTC <span class="badge">BUY</span></h2>
+          <p class="muted">Confidence 87%</p>
+        </div>
+      </div>
+      <div>
+        <h3>$61,195</h3>
+        <p class="green">+2.34%</p>
+      </div>
+    </div>
 
-<div class="card">
-<h3>🚨 Smart Alerts</h3>
+    <div class="card asset">
+      <div class="asset-left">
+        <div class="coin eth">Ξ</div>
+        <div>
+          <h2>ETH <span class="badge">BUY</span></h2>
+          <p class="muted">Confidence 78%</p>
+        </div>
+      </div>
+      <div>
+        <h3>$1,610</h3>
+        <p class="green">+1.12%</p>
+      </div>
+    </div>
 
-<div class="alert">
-BTC approaching resistance.
-</div>
+    <div class="bottom-nav">
+      <a href="dashboard.html" class="active">Command</a>
+      <a href="market.html">Markets</a>
+      <a href="copilot.html">Copilot</a>
+      <a href="alert.html">Alerts</a>
+      <a href="journal.html">Wallet</a>
+    </div>
 
-<div class="alert">
-SOL volume spike detected.
-</div>
+  </div>
 
-<div class="alert">
-ETH breakout watch.
-</div>
-
-</div>
-
-<div class="card">
-<h3>🧠 AI Coin Analysis</h3>
-
-<div class="analysis">
-Trend: Bullish<br>
-Confidence: 82%<br>
-Risk: Medium<br>
-Entry Zone: $118k - $119k<br>
-Take Profit: $123k
-</div>
-
-<a href="analyzer.html">
-<button>Analyze Coin</button>
-</a>
-
-</div>
-
-  <div class="card">
-
-<h3>🤖 Zella Copilot</h3>
-
-<p>
-Ask trading questions and receive AI-powered guidance.
-</p>
-
-<a href="copilot.html">
-<button>Open Copilot</button>
-</a>
-
-</div>
-<div class="card">
-<h3>📰 Market News</h3>
-
-</div>
-<div class="news">
-Bitcoin gains after institutional buying.
-</div>
-
-<div class="news">
-Ethereum ETF inflows increase.
-</div>
-
-<div class="news">
-Solana ecosystem expands rapidly.
-</div>
-
-</div>
-
-</div>
-
-<div class="card" style="margin-top:20px;">
-<h3>📚 Learn Trading</h3>
-
-<div class="learn">
-
-<div class="lesson">
-Support & Resistance
-</div>
-
-<div class="lesson">
-Risk Management
-</div>
-
-<div class="lesson">
-Candlestick Patterns
-</div>
-
-<div class="lesson">
-Trading Psychology
-</div>
-
-</div>
-
-</div>
-<div class="card" style="margin-top:20px;">
-
-<h3>🚀 Zella Tools</h3>
-
-<a href="analyzer.html">
-<button>Analyze Coin</button>
-</a>
-
-<a href="learn.html">
-<button>Learning Hub</button>
-</a>
-
-<a href="alerts.html">
-<button>View Alerts</button>
-</a>
-
-</div>
 </body>
 </html>

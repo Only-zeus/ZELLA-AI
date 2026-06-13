@@ -3,47 +3,245 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Copilot</title>
+<title>Zella Copilot V2</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;min-height:100%;overflow-x:hidden}
 body{font-family:Arial,sans-serif;background:#050b12;color:#f8fafc}
 
-.app{width:100%;min-height:100vh;padding:42px 16px 170px;background:radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),linear-gradient(180deg,#07111d,#050b12)}
+.app{
+width:100%;
+min-height:100vh;
+padding:42px 16px 170px;
+background:
+radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),
+linear-gradient(180deg,#07111d,#050b12);
+}
 
-.top-label{color:#9ca3af;font-size:12px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px}
-h1{font-size:36px;color:#d8ecff;margin-bottom:12px}
+.top-label{
+color:#9ca3af;
+font-size:12px;
+letter-spacing:5px;
+text-transform:uppercase;
+margin-bottom:10px;
+}
+
+h1{font-size:36px;color:#d8ecff;margin-bottom:10px}
 h2{font-size:22px}
+h3{font-size:18px}
 .muted{color:#9ca3af;line-height:1.6}
-.blue{color:#4dabff}.green{color:#4ade80}.orange{color:#f59e0b}
+.green{color:#4ade80}
+.red{color:#ef4444}
+.blue{color:#4dabff}
+.orange{color:#f59e0b}
 
-.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#111a26,#0b111a);border:1px solid #1f2937;border-radius:26px;padding:22px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.35)}
-.card::before{content:"";position:absolute;width:260px;height:260px;background:rgba(59,130,246,.08);border-radius:50%;top:-140px;right:-140px}
+.card{
+position:relative;
+overflow:hidden;
+background:linear-gradient(145deg,#111a26,#0b111a);
+border:1px solid #1f2937;
+border-radius:26px;
+padding:22px;
+margin-bottom:18px;
+box-shadow:0 14px 35px rgba(0,0,0,.35);
+}
+
+.card::before{
+content:"";
+position:absolute;
+width:260px;
+height:260px;
+background:rgba(59,130,246,.08);
+border-radius:50%;
+top:-140px;
+right:-140px;
+}
+
 .card>*{position:relative}
-.card-title{color:#38bdf8;font-size:14px;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
 
-.ai-orb{width:82px;height:82px;border-radius:50%;background:radial-gradient(circle,#7dd3fc,#2563eb,#111827);display:grid;place-items:center;font-size:34px;box-shadow:0 0 40px rgba(56,189,248,.45);margin-bottom:18px}
+.card-title{
+color:#38bdf8;
+font-size:14px;
+letter-spacing:4px;
+text-transform:uppercase;
+margin-bottom:16px;
+}
 
-.input-box{display:flex;gap:10px;align-items:center;background:#101722;border:1px solid #263241;border-radius:26px;padding:10px;margin-bottom:18px}
-.input-box input{flex:1;background:transparent;border:none;outline:none;color:white;font-size:15px;padding:12px}
-.send-btn{width:46px;height:46px;border:none;border-radius:50%;background:#2563eb;color:white;font-size:18px}
+.ai-orb{
+width:86px;
+height:86px;
+border-radius:50%;
+background:radial-gradient(circle,#7dd3fc,#2563eb,#111827);
+display:grid;
+place-items:center;
+font-size:36px;
+box-shadow:0 0 42px rgba(56,189,248,.45);
+margin-bottom:18px;
+}
 
-.prompt-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
-.prompt{border:1px solid #263241;border-radius:20px;padding:11px 14px;color:#e5e7eb;background:#101722;font-size:14px}
+.status-pill{
+display:inline-block;
+padding:7px 13px;
+border-radius:20px;
+font-size:12px;
+letter-spacing:2px;
+background:rgba(34,197,94,.18);
+color:#4ade80;
+margin-top:12px;
+}
 
-.chat{display:flex;gap:12px;margin-bottom:16px}
-.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#6366f1);display:grid;place-items:center;font-weight:bold;flex-shrink:0}
-.message{background:#101722;border:1px solid #263241;border-radius:20px;padding:15px;line-height:1.6;color:#dbeafe}
-.user-message{background:rgba(37,99,235,.25);border-color:#2563eb}
+.chat-window{
+display:flex;
+flex-direction:column;
+gap:14px;
+margin-bottom:18px;
+}
 
-.status-card{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.mini-card{border:1px solid #263241;border-radius:18px;padding:15px;background:#101722}
-.badge{display:inline-block;padding:6px 12px;border-radius:20px;background:rgba(34,197,94,.18);color:#4ade80;font-size:12px;letter-spacing:2px}
+.message-row{
+display:flex;
+gap:12px;
+align-items:flex-start;
+}
 
-.bottom-nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:460px;background:rgba(15,23,42,.92);border:1px solid #263241;border-radius:30px;padding:12px;display:flex;justify-content:space-between;backdrop-filter:blur(18px);z-index:50}
-.bottom-nav a{color:#9ca3af;text-decoration:none;font-size:13px;text-align:center;padding:10px 12px;border-radius:20px}
-.bottom-nav a.active{color:#4dabff;background:rgba(56,189,248,.14)}
+.message-row.user{
+justify-content:flex-end;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:linear-gradient(135deg,#38bdf8,#6366f1);
+display:grid;
+place-items:center;
+font-weight:bold;
+flex-shrink:0;
+}
+
+.bubble{
+max-width:82%;
+background:#101722;
+border:1px solid #263241;
+border-radius:20px;
+padding:15px;
+line-height:1.6;
+color:#dbeafe;
+font-size:15px;
+}
+
+.user .bubble{
+background:rgba(37,99,235,.28);
+border-color:#2563eb;
+color:white;
+}
+
+.prompt-row{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:18px;
+}
+
+.prompt{
+border:1px solid #263241;
+border-radius:20px;
+padding:11px 14px;
+color:#e5e7eb;
+background:#101722;
+font-size:14px;
+cursor:pointer;
+}
+
+.prompt:hover{
+background:#12375c;
+}
+
+.input-box{
+position:sticky;
+bottom:138px;
+display:flex;
+gap:10px;
+align-items:center;
+background:rgba(16,23,34,.95);
+border:1px solid #263241;
+border-radius:26px;
+padding:10px;
+margin-bottom:18px;
+backdrop-filter:blur(18px);
+z-index:30;
+}
+
+.input-box input{
+flex:1;
+background:transparent;
+border:none;
+outline:none;
+color:white;
+font-size:15px;
+padding:12px;
+}
+
+.send-btn{
+width:46px;
+height:46px;
+border:none;
+border-radius:50%;
+background:#2563eb;
+color:white;
+font-size:18px;
+cursor:pointer;
+}
+
+.send-btn:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+.grid-2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:18px;
+}
+
+.mini-card{
+border:1px solid #263241;
+border-radius:18px;
+padding:15px;
+background:#101722;
+}
+
+.bottom-nav{
+position:fixed;
+bottom:50px;
+left:50%;
+transform:translateX(-50%);
+width:calc(100% - 32px);
+max-width:460px;
+background:rgba(15,23,42,.92);
+border:1px solid #263241;
+border-radius:30px;
+padding:12px;
+display:flex;
+justify-content:space-between;
+backdrop-filter:blur(18px);
+z-index:50;
+}
+
+.bottom-nav a{
+color:#9ca3af;
+text-decoration:none;
+font-size:13px;
+text-align:center;
+padding:10px 12px;
+border-radius:20px;
+}
+
+.bottom-nav a.active{
+color:#4dabff;
+background:rgba(56,189,248,.14);
+}
 </style>
 </head>
 
@@ -51,107 +249,240 @@ h2{font-size:22px}
 
 <div class="app">
 
-<div class="top-label">ZELLA AI • COPILOT</div>
+<div class="top-label">ZELLA AI • COPILOT V2</div>
 
 <h1>Ask Zella.</h1>
-<p class="muted">Your AI trading assistant for smarter crypto decisions.</p>
+<p class="muted">Your backend-ready AI trading assistant.</p>
 
 <br>
 
 <div class="card">
 <div class="ai-orb">✦</div>
-
 <div class="card-title">AI ASSISTANT ONLINE</div>
-
 <h2>Hello Zeus, I’m Zella.</h2>
 <br>
 <p class="muted">
-I can help you analyze BTC, ETH, SOL, BNB and XRP,
-explain trading signals, calculate risk, and guide you like a beginner-friendly trading copilot.
+Ask me about BTC, ETH, SOL, BNB, XRP, market risk, trade setups,
+or beginner-friendly crypto explanations.
 </p>
-
-<br>
-
-<span class="badge">LIVE MARKET MODE</span>
-</div>
-
-<div class="input-box">
-<input type="text" placeholder="Ask about BTC, ETH, risk, entries...">
-<button class="send-btn">➤</button>
-</div>
-
-<div class="prompt-row">
-<div class="prompt">Best setup today?</div>
-<div class="prompt">Should I buy BTC?</div>
-<div class="prompt">Explain market risk</div>
-<div class="prompt">Lowest-risk trade?</div>
+<span class="status-pill" id="backendStatus">BACKEND READY</span>
 </div>
 
 <div class="card">
-<div class="card-title">COPILOT RESPONSE</div>
+<div class="card-title">LIVE MARKET CONTEXT</div>
 
-<div class="chat">
-<div class="avatar">Z</div>
-<div class="message">
-BTC is showing strength, but the market score is still cautious.
-I would wait for a clean breakout and confirmation before entering.
+<div class="grid-2">
+<div class="mini-card">
+<p class="muted">Market Mood</p>
+<h2 id="marketMood" class="orange">Loading</h2>
 </div>
-</div>
-
-<div class="chat">
-<div class="avatar">You</div>
-<div class="message user-message">
-What is the safest opportunity right now?
-</div>
-</div>
-
-<div class="chat">
-<div class="avatar">Z</div>
-<div class="message">
-The safest current setup is BTC because it has stronger liquidity,
-better trend structure, and lower volatility compared to smaller coins.
-</div>
-</div>
-
-</div>
-
-<div class="card">
-<div class="card-title">QUICK ANALYSIS</div>
-
-<div class="status-card">
 
 <div class="mini-card">
 <p class="muted">Best Coin</p>
-<h2 class="blue">BTC</h2>
+<h2 id="bestCoin" class="blue">...</h2>
 </div>
 
 <div class="mini-card">
-<p class="muted">Risk</p>
-<h2 class="orange">Medium</h2>
+<p class="muted">Risk Level</p>
+<h2 id="riskLevel" class="orange">...</h2>
 </div>
 
 <div class="mini-card">
-<p class="muted">Signal</p>
-<h2 class="green">Wait</h2>
+<p class="muted">Refresh</p>
+<h2 class="green">30s</h2>
+</div>
+</div>
 </div>
 
-<div class="mini-card">
-<p class="muted">Confidence</p>
-<h2 class="blue">62%</h2>
+<div class="prompt-row">
+<button class="prompt" onclick="quickAsk('Should I buy BTC right now?')">Should I buy BTC?</button>
+<button class="prompt" onclick="quickAsk('What is the safest trade today?')">Safest trade?</button>
+<button class="prompt" onclick="quickAsk('Explain today market like I am a beginner')">Explain market</button>
+<button class="prompt" onclick="quickAsk('What coin should I avoid today?')">What to avoid?</button>
 </div>
 
+<div class="card">
+<div class="card-title">CHAT</div>
+
+<div class="chat-window" id="chatWindow">
+<div class="message-row">
+<div class="avatar">Z</div>
+<div class="bubble">
+I’m ready, Zeus. Once the backend is connected, I’ll answer using real AI plus live market context.
 </div>
+</div>
+</div>
+</div>
+
+<div class="input-box">
+<input type="text" id="userInput" placeholder="Ask Zella about the market...">
+<button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
 </div>
 
 <div class="bottom-nav">
 <a href="dashboard.html">Command</a>
 <a href="market.html">Markets</a>
 <a href="copilot.html" class="active">Copilot</a>
-<a href="alert.html">Alerts</a>
+<a href="alerts.html">Alerts</a>
 <a href="wallet.html">Wallet</a>
 </div>
 
 </div>
+
+<script>
+const BACKEND_URL = "https://your-zella-backend.onrender.com/chat";
+
+const chatWindow = document.getElementById("chatWindow");
+const userInput = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
+
+function addUserMessage(text){
+chatWindow.innerHTML += `
+<div class="message-row user">
+<div class="bubble">${text}</div>
+</div>
+`;
+chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function addBotMessage(text){
+chatWindow.innerHTML += `
+<div class="message-row">
+<div class="avatar">Z</div>
+<div class="bubble">${text}</div>
+</div>
+`;
+chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function quickAsk(text){
+userInput.value = text;
+sendMessage();
+}
+
+async function sendMessage(){
+
+const message = userInput.value.trim();
+
+if(!message) return;
+
+addUserMessage(message);
+userInput.value = "";
+
+sendBtn.disabled = true;
+
+try{
+
+const response = await fetch(BACKEND_URL,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:message
+})
+});
+
+const data = await response.json();
+
+addBotMessage(data.reply);
+
+}
+catch(error){
+
+addBotMessage(
+"Backend not connected yet. Once we deploy the Zella server on Render and connect the AI API, I'll respond with live AI analysis."
+);
+
+console.log(error);
+}
+
+sendBtn.disabled = false;
+}
+
+userInput.addEventListener("keypress", function(e){
+if(e.key === "Enter"){
+sendMessage();
+}
+});
+
+async function updateMarketContext(){
+
+try{
+
+const response = await fetch(
+"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,ripple&vs_currencies=usd&include_24hr_change=true"
+);
+
+const data = await response.json();
+
+const coins = [
+{ name:"BTC", id:"bitcoin" },
+{ name:"ETH", id:"ethereum" },
+{ name:"SOL", id:"solana" },
+{ name:"BNB", id:"binancecoin" },
+{ name:"XRP", id:"ripple" }
+];
+
+let positive = 0;
+let bestCoin = "BTC";
+let bestChange = -999;
+
+coins.forEach(coin => {
+
+const change = data[coin.id].usd_24h_change;
+
+if(change > 0){
+positive++;
+}
+
+if(change > bestChange){
+bestChange = change;
+bestCoin = coin.name;
+}
+
+});
+
+document.getElementById("bestCoin").textContent = bestCoin;
+
+if(positive >= 4){
+
+document.getElementById("marketMood").textContent = "Bullish";
+document.getElementById("marketMood").className = "green";
+
+document.getElementById("riskLevel").textContent = "Medium";
+document.getElementById("riskLevel").className = "orange";
+
+}
+else if(positive >= 2){
+
+document.getElementById("marketMood").textContent = "Mixed";
+document.getElementById("marketMood").className = "orange";
+
+document.getElementById("riskLevel").textContent = "Medium";
+document.getElementById("riskLevel").className = "orange";
+
+}
+else{
+
+document.getElementById("marketMood").textContent = "Risk-Off";
+document.getElementById("marketMood").className = "red";
+
+document.getElementById("riskLevel").textContent = "High";
+document.getElementById("riskLevel").className = "red";
+
+}
+
+}
+catch(error){
+console.log(error);
+}
+
+}
+
+updateMarketContext();
+setInterval(updateMarketContext,30000);
+</script>
 
 </body>
 </html>

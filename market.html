@@ -9,152 +9,33 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;min-height:100%;overflow-x:hidden}
 body{font-family:Arial,sans-serif;background:#050b12;color:#f8fafc}
-
-.app{
-width:100%;
-min-height:100vh;
-padding:42px 16px 170px;
-background:
-radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),
-linear-gradient(180deg,#07111d,#050b12);
-}
-
+.app{width:100%;min-height:100vh;padding:42px 16px 170px;background:radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),linear-gradient(180deg,#07111d,#050b12)}
 .top-label{color:#9ca3af;font-size:12px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px}
 h1{font-size:36px;color:#d8ecff;margin-bottom:20px}
 h2{font-size:22px}
 .muted{color:#9ca3af;line-height:1.6}
-.green{color:#4ade80}
-.red{color:#ef4444}
-.blue{color:#4dabff}
-.orange{color:#f59e0b}
-
-.card{
-position:relative;
-overflow:hidden;
-background:linear-gradient(145deg,#111a26,#0b111a);
-border:1px solid #1f2937;
-border-radius:26px;
-padding:22px;
-margin-bottom:18px;
-box-shadow:0 14px 35px rgba(0,0,0,.35);
-}
-
-.card::before{
-content:"";
-position:absolute;
-width:260px;
-height:260px;
-background:rgba(59,130,246,.08);
-border-radius:50%;
-top:-140px;
-right:-140px;
-}
-
+.green{color:#4ade80}.red{color:#ef4444}.blue{color:#4dabff}.orange{color:#f59e0b}
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#111a26,#0b111a);border:1px solid #1f2937;border-radius:26px;padding:22px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.35)}
+.card::before{content:"";position:absolute;width:260px;height:260px;background:rgba(59,130,246,.08);border-radius:50%;top:-140px;right:-140px}
 .card>*{position:relative}
 .card-title{color:#38bdf8;font-size:14px;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
-
-.grid-2{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-top:18px;
-}
-
-.mini-card{
-border:1px solid #263241;
-border-radius:18px;
-padding:15px;
-background:#101722;
-}
-
-.asset{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:12px;
-}
-
-.asset-left{
-display:flex;
-align-items:center;
-gap:14px;
-}
-
-.coin{
-width:52px;
-height:52px;
-border-radius:50%;
-display:grid;
-place-items:center;
-font-weight:bold;
-font-size:22px;
-flex-shrink:0;
-}
-
-.btc{background:#f59e0b}
-.eth{background:#6366f1}
-.sol{background:linear-gradient(135deg,#8b5cf6,#5eead4)}
-.bnb{background:#facc15;color:#111}
-.xrp{background:#94a3b8;color:#111}
-
-.badge{
-display:inline-block;
-padding:6px 12px;
-border-radius:20px;
-background:rgba(34,197,94,.18);
-color:#4ade80;
-font-size:12px;
-letter-spacing:2px;
-margin-top:6px;
-}
-
-.badge.hold{
-background:rgba(245,158,11,.18);
-color:#f59e0b;
-}
-
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.mini-card{border:1px solid #263241;border-radius:18px;padding:15px;background:#101722}
+.asset{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.asset-left{display:flex;align-items:center;gap:14px}
+.coin{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:bold;font-size:22px;flex-shrink:0}
+.btc{background:#f59e0b}.eth{background:#6366f1}.sol{background:linear-gradient(135deg,#8b5cf6,#5eead4)}.bnb{background:#facc15;color:#111}.xrp{background:#94a3b8;color:#111}
+.badge{display:inline-block;padding:6px 12px;border-radius:20px;background:rgba(34,197,94,.18);color:#4ade80;font-size:12px;letter-spacing:2px;margin-top:6px}
+.badge.hold{background:rgba(245,158,11,.18);color:#f59e0b}
 .section-title{margin:22px 0 14px}
-
-.live-dot{
-display:inline-block;
-width:8px;
-height:8px;
-background:#22c55e;
-border-radius:50%;
-margin-right:8px;
-box-shadow:0 0 12px #22c55e;
-}
-
-.bottom-nav{
-position:fixed;
-bottom:70px;
-left:50%;
-transform:translateX(-50%);
-width:calc(100% - 32px);
-max-width:460px;
-background:rgba(15,23,42,.92);
-border:1px solid #263241;
-border-radius:30px;
-padding:12px;
-display:flex;
-justify-content:space-between;
-backdrop-filter:blur(18px);
-z-index:50;
-}
-
-.bottom-nav a{
-color:#9ca3af;
-text-decoration:none;
-font-size:13px;
-text-align:center;
-padding:10px 12px;
-border-radius:20px;
-}
-
-.bottom-nav a.active{
-color:#4dabff;
-background:rgba(56,189,248,.14);
-}
+.live-dot{display:inline-block;width:8px;height:8px;background:#22c55e;border-radius:50%;margin-right:8px;box-shadow:0 0 12px #22c55e}
+.chart-wrap{height:420px;border-radius:24px;overflow:hidden;border:1px solid #263241;background:#101722;margin-top:12px}
+.coin-tabs{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;margin-bottom:12px}
+.coin-tabs button{border:1px solid #263241;background:#101722;color:#e5e7eb;border-radius:20px;padding:10px 14px;white-space:nowrap}
+.coin-tabs button.active{background:#2563eb;color:white}
+.bottom-nav{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:460px;background:rgba(15,23,42,.92);border:1px solid #263241;border-radius:30px;padding:12px;display:flex;justify-content:space-between;backdrop-filter:blur(18px);z-index:50}
+.bottom-nav a{color:#9ca3af;text-decoration:none;font-size:13px;text-align:center;padding:10px 12px;border-radius:20px}
+.bottom-nav a.active{color:#4dabff;background:rgba(56,189,248,.14)}
 </style>
 </head>
 
@@ -163,121 +44,51 @@ background:rgba(56,189,248,.14);
 <div class="app">
 
 <div class="top-label">ZELLA AI • LIVE MARKETS</div>
-
 <h1>Market Pulse.</h1>
 
 <div class="card">
 <div class="card-title"><span class="live-dot"></span>LIVE MARKET OVERVIEW</div>
-
 <h2 id="marketStatus" class="green">Loading Market...</h2>
 <br>
-
-<p class="muted" id="marketText">
-Zella is fetching live crypto prices.
-</p>
+<p class="muted" id="marketText">Zella is fetching live crypto prices.</p>
 
 <div class="grid-2">
-<div class="mini-card">
-<p class="muted">Tracked Coins</p>
-<h2 class="blue">5</h2>
+<div class="mini-card"><p class="muted">Tracked Coins</p><h2 class="blue">5</h2></div>
+<div class="mini-card"><p class="muted">Refresh</p><h2 class="green">30s</h2></div>
+<div class="mini-card"><p class="muted">Top Coin</p><h2 id="topCoin" class="green">...</h2></div>
+<div class="mini-card"><p class="muted">Risk Mode</p><h2 id="riskMode" class="orange">...</h2></div>
+</div>
 </div>
 
-<div class="mini-card">
-<p class="muted">Refresh</p>
-<h2 class="green">30s</h2>
+<div class="card">
+<div class="card-title">TRADINGVIEW LIVE CHART</div>
+
+<div class="coin-tabs">
+<button onclick="loadChart('BINANCE:BTCUSDT', this)" class="active">BTC</button>
+<button onclick="loadChart('BINANCE:ETHUSDT', this)">ETH</button>
+<button onclick="loadChart('BINANCE:SOLUSDT', this)">SOL</button>
+<button onclick="loadChart('BINANCE:BNBUSDT', this)">BNB</button>
+<button onclick="loadChart('BINANCE:XRPUSDT', this)">XRP</button>
 </div>
 
-<div class="mini-card">
-<p class="muted">Top Coin</p>
-<h2 id="topCoin" class="green">...</h2>
-</div>
-
-<div class="mini-card">
-<p class="muted">Risk Mode</p>
-<h2 id="riskMode" class="orange">...</h2>
-</div>
+<div class="chart-wrap">
+<div id="tradingview_chart"></div>
 </div>
 </div>
 
 <h2 class="section-title">Live Watchlist</h2>
 
-<div class="card asset">
-<div class="asset-left">
-<div class="coin btc">₿</div>
-<div>
-<h2>BTC</h2>
-<p class="muted" id="btc-price">Loading...</p>
-</div>
-</div>
-<div>
-<h3 id="btc-change">...</h3>
-<span id="btc-signal" class="badge">...</span>
-</div>
-</div>
-
-<div class="card asset">
-<div class="asset-left">
-<div class="coin eth">Ξ</div>
-<div>
-<h2>ETH</h2>
-<p class="muted" id="eth-price">Loading...</p>
-</div>
-</div>
-<div>
-<h3 id="eth-change">...</h3>
-<span id="eth-signal" class="badge">...</span>
-</div>
-</div>
-
-<div class="card asset">
-<div class="asset-left">
-<div class="coin sol">◎</div>
-<div>
-<h2>SOL</h2>
-<p class="muted" id="sol-price">Loading...</p>
-</div>
-</div>
-<div>
-<h3 id="sol-change">...</h3>
-<span id="sol-signal" class="badge">...</span>
-</div>
-</div>
-
-<div class="card asset">
-<div class="asset-left">
-<div class="coin bnb">B</div>
-<div>
-<h2>BNB</h2>
-<p class="muted" id="bnb-price">Loading...</p>
-</div>
-</div>
-<div>
-<h3 id="bnb-change">...</h3>
-<span id="bnb-signal" class="badge">...</span>
-</div>
-</div>
-
-<div class="card asset">
-<div class="asset-left">
-<div class="coin xrp">X</div>
-<div>
-<h2>XRP</h2>
-<p class="muted" id="xrp-price">Loading...</p>
-</div>
-</div>
-<div>
-<h3 id="xrp-change">...</h3>
-<span id="xrp-signal" class="badge">...</span>
-</div>
-</div>
+<div class="card asset"><div class="asset-left"><div class="coin btc">₿</div><div><h2>BTC</h2><p class="muted" id="btc-price">Loading...</p></div></div><div><h3 id="btc-change">...</h3><span id="btc-signal" class="badge">...</span></div></div>
+<div class="card asset"><div class="asset-left"><div class="coin eth">Ξ</div><div><h2>ETH</h2><p class="muted" id="eth-price">Loading...</p></div></div><div><h3 id="eth-change">...</h3><span id="eth-signal" class="badge">...</span></div></div>
+<div class="card asset"><div class="asset-left"><div class="coin sol">◎</div><div><h2>SOL</h2><p class="muted" id="sol-price">Loading...</p></div></div><div><h3 id="sol-change">...</h3><span id="sol-signal" class="badge">...</span></div></div>
+<div class="card asset"><div class="asset-left"><div class="coin bnb">B</div><div><h2>BNB</h2><p class="muted" id="bnb-price">Loading...</p></div></div><div><h3 id="bnb-change">...</h3><span id="bnb-signal" class="badge">...</span></div></div>
+<div class="card asset"><div class="asset-left"><div class="coin xrp">X</div><div><h2>XRP</h2><p class="muted" id="xrp-price">Loading...</p></div></div><div><h3 id="xrp-change">...</h3><span id="xrp-signal" class="badge">...</span></div></div>
 
 <div class="card">
 <div class="card-title">ZELLA LIVE READ</div>
 <h2 id="zellaRead">Analyzing market...</h2>
 <br>
-<p class="muted" id="zellaNote">
-Live prices are being checked.
-</p>
+<p class="muted" id="zellaNote">Live prices are being checked.</p>
 </div>
 
 <div class="bottom-nav">
@@ -290,6 +101,8 @@ Live prices are being checked.
 
 </div>
 
+<script src="https://s3.tradingview.com/tv.js"></script>
+
 <script>
 const coins = {
 bitcoin: { symbol: "btc", name: "BTC" },
@@ -298,6 +111,27 @@ solana: { symbol: "sol", name: "SOL" },
 binancecoin: { symbol: "bnb", name: "BNB" },
 ripple: { symbol: "xrp", name: "XRP" }
 };
+
+function loadChart(symbol, btn){
+document.getElementById("tradingview_chart").innerHTML = "";
+document.querySelectorAll(".coin-tabs button").forEach(b => b.classList.remove("active"));
+if(btn){btn.classList.add("active")}
+
+new TradingView.widget({
+"autosize": true,
+"symbol": symbol,
+"interval": "60",
+"timezone": "Etc/UTC",
+"theme": "dark",
+"style": "1",
+"locale": "en",
+"enable_publishing": false,
+"hide_top_toolbar": false,
+"hide_legend": false,
+"save_image": false,
+"container_id": "tradingview_chart"
+});
+}
 
 async function fetchPrices(){
 try{
@@ -314,29 +148,24 @@ const coin = coins[id];
 const price = data[id].usd;
 const change = data[id].usd_24h_change;
 
-const priceEl = document.getElementById(`${coin.symbol}-price`);
+document.getElementById(`${coin.symbol}-price`).textContent = "$" + price.toLocaleString();
+
 const changeEl = document.getElementById(`${coin.symbol}-change`);
 const signalEl = document.getElementById(`${coin.symbol}-signal`);
 
-priceEl.textContent = "$" + price.toLocaleString();
-
 const changeText = change.toFixed(2) + "%";
 changeEl.textContent = change >= 0 ? "+" + changeText : changeText;
+changeEl.className = change >= 0 ? "green" : "red";
 
-if(change >= 0){
-changeEl.className = "green";
-positiveCount++;
-} else {
-changeEl.className = "red";
-}
+if(change >= 0){positiveCount++}
 
 if(change > 2){
 signalEl.textContent = "BUY";
 signalEl.className = "badge";
-} else if(change > 0){
+}else if(change > 0){
 signalEl.textContent = "WATCH";
 signalEl.className = "badge hold";
-} else {
+}else{
 signalEl.textContent = "HOLD";
 signalEl.className = "badge hold";
 }
@@ -355,13 +184,13 @@ document.getElementById("marketStatus").className = "green";
 document.getElementById("riskMode").textContent = "Normal";
 document.getElementById("zellaRead").textContent = "Market is showing strength.";
 document.getElementById("zellaNote").textContent = "Most tracked coins are positive. Zella suggests watching breakout confirmations before entering.";
-} else if(positiveCount >= 2){
+}else if(positiveCount >= 2){
 document.getElementById("marketStatus").textContent = "Mixed Market";
 document.getElementById("marketStatus").className = "orange";
 document.getElementById("riskMode").textContent = "Medium";
 document.getElementById("zellaRead").textContent = "Market is mixed.";
 document.getElementById("zellaNote").textContent = "Some coins are positive, but confirmation is still needed before taking trades.";
-} else {
+}else{
 document.getElementById("marketStatus").textContent = "Risk-Off Market";
 document.getElementById("marketStatus").className = "red";
 document.getElementById("riskMode").textContent = "High";
@@ -370,18 +199,20 @@ document.getElementById("zellaNote").textContent = "Most tracked coins are weak.
 }
 
 document.getElementById("marketText").textContent =
-"Live market data updated from CoinGecko. Zella is tracking BTC, ETH, SOL, BNB and XRP.";
+"Live market data updated from CoinGecko. TradingView chart is active.";
 
 }catch(error){
 document.getElementById("marketStatus").textContent = "Live Data Error";
 document.getElementById("marketStatus").className = "red";
 document.getElementById("marketText").textContent = "Unable to fetch live prices right now. Refresh or try again later.";
-console.log(error);
 }
 }
 
+window.addEventListener("load", function(){
+loadChart("BINANCE:BTCUSDT");
 fetchPrices();
 setInterval(fetchPrices, 30000);
+});
 </script>
 
 </body>

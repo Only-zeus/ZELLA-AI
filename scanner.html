@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Scanner V2</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;min-height:100%;overflow-x:hidden}
+body{font-family:Arial,sans-serif;background:#050b12;color:#f8fafc}
+.app{width:100%;min-height:100vh;padding:42px 16px 170px;background:radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),linear-gradient(180deg,#07111d,#050b12)}
+.top-label{color:#9ca3af;font-size:12px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:36px;color:#d8ecff;margin-bottom:20px}
+h2{font-size:22px}
+h3{font-size:18px}
+.muted{color:#9ca3af;line-height:1.6}
+.green{color:#4ade80}.red{color:#ef4444}.blue{color:#4dabff}.orange{color:#f59e0b}
+.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#111a26,#0b111a);border:1px solid #1f2937;border-radius:26px;padding:22px;margin-bottom:18px;box-shadow:0 14px 35px rgba(0,0,0,.35)}
+.card::before{content:"";position:absolute;width:260px;height:260px;background:rgba(59,130,246,.08);border-radius:50%;top:-140px;right:-140px}
+.card>*{position:relative}
+.card-title{color:#38bdf8;font-size:14px;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
+.scan-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;border-bottom:1px solid #1f2937}
+.scan-row:last-child{border-bottom:none}
+.coin-left{display:flex;align-items:center;gap:14px}
+.coin{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:bold;font-size:22px}
+.btc{background:#f59e0b}.eth{background:#6366f1}.sol{background:linear-gradient(135deg,#8b5cf6,#5eead4)}.bnb{background:#facc15;color:#111}.xrp{background:#94a3b8;color:#111}
+.badge{display:inline-block;padding:7px 13px;border-radius:20px;font-size:12px;letter-spacing:2px}
+.buy{background:rgba(34,197,94,.18);color:#4ade80}
+.watch{background:rgba(245,158,11,.18);color:#f59e0b}
+.avoid{background:rgba(239,68,68,.18);color:#ef4444}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.mini-card{border:1px solid #263241;border-radius:18px;padding:15px;background:#101722}
+button{width:100%;padding:15px;border:none;border-radius:18px;background:#2563eb;color:white;font-weight:bold;font-size:15px}
+.bottom-nav{position:fixed;bottom:50px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:460px;background:rgba(15,23,42,.92);border:1px solid #263241;border-radius:30px;padding:12px;display:flex;justify-content:space-between;backdrop-filter:blur(18px);z-index:50}
+.bottom-nav a{color:#9ca3af;text-decoration:none;font-size:13px;text-align:center;padding:10px 12px;border-radius:20px}
+.bottom-nav a.active{color:#4dabff;background:rgba(56,189,248,.14)}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="top-label">ZELLA AI • SCANNER V2</div>
+
+<h1>Market Scanner.</h1>
+
+<div class="card">
+<div class="card-title">LIVE SCANNER STATUS</div>
+<h2 id="scannerStatus" class="orange">Scanning market...</h2>
+<br>
+<p class="muted" id="scannerNote">Zella is checking BTC, ETH, SOL, BNB and XRP using live 24h momentum.</p>
+
+<div class="grid-2">
+<div class="mini-card">
+<p class="muted">Best Coin</p>
+<h2 id="bestCoin" class="blue">...</h2>
+</div>
+
+<div class="mini-card">
+<p class="muted">Market Risk</p>
+<h2 id="marketRisk" class="orange">...</h2>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">SCAN RESULTS</div>
+<div id="scanResults">
+<p class="muted">Loading live scan...</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">ZELLA AI SUMMARY</div>
+<h2 id="aiTitle">Waiting for scan...</h2>
+<br>
+<p class="muted" id="aiSummary">Once the scan completes, Zella will explain the strongest opportunity.</p>
+<br>
+<button onclick="askZellaScanner()">Ask Zella to explain this scan</button>
+</div>
+
+<div class="bottom-nav">
+<a href="dashboard.html">Command</a>
+<a href="market.html">Markets</a>
+<a href="copilot.html">Copilot</a>
+<a href="alerts.html">Alerts</a>
+<a href="wallet.html">Wallet</a>
+</div>
+
+</div>
+
+<script>
+const BACKEND_URL = "https://zella-backend.onrender.com/chat";
+
+const coins = [
+{name:"BTC", id:"bitcoin", icon:"₿", class:"btc"},
+{name:"ETH", id:"ethereum", icon:"Ξ", class:"eth"},
+{name:"SOL", id:"solana", icon:"◎", class:"sol"},
+{name:"BNB", id:"binancecoin", icon:"B", class:"bnb"},
+{name:"XRP", id:"ripple", icon:"X", class:"xrp"}
+];
+
+let latestScanText = "";
+
+async function runScanner(){
+try{
+const url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin,ripple&vs_currencies=usd&include_24hr_change=true";
+const response = await fetch(url);
+const data = await response.json();
+
+let results = [];
+let positive = 0;
+
+coins.forEach(coin => {
+const price = data[coin.id].usd;
+const change = data[coin.id].usd_24h_change;
+
+let signal = "";
+let badge = "";
+let confidence = 0;
+let reason = "";
+
+if(change >= 4){
+signal = "STRONG BUY";
+badge = "buy";
+confidence = 88;
+reason = "Strong 24h momentum";
+positive++;
+}
+else if(change >= 2){
+signal = "BUY SETUP";
+badge = "buy";
+confidence = 78;
+reason = "Positive momentum";
+positive++;
+}
+else if(change >= 0){
+signal = "WATCH";
+badge = "watch";
+confidence = 62;
+reason = "Mild strength";
+positive++;
+}
+else{
+signal = "AVOID";
+badge = "avoid";
+confidence = 45;
+reason = "Weak short-term momentum";
+}
+
+results.push({
+name:coin.name,
+icon:coin.icon,
+class:coin.class,
+price,
+change,
+signal,
+badge,
+confidence,
+reason
+});
+});
+
+results.sort((a,b)=>b.change-a.change);
+
+document.getElementById("bestCoin").textContent = results[0].name;
+
+if(positive >= 4){
+document.getElementById("scannerStatus").textContent = "Bullish Scanner";
+document.getElementById("scannerStatus").className = "green";
+document.getElementById("marketRisk").textContent = "Medium";
+document.getElementById("marketRisk").className = "orange";
+document.getElementById("scannerNote").textContent = "Most tracked coins are positive. Zella sees risk-on momentum.";
+}
+else if(positive >= 2){
+document.getElementById("scannerStatus").textContent = "Mixed Scanner";
+document.getElementById("scannerStatus").className = "orange";
+document.getElementById("marketRisk").textContent = "Medium";
+document.getElementById("marketRisk").className = "orange";
+document.getElementById("scannerNote").textContent = "Some coins are strong, but confirmation is still needed.";
+}
+else{
+document.getElementById("scannerStatus").textContent = "Risk-Off Scanner";
+document.getElementById("scannerStatus").className = "red";
+document.getElementById("marketRisk").textContent = "High";
+document.getElementById("marketRisk").className = "red";
+document.getElementById("scannerNote").textContent = "Most coins are weak. Zella suggests patience.";
+}
+
+let html = "";
+
+results.forEach(r => {
+html += `
+<div class="scan-row">
+<div class="coin-left">
+<div class="coin ${r.class}">${r.icon}</div>
+<div>
+<h3>${r.name}</h3>
+<p class="muted">$${r.price.toLocaleString()} • ${r.change.toFixed(2)}%</p>
+<p class="muted">${r.reason} • Confidence ${r.confidence}%</p>
+</div>
+</div>
+<span class="badge ${r.badge}">${r.signal}</span>
+</div>
+`;
+});
+
+document.getElementById("scanResults").innerHTML = html;
+
+latestScanText = results.map(r =>
+`${r.name}: ${r.signal}, ${r.change.toFixed(2)}%, confidence ${r.confidence}%, reason: ${r.reason}`
+).join("\\n");
+
+document.getElementById("aiTitle").textContent = `${results[0].name} leads the scan.`;
+document.getElementById("aiSummary").textContent = `${results[0].name} currently has the strongest short-term momentum. Ask Zella for deeper explanation.`;
+
+}catch(error){
+document.getElementById("scannerStatus").textContent = "Scanner Error";
+document.getElementById("scannerStatus").className = "red";
+document.getElementById("scanResults").innerHTML = "<p class='red'>Unable to load scanner data.</p>";
+}
+}
+
+async function askZellaScanner(){
+document.getElementById("aiTitle").textContent = "Zella is analyzing...";
+document.getElementById("aiSummary").textContent = "Please wait...";
+
+try{
+const response = await fetch(BACKEND_URL,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+message:`Analyze this Zella Scanner V2 result and give a short trading copilot summary:\\n${latestScanText}`
+})
+});
+
+const data = await response.json();
+
+document.getElementById("aiTitle").textContent = "Zella AI Summary";
+document.getElementById("aiSummary").textContent = data.reply;
+
+}catch(error){
+document.getElementById("aiTitle").textContent = "AI Summary Error";
+document.getElementById("aiSummary").textContent = "Zella could not reach the AI backend.";
+}
+}
+
+runScanner();
+setInterval(runScanner,30000);
+</script>
+
+</body>
+</html>

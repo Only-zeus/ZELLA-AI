@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Copilot V5</title>
+<title>Zella Copilot V6</title>
 
 <style>
 *{
@@ -130,7 +130,7 @@ body{
   font-weight:bold;
   flex-shrink:0;
 }
-
+<style>
 .bubble{
   max-width:78%;
   padding:16px;
@@ -151,21 +151,35 @@ body{
   color:white;
 }
 
+.smart-card{
+  background:#0f172a;
+  border:1px solid #263241;
+  border-radius:18px;
+  padding:14px;
+  margin-top:10px;
+}
+
+.smart-card h4{
+  color:#38bdf8;
+  margin-bottom:8px;
+}
+
+.smart-card .value{
+  font-size:24px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.smart-card .mini{
+  color:#94a3b8;
+  font-size:13px;
+}
+
 .typing{
   display:none;
   color:#94a3b8;
   font-size:14px;
   margin:8px 0 0 58px;
-}
-
-.typing span{
-  animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-  0%{opacity:.25}
-  50%{opacity:1}
-  100%{opacity:.25}
 }
 
 .input-area{
@@ -217,21 +231,16 @@ body{
   padding:10px;
   display:flex;
   justify-content:space-between;
-  backdrop-filter:blur(18px);
-  z-index:50;
 }
 
 .bottom-nav a{
   color:#94a3b8;
   text-decoration:none;
   font-size:13px;
-  padding:10px 12px;
-  border-radius:20px;
 }
 
 .bottom-nav a.active{
   color:#38bdf8;
-  background:rgba(56,189,248,.14);
 }
 </style>
 </head>
@@ -240,65 +249,86 @@ body{
 
 <div class="app">
 
-  <div class="header">
-    <div class="label">ZELLA AI COPILOT</div>
-    <h1>Ask Zella<br>about the market.</h1>
-    <p>Live market intelligence, verdicts, rankings and beginner-friendly trade guidance.</p>
-  </div>
+<div class="header">
+<div class="label">ZELLA AI COPILOT</div>
+<h1>Trade Smarter.<br>Profit Faster.</h1>
+<p>Live prices, rankings, verdicts and market intelligence.</p>
+</div>
 
-  <div class="status-grid">
-    <div class="status-card">
-      <span>Backend</span>
-      <h3>Live</h3>
-    </div>
-    <div class="status-card">
-      <span>Verdict Engine</span>
-      <h3>V2</h3>
-    </div>
-  </div>
+<div class="status-grid">
+<div class="status-card">
+<span>Backend</span>
+<h3>Live</h3>
+</div>
 
-  <div class="quick-prompts">
-    <button onclick="quickAsk('What is BTC price?')">BTC price</button>
-    <button onclick="quickAsk('Scan the market and tell me the strongest setup')">Strongest setup</button>
-    <button onclick="quickAsk('What is the safest trade today?')">Safest trade</button>
-    <button onclick="quickAsk('Rank BTC, ETH, SOL, BNB and XRP')">Rank assets</button>
-    <button onclick="quickAsk('What should I avoid today?')">Avoid</button>
-  </div>
+<div class="status-card">
+<span>Verdict Engine</span>
+<h3>V2</h3>
+</div>
+</div>
 
-  <div class="chat-card" id="chatBox">
-    <div class="chat-title">CHAT</div>
+<div class="quick-prompts">
+<button onclick="quickAsk('What is BTC price?')">BTC Price</button>
+<button onclick="quickAsk('Safest trade today')">Safest Trade</button>
+<button onclick="quickAsk('Scan the market')">Market Scan</button>
+<button onclick="quickAsk('Rank BTC ETH SOL BNB XRP')">Rank Assets</button>
+</div>
 
-    <div class="message-row bot">
-      <div class="avatar">Z</div>
-      <div class="bubble">
-I'm ready, Zeus. Ask me for live prices, market rankings, risk analysis, or the strongest setup today.
-      </div>
-    </div>
-  </div>
+<div class="chat-card" id="chatBox">
 
-  <div class="typing" id="typingText">Zella is thinking<span>...</span></div>
+<div class="chat-title">
+CHAT
+</div>
+
+<div class="message-row bot">
+<div class="avatar">Z</div>
+
+<div class="bubble">
+Welcome back Zeus.
+
+Ask me for:
+• Live prices
+• Market rankings
+• Strongest setup
+• Risk analysis
+• Coin comparison
+</div>
+
+</div>
+
+</div>
+
+<div class="typing" id="typingText">
+Zella is thinking...
+</div>
 
 </div>
 
 <div class="input-area">
-  <input id="userInput" placeholder="Ask Zella about the market..." />
-  <button onclick="sendMessage()">›</button>
+<input id="userInput" placeholder="Ask Zella..." />
+<button onclick="sendMessage()">›</button>
 </div>
 
 <div class="bottom-nav">
-  <a href="dashboard.html">Command</a>
-  <a href="market.html">Markets</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html" class="active">Copilot</a>
-  <a href="alerts.html">Alerts</a>
+<a href="dashboard.html">Home</a>
+<a href="market.html">Market</a>
+<a href="scanner.html">Scanner</a>
+<a href="copilot.html" class="active">Copilot</a>
+<a href="alerts.html">Alerts</a>
 </div>
-
 <script>
 const BACKEND_URL = "https://zella-backend.onrender.com/chat";
 
 const chatBox = document.getElementById("chatBox");
 const input = document.getElementById("userInput");
 const typingText = document.getElementById("typingText");
+
+function escapeHTML(text){
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
 
 function addMessage(text, sender){
   const row = document.createElement("div");
@@ -319,40 +349,23 @@ function addMessage(text, sender){
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function escapeHTML(text){
-  return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;");
-}
-
 async function sendMessage(){
   const message = input.value.trim();
-
-  if(!message){
-    return;
-  }
+  if(!message) return;
 
   addMessage(message, "user");
   input.value = "";
-
   typingText.style.display = "block";
 
   try{
     const response = await fetch(BACKEND_URL,{
       method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        message
-      })
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ message })
     });
 
     const data = await response.json();
-
     typingText.style.display = "none";
-
     addMessage(data.reply || "Zella could not reply.", "bot");
 
   }catch(error){

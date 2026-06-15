@@ -395,6 +395,50 @@ async function sendMessage(){
   }
 }
 
+async function loadInsights(){
+
+  try{
+
+    const response =
+      await fetch(API_URL + "/scanner");
+
+    const data =
+      await response.json();
+
+    const top =
+      data.items?.[0];
+
+    if(!top) return;
+
+    document.getElementById("topAsset").textContent =
+      top.asset;
+
+    document.getElementById("topConfidence").textContent =
+      top.confidence + "%";
+
+    document.getElementById("topSignal").textContent =
+      top.signal;
+
+    document.getElementById("topRisk").textContent =
+      top.risk;
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+loadInsights();
+
+setInterval(
+  loadInsights,
+  30000
+);
+
 document.getElementById("userInput")
   .addEventListener("keypress", function(event){
     if(event.key === "Enter"){

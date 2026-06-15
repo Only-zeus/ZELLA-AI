@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Scanner V2</title>
+<title>Zella Scanner V3</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -22,8 +22,8 @@
 
   <div class="live-row">
     <div>
-      <div class="eyebrow">ZELLA MARKET SCANNER</div>
-      <h1 class="command-title">Scanner<br>Terminal.</h1>
+      <div class="eyebrow">ZELLA QUANT SCANNER</div>
+      <h1 class="command-title">Scanner<br>V3.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
@@ -33,48 +33,26 @@
   </div>
 
   <p class="briefing-text">
-    Zella scans tracked crypto assets, ranks opportunities,
-    monitors risk, and highlights the strongest setup in real time.
+    Zella ranks crypto assets using confidence, momentum,
+    opportunity, liquidity, market strength, volatility and risk scores.
   </p>
-
-  <div class="mini-grid">
-
-    <div class="mini-box">
-      <div class="mini-label">Market Mood</div>
-      <div class="mini-value blue" id="marketMood">Loading</div>
-    </div>
-
-    <div class="mini-box">
-      <div class="mini-label">Refresh</div>
-      <div class="mini-value green">30s</div>
-    </div>
-
-  </div>
 
 </section>
 
 <section class="command-card">
 
-  <div class="card-label">STRONGEST SETUP</div>
+  <div class="card-label">TOP QUANT VERDICT</div>
 
   <div class="verdict-layout">
-
     <div class="score-ring">
-      <div class="score-number" id="strongestScore">--</div>
+      <div class="score-number" id="topConfidence">--</div>
     </div>
 
     <div>
-      <div class="live-label">TOP OPPORTUNITY</div>
-
-      <div class="verdict-status" id="strongestSignal">
-        Loading...
-      </div>
-
-      <div class="verdict-action" id="strongestAsset">
-        Scanning
-      </div>
+      <div class="live-label">STRONGEST SETUP</div>
+      <div class="verdict-status" id="topSignal">Loading...</div>
+      <div class="verdict-action" id="topAsset">Scanning</div>
     </div>
-
   </div>
 
 </section>
@@ -82,25 +60,35 @@
 <section class="mini-grid" style="margin-top:22px;">
 
   <div class="mini-box">
-    <div class="mini-label">Risk</div>
-    <div class="mini-value orange" id="strongestRisk">--</div>
+    <div class="mini-label">Momentum</div>
+    <div class="mini-value green" id="momentumScore">--</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Price</div>
-    <div class="mini-value blue" id="strongestPrice">--</div>
+    <div class="mini-label">Opportunity</div>
+    <div class="mini-value blue" id="opportunityScore">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Liquidity</div>
+    <div class="mini-value orange" id="liquidityScore">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Risk</div>
+    <div class="mini-value blue" id="riskScore">--</div>
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">LIVE RANKINGS</div>
+  <div class="briefing-title">LIVE QUANT RANKING</div>
 
   <div class="ranking-list" id="rankingList">
     <div class="rank-row">
       <div class="rank-position">...</div>
-      <div class="rank-asset">Loading assets</div>
+      <div class="rank-asset">Loading scanner data</div>
       <div class="rank-score">...</div>
     </div>
   </div>
@@ -109,27 +97,15 @@
 
 <section class="briefing-card">
 
-  <div class="briefing-title">SCANNER SUMMARY</div>
+  <div class="briefing-title">ZELLA SCANNER REVIEW</div>
 
   <h2 class="briefing-headline" id="scannerHeadline">
-    Reading live market data...
+    Reading quant scores...
   </h2>
 
-  <p class="briefing-text" id="scannerText">
-    Zella is checking momentum, confidence, risk and opportunity strength.
+  <p class="briefing-text" id="scannerSummary">
+    Zella is analyzing momentum, opportunity, liquidity and risk across tracked assets.
   </p>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">QUICK ACTIONS</div>
-
-  <div class="hero-actions">
-    <a href="copilot.html" class="btn">Ask Zella</a>
-    <a href="dashboard.html" class="btn secondary">Dashboard</a>
-    <a href="market.html" class="btn secondary">Market</a>
-  </div>
 
 </section>
 
@@ -137,7 +113,7 @@
 
 <div class="bottom-nav">
   <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
+  <a href="scanner.html" class="active">Scanner</a>
   <a href="copilot.html">Copilot</a>
   <a href="market.html">Market</a>
   <a href="journal.html">Wallet</a>
@@ -147,117 +123,76 @@
 
 const API_URL = "https://zella-backend.onrender.com";
 
-async function loadScanner(){
+async function loadScannerV3(){
 
   try{
 
-    const response =
-      await fetch(API_URL + "/scanner");
+    const response = await fetch(API_URL + "/scanner");
+    const data = await response.json();
 
-    const data =
-      await response.json();
+    const rankings = data.items || [];
 
-    const rankings =
-      data.items || [];
+    if(!rankings.length) return;
 
-    if(!rankings.length){
-      return;
-    }
+    const top = rankings[0];
 
-    const strongest =
-      rankings[0];
+    document.getElementById("topAsset").textContent = top.asset;
+    document.getElementById("topSignal").textContent = top.signal;
+    document.getElementById("topConfidence").textContent = top.confidence;
 
-    document.getElementById("strongestAsset").textContent =
-      strongest.asset;
+    document.getElementById("momentumScore").textContent =
+      top.momentumScore || "--";
 
-    document.getElementById("strongestSignal").textContent =
-      strongest.signal || "BUY";
+    document.getElementById("opportunityScore").textContent =
+      top.opportunityScore || "--";
 
-    document.getElementById("strongestScore").textContent =
-      strongest.confidence || 70;
+    document.getElementById("liquidityScore").textContent =
+      top.liquidityScore || "--";
 
-    document.getElementById("strongestRisk").textContent =
-      strongest.risk || "LOW";
-
-    document.getElementById("strongestPrice").textContent =
-      strongest.price
-      ? "$" + Number(strongest.price).toLocaleString()
-      : "--";
-
-    let mood = "NEUTRAL";
-
-    const avg =
-      rankings.reduce(
-        (sum,item)=>
-          sum + Number(item.confidence || 0),
-        0
-      ) / rankings.length;
-
-    if(avg >= 70){
-      mood = "BULLISH";
-    }
-    else if(avg >= 60){
-      mood = "WATCH";
-    }
-    else{
-      mood = "RISK OFF";
-    }
-
-    document.getElementById("marketMood").textContent =
-      mood;
+    document.getElementById("riskScore").textContent =
+      top.riskScore || "--";
 
     document.getElementById("scannerHeadline").textContent =
-      `${strongest.asset} is leading the scanner`;
+      `${top.asset} leads the quant scanner`;
 
-    document.getElementById("scannerText").textContent =
-      `${strongest.asset} currently ranks #1 with ${strongest.confidence}% confidence. Zella detects the strongest opportunity here while continuously monitoring risk and market strength across all tracked assets.`;
+    document.getElementById("scannerSummary").textContent =
+      `${top.asset} ranks highest with ${top.confidence}% confidence. Zella detects strong momentum, opportunity strength and manageable risk compared to other tracked assets.`;
 
     document.getElementById("rankingList").innerHTML =
       rankings.map((coin,index)=>`
 
         <div class="rank-row">
-
-          <div class="rank-position">
-            #${index + 1}
-          </div>
-
+          <div class="rank-position">#${index + 1}</div>
           <div class="rank-asset">
-            ${coin.asset}
+            ${coin.asset}<br>
+            <small>
+              ${coin.signal} • Risk: ${coin.risk}
+            </small>
           </div>
-
           <div class="rank-score">
             ${coin.confidence}%
           </div>
-
         </div>
 
       `).join("");
 
-  }
-
-  catch(error){
+  }catch(error){
 
     console.error(error);
-
-    document.getElementById("marketMood").textContent =
-      "OFFLINE";
 
     document.getElementById("scannerHeadline").textContent =
       "Scanner unavailable";
 
-    document.getElementById("scannerText").textContent =
-      "Unable to connect to the market engine.";
+    document.getElementById("scannerSummary").textContent =
+      "Unable to connect to Zella market engine.";
 
   }
 
 }
 
-loadScanner();
+loadScannerV3();
 
-setInterval(
-  loadScanner,
-  30000
-);
+setInterval(loadScannerV3, 30000);
 
 </script>
 

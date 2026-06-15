@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Market Dashboard V2</title>
+<title>Zella Market Dashboard V3</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -23,7 +23,7 @@
   <div class="live-row">
     <div>
       <div class="eyebrow">ZELLA MARKET DASHBOARD</div>
-      <h1 class="command-title">Market<br>Pulse.</h1>
+      <h1 class="command-title">Market<br>Terminal.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
@@ -33,71 +33,17 @@
   </div>
 
   <p class="briefing-text">
-    Track live crypto movement, top opportunities, market strength,
-    volume leaders and risk signals across Zella’s tracked assets.
+    View live charts, switch between assets, monitor market pulse,
+    and track Zella’s strongest opportunities in real time.
   </p>
 
-  <div class="mini-grid">
-
-    <div class="mini-box">
-      <div class="mini-label">Market Mood</div>
-      <div class="mini-value blue" id="marketMood">Loading</div>
-    </div>
-
-    <div class="mini-box">
-      <div class="mini-label">Market Health</div>
-      <div class="mini-value green" id="marketHealth">--</div>
-    </div>
-
+  <div class="hero-actions">
+    <button class="btn secondary" onclick="switchChart('BINANCE:BTCUSDT','BTC')">BTC</button>
+    <button class="btn secondary" onclick="switchChart('BINANCE:ETHUSDT','ETH')">ETH</button>
+    <button class="btn secondary" onclick="switchChart('BINANCE:SOLUSDT','SOL')">SOL</button>
+    <button class="btn secondary" onclick="switchChart('BINANCE:BNBUSDT','BNB')">BNB</button>
+    <button class="btn secondary" onclick="switchChart('BINANCE:XRPUSDT','XRP')">XRP</button>
   </div>
-
-</section>
-
-<section class="mini-grid" style="margin-top:22px;">
-
-  <div class="mini-box">
-    <div class="mini-label">Top Gainer</div>
-    <div class="mini-value green" id="topGainer">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Weakest Asset</div>
-    <div class="mini-value orange" id="weakestAsset">--</div>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    MARKET LEADERS
-  </div>
-
-  <div class="ranking-list" id="marketRanking">
-
-    <div class="rank-row">
-      <div class="rank-position">...</div>
-      <div class="rank-asset">Loading market data</div>
-      <div class="rank-score">...</div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA MARKET SUMMARY
-  </div>
-
-  <h2 class="briefing-headline" id="marketHeadline">
-    Reading live market pulse...
-  </h2>
-
-  <p class="briefing-text" id="marketSummary">
-    Zella is analyzing confidence, momentum, opportunity and risk across all tracked assets.
-  </p>
 
 </section>
 
@@ -109,85 +55,62 @@
 
   <div
     class="tradingview-widget-container"
-    style="
-      height:500px;
-      width:100%;
-      border-radius:24px;
-      overflow:hidden;
-    "
+    style="height:500px;width:100%;border-radius:24px;overflow:hidden;"
   >
-    <div
-      id="tradingview_chart"
-      style="height:500px;"
-    ></div>
+    <div id="tradingview_chart" style="height:500px;"></div>
   </div>
 
 </section>
 
-<script
-  type="text/javascript"
-  src="https://s3.tradingview.com/tv.js"
-></script>
+<section class="mini-grid" style="margin-top:22px;">
 
-<script>
-
-new TradingView.widget({
-
-  "container_id":"tradingview_chart",
-
-  "autosize":true,
-
-  "symbol":"BINANCE:BTCUSDT",
-
-  "interval":"60",
-
-  "timezone":"Etc/UTC",
-
-  "theme":"dark",
-
-  "style":"1",
-
-  "locale":"en",
-
-  "toolbar_bg":"#0b1624",
-
-  "enable_publishing":false,
-
-  "hide_top_toolbar":false,
-
-  "save_image":false,
-
-  "studies":[
-    "RSI@tv-basicstudies",
-    "MACD@tv-basicstudies"
-  ]
-
-});
-
-</script>
-
-
-  <div class="card-label">
-    VOLUME LEADERS
+  <div class="mini-box">
+    <div class="mini-label">Selected Asset</div>
+    <div class="mini-value blue" id="selectedAsset">BTC</div>
   </div>
 
-  <div class="mini-grid">
-
-    <div class="mini-box">
-      <div class="mini-label">Highest Volume</div>
-      <div class="mini-value blue" id="volumeLeader">
-        --
-      </div>
-    </div>
-
-    <div class="mini-box">
-      <div class="mini-label">Top Opportunity</div>
-      <div class="mini-value green" id="topOpportunity">
-        --
-      </div>
-    </div>
-
+  <div class="mini-box">
+    <div class="mini-label">Live Price</div>
+    <div class="mini-value green" id="selectedPrice">--</div>
   </div>
+
+  <div class="mini-box">
+    <div class="mini-label">24H Change</div>
+    <div class="mini-value orange" id="selectedChange">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Signal</div>
+    <div class="mini-value blue" id="selectedSignal">--</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">MARKET LEADERS</div>
+
+  <div class="ranking-list" id="marketRanking">
+    <div class="rank-row">
+      <div class="rank-position">...</div>
+      <div class="rank-asset">Loading market data</div>
+      <div class="rank-score">...</div>
+    </div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ZELLA MARKET SUMMARY</div>
+
+  <h2 class="briefing-headline" id="marketHeadline">
+    Reading live market pulse...
+  </h2>
+
+  <p class="briefing-text" id="marketSummary">
+    Zella is analyzing confidence, price action, momentum and risk.
+  </p>
 
 </section>
 
@@ -201,9 +124,103 @@ new TradingView.widget({
   <a href="alerts.html">Alerts</a>
 </div>
 
+<script src="https://s3.tradingview.com/tv.js"></script>
+
 <script>
 
 const API_URL = "https://zella-backend.onrender.com";
+
+let currentSymbol = "BINANCE:BTCUSDT";
+let chartWidget = null;
+
+function createChart(symbol){
+
+  document.getElementById("tradingview_chart").innerHTML = "";
+
+  chartWidget = new TradingView.widget({
+
+    container_id: "tradingview_chart",
+
+    autosize: true,
+
+    symbol: symbol,
+
+    interval: "60",
+
+    timezone: "Etc/UTC",
+
+    theme: "dark",
+
+    style: "1",
+
+    locale: "en",
+
+    toolbar_bg: "#0b1624",
+
+    enable_publishing: false,
+
+    save_image: false,
+
+    studies: [
+      "RSI@tv-basicstudies",
+      "MACD@tv-basicstudies"
+    ]
+
+  });
+
+}
+
+function switchChart(symbol, asset){
+
+  currentSymbol = symbol;
+
+  document.getElementById("selectedAsset").textContent =
+    asset;
+
+  createChart(symbol);
+
+  updateSelectedAsset(asset);
+
+}
+
+async function updateSelectedAsset(asset){
+
+  try{
+
+    const response =
+      await fetch(API_URL + "/scanner");
+
+    const data =
+      await response.json();
+
+    const rankings =
+      data.items || [];
+
+    const coin =
+      rankings.find(
+        item => item.asset === asset
+      );
+
+    if(!coin) return;
+
+    document.getElementById("selectedPrice").textContent =
+      "$" + Number(coin.price).toLocaleString();
+
+    document.getElementById("selectedChange").textContent =
+      Number(coin.change).toFixed(2) + "%";
+
+    document.getElementById("selectedSignal").textContent =
+      coin.signal;
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+  }
+
+}
 
 async function loadMarketDashboard(){
 
@@ -218,72 +235,23 @@ async function loadMarketDashboard(){
     const rankings =
       data.items || [];
 
-    if(!rankings.length){
-      return;
-    }
+    if(!rankings.length) return;
 
-    const strongest =
+    const top =
       rankings[0];
 
-    const weakest =
-      rankings[rankings.length - 1];
-
-    document.getElementById("topGainer").textContent =
-      strongest.asset;
-
-    document.getElementById("weakestAsset").textContent =
-      weakest.asset;
-
-    document.getElementById("topOpportunity").textContent =
-      strongest.asset;
-
-    let volumeLeader =
-      rankings[0];
-
-    rankings.forEach(asset => {
-
-      if(
-        Number(asset.volume || 0) >
-        Number(volumeLeader.volume || 0)
-      ){
-        volumeLeader = asset;
-      }
-
-    });
-
-    document.getElementById("volumeLeader").textContent =
-      volumeLeader.asset;
-
-    const avgConfidence =
+    const avg =
       rankings.reduce(
-        (sum,asset)=>
-          sum + Number(asset.confidence || 0),
+        (sum,item)=>
+          sum + Number(item.confidence || 0),
         0
       ) / rankings.length;
 
-    let mood = "NEUTRAL";
-
-    if(avgConfidence >= 80){
-      mood = "BULLISH";
-    }
-    else if(avgConfidence >= 70){
-      mood = "WATCH";
-    }
-    else{
-      mood = "RISK OFF";
-    }
-
-    document.getElementById("marketMood").textContent =
-      mood;
-
-    document.getElementById("marketHealth").textContent =
-      Math.round(avgConfidence) + "%";
-
     document.getElementById("marketHeadline").textContent =
-      `${strongest.asset} leads today's market`;
+      `${top.asset} leads the market today`;
 
     document.getElementById("marketSummary").textContent =
-      `${strongest.asset} currently ranks first with ${strongest.confidence}% confidence and a ${strongest.signal} signal. Average market confidence sits at ${Math.round(avgConfidence)}%, indicating ${mood.toLowerCase()} conditions across tracked assets.`;
+      `${top.asset} currently ranks #1 with ${top.confidence}% confidence and a ${top.signal} signal. Average market confidence is ${Math.round(avg)}%.`;
 
     document.getElementById("marketRanking").innerHTML =
       rankings.map((coin,index)=>`
@@ -312,18 +280,13 @@ async function loadMarketDashboard(){
 
     console.error(error);
 
-    document.getElementById("marketMood").textContent =
-      "OFFLINE";
-
-    document.getElementById("marketHeadline").textContent =
-      "Market engine unavailable";
-
-    document.getElementById("marketSummary").textContent =
-      "Unable to connect to the scanner backend.";
-
   }
 
 }
+
+createChart(currentSymbol);
+
+updateSelectedAsset("BTC");
 
 loadMarketDashboard();
 

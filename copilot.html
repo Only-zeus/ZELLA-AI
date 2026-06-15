@@ -3,663 +3,347 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Copilot V8 Final</title>
+<title>Zella Copilot V9</title>
 <link rel="stylesheet" href="style.css" />
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-body{
-  font-family:Arial, sans-serif;
-  background:#020817;
-  color:#e5f0ff;
-  min-height:100vh;
-}
-
-.app{
-  min-height:100vh;
-  padding:28px 16px 170px;
-  background:
-    radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 34%),
-    linear-gradient(180deg,#07111d,#020817);
-}
-
-.header{
-  margin-bottom:22px;
-}
-
-.label{
-  color:#38bdf8;
-  letter-spacing:6px;
-  font-size:13px;
-  margin-bottom:10px;
-}
-
-.header h1{
-  font-size:36px;
-  line-height:1.1;
-  color:#f8fafc;
-}
-
-.header p{
-  color:#94a3b8;
-  margin-top:10px;
-  line-height:1.5;
-}
-
-.status-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:18px;
-}
-
-.status-card{
-  background:#0f172a;
-  border:1px solid #1e293b;
-  border-radius:20px;
-  padding:16px;
-}
-
-.status-card span{
-  font-size:12px;
-  color:#94a3b8;
-}
-
-.status-card h3{
-  margin-top:8px;
-  color:#22c55e;
-}
-
-.quick-prompts{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-bottom:18px;
-}
-
-.quick-prompts button{
-  background:#0f172a;
-  color:#e5f0ff;
-  border:1px solid #263241;
-  border-radius:999px;
-  padding:11px 15px;
-  font-size:14px;
-}
-
-.chat-card{
-  background:linear-gradient(145deg,#111a26,#0b111a);
-  border:1px solid #1f2937;
-  border-radius:28px;
-  padding:18px;
-  min-height:430px;
-  max-height:560px;
-  overflow-y:auto;
-  box-shadow:0 16px 40px rgba(0,0,0,.35);
-}
-
-.chat-title{
-  color:#38bdf8;
-  letter-spacing:6px;
-  font-size:13px;
-  margin-bottom:18px;
-}
-
-.message-row{
-  display:flex;
-  gap:12px;
-  margin-bottom:18px;
-  align-items:flex-start;
-}
-
-.message-row.user{
-  justify-content:flex-end;
-}
-
-.avatar{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#38bdf8,#6366f1);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  flex-shrink:0;
-}
-
-.bubble{
-  max-width:82%;
-  padding:16px;
-  border-radius:22px;
-  line-height:1.55;
-  word-wrap:break-word;
-}
-
-.bot .bubble{
-  background:#0f172a;
-  border:1px solid #263241;
-}
-
-.user .bubble{
-  background:#1d4ed8;
-  border:1px solid #2563eb;
-  color:white;
-}
-
-.card{
-  background:#081120;
-  border:1px solid #1e3a5f;
-  border-radius:18px;
-  padding:16px;
-  margin-top:10px;
-}
-
-.card-title{
-  color:#38bdf8;
-  font-weight:bold;
-  font-size:15px;
-  margin-bottom:12px;
-}
-
-.card-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.metric{
-  background:#0f172a;
-  border:1px solid #263241;
-  border-radius:14px;
-  padding:12px;
-}
-
-.metric span{
-  display:block;
-  color:#94a3b8;
-  font-size:12px;
-}
-
-.metric strong{
-  display:block;
-  margin-top:6px;
-  font-size:18px;
-}
-
-.ranking-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.ranking-row{
-  display:grid;
-  grid-template-columns:42px 1fr auto;
-  gap:10px;
-  align-items:center;
-  background:#0f172a;
-  border:1px solid #263241;
-  border-radius:14px;
-  padding:12px;
-}
-
-.rank-number{
-  color:#38bdf8;
-  font-weight:bold;
-}
-
-.rank-name{
-  font-weight:bold;
-}
-
-.rank-score{
-  color:#22c55e;
-  font-weight:bold;
-}
-
-.compare-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.compare-side{
-  background:#0f172a;
-  border:1px solid #263241;
-  border-radius:14px;
-  padding:12px;
-}
-
-.compare-side h3{
-  color:#38bdf8;
-  margin-bottom:10px;
-}
-
-.winner-banner{
-  background:rgba(34,197,94,.12);
-  border:1px solid rgba(34,197,94,.35);
-  color:#22c55e;
-  padding:10px;
-  border-radius:14px;
-  margin-bottom:12px;
-  font-weight:bold;
-}
-
-.green{color:#22c55e}
-.orange{color:#f59e0b}
-.red{color:#ef4444}
-.blue{color:#38bdf8}
-
-.bottom-bar{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:76px;
-  padding:0 14px;
-  z-index:30;
-}
-
-.input-wrap{
-  display:flex;
-  gap:10px;
-  background:#091425;
-  border:1px solid #243244;
-  border-radius:30px;
-  padding:10px;
-}
-
-.input-wrap input{
-  flex:1;
-  border:none;
-  outline:none;
-  background:transparent;
-  color:white;
-  font-size:16px;
-  padding:12px;
-}
-
-.send-btn{
-  width:62px;
-  height:62px;
-  border:none;
-  border-radius:50%;
-  background:#2563eb;
-  color:white;
-  font-size:24px;
-}
-
-.nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:74px;
-  background:#091425;
-  border-top:1px solid #1f2937;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:25;
-}
-
-.nav a{
-  color:#94a3b8;
-  text-decoration:none;
-  font-size:15px;
-}
-
-.nav .active{
-  color:#38bdf8;
-}
-
-@media(max-width:700px){
-  .bubble{max-width:100%}
-  .card-grid{grid-template-columns:1fr}
-  .compare-grid{grid-template-columns:1fr}
-}
-</style>
 </head>
 
 <body>
 
-<div class="app">
-
-  <div class="header">
-    <div class="label">ZELLA COPILOT V8</div>
-    <h1>AI Trading<br>Copilot.</h1>
-    <p>Native cards for prices, rankings, comparisons and verdicts.</p>
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">Z</div>
   </div>
+</nav>
 
-  <div class="status-grid">
-    <div class="status-card">
-      <span>Backend</span>
-      <h3>ONLINE</h3>
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+    <div>
+      <div class="eyebrow">ZELLA AI COPILOT</div>
+      <h1 class="command-title">Ask<br>Zella.</h1>
     </div>
 
-    <div class="status-card">
-      <span>Engine</span>
-      <h3>V8 READY</h3>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">ONLINE</span>
     </div>
   </div>
 
-  <div class="quick-prompts">
-    <button onclick="quickAsk('What is BTC price?')">BTC Price</button>
-    <button onclick="quickAsk('Scan the market and tell me the strongest setup')">Strongest Setup</button>
-    <button onclick="quickAsk('Rank BTC ETH SOL BNB XRP')">Rank Assets</button>
-    <button onclick="quickAsk('Compare BTC and SOL')">Compare</button>
-    <button onclick="quickAsk('Which coin should I avoid?')">Avoid</button>
+  <p class="briefing-text">
+    Ask Zella about live prices, strongest setups,
+    rankings, risk, confidence scores and coin comparisons.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn secondary" onclick="quickAsk('What is BTC price?')">
+      BTC Price
+    </button>
+
+    <button class="btn secondary" onclick="quickAsk('Scan the market and tell me the strongest setup')">
+      Strongest Setup
+    </button>
+
+    <button class="btn secondary" onclick="quickAsk('Rank BTC ETH SOL BNB XRP')">
+      Rank Assets
+    </button>
+
+    <button class="btn secondary" onclick="quickAsk('Compare BTC and SOL')">
+      Compare
+    </button>
   </div>
 
-  <div class="chat-card" id="chat">
-    <div class="chat-title">CHAT</div>
+</section>
 
-    <div class="message-row bot">
-      <div class="avatar">Z</div>
-      <div class="bubble">
-Welcome back Zeus.
+<section class="chat-shell">
 
-Ask Zella for live prices, strongest setups, market ranking, comparisons, or risk analysis.
+  <div id="chat" class="copilot-chat">
+
+    <div class="chat-message bot">
+      <strong>Zella:</strong>
+      Welcome back Zeus. Ask me about live market data,
+      rankings, confidence scores, risks, or trading setups.
+    </div>
+
+  </div>
+  
+  <div class="chat-input-bar">
+
+  <input
+    type="text"
+    id="userInput"
+    placeholder="Ask Zella anything..."
+  />
+
+  <button class="btn" onclick="sendMessage()">
+    Send
+  </button>
+
+</div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    AI INSIGHTS
+  </div>
+
+  <div class="mini-grid">
+
+    <div class="mini-box">
+      <div class="mini-label">Top Asset</div>
+      <div class="mini-value blue" id="topAsset">
+        Loading
       </div>
     </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Confidence</div>
+      <div class="mini-value green" id="topConfidence">
+        --
+      </div>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Signal</div>
+      <div class="mini-value orange" id="topSignal">
+        --
+      </div>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Risk</div>
+      <div class="mini-value blue" id="topRisk">
+        --
+      </div>
+    </div>
+
   </div>
 
-</div>
+</section>
 
-<div class="bottom-bar">
-  <div class="input-wrap">
-    <input id="userInput" placeholder="Ask Zella..." />
-    <button class="send-btn" id="sendBtn">›</button>
-  </div>
-</div>
+</main>
 
 <div class="bottom-nav">
-  <a href="dashboard.html">Command</a>
-  <a href="market.html">Markets</a>
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
   <a href="copilot.html" class="active">Copilot</a>
+  <a href="market.html">Market</a>
   <a href="alerts.html">Alerts</a>
-  <a href="journal.html">Wallet</a>
 </div>
 
 <script>
 
 const API_URL = "https://zella-backend.onrender.com";
 
-const chat = document.getElementById("chat");
-const input = document.getElementById("userInput");
-const sendBtn = document.getElementById("sendBtn");
+async function loadInsights(){
 
-function escapeHTML(str){
-  if(!str) return "";
-  return String(str)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;");
-}
+  try{
 
-function signalColor(signal){
-  if(!signal) return "";
+    const response =
+      await fetch(API_URL + "/scanner");
 
-  const s = signal.toUpperCase();
+    const data =
+      await response.json();
 
-  if(s.includes("BUY")) return "green";
-  if(s.includes("WATCH")) return "orange";
-  if(s.includes("AVOID")) return "red";
+    const top =
+      data.items?.[0];
 
-  return "blue";
-}
+    if(!top) return;
 
-function money(value){
-  const num = Number(value);
-  if(!Number.isFinite(num)) return "-";
-  return "$" + num.toLocaleString();
-}
+    document.getElementById("topAsset").textContent =
+      top.asset;
 
-function addUserMessage(text){
+    document.getElementById("topConfidence").textContent =
+      top.confidence + "%";
 
-  const row = document.createElement("div");
-  row.className = "message-row user";
+    document.getElementById("topSignal").textContent =
+      top.signal;
 
-  row.innerHTML = `
-    <div class="bubble">${escapeHTML(text)}</div>
-  `;
+    document.getElementById("topRisk").textContent =
+      top.risk;
 
-  chat.appendChild(row);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function addBotText(text){
-
-  const row = document.createElement("div");
-  row.className = "message-row bot";
-
-  row.innerHTML = `
-    <div class="avatar">Z</div>
-    <div class="bubble">${text}</div>
-  `;
-
-  chat.appendChild(row);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function metric(label,value){
-  return `
-    <div class="metric">
-      <span>${label}</span>
-      <strong>${value ?? "-"}</strong>
-    </div>
-  `;
-}
-
-function renderPriceCard(data){
-  console.log("PRICE DATA RECEIVED:", data);
-
-  return `
-    <div class="card">
-      <div class="card-title">💰 ${data.asset || "LIVE PRICE"}</div>
-
-      <div class="card-grid">
-        ${metric("Price", money(data.price))}
-        ${metric("24H Change", data.change === null ? "-" : data.change + "%")}
-        ${metric("Market Cap", money(data.marketCap))}
-        ${metric("Volume", money(data.volume))}
-      </div>
-    </div>
-  `;
-}
-
-function renderVerdictCard(data){
-
-  return `
-    <div class="card">
-
-      <div class="card-title">
-        📊 ZELLA VERDICT
-      </div>
-
-      <div class="card-grid">
-
-        ${metric("Asset", data.asset)}
-        ${metric("Signal", data.signal)}
-        ${metric("Confidence", data.confidence + "%")}
-        ${metric("Risk", data.risk)}
-
-      </div>
-
-    </div>
-  `;
-}
-
-function renderComparisonCard(data){
-
-  const left = data.items?.[0] || {};
-  const right = data.items?.[1] || {};
-
-  return `
-    <div class="card">
-
-      <div class="card-title">
-        📈 ${data.title || "Comparison"}
-      </div>
-
-      <div class="winner-banner">
-        Winner: ${data.winner || "-"}
-      </div>
-
-      <div class="compare-grid">
-
-        <div class="compare-side">
-          <h3>${left.asset || "-"}</h3>
-          <p>Signal: ${left.signal || "-"}</p>
-          <p>Confidence: ${left.confidence || 0}%</p>
-          <p>Risk: ${left.risk || "-"}</p>
-        </div>
-
-        <div class="compare-side">
-          <h3>${right.asset || "-"}</h3>
-          <p>Signal: ${right.signal || "-"}</p>
-          <p>Confidence: ${right.confidence || 0}%</p>
-          <p>Risk: ${right.risk || "-"}</p>
-        </div>
-
-      </div>
-
-    </div>
-  `;
-}
-
-function renderRankingCard(data){
-
-  const assets = data.items || data.assets || [];
-
-  return `
-    <div class="card">
-
-      <div class="card-title">
-        🏆 ZELLA RANKINGS
-      </div>
-
-      <div class="ranking-list">
-
-        ${assets.map((coin,index)=>`
-
-          <div class="ranking-row">
-
-            <div class="rank-number">
-              #${index+1}
-            </div>
-
-            <div class="rank-name">
-              ${coin.asset}
-            </div>
-
-            <div class="rank-score">
-              ${coin.confidence}%
-            </div>
-
-          </div>
-
-        `).join("")}
-
-      </div>
-
-    </div>
-  `;
-}
-
-function addBotCard(html){
-
-  const row = document.createElement("div");
-  row.className = "message-row bot";
-
-  row.innerHTML = `
-    <div class="avatar">Z</div>
-    <div class="bubble">
-      ${html}
-    </div>
-  `;
-
-  chat.appendChild(row);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function renderResponse(data){
-
-  if(data.type === "price"){
-    addBotCard(renderPriceCard(data));
-    return;
   }
 
-  if(data.type === "verdict"){
-    addBotCard(renderVerdictCard(data));
-    return;
+  catch(error){
+
+    console.error(error);
+
   }
 
-  if(data.type === "comparison"){
-    addBotCard(renderComparisonCard(data));
-    return;
-  }
+}
 
-  if(data.type === "ranking"){
-    addBotCard(renderRankingCard(data));
-    return;
-  }
+function addMessage(sender,text){
 
-  addBotText(data.reply || "Zella could not generate a response.");
+  const chat =
+    document.getElementById("chat");
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    sender === "user"
+    ? "chat-message user"
+    : "chat-message bot";
+
+  bubble.innerHTML =
+    `<strong>${sender === "user" ? "You" : "Zella"}:</strong> ${text}`;
+
+  chat.appendChild(bubble);
+
+  chat.scrollTop =
+    chat.scrollHeight;
+
+}
+
+function quickAsk(prompt){
+
+  document.getElementById("userInput").value =
+    prompt;
+
+  sendMessage();
+
 }
 
 async function sendMessage(){
 
-  const message = input.value.trim();
+  const input =
+    document.getElementById("userInput");
 
-  if(!message) return;
+  const text =
+    input.value.trim();
 
-  addUserMessage(message);
+  if(!text) return;
+
+  addMessage("user", text);
 
   input.value = "";
 
+  addMessage(
+    "bot",
+    "Analyzing live market data..."
+  );
+
   try{
 
-    const response = await fetch(API_URL + "/chat",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        message
-      })
-    });
+    const response =
+      await fetch(API_URL + "/scanner");
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
-    renderResponse(data);
+    const rankings =
+      data.items || [];
 
-  }catch(error){
+    const top =
+      rankings[0];
+
+    let answer = "";
+
+    const q =
+      text.toLowerCase();
+
+    if(q.includes("strongest")){
+
+      answer =
+        `${top.asset} is currently the strongest setup with ${top.confidence}% confidence and a ${top.signal} signal.`;
+
+    }
+
+    else if(
+      q.includes("rank")
+    ){
+
+      answer =
+        rankings
+          .map(
+            (c,i)=>
+            `#${i+1} ${c.asset} (${c.confidence}%)`
+          )
+          .join("<br>");
+
+    }
+
+    else if(
+      q.includes("btc")
+      &&
+      q.includes("price")
+    ){
+
+      const btc =
+        rankings.find(
+          x=>x.asset==="BTC"
+        );
+
+      answer =
+        btc
+        ? `BTC price is approximately $${Number(btc.price).toLocaleString()}`
+        : "BTC data unavailable.";
+
+    }
+
+    else if(
+      q.includes("compare")
+    ){
+
+      answer =
+        `Current ranking: ${rankings.map(x=>x.asset).join(" > ")}`;
+
+    }
+
+    else{
+
+      answer =
+        `Top asset right now is ${top.asset}. Confidence is ${top.confidence}% with a ${top.signal} signal. Risk level remains ${top.risk}.`;
+
+    }
+
+    const messages =
+      document.querySelectorAll(".chat-message.bot");
+
+    messages[messages.length - 1].innerHTML =
+      `<strong>Zella:</strong> ${answer}`;
+
+  }
+
+  catch(error){
 
     console.error(error);
 
-    addBotText("⚠️ Backend connection failed.");
+    const messages =
+      document.querySelectorAll(".chat-message.bot");
+
+    messages[messages.length - 1].innerHTML =
+      `<strong>Zella:</strong> Unable to reach the scanner engine.`;
 
   }
 
 }
 
-function quickAsk(text){
-  input.value = text;
-  sendMessage();
-}
+loadInsights();
 
-sendBtn.addEventListener("click", sendMessage);
+setInterval(
+  loadInsights,
+  30000
+);
 
-input.addEventListener("keydown",(e)=>{
-  if(e.key === "Enter"){
-    sendMessage();
-  }
-});
+document
+  .getElementById("userInput")
+  .addEventListener(
+    "keypress",
+    function(event){
+
+      if(event.key==="Enter"){
+
+        sendMessage();
+
+      }
+
+    }
+  );
 
 </script>
 

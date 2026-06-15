@@ -538,7 +538,7 @@ function renderComparisonCard(data){
 
 function renderRankingCard(data){
 
-  const assets = data.assets || [];
+  const assets = data.items || data.assets || [];
 
   return `
     <div class="card">

@@ -421,7 +421,34 @@ function createRichCard(text){
     ? "💰 LIVE PRICE"
     : "📊 ZELLA VERDICT";
 
-  const asset = extractValue(text, "Asset");
+  const asset = let asset = extractValue(text,"Asset");
+let signal = extractValue(text,"Signal");
+let confidence = extractValue(text,"Confidence");
+let risk = extractValue(text,"Risk");
+
+if(asset === "—"){
+  const setupMatch =
+    text.match(/Strongest Setup:\s*([A-Z]+)/i);
+
+  if(setupMatch){
+    asset = setupMatch[1];
+  }
+}
+
+if(signal === "—"){
+  const m = text.match(/Signal:\s*([A-Z ]+)/i);
+  if(m) signal = m[1];
+}
+
+if(confidence === "—"){
+  const m = text.match(/Confidence:\s*([0-9]+%?)/i);
+  if(m) confidence = m[1];
+}
+
+if(risk === "—"){
+  const m = text.match(/Risk:\s*(Low|Medium|High)/i);
+  if(m) risk = m[1];
+}
   const signal = extractValue(text, "Signal");
   const confidence = extractValue(text, "Confidence");
   const risk = extractValue(text, "Risk");

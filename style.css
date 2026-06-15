@@ -1,152 +1,822 @@
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;min-height:100%;overflow-x:hidden}
-body{font-family:Arial,sans-serif;background:#050b12;color:#f8fafc}
-.app{width:100%;min-height:100vh;padding:42px 16px 110px;background:radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),linear-gradient(180deg,#07111d,#050b12)}
-.top-label{color:#9ca3af;font-size:12px;letter-spacing:5px;text-transform:uppercase;margin-bottom:10px}
-h1{font-size:34px;color:#d8ecff;margin-bottom:24px}
-h2{font-size:22px}
-.muted{color:#9ca3af;line-height:1.6}
-.blue{color:#4dabff}.green{color:#4ade80}.red{color:#ef4444}.orange{color:#f59e0b}
-.card{position:relative;overflow:hidden;background:linear-gradient(145deg,#111a26,#0b111a);border:1px solid #1f2937;border-radius:26px;padding:22px;margin-bottom:26px;box-shadow:0 14px 35px rgba(0,0,0,.35)}
-.card::before{content:"";position:absolute;width:260px;height:260px;background:rgba(59,130,246,.08);border-radius:50%;top:-140px;right:-140px}
-.card>*{position:relative}
-.card-title{color:#38bdf8;font-size:14px;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
-.big-score{font-size:42px;font-weight:900}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
-.mini-card{border:1px solid #263241;border-radius:18px;padding:15px;background:#101722}
-.asset{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.asset-left{display:flex;align-items:center;gap:14px}
-.coin{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:bold;font-size:22px;flex-shrink:0}
-.btc{background:#f59e0b}.eth{background:#6366f1}.sol{background:linear-gradient(135deg,#8b5cf6,#5eead4)}.bnb{background:#facc15;color:#111}.xrp{background:#94a3b8;color:#111}
-.badge{padding:6px 12px;border-radius:20px;background:rgba(34,197,94,.18);color:#4ade80;font-size:12px;letter-spacing:2px}
-.badge.sell{background:rgba(239,68,68,.18);color:#ef4444}
-.btn{border:none;background:#12375c;color:#eaf6ff;padding:12px 16px;border-radius:20px;text-decoration:none;display:inline-block}
-input,textarea,select{width:100%;padding:18px;background:#101722;border:1px solid #263241;border-radius:22px;color:white;font-size:16px}
-textarea{min-height:140px}
-.bottom-nav{position:fixed;bottom:70;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:460px;background:rgba(15,23,42,.92);border:1px solid #263241;border-radius:30px;padding:12px;display:flex;justify-content:space-between;backdrop-filter:blur(18px);z-index:50}
-.bottom-nav a{color:#9ca3af;text-decoration:none;font-size:13px;text-align:center;padding:10px 12px;border-radius:20px}
-.bottom-nav a.active{color:#4dabff;background:rgba(56,189,248,.14)}
-.progress{height:10px;border-radius:20px;background:#1f2937;overflow:hidden;margin-top:18px}
-.progress span{display:block;height:100%;background:linear-gradient(90deg,#38bdf8,#6366f1,#a855f7,#f59e0b)}
-.chat-card{display:flex;gap:16px;align-items:flex-start}
-.prompt-row{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
-.prompt{border:1px solid #263241;border-radius:20px;padding:10px 14px;color:#e5e7eb}
-.section-title{margin:22px 0 14px}
+/* =========================
+ZELLA V1 GLOBAL THEME
+========================= */
 
-.scanner-container{
-  padding:20px;
-  max-width:1400px;
-  margin:auto;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-.scanner-header{
-  margin-bottom:24px;
+:root{
+
+–bg:#020817;
+–card:#0f172a;
+–card2:#111827;
+
+–border:#1e293b;
+
+–primary:#38bdf8;
+–success:#22c55e;
+–warning:#f59e0b;
+–danger:#ef4444;
+
+–text:#f8fafc;
+–muted:#94a3b8;
+
+–radius:18px;
+
 }
 
-.scanner-header h1{
-  font-size:34px;
-  color:#ffffff;
-  margin-bottom:8px;
+body{
+
+font-family:
+Inter,
+Arial,
+sans-serif;
+
+background:
+radial-gradient(
+circle at top right,
+rgba(56,189,248,.15),
+transparent 35%
+),
+linear-gradient(
+180deg,
+#07111d,
+#020817
+);
+
+color:var(–text);
+
+min-height:100vh;
+
 }
 
-.scanner-header p{
-  color:#94a3b8;
+/* =========================
+CONTAINERS
+========================= */
+
+.container{
+
+width:100%;
+max-width:1400px;
+
+margin:auto;
+
+padding:24px;
+
 }
 
-.scanner-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:16px;
-  margin-bottom:20px;
+.page-header{
+
+margin-bottom:24px;
+
 }
 
-.scanner-card{
-  background:#0f172a;
-  border:1px solid #1e293b;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
+.page-header h1{
+
+font-size:40px;
+font-weight:800;
+
 }
 
-.scanner-card h2{
-  color:#38bdf8;
-  margin-bottom:15px;
-  font-size:18px;
+.page-header p{
+
+color:var(–muted);
+
+margin-top:8px;
+
 }
 
-.asset-name{
-  font-size:28px;
-  font-weight:700;
-  margin-bottom:16px;
-  color:#ffffff;
+/* =========================
+GRID SYSTEM
+========================= */
+
+.grid{
+
+display:grid;
+
+gap:18px;
+
 }
 
-.metric-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 0;
-  border-bottom:1px solid #1e293b;
+.grid-2{
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(280px,1fr)
+);
+
 }
 
-.metric-row span{
-  color:#94a3b8;
+.grid-3{
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(240px,1fr)
+);
+
 }
 
-.metric-row strong{
-  color:#ffffff;
+/* =========================
+CARDS
+========================= */
+
+.card{
+
+background:var(–card);
+
+border:1px solid var(–border);
+
+border-radius:var(–radius);
+
+padding:20px;
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.20);
+
 }
 
-.rankings-card{
-  margin-top:10px;
+.card-title{
+
+color:var(–primary);
+
+font-weight:700;
+
+margin-bottom:15px;
+
+}
+
+.card-value{
+
+font-size:30px;
+
+font-weight:800;
+
+margin-bottom:8px;
+
+}
+
+.card-sub{
+
+color:var(–muted);
+
+}
+
+/* =========================
+STATUS COLORS
+========================= */
+
+.green{
+color:var(–success);
+}
+
+.orange{
+color:var(–warning);
+}
+
+.red{
+color:var(–danger);
+}
+
+.blue{
+color:var(–primary);
+}
+
+/* =========================
+NAVIGATION
+========================= */
+
+.navbar{
+
+position:sticky;
+top:0;
+z-index:50;
+
+background:rgba(2,8,23,.88);
+backdrop-filter:blur(18px);
+
+border-bottom:1px solid var(–border);
+
+}
+
+.nav-inner{
+
+max-width:1400px;
+
+margin:auto;
+
+padding:16px 24px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+}
+
+.logo{
+
+font-size:24px;
+font-weight:900;
+
+color:var(–primary);
+
+letter-spacing:2px;
+
+}
+
+.nav-links{
+
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+
+}
+
+.nav-links a{
+
+color:var(–muted);
+
+text-decoration:none;
+
+padding:9px 14px;
+
+border-radius:999px;
+
+transition:.2s;
+
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+
+color:var(–text);
+
+background:rgba(56,189,248,.12);
+
+}
+
+/* =========================
+HERO / DASHBOARD TOP
+========================= */
+
+.hero{
+
+display:grid;
+
+grid-template-columns:
+1.4fr .8fr;
+
+gap:20px;
+
+margin-bottom:22px;
+
+}
+
+.hero-card{
+
+background:
+linear-gradient(
+145deg,
+rgba(15,23,42,.95),
+rgba(17,24,39,.95)
+);
+
+border:1px solid var(–border);
+
+border-radius:26px;
+
+padding:28px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.hero-card::after{
+
+content:””;
+
+position:absolute;
+
+width:250px;
+height:250px;
+
+border-radius:50%;
+
+right:-80px;
+top:-90px;
+
+background:rgba(56,189,248,.12);
+
+}
+
+.hero-card h1{
+
+font-size:44px;
+
+line-height:1.05;
+
+position:relative;
+z-index:1;
+
+}
+
+.hero-card p{
+
+color:var(–muted);
+
+margin-top:14px;
+
+max-width:580px;
+
+line-height:1.7;
+
+position:relative;
+z-index:1;
+
+}
+
+.hero-actions{
+
+display:flex;
+flex-wrap:wrap;
+
+gap:12px;
+
+margin-top:22px;
+
+position:relative;
+z-index:1;
+
+}
+
+.btn{
+
+display:inline-block;
+
+padding:13px 18px;
+
+border-radius:999px;
+
+background:var(–primary);
+
+color:#00111d;
+
+font-weight:800;
+
+text-decoration:none;
+
+border:none;
+
+}
+
+.btn.secondary{
+
+background:transparent;
+
+color:var(–text);
+
+border:1px solid var(–border);
+
+}
+
+/* =========================
+METRIC CARDS
+========================= */
+
+.metric-card{
+
+background:var(–card);
+
+border:1px solid var(–border);
+
+border-radius:22px;
+
+padding:20px;
+
+}
+
+.metric-label{
+
+color:var(–muted);
+
+font-size:13px;
+
+margin-bottom:8px;
+
+}
+
+.metric-number{
+
+font-size:34px;
+
+font-weight:900;
+
+}
+
+.metric-note{
+
+color:var(–muted);
+
+margin-top:8px;
+
+font-size:14px;
+
+}
+
+/* =========================
+RANKING COMPONENTS
+========================= */
+
+.ranking-list{
+
+display:flex;
+flex-direction:column;
+
+gap:12px;
+
 }
 
 .rank-row{
-  display:grid;
-  grid-template-columns:60px 1fr auto;
-  align-items:center;
-  gap:12px;
-  padding:14px;
-  margin-top:10px;
-  background:#111827;
-  border-radius:12px;
+
+display:grid;
+
+grid-template-columns:
+48px 1fr auto;
+
+gap:12px;
+
+align-items:center;
+
+background:var(–card2);
+
+border:1px solid var(–border);
+
+border-radius:14px;
+
+padding:14px;
+
 }
 
 .rank-position{
-  color:#38bdf8;
-  font-weight:700;
+
+color:var(–primary);
+
+font-weight:900;
+
 }
 
 .rank-asset{
-  color:white;
-  font-weight:600;
+
+font-weight:800;
+
 }
 
 .rank-score{
-  color:#22c55e;
-  font-weight:700;
+
+color:var(–success);
+
+font-weight:900;
+
 }
 
-.bullish{
-  color:#22c55e;
+/* =========================
+SCANNER DASHBOARD WIDGETS
+========================= */
+
+.scanner-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(240px,1fr)
+);
+
+gap:18px;
+
+margin-top:20px;
+
 }
 
-.neutral{
-  color:#f59e0b;
+.scanner-card{
+
+background:var(–card);
+
+border:1px solid var(–border);
+
+border-radius:22px;
+
+padding:20px;
+
+box-shadow:
+0 12px 28px rgba(0,0,0,.20);
+
 }
 
-.bearish{
-  color:#ef4444;
+.scanner-card h2{
+
+font-size:18px;
+
+color:var(–primary);
+
+margin-bottom:14px;
+
 }
 
-@media(max-width:768px){
+.asset-name{
 
-  .scanner-header h1{
-    font-size:28px;
-  }
+font-size:30px;
 
-  .asset-name{
-    font-size:24px;
-  }
+font-weight:900;
+
+margin-bottom:14px;
+
+}
+
+.metric-row{
+
+display:flex;
+
+justify-content:space-between;
+
+gap:12px;
+
+padding:10px 0;
+
+border-bottom:1px solid var(–border);
+
+}
+
+.metric-row:last-child{
+
+border-bottom:none;
+
+}
+
+.metric-row span{
+
+color:var(–muted);
+
+}
+
+.metric-row strong{
+
+color:var(–text);
+
+}
+
+/* =========================
+COPILOT / CHAT SHARED
+========================= */
+
+.chat-shell{
+
+background:var(–card);
+
+border:1px solid var(–border);
+
+border-radius:26px;
+
+padding:18px;
+
+}
+
+.chat-message{
+
+background:var(–card2);
+
+border:1px solid var(–border);
+
+border-radius:18px;
+
+padding:14px;
+
+margin-bottom:12px;
+
+}
+
+.chat-message.user{
+
+background:#1d4ed8;
+
+}
+
+.input-row{
+
+display:flex;
+
+gap:10px;
+
+margin-top:14px;
+
+}
+
+.input-row input{
+
+flex:1;
+
+background:#020817;
+
+border:1px solid var(–border);
+
+border-radius:999px;
+
+padding:14px 16px;
+
+color:var(–text);
+
+outline:none;
+
+}
+
+.input-row button{
+
+border:none;
+
+border-radius:999px;
+
+padding:14px 18px;
+
+background:var(–primary);
+
+color:#00111d;
+
+font-weight:900;
+
+}
+
+/* =========================
+BADGES
+========================= */
+
+.badge{
+
+display:inline-block;
+
+padding:7px 11px;
+
+border-radius:999px;
+
+font-size:12px;
+
+font-weight:800;
+
+}
+
+.badge.buy{
+
+color:var(–success);
+
+background:rgba(34,197,94,.13);
+
+}
+
+.badge.watch{
+
+color:var(–warning);
+
+background:rgba(245,158,11,.13);
+
+}
+
+.badge.avoid{
+
+color:var(–danger);
+
+background:rgba(239,68,68,.13);
+
+}
+
+/* =========================
+FOOTER / MOBILE NAV
+========================= */
+
+.bottom-nav{
+
+position:fixed;
+
+left:50%;
+
+bottom:18px;
+
+transform:translateX(-50%);
+
+width:calc(100% - 32px);
+
+max-width:720px;
+
+background:rgba(15,23,42,.95);
+
+border:1px solid var(–border);
+
+border-radius:999px;
+
+padding:10px;
+
+display:flex;
+
+justify-content:space-around;
+
+z-index:80;
+
+backdrop-filter:blur(18px);
+
+}
+
+.bottom-nav a{
+
+color:var(–muted);
+
+text-decoration:none;
+
+font-size:13px;
+
+padding:10px 12px;
+
+border-radius:999px;
+
+}
+
+.bottom-nav a.active{
+
+color:var(–primary);
+
+background:rgba(56,189,248,.12);
+
+}
+
+/* =========================
+RESPONSIVE DESIGN
+========================= */
+
+@media(max-width:900px){
+
+.hero{
+
+grid-template-columns:1fr;
+
+}
+
+.hero-card h1{
+
+font-size:36px;
+
+}
+
+.nav-inner{
+
+flex-direction:column;
+gap:12px;
+align-items:flex-start;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.container{
+
+padding:18px;
+padding-bottom:100px;
+
+}
+
+.page-header h1{
+
+font-size:32px;
+
+}
+
+.hero-card{
+
+padding:22px;
+
+}
+
+.hero-card h1{
+
+font-size:32px;
+
+}
+
+.metric-number{
+
+font-size:28px;
+
+}
+
+.rank-row{
+
+grid-template-columns:38px 1fr auto;
+
+}
 
 }

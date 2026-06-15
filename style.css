@@ -32,3 +32,121 @@ textarea{min-height:140px}
 .prompt-row{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
 .prompt{border:1px solid #263241;border-radius:20px;padding:10px 14px;color:#e5e7eb}
 .section-title{margin:22px 0 14px}
+
+.scanner-container{
+  padding:20px;
+  max-width:1400px;
+  margin:auto;
+}
+
+.scanner-header{
+  margin-bottom:24px;
+}
+
+.scanner-header h1{
+  font-size:34px;
+  color:#ffffff;
+  margin-bottom:8px;
+}
+
+.scanner-header p{
+  color:#94a3b8;
+}
+
+.scanner-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px;
+  margin-bottom:20px;
+}
+
+.scanner-card{
+  background:#0f172a;
+  border:1px solid #1e293b;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.scanner-card h2{
+  color:#38bdf8;
+  margin-bottom:15px;
+  font-size:18px;
+}
+
+.asset-name{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:16px;
+  color:#ffffff;
+}
+
+.metric-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #1e293b;
+}
+
+.metric-row span{
+  color:#94a3b8;
+}
+
+.metric-row strong{
+  color:#ffffff;
+}
+
+.rankings-card{
+  margin-top:10px;
+}
+
+.rank-row{
+  display:grid;
+  grid-template-columns:60px 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  margin-top:10px;
+  background:#111827;
+  border-radius:12px;
+}
+
+.rank-position{
+  color:#38bdf8;
+  font-weight:700;
+}
+
+.rank-asset{
+  color:white;
+  font-weight:600;
+}
+
+.rank-score{
+  color:#22c55e;
+  font-weight:700;
+}
+
+.bullish{
+  color:#22c55e;
+}
+
+.neutral{
+  color:#f59e0b;
+}
+
+.bearish{
+  color:#ef4444;
+}
+
+@media(max-width:768px){
+
+  .scanner-header h1{
+    font-size:28px;
+  }
+
+  .asset-name{
+    font-size:24px;
+  }
+
+}

@@ -656,3 +656,176 @@ body::before{
   }
 
 }
+
+/* ==================================================
+   COPILOT PREMIUM UI V10
+   Chat Shell + Messages
+================================================== */
+
+.chat-shell{
+  margin-top:22px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(11,24,38,.96),
+      rgba(8,19,31,.98)
+    );
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:32px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.copilot-chat{
+  max-height:520px;
+  overflow-y:auto;
+  padding:8px 4px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.chat-message{
+  width:fit-content;
+  max-width:88%;
+  padding:15px 17px;
+  border-radius:22px;
+  line-height:1.6;
+  font-size:16px;
+  word-wrap:break-word;
+}
+
+.chat-message.bot{
+  align-self:flex-start;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15,28,43,.96),
+      rgba(10,22,34,.98)
+    );
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--text);
+}
+
+.chat-message.user{
+  align-self:flex-end;
+  background:
+    linear-gradient(
+      135deg,
+      var(--blue),
+      #1d4ed8
+    );
+  color:#ffffff;
+  border:1px solid rgba(255,255,255,.14);
+}
+
+.chat-message strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:13px;
+  letter-spacing:1px;
+  color:var(--cyan);
+}
+
+.chat-message.user strong{
+  color:#dbeafe;
+}
+
+/* ==================================================
+   COPILOT PREMIUM UI V10
+   Input Bar + Send Button
+================================================== */
+
+.chat-input-bar{
+  margin-top:18px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  padding:10px;
+}
+
+.chat-input-bar input{
+  flex:1;
+  min-width:0;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:var(--text);
+  font-size:16px;
+  padding:12px 14px;
+}
+
+.chat-input-bar input::placeholder{
+  color:var(--muted);
+}
+
+.chat-input-bar button{
+  min-width:86px;
+  border:none;
+  border-radius:999px;
+  padding:13px 18px;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#00111d;
+  font-weight:950;
+  box-shadow:0 0 24px rgba(40,199,255,.25);
+}
+
+@media(max-width:520px){
+  .chat-input-bar{
+    gap:8px;
+    padding:8px;
+  }
+
+  .chat-input-bar button{
+    min-width:72px;
+    padding:12px 14px;
+  }
+}
+
+/* ==================================================
+   COPILOT PREMIUM UI V10
+   Polish + Mobile Fixes
+================================================== */
+
+.chat-message.bot::before{
+  content:"Z";
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  margin-right:8px;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#00111d;
+  font-weight:950;
+}
+
+.copilot-chat::-webkit-scrollbar{
+  width:4px;
+}
+
+.copilot-chat::-webkit-scrollbar-thumb{
+  background:rgba(40,199,255,.35);
+  border-radius:999px;
+}
+
+@media(max-width:520px){
+
+  .chat-shell{
+    padding:16px;
+  }
+
+  .copilot-chat{
+    max-height:460px;
+  }
+
+  .chat-message{
+    max-width:94%;
+    font-size:15px;
+  }
+
+}

@@ -455,23 +455,18 @@ function metric(label,value){
 }
 
 function renderPriceCard(data){
+  console.log("PRICE DATA RECEIVED:", data);
 
   return `
     <div class="card">
-
-      <div class="card-title">
-        💰 ${data.asset || "LIVE PRICE"}
-      </div>
+      <div class="card-title">💰 ${data.asset || "LIVE PRICE"}</div>
 
       <div class="card-grid">
-
         ${metric("Price", money(data.price))}
-        ${metric("24H Change", data.change + "%")}
+        ${metric("24H Change", data.change === null ? "-" : data.change + "%")}
         ${metric("Market Cap", money(data.marketCap))}
         ${metric("Volume", money(data.volume))}
-
       </div>
-
     </div>
   `;
 }

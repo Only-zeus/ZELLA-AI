@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Wallet V3</title>
+<title>Zella Wallet V4</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -23,7 +23,7 @@
   <div class="live-row">
     <div>
       <div class="eyebrow">ZELLA WALLET</div>
-      <h1 class="command-title">Portfolio<br>Command.</h1>
+      <h1 class="command-title">Portfolio<br>Control.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
@@ -33,8 +33,8 @@
   </div>
 
   <p class="briefing-text">
-    Track holdings, estimate value, measure profit/loss,
-    monitor allocation and let Zella review portfolio risk.
+    Manage holdings, track portfolio value, monitor profit/loss,
+    review allocation and let Zella detect portfolio risk.
   </p>
 
 </section>
@@ -65,13 +65,13 @@
 
 <section class="command-card">
 
-  <div class="card-label">ADD HOLDING</div>
+  <div class="card-label">ADD / UPDATE HOLDING</div>
 
   <div class="chat-input-bar">
     <input id="coinSymbol" placeholder="Coin e.g BTC" />
     <input id="coinAmount" placeholder="Amount e.g 0.05" />
     <input id="coinEntry" placeholder="Entry price e.g 65000" />
-    <button type="button" onclick="addHolding()">Add</button>
+    <button type="button" onclick="addOrUpdateHolding()">Save</button>
   </div>
 
 </section>
@@ -106,14 +106,14 @@
 
 <section class="briefing-card">
 
-  <div class="briefing-title">ZELLA PORTFOLIO REVIEW</div>
+  <div class="briefing-title">ZELLA PORTFOLIO RISK REVIEW</div>
 
   <h2 class="briefing-headline" id="portfolioHeadline">
     No portfolio data yet.
   </h2>
 
   <p class="briefing-text" id="portfolioSummary">
-    Add holdings and Zella will analyze value, PnL, allocation and risk.
+    Add holdings and Zella will analyze portfolio value, PnL, allocation, concentration and risk.
   </p>
 
 </section>
@@ -133,18 +133,18 @@
 const API_URL = "https://zella-backend.onrender.com";
 
 let holdings =
-  JSON.parse(localStorage.getItem("zellaWalletV3")) || [];
+  JSON.parse(localStorage.getItem("zellaWalletV4")) || [];
 
 function saveHoldings(){
 
   localStorage.setItem(
-    "zellaWalletV3",
+    "zellaWalletV4",
     JSON.stringify(holdings)
   );
 
 }
 
-function addHolding(){
+function addOrUpdateHolding(){
 
   const symbol =
     document.getElementById("coinSymbol").value.trim().toUpperCase();
@@ -170,11 +170,28 @@ function addHolding(){
     return;
   }
 
-  holdings.push({
-    symbol,
-    amount,
-    entry
-  });
+  const existing =
+    holdings.findIndex(
+      item => item.symbol === symbol
+    );
+
+  if(existing >= 0){
+
+    holdings[existing] = {
+      symbol,
+      amount,
+      entry
+    };
+
+  }else{
+
+    holdings.push({
+      symbol,
+      amount,
+      entry
+    });
+
+  }
 
   saveHoldings();
 
@@ -213,126 +230,145 @@ async function loadPortfolio(){
     let portfolioCost = 0;
     let totalPnl = 0;
 
+    let bestPerformer = "--";
+    let worstPerformer = "--";
+
+    let bestPnl = -Infinity;
+    let worstPnl = Infinity;
+
     const values = [];
 
-    const holdingsHtml =
-      holdings.map((holding,index)=>{
+    const holdingsHtml = holdings.map((holding,index)=>{
 
-        const asset =
-          assets.find(
-            x =>
-            String(x.asset).toUpperCase() ===
-            String(holding.symbol).toUpperCase()
-          );
+      const asset =
+        assets.find(
+          x =>
+          String(x.asset).toUpperCase() ===
+          String(holding.symbol).toUpperCase()
+        );
 
-        const currentPrice =
-          asset ? Number(asset.price) : 0;
+      const currentPrice =
+        asset ? Number(asset.price) : 0;
 
-        const value =
-          holding.amount * currentPrice;
+      const value =
+        holding.amount * currentPrice;
 
-        const cost =
-          holding.amount * holding.entry;
+      const cost =
+        holding.amount * holding.entry;
 
-        const pnl =
-          value - cost;
+      const pnl =
+        value - cost;
 
-        portfolioValue += value;
-        portfolioCost += cost;
-        totalPnl += pnl;
+      if(pnl > bestPnl){
+        bestPnl = pnl;
+        bestPerformer = holding.symbol;
+      }
 
-        values.push({
-          symbol: holding.symbol,
-          value
-        });
+      if(pnl < worstPnl){
+        worstPnl = pnl;
+        worstPerformer = holding.symbol;
+      }
 
-        return `
+      portfolioValue += value;
+      portfolioCost += cost;
+      totalPnl += pnl;
 
-          <div class="rank-row">
+      values.push({
+        symbol: holding.symbol,
+        value
+      });
 
-            <div class="rank-position">
-              ${holding.symbol}
-            </div>
+      return `
 
-            <div class="rank-asset">
-              ${holding.amount}
-            </div>
+        <div class="rank-row">
 
-            <div class="rank-score">
-              $${value.toLocaleString()}
-            </div>
+          <div class="rank-position">
+            ${holding.symbol}
+          </div>
+
+          <div class="rank-asset">
+
+            Amount: ${holding.amount}<br>
+            Entry: $${holding.entry}
+
+          </div>
+
+          <div class="rank-score">
+
+            $${value.toLocaleString()}
+
+            <br><br>
 
             <button
               onclick="deleteHolding(${index})"
               style="
-              margin-left:10px;
-              border:none;
-              border-radius:10px;
-              padding:8px 12px;
-              cursor:pointer;">
+                border:none;
+                border-radius:10px;
+                padding:6px 10px;
+                cursor:pointer;">
               ✕
             </button>
 
           </div>
 
-        `;
+        </div>
 
-      }).join("");
+      `;
 
-    const allocationHtml =
-      values.map(item => {
+    }).join("");
 
-        const percent =
-          portfolioValue > 0
-          ? ((item.value / portfolioValue) * 100).toFixed(1)
-          : 0;
+    const allocationHtml = values.map(item=>{
 
-        return `
+      const percent =
+        portfolioValue > 0
+        ? ((item.value / portfolioValue) * 100).toFixed(1)
+        : 0;
 
-          <div style="margin-bottom:18px;">
+      return `
 
-            <div class="rank-row">
+        <div style="margin-bottom:18px;">
 
-              <div class="rank-position">
-                ${percent}%
-              </div>
+          <div class="rank-row">
 
-              <div class="rank-asset">
-                ${item.symbol}
-              </div>
-
-              <div class="rank-score">
-                $${item.value.toLocaleString()}
-              </div>
-
+            <div class="rank-position">
+              ${percent}%
             </div>
 
-            <div style="
-              width:100%;
-              height:8px;
-              border-radius:999px;
-              background:#13233f;
-              overflow:hidden;
-              margin-top:8px;
-            ">
+            <div class="rank-asset">
+              ${item.symbol}
+            </div>
 
-              <div style="
-                width:${percent}%;
-                height:100%;
-                background:linear-gradient(
-                  90deg,
-                  #1ec8ff,
-                  #3478ff
-                );
-              "></div>
-
+            <div class="rank-score">
+              $${item.value.toLocaleString()}
             </div>
 
           </div>
 
-        `;
+          <div style="
+            width:100%;
+            height:8px;
+            border-radius:999px;
+            background:#13233f;
+            overflow:hidden;
+            margin-top:8px;">
 
-      }).join("");
+            <div style="
+              width:${percent}%;
+              height:100%;
+              background:linear-gradient(
+                90deg,
+                #1ec8ff,
+                #3478ff
+              );">
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
 
     const pnlPercent =
       portfolioCost > 0
@@ -341,15 +377,11 @@ async function loadPortfolio(){
 
     let healthScore = "C";
 
-    if(portfolioValue > 0){
-
-      if(values.length >= 4){
-        healthScore = "A";
-      }
-      else if(values.length >= 2){
-        healthScore = "B";
-      }
-
+    if(values.length >= 5){
+      healthScore = "A";
+    }
+    else if(values.length >= 3){
+      healthScore = "B";
     }
 
     document.getElementById("portfolioValue").textContent =
@@ -367,27 +399,21 @@ async function loadPortfolio(){
       healthScore;
 
     document.getElementById("holdingsList").innerHTML =
-      holdingsHtml ||
-      `
-      <div class="rank-row">
-        <div class="rank-position">₿</div>
-        <div class="rank-asset">
-          No holdings added yet
+      holdingsHtml || `
+        <div class="rank-row">
+          <div class="rank-position">₿</div>
+          <div class="rank-asset">No holdings added yet</div>
+          <div class="rank-score">--</div>
         </div>
-        <div class="rank-score">--</div>
-      </div>
       `;
 
     document.getElementById("allocationList").innerHTML =
-      allocationHtml ||
-      `
-      <div class="rank-row">
-        <div class="rank-position">%</div>
-        <div class="rank-asset">
-          Allocation appears after holdings
+      allocationHtml || `
+        <div class="rank-row">
+          <div class="rank-position">%</div>
+          <div class="rank-asset">Allocation appears after holdings</div>
+          <div class="rank-score">--</div>
         </div>
-        <div class="rank-score">--</div>
-      </div>
       `;
 
     document.getElementById("portfolioHeadline").textContent =
@@ -397,7 +423,7 @@ async function loadPortfolio(){
 
     document.getElementById("portfolioSummary").textContent =
       portfolioValue > 0
-      ? `Portfolio contains ${holdings.length} holdings with ${pnlPercent}% performance. Diversification score is ${healthScore}.`
+      ? `Health Score ${healthScore}. Best performer: ${bestPerformer}. Worst performer: ${worstPerformer}. Portfolio PnL is ${pnlPercent}%. Zella recommends keeping allocation diversified and avoiding excessive concentration in one asset.`
       : "Add holdings and Zella will analyze your portfolio.";
 
   }

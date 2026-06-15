@@ -92,31 +92,30 @@ function saveHoldings(){
 
 function addHolding(){
 
-  const symbol =
-    document.getElementById("coinSymbol").value.trim().toUpperCase();
+  const symbolInput = document.getElementById("coinSymbol");
+  const amountInput = document.getElementById("coinAmount");
+  const entryInput = document.getElementById("coinEntry");
 
-  const amount =
-    Number(document.getElementById("coinAmount").value);
+  const symbol = symbolInput.value.trim().toUpperCase();
+  const amount = parseFloat(amountInput.value);
+  const entry = parseFloat(entryInput.value);
 
-  const entry =
-    Number(document.getElementById("coinEntry").value);
-
-  if if(!symbol || amount <= 0 || entry <= 0){
-    alert("Please complete all fields.");
+  if(!symbol || isNaN(amount) || isNaN(entry) || amount <= 0 || entry <= 0){
+    alert("Please enter coin, amount and entry price.");
     return;
   }
 
   holdings.push({
-    symbol,
-    amount,
-    entry
+    symbol: symbol,
+    amount: amount,
+    entry: entry
   });
 
   saveHoldings();
 
-  document.getElementById("coinSymbol").value = "";
-  document.getElementById("coinAmount").value = "";
-  document.getElementById("coinEntry").value = "";
+  symbolInput.value = "";
+  amountInput.value = "";
+  entryInput.value = "";
 
   loadPortfolio();
 }

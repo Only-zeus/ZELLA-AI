@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Copilot V8</title>
+<title>Zella Copilot V8 Final</title>
 
 <style>
 *{
@@ -136,7 +136,6 @@ body{
   padding:16px;
   border-radius:22px;
   line-height:1.55;
-  white-space:pre-wrap;
   word-wrap:break-word;
 }
 
@@ -191,6 +190,65 @@ body{
   font-size:18px;
 }
 
+.ranking-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.ranking-row{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  gap:10px;
+  align-items:center;
+  background:#0f172a;
+  border:1px solid #263241;
+  border-radius:14px;
+  padding:12px;
+}
+
+.rank-number{
+  color:#38bdf8;
+  font-weight:bold;
+}
+
+.rank-name{
+  font-weight:bold;
+}
+
+.rank-score{
+  color:#22c55e;
+  font-weight:bold;
+}
+
+.compare-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.compare-side{
+  background:#0f172a;
+  border:1px solid #263241;
+  border-radius:14px;
+  padding:12px;
+}
+
+.compare-side h3{
+  color:#38bdf8;
+  margin-bottom:10px;
+}
+
+.winner-banner{
+  background:rgba(34,197,94,.12);
+  border:1px solid rgba(34,197,94,.35);
+  color:#22c55e;
+  padding:10px;
+  border-radius:14px;
+  margin-bottom:12px;
+  font-weight:bold;
+}
+
 .green{color:#22c55e}
 .orange{color:#f59e0b}
 .red{color:#ef4444}
@@ -202,6 +260,7 @@ body{
   right:0;
   bottom:76px;
   padding:0 14px;
+  z-index:30;
 }
 
 .input-wrap{
@@ -244,6 +303,7 @@ body{
   display:flex;
   justify-content:space-around;
   align-items:center;
+  z-index:25;
 }
 
 .nav a{
@@ -259,6 +319,7 @@ body{
 @media(max-width:700px){
   .bubble{max-width:100%}
   .card-grid{grid-template-columns:1fr}
+  .compare-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -267,51 +328,51 @@ body{
 
 <div class="app">
 
-<div class="header">
-  <div class="label">ZELLA COPILOT V8</div>
-  <h1>AI Trading<br>Copilot.</h1>
-  <p>Native cards for prices, rankings, comparisons and verdicts.</p>
-</div>
-
-<div class="status-grid">
-  <div class="status-card">
-    <span>Backend</span>
-    <h3>ONLINE</h3>
+  <div class="header">
+    <div class="label">ZELLA COPILOT V8</div>
+    <h1>AI Trading<br>Copilot.</h1>
+    <p>Native cards for prices, rankings, comparisons and verdicts.</p>
   </div>
 
-  <div class="status-card">
-    <span>Engine</span>
-    <h3>V8 READY</h3>
+  <div class="status-grid">
+    <div class="status-card">
+      <span>Backend</span>
+      <h3>ONLINE</h3>
+    </div>
+
+    <div class="status-card">
+      <span>Engine</span>
+      <h3>V8 READY</h3>
+    </div>
   </div>
-</div>
 
-<div class="quick-prompts">
-  <button onclick="quickAsk('What is BTC price?')">BTC Price</button>
-  <button onclick="quickAsk('Scan the market and tell me the strongest setup')">Strongest Setup</button>
-  <button onclick="quickAsk('Rank BTC ETH SOL BNB XRP')">Rank Assets</button>
-  <button onclick="quickAsk('Compare BTC and SOL')">Compare</button>
-  <button onclick="quickAsk('Which coin should I avoid?')">Avoid</button>
-</div>
+  <div class="quick-prompts">
+    <button onclick="quickAsk('What is BTC price?')">BTC Price</button>
+    <button onclick="quickAsk('Scan the market and tell me the strongest setup')">Strongest Setup</button>
+    <button onclick="quickAsk('Rank BTC ETH SOL BNB XRP')">Rank Assets</button>
+    <button onclick="quickAsk('Compare BTC and SOL')">Compare</button>
+    <button onclick="quickAsk('Which coin should I avoid?')">Avoid</button>
+  </div>
 
-<div class="chat-card" id="chat">
-  <div class="chat-title">CHAT</div>
+  <div class="chat-card" id="chat">
+    <div class="chat-title">CHAT</div>
 
-  <div class="message-row bot">
-    <div class="avatar">Z</div>
-    <div class="bubble">
+    <div class="message-row bot">
+      <div class="avatar">Z</div>
+      <div class="bubble">
 Welcome back Zeus.
 
 Ask Zella for live prices, strongest setups, market ranking, comparisons, or risk analysis.
+      </div>
     </div>
   </div>
-</div>
 
 </div>
 
 <div class="bottom-bar">
   <div class="input-wrap">
     <input id="userInput" placeholder="Ask Zella..." />
-    <button class="send-btn" onclick="sendMessage()">›</button>
+    <button class="send-btn" id="sendBtn">›</button>
   </div>
 </div>
 
@@ -324,93 +385,149 @@ Ask Zella for live prices, strongest setups, market ranking, comparisons, or ris
 </div>
 
 <script>
-const BACKEND_URL = "https://zella-backend.onrender.com/chat";
+
+const API_URL = "https://zella-backend.onrender.com";
 
 const chat = document.getElementById("chat");
 const input = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
 
-function escapeHTML(text){
-  return String(text)
+function escapeHTML(str){
+  if(!str) return "";
+  return String(str)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;");
 }
 
 function signalColor(signal){
-  const s = String(signal || "").toUpperCase();
+  if(!signal) return "";
+
+  const s = signal.toUpperCase();
 
   if(s.includes("BUY")) return "green";
+  if(s.includes("WATCH")) return "orange";
   if(s.includes("AVOID")) return "red";
-  return "orange";
+
+  return "blue";
 }
 
 function money(value){
   const num = Number(value);
   if(!Number.isFinite(num)) return "-";
-  return "$" + num.toLocaleString(undefined,{maximumFractionDigits:2});
+  return "$" + num.toLocaleString();
 }
 
-function percent(value){
-  const num = Number(value);
-  if(!Number.isFinite(num)) return "-";
-  return num.toFixed(2) + "%";
+function addUserMessage(text){
+
+  const row = document.createElement("div");
+  row.className = "message-row user";
+
+  row.innerHTML = `
+    <div class="bubble">${escapeHTML(text)}</div>
+  `;
+
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-function cardMetric(label,value,colorClass=""){
+function addBotText(text){
+
+  const row = document.createElement("div");
+  row.className = "message-row bot";
+
+  row.innerHTML = `
+    <div class="avatar">Z</div>
+    <div class="bubble">${text}</div>
+  `;
+
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function metric(label,value){
   return `
     <div class="metric">
       <span>${label}</span>
-      <strong class="${colorClass}">
-        ${escapeHTML(value ?? "-")}
-      </strong>
+      <strong>${value ?? "-"}</strong>
     </div>
   `;
 }
 
-function createPriceCard(data){
+function renderPriceCard(data){
+
   return `
     <div class="card">
-      <div class="card-title">💰 ${escapeHTML(data.title || "LIVE PRICE")}</div>
-      <div class="card-grid">
-        ${cardMetric("Asset",data.asset)}
-        ${cardMetric("Price",money(data.price),"blue")}
-        ${cardMetric("24h Change",percent(data.change))}
-        ${cardMetric("Source",data.source)}
+
+      <div class="card-title">
+        💰 ${data.asset || "LIVE PRICE"}
       </div>
+
+      <div class="card-grid">
+
+        ${metric("Price", money(data.price))}
+        ${metric("24H Change", data.change + "%")}
+        ${metric("Market Cap", money(data.marketCap))}
+        ${metric("Volume", money(data.volume))}
+
+      </div>
+
     </div>
   `;
-  function createComparisonCard(data){
+}
+
+function renderVerdictCard(data){
+
+  return `
+    <div class="card">
+
+      <div class="card-title">
+        📊 ZELLA VERDICT
+      </div>
+
+      <div class="card-grid">
+
+        ${metric("Asset", data.asset)}
+        ${metric("Signal", data.signal)}
+        ${metric("Confidence", data.confidence + "%")}
+        ${metric("Risk", data.risk)}
+
+      </div>
+
+    </div>
+  `;
+}
+
+function renderComparisonCard(data){
 
   const left = data.items?.[0] || {};
   const right = data.items?.[1] || {};
 
   return `
-    <div class="card comparison-card">
+    <div class="card">
 
       <div class="card-title">
-        📊 ${escapeHTML(data.title || "Comparison")}
+        📈 ${data.title || "Comparison"}
       </div>
 
       <div class="winner-banner">
-        Winner: ${escapeHTML(data.winner || "-")}
+        Winner: ${data.winner || "-"}
       </div>
 
       <div class="compare-grid">
 
         <div class="compare-side">
-          <h3>${escapeHTML(left.asset || "-")}</h3>
-
-          ${cardMetric("Signal", left.signal)}
-          ${cardMetric("Confidence", (left.confidence || 0) + "%")}
-          ${cardMetric("Risk", left.risk)}
+          <h3>${left.asset || "-"}</h3>
+          <p>Signal: ${left.signal || "-"}</p>
+          <p>Confidence: ${left.confidence || 0}%</p>
+          <p>Risk: ${left.risk || "-"}</p>
         </div>
 
         <div class="compare-side">
-          <h3>${escapeHTML(right.asset || "-")}</h3>
-
-          ${cardMetric("Signal", right.signal)}
-          ${cardMetric("Confidence", (right.confidence || 0) + "%")}
-          ${cardMetric("Risk", right.risk)}
+          <h3>${right.asset || "-"}</h3>
+          <p>Signal: ${right.signal || "-"}</p>
+          <p>Confidence: ${right.confidence || 0}%</p>
+          <p>Risk: ${right.risk || "-"}</p>
         </div>
 
       </div>
@@ -419,7 +536,7 @@ function createPriceCard(data){
   `;
 }
 
-function createRankingCard(data){
+function renderRankingCard(data){
 
   const assets = data.assets || [];
 
@@ -427,7 +544,7 @@ function createRankingCard(data){
     <div class="card">
 
       <div class="card-title">
-        🏆 ZELLA RANKING
+        🏆 ZELLA RANKINGS
       </div>
 
       <div class="ranking-list">
@@ -441,7 +558,7 @@ function createRankingCard(data){
             </div>
 
             <div class="rank-name">
-              ${escapeHTML(coin.asset)}
+              ${coin.asset}
             </div>
 
             <div class="rank-score">
@@ -458,88 +575,52 @@ function createRankingCard(data){
   `;
 }
 
-function createVerdictCard(data){
-  return `
-    <div class="card">
-      <div class="card-title">
-        📊 ${escapeHTML(data.title || "ZELLA VERDICT")}
-      </div>
+function addBotCard(html){
 
-      <div class="card-grid">
-        ${cardMetric("Asset", data.asset)}
-        ${cardMetric("Signal", data.signal, signalColor(data.signal))}
-        ${cardMetric("Confidence", (data.confidence || 0) + "%")}
-        ${cardMetric("Risk", data.risk)}
-      </div>
-    </div>
-  `;
-}
-
-function renderCard(data){
-  if(data.type === "price"){
-    return createPriceCard(data);
-  }
-
-  if(data.type === "comparison"){
-    return createComparisonCard(data);
-  }
-
-  if(data.type === "ranking"){
-    return createRankingCard(data);
-  }
-
-  if(data.type === "verdict"){
-    return createVerdictCard(data);
-  }
-
-  return escapeHTML(data.reply || "Zella could not reply.");
-}
-
-function addBotCard(data){
   const row = document.createElement("div");
   row.className = "message-row bot";
 
   row.innerHTML = `
     <div class="avatar">Z</div>
     <div class="bubble">
-      ${renderCard(data)}
+      ${html}
     </div>
   `;
 
   chat.appendChild(row);
   chat.scrollTop = chat.scrollHeight;
 }
-}
 
-  chat.appendChild(row);
-  chat.scrollTop = chat.scrollHeight;
-}
+function renderResponse(data){
 
-function addBotText(text){
-  const row = document.createElement("div");
+  if(data.type === "price"){
+    addBotCard(renderPriceCard(data));
+    return;
+  }
 
-  row.className = "message-row bot";
+  if(data.type === "verdict"){
+    addBotCard(renderVerdictCard(data));
+    return;
+  }
 
-  row.innerHTML = `
-    <div class="avatar">Z</div>
-    <div class="bubble">${escapeHTML(text)}</div>
-  `;
+  if(data.type === "comparison"){
+    addBotCard(renderComparisonCard(data));
+    return;
+  }
 
-  chat.appendChild(row);
-  chat.scrollTop = chat.scrollHeight;
-}
+  if(data.type === "ranking"){
+    addBotCard(renderRankingCard(data));
+    return;
+  }
 
-  chat.appendChild(row);
-  chat.scrollTop = chat.scrollHeight;
+  addBotText(data.reply || "Zella could not generate a response.");
 }
 
 async function sendMessage(){
 
   const message = input.value.trim();
 
-  if(!message){
-    return;
-  }
+  if(!message) return;
 
   addUserMessage(message);
 
@@ -547,7 +628,7 @@ async function sendMessage(){
 
   try{
 
-    const response = await fetch(BACKEND_URL,{
+    const response = await fetch(API_URL + "/copilot",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
@@ -559,43 +640,13 @@ async function sendMessage(){
 
     const data = await response.json();
 
-    /*
-      V8 FORMAT
-
-      Backend can return:
-
-      {
-        type:"verdict",
-        asset:"BTC",
-        signal:"BUY",
-        confidence:88,
-        risk:"Low"
-      }
-
-      OR
-
-      {
-        reply:"normal text"
-      }
-    */
-
-    if(data.type){
-
-      addBotCard(data);
-
-    }else{
-
-      addBotText(
-        data.reply || "Zella could not generate a reply."
-      );
-
-    }
+    renderResponse(data);
 
   }catch(error){
 
-    addBotText(
-      "Backend error. Please try again."
-    );
+    console.error(error);
+
+    addBotText("⚠️ Backend connection failed.");
 
   }
 
@@ -606,13 +657,14 @@ function quickAsk(text){
   sendMessage();
 }
 
-input.addEventListener("keydown",function(event){
+sendBtn.addEventListener("click", sendMessage);
 
-  if(event.key === "Enter"){
+input.addEventListener("keydown",(e)=>{
+  if(e.key === "Enter"){
     sendMessage();
   }
-
 });
+
 </script>
 
 </body>

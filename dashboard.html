@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Dashboard V2</title>
+<title>Zella Dashboard V3</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -31,21 +31,20 @@
     <h1>Trade smarter.<br>Profit faster.</h1>
 
     <p>
-      Zella is your AI crypto trading copilot.
-      Track live markets, discover the strongest setup,
-      compare assets, manage risk, and learn faster.
+      Zella scans live crypto market data, ranks assets,
+      detects strong setups, and helps new traders make clearer decisions.
     </p>
 
     <div class="hero-actions">
-      <a href="copilot.html" class="btn">Open Copilot</a>
-      <a href="scanner.html" class="btn secondary">View Scanner</a>
+      <a href="copilot.html" class="btn">Ask Zella</a>
+      <a href="scanner.html" class="btn secondary">Open Scanner</a>
     </div>
   </div>
 
   <div class="metric-card">
     <div class="metric-label">Market Mood</div>
     <div class="metric-number" id="marketMood">Loading...</div>
-    <div class="metric-note">Powered by Zella Scanner</div>
+    <div class="metric-note" id="marketMoodNote">Reading live scanner data...</div>
   </div>
 
 </section>
@@ -55,19 +54,19 @@
   <div class="card">
     <div class="card-title">🏆 Strongest Setup</div>
     <div class="card-value" id="strongestAsset">Loading...</div>
-    <div class="card-sub" id="strongestMeta">Scanning market...</div>
+    <div class="card-sub" id="strongestMeta">Scanning strongest asset...</div>
   </div>
 
   <div class="card">
-    <div class="card-title">🛡 Safest Setup</div>
+    <div class="card-title">🛡 Safer Watch</div>
     <div class="card-value" id="safeAsset">Loading...</div>
-    <div class="card-sub" id="safeMeta">Checking risk...</div>
+    <div class="card-sub" id="safeMeta">Checking lower-risk setup...</div>
   </div>
 
   <div class="card">
-    <div class="card-title">⚠️ Avoid / Be Careful</div>
+    <div class="card-title">⚠️ Weakest Setup</div>
     <div class="card-value" id="avoidAsset">Loading...</div>
-    <div class="card-sub" id="avoidMeta">Checking weak assets...</div>
+    <div class="card-sub" id="avoidMeta">Checking weakest ranking...</div>
   </div>
 
 </section>
@@ -75,27 +74,28 @@
 <section class="grid grid-2" style="margin-top:22px;">
 
   <div class="card">
-    <div class="card-title">📊 Zella Market Ranking</div>
+    <div class="card-title">📊 Zella Live Ranking</div>
 
     <div class="ranking-list" id="rankingList">
       <div class="rank-row">
         <div class="rank-position">...</div>
-        <div class="rank-asset">Loading rankings</div>
+        <div class="rank-asset">Loading market ranking</div>
         <div class="rank-score">...</div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">🤖 Copilot Quick Actions</div>
+    <div class="card-title">⚡ Quick Actions</div>
 
     <p class="card-sub">
-      Ask Zella for live price, strongest setup, safest trade, or coin comparison.
+      Jump straight into Zella’s trading tools.
     </p>
 
     <div class="hero-actions" style="margin-top:18px;">
-      <a href="copilot.html" class="btn">Ask Zella</a>
+      <a href="copilot.html" class="btn">Open Copilot</a>
       <a href="scanner.html" class="btn secondary">Open Scanner</a>
+      <a href="market.html" class="btn secondary">Market Page</a>
     </div>
   </div>
 
@@ -104,21 +104,21 @@
 <section class="grid grid-3" style="margin-top:22px;">
 
   <div class="card">
-    <div class="card-title">⚡ Live Engine</div>
-    <div class="card-value green">Online</div>
-    <div class="card-sub">Multi-source market data active</div>
-  </div>
-
-  <div class="card">
     <div class="card-title">🧠 Verdict Engine</div>
     <div class="card-value blue">V8</div>
-    <div class="card-sub">Confidence, risk, and ranking system</div>
+    <div class="card-sub">Signals, confidence, risk and ranking.</div>
   </div>
 
   <div class="card">
-    <div class="card-title">🔁 Auto Refresh</div>
+    <div class="card-title">🔁 Data Engine</div>
+    <div class="card-value green">Live</div>
+    <div class="card-sub">Multi-source market merge engine active.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⏱ Refresh</div>
     <div class="card-value orange">30s</div>
-    <div class="card-sub">Dashboard updates automatically</div>
+    <div class="card-sub">Dashboard refreshes automatically.</div>
   </div>
 
 </section>
@@ -137,93 +137,101 @@
 
 const API_URL = "https://zella-backend.onrender.com";
 
-async function loadDashboard(){
+async function loadDashboard() {
 
-  try{
+  try {
 
     const response = await fetch(API_URL + "/scanner");
-
     const data = await response.json();
 
-    const rankings =
-  data.items ||
-  data.rankings ||
-  data.assets ||
-  [];
+    const rankings = data.items || [];
 
-    if(rankings.length){
-
-      const strongest = rankings[0];
-      const safest = rankings[1] || rankings[0];
-      const avoid = rankings[rankings.length - 1];
-
-      document.getElementById("strongestAsset").textContent =
-        strongest.asset;
-
-      document.getElementById("strongestMeta").textContent =
-        `${strongest.signal} • ${strongest.confidence}% • ${strongest.risk}`;
-
-      document.getElementById("safeAsset").textContent =
-        safest.asset;
-
-      document.getElementById("safeMeta").textContent =
-        `${safest.signal} • ${safest.confidence}%`;
-
-      document.getElementById("avoidAsset").textContent =
-        avoid.asset;
-
-      document.getElementById("avoidMeta").textContent =
-        `${avoid.signal} • ${avoid.confidence}%`;
-
-      const rankingHTML = rankings.map((coin,index)=>`
-
-        <div class="rank-row">
-
-          <div class="rank-position">
-            #${index + 1}
-          </div>
-
-          <div class="rank-asset">
-            ${coin.asset}
-          </div>
-
-          <div class="rank-score">
-            ${coin.confidence}%
-          </div>
-
-        </div>
-
-      `).join("");
-
-      document.getElementById("rankingList").innerHTML =
-        rankingHTML;
-
-      const avgConfidence =
-        rankings.reduce(
-          (sum,coin)=>sum + coin.confidence,
-          0
-        ) / rankings.length;
-
-      let mood = "NEUTRAL";
-
-      if(avgConfidence >= 70){
-        mood = "BULLISH";
-      }
-      else if(avgConfidence <= 55){
-        mood = "RISK OFF";
-      }
-
-      document.getElementById("marketMood").textContent =
-        mood;
-
+    if (!rankings.length) {
+      return;
     }
 
-  }catch(error){
+    const strongest = rankings[0];
+    const safest = rankings[1] || rankings[0];
+    const weakest = rankings[rankings.length - 1];
+
+    document.getElementById("strongestAsset").textContent =
+      strongest.asset;
+
+    document.getElementById("strongestMeta").textContent =
+      `${strongest.signal} • ${strongest.confidence}% • ${strongest.risk}`;
+
+    document.getElementById("safeAsset").textContent =
+      safest.asset;
+
+    document.getElementById("safeMeta").textContent =
+      `${safest.signal} • ${safest.confidence}% • ${safest.risk}`;
+
+    document.getElementById("avoidAsset").textContent =
+      weakest.asset;
+
+    document.getElementById("avoidMeta").textContent =
+      `${weakest.signal} • ${weakest.confidence}% • ${weakest.risk}`;
+
+    const rankingHTML = rankings.map((coin, index) => `
+      <div class="rank-row">
+
+        <div class="rank-position">
+          #${index + 1}
+        </div>
+
+        <div class="rank-asset">
+          ${coin.asset}
+        </div>
+
+        <div class="rank-score">
+          ${coin.confidence}%
+        </div>
+
+      </div>
+    `).join("");
+
+    document.getElementById("rankingList").innerHTML =
+      rankingHTML;
+
+    const average =
+      rankings.reduce(
+        (sum, coin) => sum + Number(coin.confidence || 0),
+        0
+      ) / rankings.length;
+
+    let mood = "NEUTRAL";
+    let note = "Mixed market conditions.";
+
+    if (average >= 70) {
+      mood = "BULLISH";
+      note = "Strong opportunities detected.";
+    }
+    else if (average >= 60) {
+      mood = "WATCH";
+      note = "Several assets showing strength.";
+    }
+    else {
+      mood = "RISK OFF";
+      note = "Market confidence is weak.";
+    }
+
+    document.getElementById("marketMood").textContent =
+      mood;
+
+    document.getElementById("marketMoodNote").textContent =
+      note;
+
+  }
+
+  catch (error) {
 
     console.error(error);
 
     document.getElementById("marketMood").textContent =
       "OFFLINE";
+
+    document.getElementById("marketMoodNote").textContent =
+      "Scanner unavailable.";
 
   }
 
@@ -240,4 +248,3 @@ setInterval(
 
 </body>
 </html>
-

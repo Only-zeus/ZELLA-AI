@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Trade Journal AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">J</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+
+    <div>
+      <div class="eyebrow">ZELLA TRADE JOURNAL</div>
+      <h1 class="command-title">
+        Trade<br>Journal.
+      </h1>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">AI REVIEW</span>
+    </div>
+
+  </div>
+
+  <p class="briefing-text">
+    Record every trade. Let Zella analyze your performance,
+    calculate win rate and help improve your trading decisions.
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Total Trades</div>
+    <div class="mini-value blue" id="totalTrades">0</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Win Rate</div>
+    <div class="mini-value green" id="winRate">0%</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Wins</div>
+    <div class="mini-value green" id="wins">0</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Losses</div>
+    <div class="mini-value orange" id="losses">0</div>
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    ADD TRADE
+  </div>
+
+  <div class="chat-input-bar">
+    <input id="tradeAsset" placeholder="Asset e.g BTC">
+    <input id="entryPrice" placeholder="Entry Price">
+    <input id="exitPrice" placeholder="Exit Price">
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="chat-input-bar">
+    <input id="stopLoss" placeholder="Stop Loss">
+    <input id="takeProfit" placeholder="Take Profit">
+  </div>
+
+  <div class="chat-input-bar" style="margin-top:12px;">
+    <input id="tradeNotes" placeholder="Trade notes e.g breakout, support bounce">
+    <button type="button" onclick="addTrade()">Save</button>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA AI TRADE REVIEW
+  </div>
+
+  <h2 class="briefing-headline" id="journalHeadline">
+    No trades recorded yet.
+  </h2>
+
+  <p class="briefing-text" id="journalSummary">
+    Add your first trade and Zella will review your performance.
+  </p>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    TRADE HISTORY
+  </div>
+
+  <div id="tradeList">
+
+    <div class="rank-row">
+      <div class="rank-position">📒</div>
+      <div class="rank-asset">No trades yet</div>
+      <div class="rank-score">--</div>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="journal.html">Wallet</a>
+</div>
+
+<script>
+
+let trades =
+  JSON.parse(localStorage.getItem("zellaTradesV1")) || [];
+
+function saveTrades(){
+  localStorage.setItem("zellaTradesV1", JSON.stringify(trades));
+}
+
+function addTrade(){
+
+  const asset = document.getElementById("tradeAsset").value.trim().toUpperCase();
+  const entry = Number(document.getElementById("entryPrice").value);
+  const exit = Number(document.getElementById("exitPrice").value);
+  const stop = Number(document.getElementById("stopLoss").value);
+  const target = Number(document.getElementById("takeProfit").value);
+  const notes = document.getElementById("tradeNotes").value.trim();
+
+  if(!asset || !entry || !exit){
+    alert("Please enter asset, entry price and exit price.");
+    return;
+  }
+
+  const pnl = exit - entry;
+  const result = pnl >= 0 ? "WIN" : "LOSS";
+
+  trades.unshift({
+    asset,
+    entry,
+    exit,
+    stop,
+    target,
+    notes,
+    pnl,
+    result,
+    date:new Date().toLocaleDateString()
+  });
+
+  saveTrades();
+  clearForm();
+  loadJournal();
+}
+
+function clearForm(){
+  ["tradeAsset","entryPrice","exitPrice","stopLoss","takeProfit","tradeNotes"]
+    .forEach(id => document.getElementById(id).value = "");
+}
+
+function loadJournal(){
+
+  const total = trades.length;
+  const wins = trades.filter(t => t.result === "WIN").length;
+  const losses = total - wins;
+  const winRate = total ? Math.round((wins / total) * 100) : 0;
+
+  document.getElementById("totalTrades").textContent = total;
+  document.getElementById("wins").textContent = wins;
+  document.getElementById("losses").textContent = losses;
+  document.getElementById("winRate").textContent = winRate + "%";
+
+  document.getElementById("tradeList").innerHTML =
+    trades.map((trade,index)=>`
+      <div class="rank-row">
+        <div class="rank-position">${trade.result === "WIN" ? "✅" : "❌"}</div>
+        <div class="rank-asset">
+          ${trade.asset} • Entry ${trade.entry} • Exit ${trade.exit}<br>
+          <small>${trade.notes || "No notes"} • ${trade.date}</small>
+        </div>
+        <div class="rank-score">${trade.result}</div>
+      </div>
+    `).join("") || `
+      <div class="rank-row">
+        <div class="rank-position">📒</div>
+        <div class="rank-asset">No trades yet</div>
+        <div class="rank-score">--</div>
+      </div>
+    `;
+
+  document.getElementById("journalHeadline").textContent =
+    total
+      ? `Win rate: ${winRate}%`
+      : "No trades recorded yet.";
+
+  document.getElementById("journalSummary").textContent =
+    total
+      ? `You have recorded ${total} trades with ${wins} wins and ${losses} losses. Zella recommends reviewing losing trades for repeated mistakes and only increasing risk after consistent performance.`
+      : "Add your first trade and Zella will review your performance.";
+}
+
+loadJournal();
+
+</script>
+
+</body>
+</html>

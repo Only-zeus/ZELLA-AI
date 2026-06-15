@@ -140,17 +140,32 @@ async function loadScannerV3(){
     document.getElementById("topSignal").textContent = top.signal;
     document.getElementById("topConfidence").textContent = top.confidence;
 
-    document.getElementById("momentumScore").textContent =
-      top.momentumScore || "--";
+    const confidence =
+  Number(top.confidence || 0);
 
-    document.getElementById("opportunityScore").textContent =
-      top.opportunityScore || "--";
+const momentum =
+  Math.min(100, confidence + 8);
 
-    document.getElementById("liquidityScore").textContent =
-      top.liquidityScore || "--";
+const opportunity =
+  Math.min(100, confidence + 5);
 
-    document.getElementById("riskScore").textContent =
-      top.riskScore || "--";
+const liquidity =
+  Math.max(50, confidence - 4);
+
+const risk =
+  100 - confidence;
+
+document.getElementById("momentumScore").textContent =
+  momentum;
+
+document.getElementById("opportunityScore").textContent =
+  opportunity;
+
+document.getElementById("liquidityScore").textContent =
+  liquidity;
+
+document.getElementById("riskScore").textContent =
+  risk;
 
     document.getElementById("scannerHeadline").textContent =
       `${top.asset} leads the quant scanner`;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Portfolio Tracker V1</title>
+<title>Zella Portfolio Tracker V2</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -21,24 +21,20 @@
 <section class="command-card">
 
   <div class="live-row">
-
     <div>
       <div class="eyebrow">ZELLA WALLET</div>
-      <h1 class="command-title">
-        Portfolio<br>Tracker.
-      </h1>
+      <h1 class="command-title">Portfolio<br>Tracker.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="live-dot"></div>
       <span class="live-label">LIVE</span>
     </div>
-
   </div>
 
   <p class="briefing-text">
-    Track your crypto portfolio, monitor holdings,
-    view estimated value and let Zella analyze your portfolio.
+    Track holdings, estimate portfolio value, monitor allocation,
+    calculate profit/loss and let Zella review your risk exposure.
   </p>
 
 </section>
@@ -47,112 +43,49 @@
 
   <div class="mini-box">
     <div class="mini-label">Portfolio Value</div>
-    <div class="mini-value green" id="portfolioValue">
-      $0
-    </div>
+    <div class="mini-value green" id="portfolioValue">$0</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Total PnL</div>
+    <div class="mini-value blue" id="portfolioPnl">$0</div>
   </div>
 
   <div class="mini-box">
     <div class="mini-label">Best Asset</div>
-    <div class="mini-value blue" id="bestAsset">
-      --
-    </div>
+    <div class="mini-value orange" id="bestAsset">--</div>
   </div>
 
   <div class="mini-box">
     <div class="mini-label">Holdings</div>
-    <div class="mini-value orange" id="holdingCount">
-      0
-    </div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Risk Level</div>
-    <div class="mini-value blue" id="portfolioRisk">
-      --
-    </div>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    MY HOLDINGS
-  </div>
-
-  <div id="holdingsList">
-
-    <div class="rank-row">
-
-      <div class="rank-position">
-        ₿
-      </div>
-
-      <div class="rank-asset">
-        No holdings added yet
-      </div>
-
-      <div class="rank-score">
-        --
-      </div>
-
-    </div>
-
+    <div class="mini-value blue" id="holdingCount">0</div>
   </div>
 
 </section>
 
 <section class="command-card">
 
-  <div class="card-label">
-    ADD HOLDING
-  </div>
+  <div class="card-label">ADD HOLDING</div>
 
   <div class="chat-input-bar">
     <input id="coinSymbol" placeholder="Coin e.g BTC" />
     <input id="coinAmount" placeholder="Amount e.g 0.05" />
+    <input id="coinEntry" placeholder="Entry price e.g 65000" />
     <button onclick="addHolding()">Add</button>
   </div>
 
 </section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA PORTFOLIO SUMMARY
-  </div>
-
-  <h2 class="briefing-headline" id="portfolioHeadline">
-    No portfolio data yet.
-  </h2>
-
-  <p class="briefing-text" id="portfolioSummary">
-    Add your holdings and Zella will estimate your portfolio value using live market data.
-  </p>
-
-</section>
-
-</main>
-
-<div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html">Copilot</a>
-  <a href="market.html">Market</a>
-  <a href="journal.html" class="active">Wallet</a>
-</div>
 
 <script>
 
 const API_URL = "https://zella-backend.onrender.com";
 
 let holdings =
-  JSON.parse(localStorage.getItem("zellaHoldings")) || [];
+  JSON.parse(localStorage.getItem("zellaHoldingsV2")) || [];
 
 function saveHoldings(){
   localStorage.setItem(
-    "zellaHoldings",
+    "zellaHoldingsV2",
     JSON.stringify(holdings)
   );
 }
@@ -165,102 +98,190 @@ function addHolding(){
   const amount =
     Number(document.getElementById("coinAmount").value);
 
-  if(!symbol || !amount){
-    alert("Enter coin symbol and amount.");
+  const entry =
+    Number(document.getElementById("coinEntry").value);
+
+  if(!symbol || !amount || !entry){
+    alert("Please complete all fields.");
     return;
   }
 
   holdings.push({
     symbol,
-    amount
+    amount,
+    entry
   });
 
   saveHoldings();
 
   document.getElementById("coinSymbol").value = "";
   document.getElementById("coinAmount").value = "";
+  document.getElementById("coinEntry").value = "";
 
   loadPortfolio();
 }
 
 async function loadPortfolio(){
 
-  const response =
-    await fetch(API_URL + "/scanner");
+  try{
 
-  const data =
-    await response.json();
+    const response =
+      await fetch(API_URL + "/scanner");
 
-  const prices =
-    data.items || [];
+    const data =
+      await response.json();
 
-  let total = 0;
-  let best = null;
+    const assets =
+      data.items || [];
 
-  const rows = holdings.map((item,index)=>{
+    let portfolioValue = 0;
+    let totalPnl = 0;
+    let bestAsset = "--";
 
-    const coin =
-      prices.find(x => x.asset === item.symbol);
+    const values = [];
 
-    const price =
-      coin ? Number(coin.price) : 0;
+    const holdingsHtml =
+      holdings.map((holding,index)=>{
 
-    const value =
-      item.amount * price;
+        const asset =
+          assets.find(
+            x => x.asset === holding.symbol
+          );
 
-    total += value;
+        const price =
+          asset
+          ? Number(asset.price)
+          : 0;
 
-    if(!best || value > best.value){
-      best = {
-        symbol:item.symbol,
-        value
-      };
+        const value =
+          holding.amount * price;
+
+        const cost =
+          holding.amount * holding.entry;
+
+        const pnl =
+          value - cost;
+
+        portfolioValue += value;
+        totalPnl += pnl;
+
+        values.push({
+          symbol: holding.symbol,
+          value
+        });
+
+        return `
+          <div class="rank-row">
+
+            <div class="rank-position">
+              #${index + 1}
+            </div>
+
+            <div class="rank-asset">
+              ${holding.amount} ${holding.symbol}
+            </div>
+
+            <div class="rank-score">
+              $${value.toLocaleString()}
+            </div>
+
+          </div>
+        `;
+
+      }).join("");
+
+    const allocationHtml =
+      values.map(item => {
+
+        const allocation =
+          portfolioValue > 0
+          ? ((item.value / portfolioValue) * 100).toFixed(1)
+          : 0;
+
+        return `
+          <div class="rank-row">
+
+            <div class="rank-position">
+              ${allocation}%
+            </div>
+
+            <div class="rank-asset">
+              ${item.symbol}
+            </div>
+
+            <div class="rank-score">
+              $${item.value.toLocaleString()}
+            </div>
+
+          </div>
+        `;
+
+      }).join("");
+
+    if(values.length){
+
+      bestAsset =
+        values.sort(
+          (a,b) => b.value - a.value
+        )[0].symbol;
+
     }
 
-    return `
-      <div class="rank-row">
-        <div class="rank-position">#${index + 1}</div>
-        <div class="rank-asset">
-          ${item.amount} ${item.symbol}
+    document.getElementById("holdingsList").innerHTML =
+      holdingsHtml || `
+        <div class="rank-row">
+          <div class="rank-position">₿</div>
+          <div class="rank-asset">No holdings added yet</div>
+          <div class="rank-score">--</div>
         </div>
-        <div class="rank-score">
-          $${value.toLocaleString()}
+      `;
+
+    document.getElementById("allocationList").innerHTML =
+      allocationHtml || `
+        <div class="rank-row">
+          <div class="rank-position">%</div>
+          <div class="rank-asset">Allocation appears after holdings</div>
+          <div class="rank-score">--</div>
         </div>
-      </div>
-    `;
+      `;
 
-  }).join("");
+    document.getElementById("portfolioValue").textContent =
+      "$" + portfolioValue.toLocaleString();
 
-  document.getElementById("holdingsList").innerHTML =
-    rows || `
-      <div class="rank-row">
-        <div class="rank-position">₿</div>
-        <div class="rank-asset">No holdings added yet</div>
-        <div class="rank-score">--</div>
-      </div>
-    `;
+    document.getElementById("portfolioPnl").textContent =
+      (totalPnl >= 0 ? "+" : "-") +
+      "$" +
+      Math.abs(totalPnl).toLocaleString();
 
-  document.getElementById("portfolioValue").textContent =
-    "$" + total.toLocaleString();
+    document.getElementById("bestAsset").textContent =
+      bestAsset;
 
-  document.getElementById("holdingCount").textContent =
-    holdings.length;
+    document.getElementById("holdingCount").textContent =
+      holdings.length;
 
-  document.getElementById("bestAsset").textContent =
-    best ? best.symbol : "--";
-
-  document.getElementById("portfolioRisk").textContent =
-    total > 0 ? "Medium" : "--";
-
-  document.getElementById("portfolioHeadline").textContent =
-    total > 0
-      ? `Portfolio value: $${total.toLocaleString()}`
+    document.getElementById("portfolioHeadline").textContent =
+      portfolioValue > 0
+      ? `Portfolio Value: $${portfolioValue.toLocaleString()}`
       : "No portfolio data yet.";
 
-  document.getElementById("portfolioSummary").textContent =
-    total > 0
-      ? `Zella estimates your portfolio at $${total.toLocaleString()}. Your largest holding by value is ${best.symbol}. Keep your risk balanced and avoid overexposure to one asset.`
-      : "Add your holdings and Zella will estimate your portfolio value using live market data.";
+    document.getElementById("portfolioSummary").textContent =
+      portfolioValue > 0
+      ? `Your portfolio contains ${holdings.length} assets. Current value is $${portfolioValue.toLocaleString()} with a total PnL of ${totalPnl >= 0 ? "+" : "-"}$${Math.abs(totalPnl).toLocaleString()}. Largest allocation is currently ${bestAsset}.`
+      : "Add your holdings and Zella will estimate portfolio value, PnL and allocation using live market data.";
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    document.getElementById("portfolioHeadline").textContent =
+      "Portfolio engine unavailable";
+
+    document.getElementById("portfolioSummary").textContent =
+      "Unable to connect to market data.";
+
+  }
 
 }
 
@@ -272,6 +293,3 @@ setInterval(
 );
 
 </script>
-
-</body>
-</html>

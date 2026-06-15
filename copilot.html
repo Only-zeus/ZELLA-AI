@@ -344,48 +344,172 @@ function signalColor(signal){
   return "orange";
 }
 
+function money(value){
+  const num = Number(value);
+  if(!Number.isFinite(num)) return "-";
+  return "$" + num.toLocaleString(undefined,{maximumFractionDigits:2});
+}
+
+function percent(value){
+  const num = Number(value);
+  if(!Number.isFinite(num)) return "-";
+  return num.toFixed(2) + "%";
+}
+
+function cardMetric(label,value,colorClass=""){
+  return `
+    <div class="metric">
+      <span>${label}</span>
+      <strong class="${colorClass}">
+        ${escapeHTML(value ?? "-")}
+      </strong>
+    </div>
+  `;
+}
+
+function createPriceCard(data){
+  return `
+    <div class="card">
+      <div class="card-title">💰 ${escapeHTML(data.title || "LIVE PRICE")}</div>
+      <div class="card-grid">
+        ${cardMetric("Asset",data.asset)}
+        ${cardMetric("Price",money(data.price),"blue")}
+        ${cardMetric("24h Change",percent(data.change))}
+        ${cardMetric("Source",data.source)}
+      </div>
+    </div>
+  `;
+  function createComparisonCard(data){
+
+  const left = data.items?.[0] || {};
+  const right = data.items?.[1] || {};
+
+  return `
+    <div class="card comparison-card">
+
+      <div class="card-title">
+        📊 ${escapeHTML(data.title || "Comparison")}
+      </div>
+
+      <div class="winner-banner">
+        Winner: ${escapeHTML(data.winner || "-")}
+      </div>
+
+      <div class="compare-grid">
+
+        <div class="compare-side">
+          <h3>${escapeHTML(left.asset || "-")}</h3>
+
+          ${cardMetric("Signal", left.signal)}
+          ${cardMetric("Confidence", (left.confidence || 0) + "%")}
+          ${cardMetric("Risk", left.risk)}
+        </div>
+
+        <div class="compare-side">
+          <h3>${escapeHTML(right.asset || "-")}</h3>
+
+          ${cardMetric("Signal", right.signal)}
+          ${cardMetric("Confidence", (right.confidence || 0) + "%")}
+          ${cardMetric("Risk", right.risk)}
+        </div>
+
+      </div>
+
+    </div>
+  `;
+}
+
+function createRankingCard(data){
+
+  const assets = data.assets || [];
+
+  return `
+    <div class="card">
+
+      <div class="card-title">
+        🏆 ZELLA RANKING
+      </div>
+
+      <div class="ranking-list">
+
+        ${assets.map((coin,index)=>`
+
+          <div class="ranking-row">
+
+            <div class="rank-number">
+              #${index+1}
+            </div>
+
+            <div class="rank-name">
+              ${escapeHTML(coin.asset)}
+            </div>
+
+            <div class="rank-score">
+              ${coin.confidence}%
+            </div>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+    </div>
+  `;
+}
+
 function createVerdictCard(data){
   return `
     <div class="card">
-      <div class="card-title">📊 ${data.title || "ZELLA VERDICT"}</div>
+      <div class="card-title">
+        📊 ${escapeHTML(data.title || "ZELLA VERDICT")}
+      </div>
 
       <div class="card-grid">
-
-        <div class="metric">
-          <span>Asset</span>
-          <strong>${escapeHTML(data.asset || "-")}</strong>
-        </div>
-
-        <div class="metric">
-          <span>Signal</span>
-          <strong class="${signalColor(data.signal)}">
-            ${escapeHTML(data.signal || "-")}
-          </strong>
-        </div>
-
-        <div class="metric">
-          <span>Confidence</span>
-          <strong>${data.confidence ?? "-"}%</strong>
-        </div>
-
-        <div class="metric">
-          <span>Risk</span>
-          <strong>${escapeHTML(data.risk || "-")}</strong>
-        </div>
-
+        ${cardMetric("Asset", data.asset)}
+        ${cardMetric("Signal", data.signal, signalColor(data.signal))}
+        ${cardMetric("Confidence", (data.confidence || 0) + "%")}
+        ${cardMetric("Risk", data.risk)}
       </div>
     </div>
   `;
 }
 
-function addUserMessage(text){
-  const row = document.createElement("div");
+function renderCard(data){
+  if(data.type === "price"){
+    return createPriceCard(data);
+  }
 
-  row.className = "message-row user";
+  if(data.type === "comparison"){
+    return createComparisonCard(data);
+  }
+
+  if(data.type === "ranking"){
+    return createRankingCard(data);
+  }
+
+  if(data.type === "verdict"){
+    return createVerdictCard(data);
+  }
+
+  return escapeHTML(data.reply || "Zella could not reply.");
+}
+
+function addBotCard(data){
+  const row = document.createElement("div");
+  row.className = "message-row bot";
 
   row.innerHTML = `
-    <div class="bubble">${escapeHTML(text)}</div>
+    <div class="avatar">Z</div>
+    <div class="bubble">
+      ${renderCard(data)}
+    </div>
   `;
+
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+}
 
   chat.appendChild(row);
   chat.scrollTop = chat.scrollHeight;
@@ -404,18 +528,6 @@ function addBotText(text){
   chat.appendChild(row);
   chat.scrollTop = chat.scrollHeight;
 }
-
-function addBotCard(card){
-  const row = document.createElement("div");
-
-  row.className = "message-row bot";
-
-  row.innerHTML = `
-    <div class="avatar">Z</div>
-    <div class="bubble">
-      ${createVerdictCard(card)}
-    </div>
-  `;
 
   chat.appendChild(row);
   chat.scrollTop = chat.scrollHeight;

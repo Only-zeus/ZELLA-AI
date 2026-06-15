@@ -101,7 +101,7 @@ function addHolding(){
   const entry =
     Number(document.getElementById("coinEntry").value);
 
-  if(!symbol || !amount || !entry){
+  if if(!symbol || amount <= 0 || entry <= 0){
     alert("Please complete all fields.");
     return;
   }
@@ -144,9 +144,9 @@ async function loadPortfolio(){
       holdings.map((holding,index)=>{
 
         const asset =
-          assets.find(
-            x => x.asset === holding.symbol
-          );
+  assets.find(
+    x => String(x.asset).toUpperCase() === String(holding.symbol).toUpperCase()
+  );
 
         const price =
           asset

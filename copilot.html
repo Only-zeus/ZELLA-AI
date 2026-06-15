@@ -107,29 +107,44 @@
 const API_URL = "https://zella-backend.onrender.com";
 
 function money(value){
-  if(value === null || value === undefined) return "Unavailable";
+  if(value === null || value === undefined || isNaN(Number(value))){
+    return "Unavailable";
+  }
+
   return "$" + Number(value).toLocaleString();
 }
 
 function percent(value){
-  if(value === null || value === undefined) return "-";
+  if(value === null || value === undefined || isNaN(Number(value))){
+    return "-";
+  }
+
   return Number(value).toFixed(2) + "%";
+}
+
+function score(value){
+  if(value === null || value === undefined || isNaN(Number(value))){
+    return "--";
+  }
+
+  return Math.round(Number(value));
 }
 
 function detectCoins(text){
   const coins = ["BTC","ETH","SOL","BNB","XRP"];
+
   return coins.filter(
     coin => text.toUpperCase().includes(coin)
   );
 }
 
-function findCoin(rankings,symbol){
+function findCoin(rankings, symbol){
   return rankings.find(
-    coin => coin.asset === symbol
+    coin => String(coin.asset).toUpperCase() === String(symbol).toUpperCase()
   );
 }
 
-function addMessage(sender,text){
+function addMessage(sender, text){
 
   const chat =
     document.getElementById("chat");
@@ -156,18 +171,104 @@ function quickAsk(prompt){
   sendMessage();
 }
 
+function buildScoreBreakdown(coin){
+
+  return `
+    <div class="analysis-card">
+
+      <h3>${coin.asset} Intelligence Report</h3>
+
+      <p>
+        <strong>Price:</strong> ${money(coin.price)}<br>
+        <strong>24H Change:</strong> ${percent(coin.change)}<br>
+        <strong>Signal:</strong> ${coin.signal}<br>
+        <strong>Confidence:</strong> ${score(coin.confidence)}%<br>
+        <strong>Risk:</strong> ${coin.risk}
+      </p>
+
+      <p>
+        <strong>Score Breakdown:</strong><br>
+        Momentum: ${score(coin.momentumScore)}<br>
+        Opportunity: ${score(coin.opportunityScore)}<br>
+        Liquidity: ${score(coin.liquidityScore)}<br>
+        Market Strength: ${score(coin.marketStrengthScore)}<br>
+        Volatility: ${score(coin.volatilityScore)}<br>
+        Risk Score: ${score(coin.riskScore)}
+      </p>
+
+      <p>
+        <strong>Strengths:</strong><br>
+        ${(coin.strengths || ["No major strength detected"])
+          .map(item => "• " + item)
+          .join("<br>")}
+      </p>
+
+      <p>
+        <strong>Weaknesses:</strong><br>
+        ${(coin.weaknesses || ["No major weakness detected"])
+          .map(item => "• " + item)
+          .join("<br>")}
+      </p>
+
+    </div>
+  `;
+
+}
+
+function buildRanking(rankings){
+
+  return rankings.map((coin,index)=>`
+    #${index + 1} ${coin.asset} — ${score(coin.confidence)}% • ${coin.signal}<br>
+    Momentum: ${score(coin.momentumScore)} | Opportunity: ${score(coin.opportunityScore)}
+  `).join("<br><br>");
+
+}
+
+function buildComparison(a,b){
+
+  const winner =
+    Number(a.confidence) >= Number(b.confidence)
+      ? a
+      : b;
+
+  return `
+    <div class="analysis-card">
+
+      <h3>${a.asset} vs ${b.asset}</h3>
+
+      <p>
+        <strong>${a.asset}</strong><br>
+        Confidence: ${score(a.confidence)}%<br>
+        Momentum: ${score(a.momentumScore)}<br>
+        Opportunity: ${score(a.opportunityScore)}<br>
+        Risk: ${a.risk}
+      </p>
+
+      <p>
+        <strong>${b.asset}</strong><br>
+        Confidence: ${score(b.confidence)}%<br>
+        Momentum: ${score(b.momentumScore)}<br>
+        Opportunity: ${score(b.opportunityScore)}<br>
+        Risk: ${b.risk}
+      </p>
+
+      <p>
+        <strong>Zella Verdict:</strong> ${winner.asset} has the stronger current setup.
+      </p>
+
+    </div>
+  `;
+
+}
+
 async function loadInsights(){
 
   try{
 
-    const response =
-      await fetch(API_URL + "/scanner");
+    const response = await fetch(API_URL + "/scanner");
+    const data = await response.json();
 
-    const data =
-      await response.json();
-
-    const top =
-      data.items?.[0];
+    const top = data.items?.[0];
 
     if(!top) return;
 
@@ -175,7 +276,7 @@ async function loadInsights(){
       top.asset;
 
     document.getElementById("topConfidence").textContent =
-      top.confidence + "%";
+      score(top.confidence) + "%";
 
     document.getElementById("topSignal").textContent =
       top.signal;
@@ -183,23 +284,16 @@ async function loadInsights(){
     document.getElementById("topRisk").textContent =
       top.risk;
 
-  }
-
-  catch(error){
-
+  }catch(error){
     console.error(error);
-
   }
 
 }
 
 async function sendMessage(){
 
-  const input =
-    document.getElementById("userInput");
-
-  const text =
-    input.value.trim();
+  const input = document.getElementById("userInput");
+  const text = input.value.trim();
 
   if(!text) return;
 
@@ -207,118 +301,91 @@ async function sendMessage(){
 
   input.value = "";
 
-  addMessage(
-    "bot",
-    "Analyzing live market intelligence..."
-  );
+  addMessage("bot", "Analyzing live scanner intelligence...");
 
   try{
 
-    const response =
-      await fetch(API_URL + "/scanner");
+    const response = await fetch(API_URL + "/scanner");
+    const data = await response.json();
 
-    const data =
-      await response.json();
+    const rankings = data.items || [];
+    const top = rankings[0];
 
-    const rankings =
-      data.items || [];
-
-    const top =
-      rankings[0];
-
-    const q =
-      text.toLowerCase();
-
-    const coins =
-      detectCoins(text);
+    const q = text.toLowerCase();
+    const coins = detectCoins(text);
 
     let answer = "";
 
-    if(q.includes("strongest")){
-
-      answer =
-        `${top.asset} is currently the strongest setup with ${top.confidence}% confidence and a ${top.signal} signal.`;
-
-    }
-
-    else if(q.includes("rank")){
-
-      answer =
-        rankings.map(
-          (coin,index)=>
-          `#${index+1} ${coin.asset} (${coin.confidence}%)`
-        ).join("<br>");
-
+    if(q.includes("rank")){
+      answer = buildRanking(rankings);
     }
 
     else if(q.includes("compare") && coins.length >= 2){
 
-      const coinA =
-        findCoin(rankings, coins[0]);
+      const a = findCoin(rankings, coins[0]);
+      const b = findCoin(rankings, coins[1]);
 
-      const coinB =
-        findCoin(rankings, coins[1]);
+      answer =
+        a && b
+          ? buildComparison(a,b)
+          : "One of those coins is unavailable right now.";
 
-      if(coinA && coinB){
+    }
 
-        const winner =
-          coinA.confidence >= coinB.confidence
-          ? coinA
-          : coinB;
+    else if(q.includes("why") || q.includes("explain")){
 
-        answer = `
-          <b>${coinA.asset}</b><br>
-          Confidence: ${coinA.confidence}%<br>
-          Signal: ${coinA.signal}<br><br>
+      const coin =
+        coins.length
+          ? findCoin(rankings, coins[0])
+          : top;
 
-          <b>${coinB.asset}</b><br>
-          Confidence: ${coinB.confidence}%<br>
-          Signal: ${coinB.signal}<br><br>
+      answer =
+        coin
+          ? buildScoreBreakdown(coin)
+          : "Coin data unavailable.";
 
-          <b>Winner:</b> ${winner.asset}
-        `;
+    }
 
-      }
+    else if(q.includes("strongest") || q.includes("best")){
+
+      answer = buildScoreBreakdown(top);
 
     }
 
     else if(q.includes("price") && coins.length){
 
-      const coin =
-        findCoin(rankings, coins[0]);
+      const coin = findCoin(rankings, coins[0]);
 
       answer =
         coin
-        ? `${coin.asset} price is approximately ${money(coin.price)}.`
-        : "Price unavailable.";
+          ? `${coin.asset} price is approximately ${money(coin.price)}. 24H change is ${percent(coin.change)}. Current signal: ${coin.signal}.`
+          : "Price data unavailable.";
 
     }
 
     else{
 
       answer =
-        `${top.asset} currently leads the scanner with ${top.confidence}% confidence. Signal is ${top.signal} and risk level is ${top.risk}.`;
+        top
+          ? buildScoreBreakdown(top)
+          : "Zella could not read scanner data.";
 
     }
 
     const botMessages =
       document.querySelectorAll(".chat-message.bot");
 
-    botMessages[
-      botMessages.length - 1
-    ].innerHTML =
+    botMessages[botMessages.length - 1].innerHTML =
       `<strong>Zella</strong>${answer}`;
 
-  }
+  }catch(error){
 
-  catch(error){
+    console.error(error);
 
     const botMessages =
       document.querySelectorAll(".chat-message.bot");
 
-    botMessages[
-      botMessages.length - 1
-    ].innerHTML =
+    botMessages[botMessages.length - 1].innerHTML =
       `<strong>Zella</strong>Unable to reach the scanner engine.`;
 
   }
@@ -327,23 +394,17 @@ async function sendMessage(){
 
 document
   .getElementById("userInput")
-  .addEventListener(
-    "keypress",
-    function(event){
+  .addEventListener("keypress", function(event){
 
-      if(event.key === "Enter"){
-        sendMessage();
-      }
-
+    if(event.key === "Enter"){
+      sendMessage();
     }
-  );
+
+  });
 
 loadInsights();
 
-setInterval(
-  loadInsights,
-  30000
-);
+setInterval(loadInsights, 30000);
 
 </script>
 

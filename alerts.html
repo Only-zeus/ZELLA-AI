@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Alert Engine V3</title>
+<title>Zella Notification Center V1</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -12,7 +12,7 @@
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">A</div>
+    <div class="avatar-dot">N</div>
   </div>
 </nav>
 
@@ -22,19 +22,19 @@
 
   <div class="live-row">
     <div>
-      <div class="eyebrow">ZELLA ALERT ENGINE</div>
-      <h1 class="command-title">Smart<br>Alerts.</h1>
+      <div class="eyebrow">ZELLA NOTIFICATION CENTER</div>
+      <h1 class="command-title">Smart<br>Notifications.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="live-dot"></div>
-      <span class="live-label">LIVE</span>
+      <span class="live-label">ALERTS</span>
     </div>
   </div>
 
   <p class="briefing-text">
-    Zella monitors confidence, momentum, opportunity,
-    risk and market strength to surface important trading alerts.
+    Enable browser notifications and let Zella notify you about
+    high-confidence setups, momentum breakouts and market risk.
   </p>
 
 </section>
@@ -42,23 +42,43 @@
 <section class="mini-grid">
 
   <div class="mini-box">
+    <div class="mini-label">Permission</div>
+    <div class="mini-value blue" id="permissionStatus">Unknown</div>
+  </div>
+
+  <div class="mini-box">
     <div class="mini-label">Active Alerts</div>
     <div class="mini-value green" id="activeAlerts">0</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Strongest Asset</div>
-    <div class="mini-value blue" id="strongestAsset">--</div>
+    <div class="mini-label">Top Signal</div>
+    <div class="mini-value orange" id="topSignal">--</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Highest Risk</div>
-    <div class="mini-value orange" id="highestRisk">--</div>
+    <div class="mini-label">Status</div>
+    <div class="mini-value blue" id="notifyStatus">Standby</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Market Status</div>
-    <div class="mini-value blue" id="marketStatus">--</div>
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    NOTIFICATION CONTROLS
+  </div>
+
+  <div class="hero-actions">
+
+    <button class="btn" onclick="enableNotifications()">
+      Enable Notifications
+    </button>
+
+    <button class="btn secondary" onclick="sendTestNotification()">
+      Test Notification
+    </button>
+
   </div>
 
 </section>
@@ -66,16 +86,15 @@
 <section class="briefing-card">
 
   <div class="briefing-title">
-    ZELLA AI ALERT SUMMARY
+    ZELLA NOTIFICATION SUMMARY
   </div>
 
-  <h2 class="briefing-headline" id="alertHeadline">
-    Monitoring market conditions...
+  <h2 class="briefing-headline" id="notificationHeadline">
+    Notification system ready.
   </h2>
 
-  <p class="briefing-text" id="alertSummary">
-    Zella is scanning the market for high-confidence opportunities,
-    momentum breakouts and risk warnings.
+  <p class="briefing-text" id="notificationSummary">
+    Enable notifications to receive scanner alerts, momentum breakouts and daily briefings.
   </p>
 
 </section>
@@ -83,15 +102,15 @@
 <section class="briefing-card">
 
   <div class="briefing-title">
-    LIVE ALERT FEED
+    LIVE NOTIFICATION FEED
   </div>
 
-  <div id="alertFeed">
+  <div id="notificationFeed">
 
     <div class="rank-row">
-      <div class="rank-position">🚨</div>
+      <div class="rank-position">🔔</div>
       <div class="rank-asset">
-        Waiting for scanner data...
+        Waiting for notification events...
       </div>
       <div class="rank-score">
         --
@@ -114,162 +133,181 @@
 
 <script>
 
-const API_URL =
-  "https://zella-backend.onrender.com";
+const API_URL = "https://zella-backend.onrender.com";
 
-async function loadAlerts(){
+let sentAlerts =
+  JSON.parse(localStorage.getItem("zellaSentNotifications")) || [];
+
+function updatePermissionStatus(){
+
+  if(!("Notification" in window)){
+    document.getElementById("permissionStatus").textContent = "Unsupported";
+    return;
+  }
+
+  document.getElementById("permissionStatus").textContent =
+    Notification.permission;
+
+}
+
+function enableNotifications(){
+
+  if(!("Notification" in window)){
+    alert("Browser notifications are not supported here.");
+    return;
+  }
+
+  Notification.requestPermission().then(permission => {
+    updatePermissionStatus();
+
+    if(permission === "granted"){
+      document.getElementById("notifyStatus").textContent = "Enabled";
+
+      new Notification("Zella Notifications Enabled", {
+        body:"You will receive market alerts when Zella detects strong setups."
+      });
+    }
+  });
+
+}
+
+function sendTestNotification(){
+
+  if(!("Notification" in window)){
+    alert("Notifications are not supported.");
+    return;
+  }
+
+  if(Notification.permission !== "granted"){
+    alert("Enable notifications first.");
+    return;
+  }
+
+  new Notification("Zella Test Alert", {
+    body:"This is a test notification from Zella."
+  });
+
+}
+
+function notifyOnce(id,title,message){
+
+  if(sentAlerts.includes(id)){
+    return;
+  }
+
+  sentAlerts.push(id);
+
+  localStorage.setItem(
+    "zellaSentNotifications",
+    JSON.stringify(sentAlerts)
+  );
+
+  if("Notification" in window && Notification.permission === "granted"){
+    new Notification(title, {
+      body:message
+    });
+  }
+
+}
+
+async function loadNotifications(){
 
   try{
 
-    const response =
-      await fetch(API_URL + "/scanner");
+    const response = await fetch(API_URL + "/scanner");
+    const data = await response.json();
 
-    const data =
-      await response.json();
-
-    const rankings =
-      data.items || [];
+    const rankings = data.items || [];
 
     if(!rankings.length) return;
 
-    const strongest =
-      rankings[0];
-
-    const weakest =
-      rankings[rankings.length - 1];
+    const top = rankings[0];
 
     const alerts = [];
 
-    rankings.forEach(asset=>{
+    rankings.forEach(asset => {
 
       if(Number(asset.confidence) >= 85){
-
         alerts.push({
-          type:"🔥",
-          title:"High Confidence Alert",
-          text:`${asset.asset} confidence reached ${asset.confidence}%`
+          id:`confidence-${asset.asset}`,
+          icon:"🔥",
+          title:"High Confidence Setup",
+          message:`${asset.asset} reached ${asset.confidence}% confidence.`
         });
-
       }
 
       if(Number(asset.momentumScore) >= 85){
-
         alerts.push({
-          type:"⚡",
+          id:`momentum-${asset.asset}`,
+          icon:"⚡",
           title:"Momentum Breakout",
-          text:`${asset.asset} momentum score is ${asset.momentumScore}`
+          message:`${asset.asset} momentum score is ${asset.momentumScore}.`
         });
-
-      }
-
-      if(Number(asset.riskScore) >= 75){
-
-        alerts.push({
-          type:"⚠️",
-          title:"Risk Warning",
-          text:`${asset.asset} risk score is elevated`
-        });
-
       }
 
       if(Number(asset.opportunityScore) >= 85){
-
         alerts.push({
-          type:"🎯",
+          id:`opportunity-${asset.asset}`,
+          icon:"🎯",
           title:"Opportunity Alert",
-          text:`${asset.asset} shows strong opportunity conditions`
+          message:`${asset.asset} shows strong opportunity conditions.`
         });
-
       }
-
-    });
-
-    alerts.unshift({
-
-      type:"🏆",
-      title:"Strongest Asset",
-      text:`${strongest.asset} currently leads the scanner`
-
-    });
-
-    alerts.push({
-
-      type:"📉",
-      title:"Weakest Asset",
-      text:`${weakest.asset} ranks lowest in current rankings`
 
     });
 
     document.getElementById("activeAlerts").textContent =
       alerts.length;
 
-    document.getElementById("strongestAsset").textContent =
-      strongest.asset;
+    document.getElementById("topSignal").textContent =
+      top.asset;
 
-    document.getElementById("highestRisk").textContent =
-      weakest.asset;
+    document.getElementById("notificationHeadline").textContent =
+      `${alerts.length} notification alert(s) ready`;
 
-    document.getElementById("marketStatus").textContent =
-      strongest.confidence >= 75
-      ? "Bullish"
-      : strongest.confidence >= 60
-      ? "Neutral"
-      : "Risk Off";
+    document.getElementById("notificationSummary").textContent =
+      `${top.asset} is currently the top scanner signal. Zella is monitoring confidence, momentum and opportunity conditions.`;
 
-    document.getElementById("alertHeadline").textContent =
-      `${alerts.length} active market alerts`;
-
-    document.getElementById("alertSummary").textContent =
-      `${strongest.asset} is currently the strongest setup. Zella has detected multiple opportunities and risk conditions requiring attention.`;
-
-    document.getElementById("alertFeed").innerHTML =
-
-      alerts.map(alert => `
-
+    document.getElementById("notificationFeed").innerHTML =
+      alerts.length
+      ? alerts.map(alert => `
         <div class="rank-row">
-
-          <div class="rank-position">
-            ${alert.type}
-          </div>
-
+          <div class="rank-position">${alert.icon}</div>
           <div class="rank-asset">
-
             <strong>${alert.title}</strong><br>
-
-            ${alert.text}
-
+            ${alert.message}
           </div>
-
-          <div class="rank-score">
-            LIVE
-          </div>
-
+          <div class="rank-score">LIVE</div>
         </div>
+      `).join("")
+      : `
+        <div class="rank-row">
+          <div class="rank-position">🔔</div>
+          <div class="rank-asset">No major notification alerts right now</div>
+          <div class="rank-score">Safe</div>
+        </div>
+      `;
 
-      `).join("");
+    alerts.forEach(alert => {
+      notifyOnce(alert.id, alert.title, alert.message);
+    });
 
   }
 
   catch(error){
-
     console.error(error);
 
-    document.getElementById("alertHeadline").textContent =
-      "Alert Engine Offline";
-
-    document.getElementById("alertSummary").textContent =
-      "Unable to connect to scanner engine.";
-
+    document.getElementById("notificationHeadline").textContent =
+      "Notification engine offline";
   }
 
 }
 
-loadAlerts();
+updatePermissionStatus();
 
-setInterval(
-  loadAlerts,
-  30000
-);
+loadNotifications();
+
+setInterval(loadNotifications, 30000);
 
 </script>
 

@@ -9,7 +9,9 @@
 
 <body>
 
-<div class="zella-bg">
+<div class="zella-orb"></div>
+
+<div class="zella-rain">
   <span>BTC</span>
   <span>ETH</span>
   <span>SOL</span>
@@ -19,7 +21,25 @@
 </div>
 
 <style>
-.zella-bg{
+.zella-orb{
+  position:fixed;
+  width:430px;
+  height:430px;
+  border-radius:50%;
+  right:-160px;
+  top:90px;
+  background:radial-gradient(circle,rgba(56,189,248,.35),transparent 70%);
+  filter:blur(22px);
+  animation:orbPulse 5s ease-in-out infinite;
+  z-index:0;
+}
+
+@keyframes orbPulse{
+  0%,100%{transform:scale(1);opacity:.75;}
+  50%{transform:scale(1.22);opacity:1;}
+}
+
+.zella-rain{
   position:fixed;
   inset:0;
   overflow:hidden;
@@ -27,44 +47,26 @@
   z-index:0;
 }
 
-.zella-bg span{
+.zella-rain span{
   position:absolute;
   top:-120px;
   opacity:.10;
-  font-size:34px;
+  font-size:32px;
   font-weight:900;
   color:#38bdf8;
-  animation:zellaFloat 16s linear infinite;
+  animation:zellaRain 16s linear infinite;
 }
 
-.zella-bg span:nth-child(1){left:7%;}
-.zella-bg span:nth-child(2){left:22%;animation-delay:2s;}
-.zella-bg span:nth-child(3){left:39%;animation-delay:5s;}
-.zella-bg span:nth-child(4){left:56%;animation-delay:1s;}
-.zella-bg span:nth-child(5){left:73%;animation-delay:4s;}
-.zella-bg span:nth-child(6){left:88%;animation-delay:3s;}
+.zella-rain span:nth-child(1){left:7%;}
+.zella-rain span:nth-child(2){left:22%;animation-delay:2s;}
+.zella-rain span:nth-child(3){left:38%;animation-delay:5s;}
+.zella-rain span:nth-child(4){left:55%;animation-delay:1s;}
+.zella-rain span:nth-child(5){left:72%;animation-delay:4s;}
+.zella-rain span:nth-child(6){left:88%;animation-delay:3s;}
 
-@keyframes zellaFloat{
+@keyframes zellaRain{
   from{transform:translateY(-150px) rotate(0deg);}
-  to{transform:translateY(120vh) rotate(360deg);}
-}
-
-.hero-glow{
-  position:fixed;
-  width:360px;
-  height:360px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.30),transparent 70%);
-  top:10%;
-  right:-120px;
-  filter:blur(20px);
-  animation:pulseGlow 5s ease-in-out infinite;
-  z-index:0;
-}
-
-@keyframes pulseGlow{
-  0%,100%{transform:scale(1);opacity:.7;}
-  50%{transform:scale(1.25);opacity:1;}
+  to{transform:translateY(125vh) rotate(360deg);}
 }
 
 .container,
@@ -72,14 +74,20 @@
   position:relative;
   z-index:2;
 }
-</style>
 
-<div class="hero-glow"></div>
+.home-link{
+  text-decoration:none;
+}
+</style>
 
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <a href="account.html" class="btn secondary">Login</a>
+
+    <div style="display:flex;gap:10px;">
+      <a href="account.html" class="btn secondary">Login</a>
+      <a href="dashboard.html" class="btn">Launch</a>
+    </div>
   </div>
 </nav>
 
@@ -108,13 +116,14 @@
 
   <p class="briefing-text">
     Zella combines live market data, scanner intelligence,
-    real-time crypto news, watchlists, cloud sync and AI-powered trade setup guidance
-    into one beginner-friendly trading assistant.
+    real-time crypto news, AI conversation, watchlists, cloud sync,
+    and AutoTrader setup guidance into one beginner-friendly trading copilot.
   </p>
 
   <div class="hero-actions">
     <a href="dashboard.html" class="btn">Launch Zella</a>
     <a href="copilot.html" class="btn secondary">Ask Copilot</a>
+    <a href="scanner.html" class="btn secondary">Open Scanner</a>
   </div>
 
 </section>
@@ -145,32 +154,35 @@
 
 <section class="briefing-card">
 
-  <div class="briefing-title">WHY ZELLA</div>
+  <div class="briefing-title">WHY TRADERS CHOOSE ZELLA</div>
 
   <div class="ranking-list">
 
     <div class="rank-row">
-      <div class="rank-position">🤖</div>
-      <div class="rank-asset">AI Copilot<br><small>Chat naturally, learn, analyze, and get market guidance.</small></div>
-      <div class="rank-score">Smart</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">📈</div>
-      <div class="rank-asset">Live Scanner<br><small>Ranks assets using real market data and quant scores.</small></div>
+      <div class="rank-position">⚡</div>
+      <div class="rank-asset">
+        Live Market Intelligence<br>
+        <small>Real-time prices, market conditions and multi-provider fallback.</small>
+      </div>
       <div class="rank-score">Live</div>
     </div>
 
     <div class="rank-row">
-      <div class="rank-position">📰</div>
-      <div class="rank-asset">News Engine<br><small>Tracks crypto news and sentiment.</small></div>
-      <div class="rank-score">RSS</div>
+      <div class="rank-position">🤖</div>
+      <div class="rank-asset">
+        Interactive AI Copilot<br>
+        <small>Chat naturally, learn crypto and understand trade ideas.</small>
+      </div>
+      <div class="rank-score">AI</div>
     </div>
 
     <div class="rank-row">
-      <div class="rank-position">⚡</div>
-      <div class="rank-asset">AutoTrader Setup<br><small>Generates entry zones, stop loss, and targets.</small></div>
-      <div class="rank-score">Ready</div>
+      <div class="rank-position">📈</div>
+      <div class="rank-asset">
+        Scanner Intelligence<br>
+        <small>Ranks assets using confidence, momentum, risk and opportunity.</small>
+      </div>
+      <div class="rank-score">V6</div>
     </div>
 
   </div>
@@ -179,15 +191,129 @@
 
 <section class="command-card">
 
-  <div class="card-label">START USING ZELLA</div>
+  <div class="card-label">ZELLA MISSION</div>
 
-  <div class="hero-actions">
-    <a href="dashboard.html" class="btn">Open Dashboard</a>
-    <a href="scanner.html" class="btn secondary">Open Scanner</a>
-    <a href="market.html" class="btn secondary">Open Market</a>
+  <h2 class="briefing-headline">
+    Make intelligent trading guidance accessible to every trader.
+  </h2>
+
+  <p class="briefing-text">
+    Zella’s mission is to help new and growing traders understand the market,
+    reduce confusion, avoid emotional decisions, and make more informed choices
+    through live data, AI explanation and structured risk-aware guidance.
+  </p>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">CORE INTELLIGENCE</div>
+
+  <div class="ranking-list">
+
+    <div class="rank-row">
+      <div class="rank-position">1</div>
+      <div class="rank-asset">Live Market Data<br><small>Binance, Bybit, Coinbase, Kraken and CoinGecko fallback.</small></div>
+      <div class="rank-score">Source</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">2</div>
+      <div class="rank-asset">Scanner Engine<br><small>Scores confidence, momentum, trend, structure, risk and opportunity.</small></div>
+      <div class="rank-score">Rank</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">3</div>
+      <div class="rank-asset">News Sentiment<br><small>Tracks crypto news and sentiment signals.</small></div>
+      <div class="rank-score">News</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">4</div>
+      <div class="rank-asset">AutoTrader Setup<br><small>Generates entry zones, stop loss and targets for review.</small></div>
+      <div class="rank-score">Setup</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">5</div>
+      <div class="rank-asset">Zella Copilot<br><small>Explains market conditions like an interactive AI assistant.</small></div>
+      <div class="rank-score">AI</div>
+    </div>
+
   </div>
 
 </section>
+
+<section class="command-card">
+
+  <div class="card-label">ZELLA ECOSYSTEM</div>
+
+  <div class="hero-actions">
+    <a href="market.html" class="btn secondary">🌍 Market</a>
+    <a href="scanner.html" class="btn secondary">📈 Scanner</a>
+    <a href="copilot.html" class="btn secondary">🤖 Copilot</a>
+    <a href="news.html" class="btn secondary">📰 News</a>
+    <a href="watchlist.html" class="btn secondary">⭐ Watchlist</a>
+    <a href="more.html" class="btn secondary">☰ More</a>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ROADMAP</div>
+
+  <div class="ranking-list">
+
+    <div class="rank-row">
+      <div class="rank-position">✅</div>
+      <div class="rank-asset">Phase 1 — Foundation<br><small>Backend V5, live market data, scanner, news and copilot.</small></div>
+      <div class="rank-score">Done</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">🚧</div>
+      <div class="rank-asset">Phase 2 — Intelligence<br><small>News integration, stronger scanner logic and smarter trade setup engine.</small></div>
+      <div class="rank-score">Now</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">🔜</div>
+      <div class="rank-asset">Phase 3 — Expansion<br><small>More assets, stronger watchlists, alerts and portfolio intelligence.</small></div>
+      <div class="rank-score">Next</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">🌍</div>
+      <div class="rank-asset">Phase 4 — Future Vision<br><small>Mobile app, advanced AI portfolio manager and multi-exchange intelligence.</small></div>
+      <div class="rank-score">Future</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">READY TO TRADE SMARTER?</div>
+
+  <h2 class="briefing-headline">
+    Start with Zella today.
+  </h2>
+
+  <div class="hero-actions">
+    <a href="dashboard.html" class="btn">Launch Zella</a>
+    <a href="copilot.html" class="btn secondary">Ask Copilot</a>
+  </div>
+
+</section>
+
+<footer style="text-align:center;padding:30px 15px;color:#94a3b8;">
+  <strong style="color:#38bdf8;">ZELLA AI</strong><br>
+  Trade smarter. Profit faster.<br><br>
+  © Zella AI
+</footer>
 
 </main>
 

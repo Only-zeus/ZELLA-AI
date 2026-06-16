@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Pro Layer V1</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- FLOATING PRO PARTICLES -->
+
+<div class="pro-particles">
+
+  <span>💎</span>
+  <span>PRO</span>
+  <span>⚡</span>
+  <span>💎</span>
+  <span>PRO</span>
+  <span>⚡</span>
+  <span>💎</span>
+
+</div>
+
+<style>
+
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+
+  position:absolute;
+  top:-100px;
+
+  color:#a855f7;
+
+  opacity:.12;
+
+  font-size:30px;
+
+  font-weight:800;
+
+  animation:
+    proFloat 14s linear infinite;
+
+}
+
+.pro-particles span:nth-child(1){left:5%;}
+.pro-particles span:nth-child(2){left:18%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:30%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:50%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:70%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:85%;animation-delay:3s;}
+.pro-particles span:nth-child(7){left:95%;animation-delay:6s;}
+
+@keyframes proFloat{
+
+  from{
+    transform:
+      translateY(-150px)
+      rotate(0deg);
+  }
+
+  to{
+    transform:
+      translateY(120vh)
+      rotate(360deg);
+  }
+
+}
+
+</style>
+
+<nav class="navbar">
+
+  <div class="nav-inner">
+
+    <div class="logo">
+      ZELLA
+    </div>
+
+    <div class="avatar-dot">
+      PRO
+    </div>
+
+  </div>
+
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+
+    <div>
+
+      <div class="eyebrow">
+        ZELLA PRO
+      </div>
+
+      <h1 class="command-title">
+
+        Unlock The<br>
+        Full Power.
+
+      </h1>
+
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+
+      <div class="live-dot"></div>
+
+      <span class="live-label">
+
+        PREMIUM
+
+      </span>
+
+    </div>
+
+  </div>
+
+  <p class="briefing-text">
+
+    Access premium intelligence,
+    advanced scanners,
+    cloud sync,
+    AI analysis
+    and future AutoTrader upgrades.
+
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+
+    <div class="mini-label">
+      Plan
+    </div>
+
+    <div class="mini-value blue">
+      Free
+    </div>
+
+  </div>
+
+  <div class="mini-box">
+
+    <div class="mini-label">
+      Features
+    </div>
+
+    <div class="mini-value green" id="proFeatures">
+      0/7
+    </div>
+
+  </div>
+
+  <div class="mini-box">
+
+    <div class="mini-label">
+      Cloud Sync
+    </div>
+
+    <div class="mini-value orange">
+      Locked
+    </div>
+
+  </div>
+
+  <div class="mini-box">
+
+    <div class="mini-label">
+      Status
+    </div>
+
+    <div class="mini-value blue">
+      Ready
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA PRO FEATURES
+  </div>
+
+  <div class="mini-grid">
+
+    <div class="mini-box">
+      <div class="mini-label">Advanced Scanner</div>
+      <div class="mini-value green">PRO</div>
+      <p class="briefing-text">Deeper filters, stronger signals and premium scanner metrics.</p>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Cloud Sync</div>
+      <div class="mini-value blue">PRO</div>
+      <p class="briefing-text">Sync wallet, journal, alerts and settings across devices.</p>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Premium AI</div>
+      <div class="mini-value orange">PRO</div>
+      <p class="briefing-text">Advanced analysis, deeper explanations and pro-grade insights.</p>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Saved Watchlists</div>
+      <div class="mini-value green">PRO</div>
+      <p class="briefing-text">Track custom assets and monitor only what matters to you.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    COMING TO PRO
+  </div>
+
+  <div class="ranking-list">
+
+    <div class="rank-row">
+      <div class="rank-position">🤖</div>
+      <div class="rank-asset">AutoTrader Pro<br><small>Advanced automated paper-trading and future exchange-ready strategy tools.</small></div>
+      <div class="rank-score">Soon</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">📊</div>
+      <div class="rank-asset">Analytics Center<br><small>Portfolio, journal and scanner performance analytics.</small></div>
+      <div class="rank-score">Soon</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">🔔</div>
+      <div class="rank-asset">Premium Alerts<br><small>Advanced notifications for scanner, portfolio and strategy events.</small></div>
+      <div class="rank-score">Soon</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    UPGRADE STATUS
+  </div>
+
+  <h2 class="briefing-headline">
+    Built for serious traders.
+  </h2>
+
+  <p class="briefing-text">
+    Zella Pro will unlock advanced scanner tools, premium AI analysis,
+    cloud sync, saved watchlists, advanced analytics and future AutoTrader tools.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn" onclick="activateDemoPro()">
+      Preview Pro
+    </button>
+
+    <a href="dashboard.html" class="btn secondary">
+      Back Home
+    </a>
+  </div>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="journal.html">Wallet</a>
+</div>
+
+<script>
+
+function activateDemoPro(){
+
+  document.getElementById("proFeatures").textContent =
+    "7/7";
+
+  alert(
+    "Zella Pro preview activated. Full billing and cloud accounts will come in a future upgrade."
+  );
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Scanner V3</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Scanner V6</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -12,7 +12,7 @@
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">S</div>
+    <div class="avatar-dot">SC</div>
   </div>
 </nav>
 
@@ -22,61 +22,120 @@
 
   <div class="live-row">
     <div>
-      <div class="eyebrow">ZELLA QUANT SCANNER</div>
-      <h1 class="command-title">Scanner<br>V3.</h1>
+      <div class="eyebrow">LIVE MARKET SCANNER V6</div>
+      <h1 class="command-title">Scanner<br>Intelligence.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="live-dot"></div>
-      <span class="live-label">LIVE</span>
+      <span class="live-label" id="scannerStatus">LIVE</span>
     </div>
   </div>
 
   <p class="briefing-text">
-    Zella ranks crypto assets using confidence, momentum,
-    opportunity, liquidity, market strength, volatility and risk scores.
+    Zella ranks assets using live price, 24h change, momentum,
+    trend, structure, opportunity, liquidity, volatility, risk and news scores.
   </p>
 
 </section>
 
-<section class="command-card">
+<section class="mini-grid">
 
-  <div class="card-label">TOP QUANT VERDICT</div>
+  <div class="mini-box">
+    <div class="mini-label">Selected Asset</div>
+    <div class="mini-value blue" id="assetView">--</div>
+  </div>
 
-  <div class="verdict-layout">
-    <div class="score-ring">
-      <div class="score-number" id="topConfidence">--</div>
+  <div class="mini-box">
+    <div class="mini-label">Live Price</div>
+    <div class="mini-value green" id="priceView">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">24h Change</div>
+    <div class="mini-value orange" id="changeView">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Signal</div>
+    <div class="mini-value blue" id="signalView">--</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">TOP QUANT VERDICT</div>
+
+  <div class="live-row">
+    <div>
+      <h2 class="briefing-headline" id="topAssetHeadline">
+        Scanning...
+      </h2>
+
+      <p class="briefing-text" id="topAssetSummary">
+        Loading live scanner data.
+      </p>
     </div>
 
-    <div>
-      <div class="live-label">STRONGEST SETUP</div>
-      <div class="verdict-status" id="topSignal">Loading...</div>
-      <div class="verdict-action" id="topAsset">Scanning</div>
+    <div style="
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      border:14px solid rgba(56,189,248,.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:28px;
+      color:#38bdf8;
+    " id="confidenceRing">
+      --
     </div>
   </div>
 
 </section>
 
-<section class="mini-grid" style="margin-top:22px;">
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Confidence</div>
+    <div class="mini-value green" id="confidenceView">--</div>
+  </div>
 
   <div class="mini-box">
     <div class="mini-label">Momentum</div>
-    <div class="mini-value green" id="momentumScore">--</div>
+    <div class="mini-value green" id="momentumView">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Trend Score</div>
+    <div class="mini-value blue" id="trendScoreView">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Structure</div>
+    <div class="mini-value blue" id="structureView">--</div>
   </div>
 
   <div class="mini-box">
     <div class="mini-label">Opportunity</div>
-    <div class="mini-value blue" id="opportunityScore">--</div>
+    <div class="mini-value green" id="opportunityView">--</div>
   </div>
 
   <div class="mini-box">
     <div class="mini-label">Liquidity</div>
-    <div class="mini-value orange" id="liquidityScore">--</div>
+    <div class="mini-value orange" id="liquidityView">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Volatility</div>
+    <div class="mini-value orange" id="volatilityView">--</div>
   </div>
 
   <div class="mini-box">
     <div class="mini-label">Risk</div>
-    <div class="mini-value blue" id="riskScore">--</div>
+    <div class="mini-value blue" id="riskView">--</div>
   </div>
 
 </section>
@@ -85,11 +144,11 @@
 
   <div class="briefing-title">LIVE QUANT RANKING</div>
 
-  <div class="ranking-list" id="rankingList">
+  <div id="rankingArea">
     <div class="rank-row">
-      <div class="rank-position">...</div>
-      <div class="rank-asset">Loading scanner data</div>
-      <div class="rank-score">...</div>
+      <div class="rank-position">--</div>
+      <div class="rank-asset">Loading scanner...</div>
+      <div class="rank-score">--</div>
     </div>
   </div>
 
@@ -97,14 +156,10 @@
 
 <section class="briefing-card">
 
-  <div class="briefing-title">ZELLA SCANNER REVIEW</div>
+  <div class="briefing-title">DATA DETAILS</div>
 
-  <h2 class="briefing-headline" id="scannerHeadline">
-    Reading quant scores...
-  </h2>
-
-  <p class="briefing-text" id="scannerSummary">
-    Zella is analyzing momentum, opportunity, liquidity and risk across tracked assets.
+  <p class="briefing-text" id="dataDetails">
+    Waiting for live source.
   </p>
 
 </section>
@@ -124,96 +179,96 @@
 const API_URL = "https://zella-backend.onrender.com";
 
 let scannerItems = [];
-let selectedAsset = "BTC";
 
-function formatMoney(value){
+function money(value){
   const num = Number(value || 0);
-
-  return "$" + num.toLocaleString(undefined, {
+  return "$" + num.toLocaleString(undefined,{
     maximumFractionDigits: num < 10 ? 4 : 2
   });
 }
 
-function formatPercent(value){
+function percent(value){
   const num = Number(value);
-
-  if(!Number.isFinite(num)){
-    return "--";
-  }
-
-  return num.toFixed(2) + "%";
+  return Number.isFinite(num) ? num.toFixed(2) + "%" : "--";
 }
 
-function scoreColor(score){
-  const value = Number(score || 0);
-
-  if(value >= 75) return "#22c55e";
-  if(value >= 55) return "#f59e0b";
-  return "#ef4444";
+function score(value){
+  return Number.isFinite(Number(value)) ? value + "%" : "--";
 }
 
-async function loadScanner(){
-  try{
-    const response = await fetch(API_URL + "/scanner");
-    const data = await response.json();
+function updateSelected(asset){
+  document.getElementById("assetView").textContent = asset.asset;
+  document.getElementById("priceView").textContent = money(asset.price);
+  document.getElementById("changeView").textContent = percent(asset.change24h);
+  document.getElementById("signalView").textContent = asset.signal;
 
-    scannerItems = data.items || [];
+  document.getElementById("confidenceView").textContent = score(asset.confidence);
+  document.getElementById("momentumView").textContent = score(asset.momentumScore);
+  document.getElementById("trendScoreView").textContent = score(asset.trendScore);
+  document.getElementById("structureView").textContent = score(asset.structureScore);
+  document.getElementById("opportunityView").textContent = score(asset.opportunityScore);
+  document.getElementById("liquidityView").textContent = score(asset.liquidityScore);
+  document.getElementById("volatilityView").textContent = score(asset.volatilityScore);
+  document.getElementById("riskView").textContent = score(asset.riskScore);
 
-    if(scannerItems.length){
-      selectedAsset = scannerItems[0].asset;
-      updateScannerUI(scannerItems[0]);
-      renderRanking(scannerItems);
-    }
+  document.getElementById("confidenceRing").textContent = score(asset.confidence);
 
-  }catch(error){
-    console.error(error);
-  }
-}
+  document.getElementById("topAssetHeadline").textContent =
+    `${asset.asset} • ${asset.signal}`;
 
-function updateScannerUI(asset){
-  document.getElementById("assetView").textContent =
-    asset.asset;
+  document.getElementById("topAssetSummary").textContent =
+    `${asset.asset} is ${asset.trend}. Confidence ${asset.confidence}%, momentum ${asset.momentumScore}%, opportunity ${asset.opportunityScore}%, risk ${asset.riskScore}%.`;
 
-  document.getElementById("priceView").textContent =
-    formatMoney(asset.price);
-
-  document.getElementById("changeView").textContent =
-    formatPercent(asset.change24h);
-
-  document.getElementById("signalView").textContent =
-    asset.signal || "--";
+  document.getElementById("dataDetails").textContent =
+    `Source: ${asset.source} • Engine: ${asset.engine} • Updated: ${new Date(asset.updatedAt).toLocaleString()}`;
 }
 
 function renderRanking(items){
-  const rankingArea =
-    document.getElementById("rankingArea");
+  const area = document.getElementById("rankingArea");
 
-  rankingArea.innerHTML = items.map((asset,index)=>`
-
-    <div class="rank-row" onclick="updateScannerUI(scannerItems[${index}])">
-
+  area.innerHTML = items.map((asset,index)=>`
+    <div class="rank-row" onclick="updateSelected(scannerItems[${index}])">
       <div class="rank-position">#${index + 1}</div>
 
       <div class="rank-asset">
         ${asset.asset}<br>
         <small>
-          ${asset.signal} • Risk: ${asset.riskScore}
+          ${asset.signal} • Risk ${asset.riskScore}% • News ${asset.newsScore}%
         </small>
       </div>
 
       <div class="rank-score">
         ${asset.confidence}%
       </div>
-
     </div>
-
   `).join("");
 }
 
+async function loadScanner(){
+  try{
+    document.getElementById("scannerStatus").textContent = "LOADING";
+
+    const res = await fetch(API_URL + "/scanner");
+    const data = await res.json();
+
+    scannerItems = data.items || [];
+
+    if(scannerItems.length){
+      updateSelected(scannerItems[0]);
+      renderRanking(scannerItems);
+      document.getElementById("scannerStatus").textContent = "LIVE";
+    }else{
+      document.getElementById("scannerStatus").textContent = "EMPTY";
+    }
+
+  }catch(error){
+    console.error(error);
+    document.getElementById("scannerStatus").textContent = "ERROR";
+  }
+}
+
 loadScanner();
-
 setInterval(loadScanner, 30000);
-
 </script>
 
 </body>

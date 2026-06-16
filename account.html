@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Account Center</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="pro-particles">
+  <span>👤</span>
+  <span>ZELLA</span>
+  <span>SYNC</span>
+  <span>☁️</span>
+  <span>LOGIN</span>
+  <span>PRO</span>
+</div>
+
+<style>
+
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+  position:absolute;
+  top:-100px;
+  opacity:.10;
+  font-size:30px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:accountRain 14s linear infinite;
+}
+
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes accountRain{
+  from{
+    transform:translateY(-140px) rotate(0deg);
+  }
+  to{
+    transform:translateY(120vh) rotate(360deg);
+  }
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+
+</style>
+
+<nav class="navbar">
+
+  <div class="nav-inner">
+
+    <div class="logo">
+      ZELLA
+    </div>
+
+    <div class="avatar-dot">
+      👤
+    </div>
+
+  </div>
+
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+
+    <div>
+
+      <div class="eyebrow">
+        USER ACCOUNT CENTER
+      </div>
+
+      <h1 class="command-title">
+
+        Welcome<br>
+        Trader.
+
+      </h1>
+
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+
+      <div class="live-dot"></div>
+
+      <span class="live-label">
+
+        ACCOUNT
+
+      </span>
+
+    </div>
+
+  </div>
+
+  <p class="briefing-text">
+
+    Create your Zella account,
+    personalize your dashboard,
+    and prepare for future cloud sync.
+
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Status</div>
+    <div class="mini-value green" id="accountStatus">
+      Guest
+    </div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Cloud Sync</div>
+    <div class="mini-value blue">
+      Soon
+    </div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Profile</div>
+    <div class="mini-value orange" id="profileName">
+      None
+    </div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Plan</div>
+    <div class="mini-value green">
+      Free
+    </div>
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    CREATE ACCOUNT
+  </div>
+
+  <div class="chat-input-bar">
+
+    <input
+      id="userName"
+      placeholder="Your Name">
+
+    <input
+      id="userEmail"
+      placeholder="Email Address">
+
+  </div>
+
+  <div class="hero-actions" style="margin-top:15px;">
+
+    <button class="btn" onclick="createAccount()">
+      Create Account
+    </button>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    PROFILE DASHBOARD
+  </div>
+
+  <h2 class="briefing-headline" id="accountHeadline">
+    No account created yet.
+  </h2>
+
+  <p class="briefing-text" id="accountSummary">
+    Create an account to personalize Zella and enable future cloud sync.
+  </p>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    CLOUD SYNC PREVIEW
+  </div>
+
+  <div class="ranking-list">
+
+    <div class="rank-row">
+      <div class="rank-position">☁️</div>
+      <div class="rank-asset">Portfolio Sync<br><small>Future multi-device wallet sync.</small></div>
+      <div class="rank-score">Soon</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">📒</div>
+      <div class="rank-asset">Journal Sync<br><small>Future trade history backup.</small></div>
+      <div class="rank-score">Soon</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">⚙️</div>
+      <div class="rank-asset">Settings Sync<br><small>Future preferences saved to cloud.</small></div>
+      <div class="rank-score">Soon</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    ACCOUNT ACTIONS
+  </div>
+
+  <div class="hero-actions">
+    <button class="btn secondary" onclick="logoutAccount()">
+      Logout
+    </button>
+
+    <a href="dashboard.html" class="btn">
+      Go Dashboard
+    </a>
+  </div>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="more.html">More</a>
+</div>
+
+<script>
+
+function createAccount(){
+
+  const name =
+    document.getElementById("userName").value.trim();
+
+  const email =
+    document.getElementById("userEmail").value.trim();
+
+  if(!name || !email){
+    alert("Please enter your name and email.");
+    return;
+  }
+
+  const user = {
+    name,
+    email,
+    plan:"Free",
+    created:new Date().toLocaleDateString()
+  };
+
+  localStorage.setItem(
+    "zellaUser",
+    JSON.stringify(user)
+  );
+
+  loadAccount();
+
+}
+
+function logoutAccount(){
+
+  localStorage.removeItem("zellaUser");
+
+  loadAccount();
+
+}
+
+function loadAccount(){
+
+  const user =
+    JSON.parse(
+      localStorage.getItem("zellaUser")
+    );
+
+  if(!user){
+
+    document.getElementById("accountStatus").textContent =
+      "Guest";
+
+    document.getElementById("profileName").textContent =
+      "None";
+
+    document.getElementById("accountHeadline").textContent =
+      "No account created yet.";
+
+    document.getElementById("accountSummary").textContent =
+      "Create an account to personalize Zella and enable future cloud sync.";
+
+    return;
+  }
+
+  document.getElementById("accountStatus").textContent =
+    "Active";
+
+  document.getElementById("profileName").textContent =
+    user.name;
+
+  document.getElementById("accountHeadline").textContent =
+    `Welcome, ${user.name}`;
+
+  document.getElementById("accountSummary").textContent =
+    `${user.name}, your Zella profile is active. Email: ${user.email}. Plan: ${user.plan}. Cloud sync will be added in a future upgrade.`;
+
+}
+
+loadAccount();
+
+</script>
+
+</body>
+</html>

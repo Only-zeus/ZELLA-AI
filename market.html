@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Market Dashboard V3</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Market V6</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -12,7 +12,7 @@
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">M</div>
+    <div class="avatar-dot">MK</div>
   </div>
 </nav>
 
@@ -22,99 +22,95 @@
 
   <div class="live-row">
     <div>
-      <div class="eyebrow">ZELLA MARKET DASHBOARD</div>
-      <h1 class="command-title">Market<br>Terminal.</h1>
+      <div class="eyebrow">LIVE MARKET CENTER V6</div>
+      <h1 class="command-title">Market<br>Pulse.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="live-dot"></div>
-      <span class="live-label">LIVE</span>
+      <span class="live-label" id="marketStatus">LIVE</span>
     </div>
   </div>
 
   <p class="briefing-text">
-    View live charts, switch between assets, monitor market pulse,
-    and track Zella’s strongest opportunities in real time.
+    Zella tracks live crypto market strength, risk, opportunities,
+    top assets, weak assets, and data sources in real time.
   </p>
 
-  <div class="hero-actions">
-    <button class="btn secondary" onclick="switchChart('BINANCE:BTCUSDT','BTC')">BTC</button>
-    <button class="btn secondary" onclick="switchChart('BINANCE:ETHUSDT','ETH')">ETH</button>
-    <button class="btn secondary" onclick="switchChart('BINANCE:SOLUSDT','SOL')">SOL</button>
-    <button class="btn secondary" onclick="switchChart('BINANCE:BNBUSDT','BNB')">BNB</button>
-    <button class="btn secondary" onclick="switchChart('BINANCE:XRPUSDT','XRP')">XRP</button>
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">
-    LIVE TRADINGVIEW CHART
-  </div>
-
-  <div
-    class="tradingview-widget-container"
-    style="height:500px;width:100%;border-radius:24px;overflow:hidden;"
-  >
-    <div id="tradingview_chart" style="height:500px;"></div>
-  </div>
-
-</section>
-
-<section class="mini-grid" style="margin-top:22px;">
-
-  <div class="mini-box">
-    <div class="mini-label">Selected Asset</div>
-    <div class="mini-value blue" id="selectedAsset">BTC</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Live Price</div>
-    <div class="mini-value green" id="selectedPrice">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">24H Change</div>
-    <div class="mini-value orange" id="selectedChange">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Signal</div>
-    <div class="mini-value blue" id="selectedSignal">--</div>
-  </div>
-  
-  <a href="news.html" class="btn">
-  📰 Open News Engine
-</a>
-
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">MARKET LEADERS</div>
-
-  <div class="ranking-list" id="marketRanking">
-    <div class="rank-row">
-      <div class="rank-position">...</div>
-      <div class="rank-asset">Loading market data</div>
-      <div class="rank-score">...</div>
-    </div>
-    
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">ZELLA MARKET SUMMARY</div>
+  <div class="briefing-title">AI DAILY BRIEFING</div>
 
   <h2 class="briefing-headline" id="marketHeadline">
-    Reading live market pulse...
+    Loading market intelligence...
   </h2>
 
   <p class="briefing-text" id="marketSummary">
-    Zella is analyzing confidence, price action, momentum and risk.
+    Zella is scanning live market conditions.
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Market Mood</div>
+    <div class="mini-value green" id="moodView">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Strongest Asset</div>
+    <div class="mini-value blue" id="strongestView">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Best Opportunity</div>
+    <div class="mini-value green" id="opportunityView">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Risk Alert</div>
+    <div class="mini-value orange" id="riskAlertView">--</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">MARKET TOOLS</div>
+
+  <div class="hero-actions">
+    <a href="news.html" class="btn">📰 News Engine</a>
+    <a href="scanner.html" class="btn secondary">📈 Open Scanner</a>
+    <a href="copilot.html" class="btn secondary">🤖 Ask Zella</a>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">LIVE MARKET BOARD</div>
+
+  <div id="marketBoard">
+
+    <div class="rank-row">
+      <div class="rank-position">BTC</div>
+      <div class="rank-asset">Loading...</div>
+      <div class="rank-score">--</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">DATA SOURCE</div>
+
+  <p class="briefing-text" id="sourceView">
+    Waiting for market data...
   </p>
 
 </section>
@@ -130,177 +126,102 @@
   <a href="more.html">More</a>
 </div>
 
-<script src="https://s3.tradingview.com/tv.js"></script>
-
 <script>
-
 const API_URL = "https://zella-backend.onrender.com";
 
-let currentSymbol = "BINANCE:BTCUSDT";
-let chartWidget = null;
-
-function createChart(symbol){
-
-  document.getElementById("tradingview_chart").innerHTML = "";
-
-  chartWidget = new TradingView.widget({
-
-    container_id: "tradingview_chart",
-
-    autosize: true,
-
-    symbol: symbol,
-
-    interval: "60",
-
-    timezone: "Etc/UTC",
-
-    theme: "dark",
-
-    style: "1",
-
-    locale: "en",
-
-    toolbar_bg: "#0b1624",
-
-    enable_publishing: false,
-
-    save_image: false,
-
-    studies: [
-      "RSI@tv-basicstudies",
-      "MACD@tv-basicstudies"
-    ]
-
+function money(value){
+  return "$" + Number(value || 0).toLocaleString(undefined,{
+    maximumFractionDigits:2
   });
-
 }
 
-function switchChart(symbol, asset){
-
-  currentSymbol = symbol;
-
-  document.getElementById("selectedAsset").textContent =
-    asset;
-
-  createChart(symbol);
-
-  updateSelectedAsset(asset);
-
+function percent(value){
+  return Number(value || 0).toFixed(2) + "%";
 }
 
-async function updateSelectedAsset(asset){
+async function loadMarket(){
 
   try{
 
-    const response =
-      await fetch(API_URL + "/scanner");
+    document.getElementById("marketStatus").textContent = "LOADING";
 
-    const data =
-      await response.json();
+    const res = await fetch(API_URL + "/scanner");
+    const data = await res.json();
 
-    const rankings =
-      data.items || [];
+    const items = data.items || [];
 
-    const coin =
-      rankings.find(
-        item => item.asset === asset
-      );
+    if(!items.length){
+      document.getElementById("marketStatus").textContent = "EMPTY";
+      return;
+    }
 
-    if(!coin) return;
+    const strongest = items[0];
+    const weakest = items[items.length - 1];
 
-    document.getElementById("selectedPrice").textContent =
-      "$" + Number(coin.price).toLocaleString();
+    document.getElementById("strongestView").textContent =
+      strongest.asset;
 
-    document.getElementById("selectedChange").textContent =
-      Number(coin.change).toFixed(2) + "%";
+    document.getElementById("opportunityView").textContent =
+      strongest.asset;
 
-    document.getElementById("selectedSignal").textContent =
-      coin.signal;
+    document.getElementById("riskAlertView").textContent =
+      weakest.asset;
 
-  }
+    let mood = "Neutral";
 
-  catch(error){
+    if(strongest.confidence >= 70){
+      mood = "Bullish";
+    }else if(strongest.confidence <= 50){
+      mood = "Risk Off";
+    }
 
-    console.error(error);
-
-  }
-
-}
-
-async function loadMarketDashboard(){
-
-  try{
-
-    const response =
-      await fetch(API_URL + "/scanner");
-
-    const data =
-      await response.json();
-
-    const rankings =
-      data.items || [];
-
-    if(!rankings.length) return;
-
-    const top =
-      rankings[0];
-
-    const avg =
-      rankings.reduce(
-        (sum,item)=>
-          sum + Number(item.confidence || 0),
-        0
-      ) / rankings.length;
+    document.getElementById("moodView").textContent = mood;
 
     document.getElementById("marketHeadline").textContent =
-      `${top.asset} leads the market today`;
+      `${strongest.asset} leads the market`;
 
     document.getElementById("marketSummary").textContent =
-      `${top.asset} currently ranks #1 with ${top.confidence}% confidence and a ${top.signal} signal. Average market confidence is ${Math.round(avg)}%.`;
+      `${strongest.asset} currently ranks first with ${strongest.confidence}% confidence. ${weakest.asset} remains the weakest asset in the current scan. Market mood is ${mood}.`;
 
-    document.getElementById("marketRanking").innerHTML =
-      rankings.map((coin,index)=>`
+    document.getElementById("sourceView").textContent =
+      `Primary source: ${strongest.source} • Scanner Engine: ${strongest.engine}`;
 
+    document.getElementById("marketBoard").innerHTML =
+      items.map(asset => `
         <div class="rank-row">
 
           <div class="rank-position">
-            #${index + 1}
+            ${asset.asset}
           </div>
 
           <div class="rank-asset">
-            ${coin.asset}
+            ${asset.signal}<br>
+            <small>
+              Momentum ${asset.momentumScore}% • Risk ${asset.riskScore}%
+            </small>
           </div>
 
           <div class="rank-score">
-            ${coin.confidence}%
+            ${asset.confidence}%
           </div>
 
         </div>
-
       `).join("");
 
-  }
+    document.getElementById("marketStatus").textContent = "LIVE";
 
-  catch(error){
+  }catch(error){
 
     console.error(error);
 
-  }
+    document.getElementById("marketStatus").textContent = "ERROR";
 
+  }
 }
 
-createChart(currentSymbol);
+loadMarket();
 
-updateSelectedAsset("BTC");
-
-loadMarketDashboard();
-
-setInterval(
-  loadMarketDashboard,
-  30000
-);
-
+setInterval(loadMarket, 30000);
 </script>
 
 </body>

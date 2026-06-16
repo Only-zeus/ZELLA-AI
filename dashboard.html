@@ -3,11 +3,24 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Command Center V4</title>
+<title>Zella Command Center V5</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+
+<div class="coin-rain">
+  <span>₿</span>
+  <span>Ξ</span>
+  <span>SOL</span>
+  <span>BNB</span>
+  <span>XRP</span>
+  <span>₿</span>
+  <span>Ξ</span>
+  <span>SOL</span>
+  <span>BNB</span>
+  <span>XRP</span>
+</div>
 
 <nav class="navbar">
   <div class="nav-inner">
@@ -23,7 +36,9 @@
   <div class="live-row">
     <div>
       <div class="eyebrow">GOOD MORNING ZEUS</div>
-      <h1 class="command-title">Command<br>Center.</h1>
+      <h1 class="command-title">
+        AI Daily<br>Briefing.
+      </h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
@@ -32,21 +47,31 @@
     </div>
   </div>
 
-  <p class="briefing-text">
-    Zella is scanning live crypto market data,
-    ranking opportunities and monitoring risk in real time.
+  <p class="briefing-text" id="dailyBriefing">
+    Zella is reading live market intelligence, scanner rankings,
+    wallet status and alert activity.
   </p>
 
   <div class="mini-grid">
 
     <div class="mini-box">
       <div class="mini-label">Market Mood</div>
-      <div class="mini-value blue" id="marketMood">Loading</div>
+      <div class="mini-value green" id="marketMood">Loading</div>
     </div>
 
     <div class="mini-box">
-      <div class="mini-label">Engine</div>
-      <div class="mini-value green">V8</div>
+      <div class="mini-label">Strongest Asset</div>
+      <div class="mini-value blue" id="strongestAsset">--</div>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Risk Alert</div>
+      <div class="mini-value orange" id="riskAlert">--</div>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Best Opportunity</div>
+      <div class="mini-value green" id="bestOpportunity">--</div>
     </div>
 
   </div>
@@ -55,98 +80,95 @@
 
 <section class="command-card">
 
-  <div class="card-label">AI MARKET VERDICT</div>
+  <div class="card-label">STRONGEST SETUP</div>
 
   <div class="verdict-layout">
-
     <div class="score-ring">
-      <div class="score-number" id="verdictScore">--</div>
+      <div class="score-number" id="setupScore">--</div>
     </div>
 
     <div>
-      <div class="live-label">STRONGEST SETUP</div>
-
-      <div class="verdict-status" id="verdictSignal">
-        Loading...
-      </div>
-
-      <div class="verdict-action" id="verdictAsset">
-        Scanning
-      </div>
+      <div class="live-label">TOP OPPORTUNITY</div>
+      <div class="verdict-status" id="setupSignal">Loading...</div>
+      <div class="verdict-action" id="setupAsset">Scanning</div>
     </div>
-
   </div>
 
-  <div class="mini-grid">
+</section>
 
-    <div class="mini-box">
-      <div class="mini-label">Risk</div>
-      <div class="mini-value orange" id="verdictRisk">--</div>
-    </div>
+<section class="mini-grid" style="margin-top:22px;">
 
-    <div class="mini-box">
-      <div class="mini-label">Refresh</div>
-      <div class="mini-value green">30s</div>
-    </div>
+  <div class="mini-box">
+    <div class="mini-label">Momentum</div>
+    <div class="mini-value green" id="momentumScore">--</div>
+  </div>
 
+  <div class="mini-box">
+    <div class="mini-label">Opportunity</div>
+    <div class="mini-value blue" id="opportunityScore">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Liquidity</div>
+    <div class="mini-value orange" id="liquidityScore">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Risk Score</div>
+    <div class="mini-value blue" id="riskScore">--</div>
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    DAILY BRIEFING
-  </div>
-
-  <h2 class="briefing-headline" id="briefingHeadline">
-    Reading live market pulse...
-  </h2>
-
-  <p class="briefing-text" id="briefingText">
-    Zella is preparing a short market summary from the scanner engine.
-  </p>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    TOP OPPORTUNITIES
-  </div>
-
-  <div class="ranking-list" id="rankingList">
-
-    <div class="rank-row">
-      <div class="rank-position">...</div>
-      <div class="rank-asset">Loading ranking</div>
-      <div class="rank-score">...</div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">
-    QUICK ACTIONS
-  </div>
+  <div class="briefing-title">COMMAND SHORTCUTS</div>
 
   <div class="hero-actions">
+    <a href="alerts.html" class="btn secondary">🚨 Alert Center</a>
+    <a href="trade-journal.html" class="btn secondary">📒 Trade Journal</a>
+    <a href="journal.html" class="btn secondary">💰 Wallet</a>
+    <a href="copilot.html" class="btn">Ask Zella</a>
+  </div>
 
-    <a href="copilot.html" class="btn">
-      Ask Zella
-    </a>
+</section>
 
-    <a href="scanner.html" class="btn secondary">
-      Open Scanner
-    </a>
+<section class="briefing-card">
 
-    <a href="market.html" class="btn secondary">
-      View Market
-    </a>
+  <div class="briefing-title">LIVE RANKING SNAPSHOT</div>
 
+  <div class="ranking-list" id="rankingList">
+    <div class="rank-row">
+      <div class="rank-position">...</div>
+      <div class="rank-asset">Loading scanner data</div>
+      <div class="rank-score">...</div>
+    </div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">SYSTEM STATUS</div>
+
+  <div class="ranking-list">
+    <div class="rank-row">
+      <div class="rank-position">✅</div>
+      <div class="rank-asset">Scanner Engine</div>
+      <div class="rank-score">Live</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">✅</div>
+      <div class="rank-asset">Copilot Engine</div>
+      <div class="rank-score">Active</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">✅</div>
+      <div class="rank-asset">Market Feed</div>
+      <div class="rank-score">Online</div>
+    </div>
   </div>
 
 </section>
@@ -154,18 +176,73 @@
 </main>
 
 <div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
+  <a href="dashboard.html" class="active">Home</a>
   <a href="scanner.html">Scanner</a>
   <a href="copilot.html">Copilot</a>
   <a href="market.html">Market</a>
   <a href="journal.html">Wallet</a>
 </div>
 
+<style>
+
+.coin-rain{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.coin-rain span{
+  position:absolute;
+  top:-120px;
+  font-size:28px;
+  font-weight:700;
+  opacity:0.08;
+  animation:fall 12s linear infinite;
+}
+
+.coin-rain span:nth-child(1){left:5%;animation-delay:0s;}
+.coin-rain span:nth-child(2){left:15%;animation-delay:2s;}
+.coin-rain span:nth-child(3){left:25%;animation-delay:4s;}
+.coin-rain span:nth-child(4){left:40%;animation-delay:1s;}
+.coin-rain span:nth-child(5){left:55%;animation-delay:3s;}
+.coin-rain span:nth-child(6){left:65%;animation-delay:5s;}
+.coin-rain span:nth-child(7){left:75%;animation-delay:2s;}
+.coin-rain span:nth-child(8){left:85%;animation-delay:6s;}
+.coin-rain span:nth-child(9){left:92%;animation-delay:4s;}
+.coin-rain span:nth-child(10){left:98%;animation-delay:7s;}
+
+@keyframes fall{
+
+  from{
+    transform:
+      translateY(-150px)
+      rotate(0deg);
+  }
+
+  to{
+    transform:
+      translateY(120vh)
+      rotate(360deg);
+  }
+
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+
+</style>
+
 <script>
 
-const API_URL = "https://zella-backend.onrender.com";
+const API_URL =
+  "https://zella-backend.onrender.com";
 
-async function loadCommandCenter(){
+async function loadDashboard(){
 
   try{
 
@@ -178,55 +255,54 @@ async function loadCommandCenter(){
     const rankings =
       data.items || [];
 
-    if(!rankings.length){
-      return;
-    }
+    if(!rankings.length) return;
 
-    const strongest =
+    const top =
       rankings[0];
 
-    document.getElementById("verdictAsset").textContent =
-      strongest.asset;
+    document.getElementById("setupAsset").textContent =
+      top.asset;
 
-    document.getElementById("verdictSignal").textContent =
-      strongest.signal || "BUY";
+    document.getElementById("setupSignal").textContent =
+      top.signal;
 
-    document.getElementById("verdictScore").textContent =
-      strongest.confidence || 70;
+    document.getElementById("setupScore").textContent =
+      top.confidence;
 
-    document.getElementById("verdictRisk").textContent =
-      strongest.risk || "LOW";
+    document.getElementById("strongestAsset").textContent =
+      top.asset;
 
-    let mood = "NEUTRAL";
+    document.getElementById("bestOpportunity").textContent =
+      top.asset;
 
-    const avg =
-      rankings.reduce(
-        (sum,item)=>
-          sum + Number(item.confidence || 0),
-        0
-      ) / rankings.length;
+    document.getElementById("riskAlert").textContent =
+      top.risk;
 
-    if(avg >= 70){
-      mood = "BULLISH";
-    }
-    else if(avg >= 60){
-      mood = "WATCH";
-    }
-    else{
-      mood = "RISK OFF";
-    }
+    document.getElementById("momentumScore").textContent =
+      top.momentumScore || "--";
+
+    document.getElementById("opportunityScore").textContent =
+      top.opportunityScore || "--";
+
+    document.getElementById("liquidityScore").textContent =
+      top.liquidityScore || "--";
+
+    document.getElementById("riskScore").textContent =
+      top.riskScore || "--";
 
     document.getElementById("marketMood").textContent =
-      mood;
+      top.confidence >= 75
+      ? "Bullish"
+      : top.confidence >= 60
+      ? "Neutral"
+      : "Risk Off";
 
-    document.getElementById("briefingHeadline").textContent =
-      `${strongest.asset} leads today's ranking`;
-
-    document.getElementById("briefingText").textContent =
-      `${strongest.asset} currently holds the strongest position with ${strongest.confidence}% confidence. Market conditions remain ${mood.toLowerCase()} while Zella continues monitoring opportunities and risk across tracked assets.`;
+    document.getElementById("dailyBriefing").textContent =
+      `${top.asset} currently leads the scanner with ${top.confidence}% confidence. Zella detects strong momentum and opportunity while monitoring overall portfolio risk conditions.`;
 
     document.getElementById("rankingList").innerHTML =
-      rankings.map((coin,index)=>`
+
+      rankings.slice(0,5).map((coin,index)=>`
 
         <div class="rank-row">
 
@@ -235,7 +311,10 @@ async function loadCommandCenter(){
           </div>
 
           <div class="rank-asset">
-            ${coin.asset}
+            ${coin.asset}<br>
+            <small>
+              ${coin.signal}
+            </small>
           </div>
 
           <div class="rank-score">
@@ -252,23 +331,14 @@ async function loadCommandCenter(){
 
     console.error(error);
 
-    document.getElementById("marketMood").textContent =
-      "OFFLINE";
-
-    document.getElementById("briefingHeadline").textContent =
-      "Scanner unavailable";
-
-    document.getElementById("briefingText").textContent =
-      "Unable to connect to the market engine.";
-
   }
 
 }
 
-loadCommandCenter();
+loadDashboard();
 
 setInterval(
-  loadCommandCenter,
+  loadDashboard,
   30000
 );
 

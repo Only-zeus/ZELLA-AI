@@ -121,94 +121,98 @@
 </div>
 
 <script>
-
 const API_URL = "https://zella-backend.onrender.com";
 
-async function loadScannerV3(){
+let scannerItems = [];
+let selectedAsset = "BTC";
 
+function formatMoney(value){
+  const num = Number(value || 0);
+
+  return "$" + num.toLocaleString(undefined, {
+    maximumFractionDigits: num < 10 ? 4 : 2
+  });
+}
+
+function formatPercent(value){
+  const num = Number(value);
+
+  if(!Number.isFinite(num)){
+    return "--";
+  }
+
+  return num.toFixed(2) + "%";
+}
+
+function scoreColor(score){
+  const value = Number(score || 0);
+
+  if(value >= 75) return "#22c55e";
+  if(value >= 55) return "#f59e0b";
+  return "#ef4444";
+}
+
+async function loadScanner(){
   try{
-
     const response = await fetch(API_URL + "/scanner");
     const data = await response.json();
 
-    const rankings = data.items || [];
+    scannerItems = data.items || [];
 
-    if(!rankings.length) return;
-
-    const top = rankings[0];
-
-    document.getElementById("topAsset").textContent = top.asset;
-    document.getElementById("topSignal").textContent = top.signal;
-    document.getElementById("topConfidence").textContent = top.confidence;
-
-    const confidence =
-  Number(top.confidence || 0);
-
-const momentum =
-  Math.min(100, confidence + 8);
-
-const opportunity =
-  Math.min(100, confidence + 5);
-
-const liquidity =
-  Math.max(50, confidence - 4);
-
-const risk =
-  100 - confidence;
-
-document.getElementById("momentumScore").textContent =
-  momentum;
-
-document.getElementById("opportunityScore").textContent =
-  opportunity;
-
-document.getElementById("liquidityScore").textContent =
-  liquidity;
-
-document.getElementById("riskScore").textContent =
-  risk;
-
-    document.getElementById("scannerHeadline").textContent =
-      `${top.asset} leads the quant scanner`;
-
-    document.getElementById("scannerSummary").textContent =
-      `${top.asset} ranks highest with ${top.confidence}% confidence. Zella detects strong momentum, opportunity strength and manageable risk compared to other tracked assets.`;
-
-    document.getElementById("rankingList").innerHTML =
-      rankings.map((coin,index)=>`
-
-        <div class="rank-row">
-          <div class="rank-position">#${index + 1}</div>
-          <div class="rank-asset">
-            ${coin.asset}<br>
-            <small>
-              ${coin.signal} • Risk: ${coin.risk}
-            </small>
-          </div>
-          <div class="rank-score">
-            ${coin.confidence}%
-          </div>
-        </div>
-
-      `).join("");
+    if(scannerItems.length){
+      selectedAsset = scannerItems[0].asset;
+      updateScannerUI(scannerItems[0]);
+      renderRanking(scannerItems);
+    }
 
   }catch(error){
-
     console.error(error);
-
-    document.getElementById("scannerHeadline").textContent =
-      "Scanner unavailable";
-
-    document.getElementById("scannerSummary").textContent =
-      "Unable to connect to Zella market engine.";
-
   }
-
 }
 
-loadScannerV3();
+function updateScannerUI(asset){
+  document.getElementById("assetView").textContent =
+    asset.asset;
 
-setInterval(loadScannerV3, 30000);
+  document.getElementById("priceView").textContent =
+    formatMoney(asset.price);
+
+  document.getElementById("changeView").textContent =
+    formatPercent(asset.change24h);
+
+  document.getElementById("signalView").textContent =
+    asset.signal || "--";
+}
+
+function renderRanking(items){
+  const rankingArea =
+    document.getElementById("rankingArea");
+
+  rankingArea.innerHTML = items.map((asset,index)=>`
+
+    <div class="rank-row" onclick="updateScannerUI(scannerItems[${index}])">
+
+      <div class="rank-position">#${index + 1}</div>
+
+      <div class="rank-asset">
+        ${asset.asset}<br>
+        <small>
+          ${asset.signal} • Risk: ${asset.riskScore}
+        </small>
+      </div>
+
+      <div class="rank-score">
+        ${asset.confidence}%
+      </div>
+
+    </div>
+
+  `).join("");
+}
+
+loadScanner();
+
+setInterval(loadScanner, 30000);
 
 </script>
 

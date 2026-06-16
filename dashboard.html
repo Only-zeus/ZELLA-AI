@@ -242,6 +242,105 @@
 const API_URL =
   "https://zella-backend.onrender.com";
 
+function score(value){
+  if(value === null || value === undefined || isNaN(Number(value))){
+    return "--";
+  }
+
+  return Math.round(Number(value));
+}
+
+function percent(value){
+  if(value === null || value === undefined || isNaN(Number(value))){
+    return "-";
+  }
+
+  return Number(value).toFixed(2) + "%";
+}
+
+function getMarketMood(avgConfidence){
+
+  if(avgConfidence >= 80){
+    return "Bullish";
+  }
+
+  if(avgConfidence >= 65){
+    return "Watch";
+  }
+
+  return "Risk Off";
+}
+
+function getRecommendation(mood, top, weakest){
+
+  if(mood === "Bullish"){
+    return `${top.asset} is leading the market. Focus on strong setups, but avoid overexposure.`;
+  }
+
+  if(mood === "Watch"){
+    return `${top.asset} is showing strength, but market confidence is mixed. Wait for confirmation before aggressive entries.`;
+  }
+
+  return `Market risk is elevated. Avoid weak assets like ${weakest.asset} and protect capital.`;
+}
+
+function buildDailyBriefing(rankings){
+
+  const top =
+    rankings[0];
+
+  const weakest =
+    rankings[rankings.length - 1];
+
+  const avgConfidence =
+    rankings.reduce(
+      (sum,item)=> sum + Number(item.confidence || 0),
+      0
+    ) / rankings.length;
+
+  const mood =
+    getMarketMood(avgConfidence);
+
+  const recommendation =
+    getRecommendation(mood, top, weakest);
+
+  return {
+    top,
+    weakest,
+    avgConfidence,
+    mood,
+    recommendation
+  };
+
+}
+
+function renderRanking(rankings){
+
+  return rankings.slice(0,5).map((coin,index)=>`
+
+    <div class="rank-row">
+
+      <div class="rank-position">
+        #${index + 1}
+      </div>
+
+      <div class="rank-asset">
+        ${coin.asset}<br>
+        <small>
+          ${coin.signal} • ${percent(coin.change)}
+        </small>
+      </div>
+
+      <div class="rank-score">
+        ${score(coin.confidence)}%
+      </div>
+
+    </div>
+
+  `).join("");
+
+}
+
 async function loadDashboard(){
 
   try{
@@ -257,8 +356,26 @@ async function loadDashboard(){
 
     if(!rankings.length) return;
 
+    const briefing =
+      buildDailyBriefing(rankings);
+
     const top =
-      rankings[0];
+      briefing.top;
+
+    const weakest =
+      briefing.weakest;
+
+    document.getElementById("marketMood").textContent =
+      briefing.mood;
+
+    document.getElementById("strongestAsset").textContent =
+      top.asset;
+
+    document.getElementById("riskAlert").textContent =
+      weakest.asset;
+
+    document.getElementById("bestOpportunity").textContent =
+      top.asset;
 
     document.getElementById("setupAsset").textContent =
       top.asset;
@@ -267,69 +384,34 @@ async function loadDashboard(){
       top.signal;
 
     document.getElementById("setupScore").textContent =
-      top.confidence;
-
-    document.getElementById("strongestAsset").textContent =
-      top.asset;
-
-    document.getElementById("bestOpportunity").textContent =
-      top.asset;
-
-    document.getElementById("riskAlert").textContent =
-      top.risk;
+      score(top.confidence);
 
     document.getElementById("momentumScore").textContent =
-      top.momentumScore || "--";
+      score(top.momentumScore);
 
     document.getElementById("opportunityScore").textContent =
-      top.opportunityScore || "--";
+      score(top.opportunityScore);
 
     document.getElementById("liquidityScore").textContent =
-      top.liquidityScore || "--";
+      score(top.liquidityScore);
 
     document.getElementById("riskScore").textContent =
-      top.riskScore || "--";
-
-    document.getElementById("marketMood").textContent =
-      top.confidence >= 75
-      ? "Bullish"
-      : top.confidence >= 60
-      ? "Neutral"
-      : "Risk Off";
+      score(top.riskScore);
 
     document.getElementById("dailyBriefing").textContent =
-      `${top.asset} currently leads the scanner with ${top.confidence}% confidence. Zella detects strong momentum and opportunity while monitoring overall portfolio risk conditions.`;
+      `${top.asset} leads today with ${score(top.confidence)}% confidence and a ${top.signal} signal. Market mood is ${briefing.mood}. ${briefing.recommendation}`;
 
     document.getElementById("rankingList").innerHTML =
-
-      rankings.slice(0,5).map((coin,index)=>`
-
-        <div class="rank-row">
-
-          <div class="rank-position">
-            #${index + 1}
-          </div>
-
-          <div class="rank-asset">
-            ${coin.asset}<br>
-            <small>
-              ${coin.signal}
-            </small>
-          </div>
-
-          <div class="rank-score">
-            ${coin.confidence}%
-          </div>
-
-        </div>
-
-      `).join("");
+      renderRanking(rankings);
 
   }
 
   catch(error){
 
     console.error(error);
+
+    document.getElementById("dailyBriefing").textContent =
+      "Zella could not load the daily briefing.";
 
   }
 

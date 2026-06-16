@@ -245,16 +245,23 @@
       <div class="mini-label">📈 Trade Prep</div>
       <div class="mini-value orange">Open</div>
     </a>
-    
-    <div class="mini-box" onclick="logoutUser()" style="cursor:pointer;">
-  <div class="mini-label">🚪 Logout</div>
-  <div class="mini-value orange">Exit</div>
-</div>
 
 <a href="cloud-sync.html" class="mini-box" style="text-decoration:none;">
   <div class="mini-label">☁️ Cloud Sync</div>
   <div class="mini-value orange">Open</div>
 </a>
+
+<div class="mini-box" onclick="logoutUser()" style="cursor:pointer;">
+
+  <div class="mini-label">
+    🚪 Logout
+  </div>
+
+  <div class="mini-value orange">
+    Exit
+  </div>
+
+</div>
 
   </div>
 
@@ -376,6 +383,50 @@ function updateHubStats(){
 }
 
 updateHubStats();
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+
+import {
+  getAuth,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+  authDomain: "zella-424f2.firebaseapp.com",
+  projectId: "zella-424f2",
+  storageBucket: "zella-424f2.firebasestorage.app",
+  messagingSenderId: "1008967672362",
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.logoutUser = async function () {
+
+  try {
+
+    await signOut(auth);
+
+    localStorage.clear();
+    sessionStorage.clear();
+
+    window.location.href = "index.html";
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Logout failed.");
+
+  }
+
+};
 
 </script>
 

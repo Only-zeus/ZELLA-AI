@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella AI Copilot V2</title>
+<title>Zella AI Copilot V4</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,13 +13,12 @@
   <span>🤖</span>
   <span>AI</span>
   <span>BTC</span>
-  <span>ETH</span>
   <span>TRADE</span>
+  <span>NEWS</span>
   <span>ZELLA</span>
 </div>
 
 <style>
-
 .pro-particles{
   position:fixed;
   inset:0;
@@ -32,7 +31,7 @@
   position:absolute;
   top:-100px;
   opacity:.10;
-  font-size:30px;
+  font-size:28px;
   font-weight:900;
   color:#38bdf8;
   animation:copilotRain 14s linear infinite;
@@ -46,19 +45,8 @@
 .pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
 
 @keyframes copilotRain{
-
-  from{
-    transform:
-      translateY(-140px)
-      rotate(0deg);
-  }
-
-  to{
-    transform:
-      translateY(120vh)
-      rotate(360deg);
-  }
-
+  from{transform:translateY(-140px) rotate(0deg);}
+  to{transform:translateY(120vh) rotate(360deg);}
 }
 
 .container,
@@ -67,22 +55,91 @@
   z-index:2;
 }
 
+.chat-box{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:20px;
+}
+
+.chat-bubble{
+  padding:18px;
+  border-radius:24px;
+  line-height:1.6;
+  font-size:15px;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.user-bubble{
+  align-self:flex-end;
+  background:linear-gradient(135deg,#0284c7,#2563eb);
+  color:white;
+  max-width:85%;
+}
+
+.zella-bubble{
+  align-self:flex-start;
+  background:rgba(15,23,42,.88);
+  color:#e5eefb;
+  max-width:90%;
+}
+
+.trade-card{
+  margin-top:14px;
+  padding:16px;
+  border-radius:22px;
+  background:rgba(15,23,42,.92);
+  border:1px solid rgba(56,189,248,.25);
+}
+
+.trade-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+
+.trade-metric{
+  padding:12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.05);
+}
+
+.trade-label{
+  font-size:11px;
+  letter-spacing:2px;
+  color:#94a3b8;
+}
+
+.trade-value{
+  font-size:18px;
+  font-weight:900;
+  margin-top:5px;
+}
+
+.quick-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:15px;
+}
+
+.quick-actions button{
+  border:none;
+  border-radius:999px;
+  padding:10px 14px;
+  background:rgba(56,189,248,.12);
+  color:#38bdf8;
+  font-weight:800;
+  cursor:pointer;
+}
 </style>
 
 <nav class="navbar">
-
   <div class="nav-inner">
-
-    <div class="logo">
-      ZELLA
-    </div>
-
-    <div class="avatar-dot">
-      AI
-    </div>
-
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">AI</div>
   </div>
-
 </nav>
 
 <main class="container">
@@ -90,44 +147,20 @@
 <section class="command-card">
 
   <div class="live-row">
-
     <div>
-
-      <div class="eyebrow">
-        ADVANCED AI COPILOT
-      </div>
-
-      <h1 class="command-title">
-
-        Trade<br>
-        Intelligence.
-
-      </h1>
-
+      <div class="eyebrow">ZELLA AI COPILOT V4</div>
+      <h1 class="command-title">Talk.<br>Analyze.<br>Trade Smarter.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
-
       <div class="live-dot"></div>
-
-      <span class="live-label">
-
-        ONLINE
-
-      </span>
-
+      <span class="live-label">ONLINE</span>
     </div>
-
   </div>
 
   <p class="briefing-text">
-
-    Ask Zella about trade setups,
-    portfolio risk,
-    scanner signals,
-    market opportunities,
-    and trading decisions.
-
+    Chat naturally with Zella like a real AI assistant. Ask questions,
+    learn crypto, analyze markets, review news, and generate live trade setups.
   </p>
 
 </section>
@@ -135,78 +168,117 @@
 <section class="mini-grid">
 
   <div class="mini-box">
-    <div class="mini-label">AI Status</div>
-    <div class="mini-value green">Active</div>
+    <div class="mini-label">AI Mode</div>
+    <div class="mini-value green">Chat</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Market Mode</div>
+    <div class="mini-label">Market Data</div>
     <div class="mini-value blue">Live</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Copilot</div>
-    <div class="mini-value orange">V2</div>
+    <div class="mini-label">Trade Setup</div>
+    <div class="mini-value orange">Ready</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Cloud</div>
-    <div class="mini-value green">Connected</div>
+    <div class="mini-label">Memory</div>
+    <div class="mini-value green">Session</div>
   </div>
 
 </section>
 
 <section class="command-card">
 
-  <div class="card-label">
-    ASK ZELLA AI
-  </div>
+  <div class="card-label">ASK ZELLA ANYTHING</div>
 
   <div class="chat-input-bar">
-
     <input
-      id="userQuestion"
-      placeholder="Should I buy BTC today?">
+      id="userMessage"
+      placeholder="Hi Zella, analyze BTC or explain RSI..."
+      onkeydown="handleEnter(event)"
+    >
 
-    <button
-      class="btn"
-      onclick="askCopilot()">
-
-      Ask AI
-
+    <button class="btn" onclick="sendMessage()">
+      Send
     </button>
+  </div>
 
+  <div class="quick-actions">
+    <button onclick="quickAsk('Hi Zella')">Hi Zella</button>
+    <button onclick="quickAsk('Explain RSI like I am a beginner')">Explain RSI</button>
+    <button onclick="quickAsk('Analyze BTC and give me entry zone and stop loss')">Analyze BTC</button>
+    <button onclick="quickAsk('What is the best setup right now?')">Best Setup</button>
+    <button onclick="quickAsk('Summarize today crypto news')">News Summary</button>
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    ZELLA AI RESPONSE
+  <div class="briefing-title">LIVE CHAT</div>
+
+  <div class="chat-box" id="chatBox">
+
+    <div class="chat-bubble zella-bubble">
+      Hey, I’m Zella 👋<br><br>
+      Ask me anything — crypto education, market news, portfolio risk,
+      or live trade setups with entry zone, stop loss and take profits.
+    </div>
+
   </div>
 
-  <h2 class="briefing-headline" id="aiHeadline">
-    Waiting for your question...
+</section>
+
+<section class="briefing-card" id="setupCard" style="display:none;">
+
+  <div class="briefing-title">AUTOTRADER SETUP</div>
+
+  <h2 class="briefing-headline" id="setupAsset">
+    Waiting for setup...
   </h2>
 
-  <p class="briefing-text" id="aiSummary">
-    Ask about buying, selling, risk, portfolio, scanner rankings, or trade setups.
-  </p>
+  <div class="trade-card">
 
-</section>
+    <div class="trade-grid">
 
-<section class="briefing-card">
+      <div class="trade-metric">
+        <div class="trade-label">VERDICT</div>
+        <div class="trade-value" id="setupVerdict">--</div>
+      </div>
 
-  <div class="briefing-title">
-    AI QUICK ACTIONS
-  </div>
+      <div class="trade-metric">
+        <div class="trade-label">CONFIDENCE</div>
+        <div class="trade-value" id="setupConfidence">--</div>
+      </div>
 
-  <div class="hero-actions">
-    <button class="btn secondary" onclick="quickAsk('Should I buy BTC today?')">Buy BTC?</button>
-    <button class="btn secondary" onclick="quickAsk('What is the strongest setup?')">Strongest Setup</button>
-    <button class="btn secondary" onclick="quickAsk('Review my portfolio risk')">Portfolio Risk</button>
-    <button class="btn secondary" onclick="quickAsk('Rank all assets')">Rank Assets</button>
+      <div class="trade-metric">
+        <div class="trade-label">ENTRY ZONE</div>
+        <div class="trade-value" id="setupEntry">--</div>
+      </div>
+
+      <div class="trade-metric">
+        <div class="trade-label">STOP LOSS</div>
+        <div class="trade-value" id="setupStop">--</div>
+      </div>
+
+      <div class="trade-metric">
+        <div class="trade-label">TAKE PROFIT 1</div>
+        <div class="trade-value" id="setupTP1">--</div>
+      </div>
+
+      <div class="trade-metric">
+        <div class="trade-label">TAKE PROFIT 2</div>
+        <div class="trade-value" id="setupTP2">--</div>
+      </div>
+
+    </div>
+
+    <button class="btn" style="margin-top:16px;" onclick="saveSetup()">
+      Save AutoTrader Setup
+    </button>
+
   </div>
 
 </section>
@@ -223,204 +295,140 @@
 </div>
 
 <script>
+const API_URL = "https://zella-backend.onrender.com";
 
-const API_URL =
-  "https://zella-backend.onrender.com";
+let lastSetup = null;
 
-function quickAsk(question){
-
-  document.getElementById("userQuestion").value =
-    question;
-
-  askCopilot();
-
+function handleEnter(event){
+  if(event.key === "Enter"){
+    sendMessage();
+  }
 }
 
-function detectAsset(text){
-
-  const assets =
-    ["BTC","ETH","SOL","BNB","XRP"];
-
-  return assets.find(
-    asset =>
-      text.toUpperCase().includes(asset)
-  );
-
+function quickAsk(text){
+  document.getElementById("userMessage").value = text;
+  sendMessage();
 }
 
-async function askCopilot(){
+function addBubble(role, text){
+  const chatBox = document.getElementById("chatBox");
 
-  const question =
-    document.getElementById("userQuestion").value.trim();
+  const bubble = document.createElement("div");
+  bubble.className =
+    role === "user"
+      ? "chat-bubble user-bubble"
+      : "chat-bubble zella-bubble";
 
-  if(!question){
-    alert("Ask Zella a question.");
+  bubble.innerHTML = text.replace(/\n/g, "<br>");
+
+  chatBox.appendChild(bubble);
+  bubble.scrollIntoView({ behavior:"smooth" });
+}
+
+function formatMoney(value){
+  const num = Number(value || 0);
+
+  return "$" + num.toLocaleString(undefined, {
+    maximumFractionDigits: num < 10 ? 4 : 2
+  });
+}
+
+function renderSetup(setup){
+  if(!setup) return;
+
+  lastSetup = setup;
+
+  document.getElementById("setupCard").style.display = "block";
+  document.getElementById("setupAsset").textContent = setup.asset + " Live Setup";
+  document.getElementById("setupVerdict").textContent = setup.verdict || "--";
+  document.getElementById("setupConfidence").textContent = setup.confidence + "%";
+
+  document.getElementById("setupEntry").textContent =
+    formatMoney(setup.entryZone.low) + " - " + formatMoney(setup.entryZone.high);
+
+  document.getElementById("setupStop").textContent =
+    formatMoney(setup.stopLoss);
+
+  document.getElementById("setupTP1").textContent =
+    formatMoney(setup.takeProfit1);
+
+  document.getElementById("setupTP2").textContent =
+    formatMoney(setup.takeProfit2);
+}
+
+async function sendMessage(){
+  const input = document.getElementById("userMessage");
+  const message = input.value.trim();
+
+  if(!message) return;
+
+  addBubble("user", message);
+  input.value = "";
+
+  addBubble("zella", "Zella is thinking...");
+
+  try{
+    const response = await fetch(API_URL + "/copilot", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        message,
+        userId: localStorage.getItem("zellaUserId") || "guest",
+        context:{
+          source:"copilot.html",
+          mode:"interactive"
+        }
+      })
+    });
+
+    const data = await response.json();
+
+    const chatBox = document.getElementById("chatBox");
+    chatBox.lastChild.remove();
+
+    if(data.reply){
+      addBubble("zella", data.reply);
+    }else{
+      addBubble("zella", "I couldn't generate a response right now.");
+    }
+
+    if(data.tradeSetup){
+      renderSetup(data.tradeSetup);
+    }
+
+  }catch(error){
+    console.error(error);
+
+    const chatBox = document.getElementById("chatBox");
+    chatBox.lastChild.remove();
+
+    addBubble("zella", "Connection error. Please try again.");
+  }
+}
+
+function saveSetup(){
+  if(!lastSetup){
+    alert("No setup to save yet.");
     return;
   }
 
-  document.getElementById("aiHeadline").textContent =
-    "Zella is analyzing...";
+  const saved =
+    JSON.parse(localStorage.getItem("zellaAutoTraderSetups")) || [];
 
-  document.getElementById("aiSummary").textContent =
-    "Reading scanner data, portfolio context and risk signals.";
+  saved.push({
+    ...lastSetup,
+    savedAt:new Date().toISOString()
+  });
 
-  try{
+  localStorage.setItem(
+    "zellaAutoTraderSetups",
+    JSON.stringify(saved)
+  );
 
-    const response =
-      await fetch(API_URL + "/scanner");
-
-    const data =
-      await response.json();
-
-    const rankings =
-      data.items || [];
-
-    const q =
-      question.toLowerCase();
-
-    const selectedAsset =
-      detectAsset(question);
-
-    const top =
-      rankings[0];
-
-    let answerHeadline =
-      "Zella AI Verdict";
-
-    let answerSummary =
-      "";
-
-    if(q.includes("rank")){
-
-      answerHeadline =
-        "Asset Ranking";
-
-      answerSummary =
-        rankings.map((asset,index)=>
-          `#${index + 1} ${asset.asset}: ${asset.confidence}% confidence, ${asset.signal}`
-        ).join(" | ");
-
-    }
-
-    else if(q.includes("portfolio")){
-
-      const wallet =
-        JSON.parse(
-          localStorage.getItem("zellaWalletV5")
-        ) || [];
-
-      answerHeadline =
-        "Portfolio Risk Review";
-
-      answerSummary =
-        wallet.length
-          ? `You currently have ${wallet.length} portfolio holding(s). Zella recommends checking allocation balance, avoiding overexposure to one asset, and using stop loss rules before entering new trades.`
-          : "No portfolio holdings detected. Add holdings in Wallet so Zella can review your risk properly.";
-
-    }
-
-    else if(selectedAsset){
-
-      const asset =
-        rankings.find(
-          item => item.asset === selectedAsset
-        );
-
-      if(!asset){
-
-        answerHeadline =
-          `${selectedAsset} unavailable`;
-
-        answerSummary =
-          "Zella could not find scanner data for that asset.";
-
-      }else{
-
-        const confidence =
-          Number(asset.confidence || 0);
-
-        const momentum =
-          Number(asset.momentumScore || 0);
-
-        const opportunity =
-          Number(asset.opportunityScore || 0);
-
-        const risk =
-          Number(asset.riskScore || 100);
-
-        let verdict =
-          "WAIT";
-
-        if(
-          confidence >= 80 &&
-          momentum >= 80 &&
-          opportunity >= 80 &&
-          risk <= 45
-        ){
-          verdict =
-            "BUY SETUP";
-        }
-
-        else if(
-          confidence < 60 ||
-          risk >= 70
-        ){
-          verdict =
-            "AVOID / SELL RISK";
-        }
-
-        answerHeadline =
-          `${asset.asset}: ${verdict}`;
-
-        answerSummary =
-          `${asset.asset} is trading around $${Number(asset.price).toLocaleString()}. Confidence is ${confidence}%, momentum is ${momentum}, opportunity is ${opportunity}, and risk score is ${risk}. Current scanner signal is ${asset.signal}. Zella verdict: ${verdict}. This is analysis only, not financial advice.`;
-
-      }
-
-    }
-
-    else if(q.includes("strongest") || q.includes("best")){
-
-      answerHeadline =
-        `${top.asset} is strongest`;
-
-      answerSummary =
-        `${top.asset} currently leads the scanner with ${top.confidence}% confidence, momentum score ${top.momentumScore}, opportunity score ${top.opportunityScore}, and signal ${top.signal}.`;
-
-    }
-
-    else{
-
-      answerHeadline =
-        "Market Intelligence Summary";
-
-      answerSummary =
-        `${top.asset} currently leads the market scanner with ${top.confidence}% confidence. Ask about BTC, ETH, SOL, BNB, XRP, portfolio risk, or asset rankings for a deeper answer.`;
-
-    }
-
-    document.getElementById("aiHeadline").textContent =
-      answerHeadline;
-
-    document.getElementById("aiSummary").textContent =
-      answerSummary;
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    document.getElementById("aiHeadline").textContent =
-      "Copilot unavailable";
-
-    document.getElementById("aiSummary").textContent =
-      "Zella could not connect to the scanner engine.";
-
-  }
-
+  alert("AutoTrader setup saved.");
 }
-
 </script>
 
 </body>

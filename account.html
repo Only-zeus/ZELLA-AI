@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Account Center</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zella Firebase Login</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
 <div class="pro-particles">
   <span>👤</span>
-  <span>ZELLA</span>
-  <span>SYNC</span>
-  <span>☁️</span>
+  <span>GOOGLE</span>
   <span>LOGIN</span>
-  <span>PRO</span>
+  <span>🔐</span>
+  <span>CLOUD</span>
+  <span>SYNC</span>
 </div>
 
 <style>
-
 .pro-particles{
   position:fixed;
   inset:0;
@@ -32,7 +31,7 @@
   position:absolute;
   top:-100px;
   opacity:.10;
-  font-size:30px;
+  font-size:28px;
   font-weight:900;
   color:#38bdf8;
   animation:accountRain 14s linear infinite;
@@ -46,12 +45,8 @@
 .pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
 
 @keyframes accountRain{
-  from{
-    transform:translateY(-140px) rotate(0deg);
-  }
-  to{
-    transform:translateY(120vh) rotate(360deg);
-  }
+  from{transform:translateY(-140px) rotate(0deg);}
+  to{transform:translateY(120vh) rotate(360deg);}
 }
 
 .container,
@@ -59,23 +54,13 @@
   position:relative;
   z-index:2;
 }
-
 </style>
 
 <nav class="navbar">
-
   <div class="nav-inner">
-
-    <div class="logo">
-      ZELLA
-    </div>
-
-    <div class="avatar-dot">
-      👤
-    </div>
-
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">G</div>
   </div>
-
 </nav>
 
 <main class="container">
@@ -83,42 +68,19 @@
 <section class="command-card">
 
   <div class="live-row">
-
     <div>
-
-      <div class="eyebrow">
-        USER ACCOUNT CENTER
-      </div>
-
-      <h1 class="command-title">
-
-        Welcome<br>
-        Trader.
-
-      </h1>
-
+      <div class="eyebrow">ZELLA ACCOUNT</div>
+      <h1 class="command-title">Google<br>Login.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
-
       <div class="live-dot"></div>
-
-      <span class="live-label">
-
-        ACCOUNT
-
-      </span>
-
+      <span class="live-label">FIREBASE</span>
     </div>
-
   </div>
 
   <p class="briefing-text">
-
-    Create your Zella account,
-    personalize your dashboard,
-    and prepare for future cloud sync.
-
+    Sign in with Google to personalize Zella and prepare your account for future cloud sync.
   </p>
 
 </section>
@@ -127,123 +89,57 @@
 
   <div class="mini-box">
     <div class="mini-label">Status</div>
-    <div class="mini-value green" id="accountStatus">
-      Guest
-    </div>
+    <div class="mini-value green" id="accountStatus">Guest</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Name</div>
+    <div class="mini-value blue" id="profileName">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Provider</div>
+    <div class="mini-value orange" id="providerName">Google</div>
   </div>
 
   <div class="mini-box">
     <div class="mini-label">Cloud Sync</div>
-    <div class="mini-value blue">
-      Soon
-    </div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Profile</div>
-    <div class="mini-value orange" id="profileName">
-      None
-    </div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Plan</div>
-    <div class="mini-value green">
-      Free
-    </div>
+    <div class="mini-value green">Soon</div>
   </div>
 
 </section>
 
 <section class="command-card">
 
-  <div class="card-label">
-    CREATE ACCOUNT
-  </div>
-
-  <div class="chat-input-bar">
-
-    <input
-      id="userName"
-      placeholder="Your Name">
-
-    <input
-      id="userEmail"
-      placeholder="Email Address">
-
-  </div>
-
-  <div class="hero-actions" style="margin-top:15px;">
-
-    <button class="btn" onclick="createAccount()">
-      Create Account
-    </button>
-
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    PROFILE DASHBOARD
-  </div>
-
-  <h2 class="briefing-headline" id="accountHeadline">
-    No account created yet.
-  </h2>
-
-  <p class="briefing-text" id="accountSummary">
-    Create an account to personalize Zella and enable future cloud sync.
-  </p>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    CLOUD SYNC PREVIEW
-  </div>
-
-  <div class="ranking-list">
-
-    <div class="rank-row">
-      <div class="rank-position">☁️</div>
-      <div class="rank-asset">Portfolio Sync<br><small>Future multi-device wallet sync.</small></div>
-      <div class="rank-score">Soon</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">📒</div>
-      <div class="rank-asset">Journal Sync<br><small>Future trade history backup.</small></div>
-      <div class="rank-score">Soon</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">⚙️</div>
-      <div class="rank-asset">Settings Sync<br><small>Future preferences saved to cloud.</small></div>
-      <div class="rank-score">Soon</div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">
-    ACCOUNT ACTIONS
-  </div>
+  <div class="card-label">ACCOUNT ACTIONS</div>
 
   <div class="hero-actions">
-    <button class="btn secondary" onclick="logoutAccount()">
-      Logout
+    <button class="btn" onclick="signInWithGoogle()">
+      Continue with Google
     </button>
 
-    <a href="dashboard.html" class="btn">
+    <button class="btn secondary" onclick="logoutUser()">
+      Sign Out
+    </button>
+
+    <a href="dashboard.html" class="btn secondary">
       Go Dashboard
     </a>
   </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">PROFILE STATUS</div>
+
+  <h2 class="briefing-headline" id="accountHeadline">
+    No user signed in.
+  </h2>
+
+  <p class="briefing-text" id="accountSummary">
+    Sign in with Google to personalize Zella.
+  </p>
 
 </section>
 
@@ -257,84 +153,193 @@
   <a href="more.html">More</a>
 </div>
 
-<script>
+<script type="module">
 
-function createAccount(){
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
-  const name =
-    document.getElementById("userName").value.trim();
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
-  const email =
-    document.getElementById("userEmail").value.trim();
+const firebaseConfig = {
 
-  if(!name || !email){
-    alert("Please enter your name and email.");
-    return;
+  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+
+  authDomain: "zella-424f2.firebaseapp.com",
+
+  projectId: "zella-424f2",
+
+  storageBucket: "zella-424f2.firebasestorage.app",
+
+  messagingSenderId: "1008967672362",
+
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
+
+};
+
+const app =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(app);
+
+const provider =
+  new GoogleAuthProvider();
+
+window.signInWithGoogle =
+async function(){
+
+  try{
+
+    const result =
+      await signInWithPopup(
+        auth,
+        provider
+      );
+
+    const user =
+      result.user;
+
+    saveUser(user);
+
   }
 
-  const user = {
-    name,
-    email,
-    plan:"Free",
-    created:new Date().toLocaleDateString()
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Google Sign-In failed."
+    );
+
+  }
+
+};
+
+window.logoutUser =
+async function(){
+
+  await signOut(auth);
+
+  localStorage.removeItem(
+    "zellaUser"
+  );
+
+  updateGuest();
+
+};
+
+function saveUser(user){
+
+  const profile = {
+
+    uid: user.uid,
+
+    name:
+      user.displayName,
+
+    email:
+      user.email,
+
+    photo:
+      user.photoURL,
+
+    provider:
+      "Google"
+
   };
 
   localStorage.setItem(
     "zellaUser",
-    JSON.stringify(user)
+    JSON.stringify(profile)
   );
 
-  loadAccount();
+  updateProfile(profile);
 
 }
 
-function logoutAccount(){
+function updateProfile(user){
 
-  localStorage.removeItem("zellaUser");
-
-  loadAccount();
-
-}
-
-function loadAccount(){
-
-  const user =
-    JSON.parse(
-      localStorage.getItem("zellaUser")
-    );
-
-  if(!user){
-
-    document.getElementById("accountStatus").textContent =
-      "Guest";
-
-    document.getElementById("profileName").textContent =
-      "None";
-
-    document.getElementById("accountHeadline").textContent =
-      "No account created yet.";
-
-    document.getElementById("accountSummary").textContent =
-      "Create an account to personalize Zella and enable future cloud sync.";
-
-    return;
-  }
-
-  document.getElementById("accountStatus").textContent =
+  document.getElementById(
+    "accountStatus"
+  ).textContent =
     "Active";
 
-  document.getElementById("profileName").textContent =
+  document.getElementById(
+    "profileName"
+  ).textContent =
     user.name;
 
-  document.getElementById("accountHeadline").textContent =
-    `Welcome, ${user.name}`;
+  document.getElementById(
+    "providerName"
+  ).textContent =
+    user.provider;
 
-  document.getElementById("accountSummary").textContent =
-    `${user.name}, your Zella profile is active. Email: ${user.email}. Plan: ${user.plan}. Cloud sync will be added in a future upgrade.`;
+  document.getElementById(
+    "accountHeadline"
+  ).textContent =
+    `Welcome ${user.name}`;
+
+  document.getElementById(
+    "accountSummary"
+  ).textContent =
+    `${user.email} connected successfully through Google Authentication.`;
 
 }
 
-loadAccount();
+function updateGuest(){
+
+  document.getElementById(
+    "accountStatus"
+  ).textContent =
+    "Guest";
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    "--";
+
+  document.getElementById(
+    "providerName"
+  ).textContent =
+    "Google";
+
+  document.getElementById(
+    "accountHeadline"
+  ).textContent =
+    "No user signed in.";
+
+  document.getElementById(
+    "accountSummary"
+  ).textContent =
+    "Sign in with Google to personalize Zella.";
+
+}
+
+onAuthStateChanged(
+  auth,
+  user => {
+
+    if(user){
+
+      saveUser(user);
+
+    }
+
+    else{
+
+      updateGuest();
+
+    }
+
+  }
+);
 
 </script>
 

@@ -1,19 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Copilot V12</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella AI Copilot V2</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<div class="pro-particles">
+  <span>🤖</span>
+  <span>AI</span>
+  <span>BTC</span>
+  <span>ETH</span>
+  <span>TRADE</span>
+  <span>ZELLA</span>
+</div>
+
+<style>
+
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+  position:absolute;
+  top:-100px;
+  opacity:.10;
+  font-size:30px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:copilotRain 14s linear infinite;
+}
+
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes copilotRain{
+
+  from{
+    transform:
+      translateY(-140px)
+      rotate(0deg);
+  }
+
+  to{
+    transform:
+      translateY(120vh)
+      rotate(360deg);
+  }
+
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+
+</style>
+
 <nav class="navbar">
+
   <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">Z</div>
+
+    <div class="logo">
+      ZELLA
+    </div>
+
+    <div class="avatar-dot">
+      AI
+    </div>
+
   </div>
+
 </nav>
 
 <main class="container">
@@ -21,73 +90,123 @@
 <section class="command-card">
 
   <div class="live-row">
+
     <div>
-      <div class="eyebrow">ZELLA AI COPILOT</div>
-      <h1 class="command-title">Ask<br>Zella.</h1>
+
+      <div class="eyebrow">
+        ADVANCED AI COPILOT
+      </div>
+
+      <h1 class="command-title">
+
+        Trade<br>
+        Intelligence.
+
+      </h1>
+
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
+
       <div class="live-dot"></div>
-      <span class="live-label">ONLINE</span>
+
+      <span class="live-label">
+
+        ONLINE
+
+      </span>
+
     </div>
+
   </div>
 
   <p class="briefing-text">
-    Ask Zella about live prices, strongest setups, rankings,
-    risk, confidence scores and coin comparisons.
+
+    Ask Zella about trade setups,
+    portfolio risk,
+    scanner signals,
+    market opportunities,
+    and trading decisions.
+
   </p>
 
-  <div class="hero-actions">
-    <button class="btn secondary" onclick="quickAsk('What is BTC price?')">BTC Price</button>
-    <button class="btn secondary" onclick="quickAsk('Scan the market and tell me the strongest setup')">Strongest Setup</button>
-    <button class="btn secondary" onclick="quickAsk('Rank BTC ETH SOL BNB XRP')">Rank Assets</button>
-    <button class="btn secondary" onclick="quickAsk('Compare BTC and SOL')">Compare</button>
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">AI Status</div>
+    <div class="mini-value green">Active</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Market Mode</div>
+    <div class="mini-value blue">Live</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Copilot</div>
+    <div class="mini-value orange">V2</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Cloud</div>
+    <div class="mini-value green">Connected</div>
   </div>
 
 </section>
 
-<section class="chat-shell">
+<section class="command-card">
 
-  <div id="chat" class="copilot-chat">
-    <div class="chat-message bot">
-      <strong>Zella</strong>
-      Welcome back Zeus. Ask me about live market data, rankings, confidence scores, risks, or trading setups.
-    </div>
+  <div class="card-label">
+    ASK ZELLA AI
   </div>
 
   <div class="chat-input-bar">
-    <input id="userInput" type="text" placeholder="Ask Zella anything..." />
-    <button onclick="sendMessage()">Send</button>
+
+    <input
+      id="userQuestion"
+      placeholder="Should I buy BTC today?">
+
+    <button
+      class="btn"
+      onclick="askCopilot()">
+
+      Ask AI
+
+    </button>
+
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">AI INSIGHTS</div>
+  <div class="briefing-title">
+    ZELLA AI RESPONSE
+  </div>
 
-  <div class="mini-grid">
+  <h2 class="briefing-headline" id="aiHeadline">
+    Waiting for your question...
+  </h2>
 
-    <div class="mini-box">
-      <div class="mini-label">Top Asset</div>
-      <div class="mini-value blue" id="topAsset">Loading</div>
-    </div>
+  <p class="briefing-text" id="aiSummary">
+    Ask about buying, selling, risk, portfolio, scanner rankings, or trade setups.
+  </p>
 
-    <div class="mini-box">
-      <div class="mini-label">Confidence</div>
-      <div class="mini-value green" id="topConfidence">--</div>
-    </div>
+</section>
 
-    <div class="mini-box">
-      <div class="mini-label">Signal</div>
-      <div class="mini-value orange" id="topSignal">--</div>
-    </div>
+<section class="briefing-card">
 
-    <div class="mini-box">
-      <div class="mini-label">Risk</div>
-      <div class="mini-value blue" id="topRisk">--</div>
-    </div>
+  <div class="briefing-title">
+    AI QUICK ACTIONS
+  </div>
 
+  <div class="hero-actions">
+    <button class="btn secondary" onclick="quickAsk('Should I buy BTC today?')">Buy BTC?</button>
+    <button class="btn secondary" onclick="quickAsk('What is the strongest setup?')">Strongest Setup</button>
+    <button class="btn secondary" onclick="quickAsk('Review my portfolio risk')">Portfolio Risk</button>
+    <button class="btn secondary" onclick="quickAsk('Rank all assets')">Rank Assets</button>
   </div>
 
 </section>
@@ -99,312 +218,207 @@
   <a href="scanner.html">Scanner</a>
   <a href="copilot.html">Copilot</a>
   <a href="market.html">Market</a>
-  <a href="journal.html">Wallet</a>
+  <a href="more.html">More</a>
 </div>
 
 <script>
 
-const API_URL = "https://zella-backend.onrender.com";
+const API_URL =
+  "https://zella-backend.onrender.com";
 
-function money(value){
-  if(value === null || value === undefined || isNaN(Number(value))){
-    return "Unavailable";
-  }
+function quickAsk(question){
 
-  return "$" + Number(value).toLocaleString();
+  document.getElementById("userQuestion").value =
+    question;
+
+  askCopilot();
+
 }
 
-function percent(value){
-  if(value === null || value === undefined || isNaN(Number(value))){
-    return "-";
-  }
+function detectAsset(text){
 
-  return Number(value).toFixed(2) + "%";
-}
+  const assets =
+    ["BTC","ETH","SOL","BNB","XRP"];
 
-function score(value){
-  if(value === null || value === undefined || isNaN(Number(value))){
-    return "--";
-  }
-
-  return Math.round(Number(value));
-}
-
-function detectCoins(text){
-  const coins = ["BTC","ETH","SOL","BNB","XRP"];
-
-  return coins.filter(
-    coin => text.toUpperCase().includes(coin)
+  return assets.find(
+    asset =>
+      text.toUpperCase().includes(asset)
   );
-}
-
-function findCoin(rankings, symbol){
-  return rankings.find(
-    coin => String(coin.asset).toUpperCase() === String(symbol).toUpperCase()
-  );
-}
-
-function addMessage(sender, text){
-
-  const chat =
-    document.getElementById("chat");
-
-  const bubble =
-    document.createElement("div");
-
-  bubble.className =
-    sender === "user"
-      ? "chat-message user"
-      : "chat-message bot";
-
-  bubble.innerHTML =
-    `<strong>${sender === "user" ? "You" : "Zella"}</strong>${text}`;
-
-  chat.appendChild(bubble);
-
-  chat.scrollTop =
-    chat.scrollHeight;
-}
-
-function quickAsk(prompt){
-  document.getElementById("userInput").value = prompt;
-  sendMessage();
-}
-
-function buildScoreBreakdown(coin){
-
-  return `
-    <div class="analysis-card">
-
-      <h3>${coin.asset} Intelligence Report</h3>
-
-      <p>
-        <strong>Price:</strong> ${money(coin.price)}<br>
-        <strong>24H Change:</strong> ${percent(coin.change)}<br>
-        <strong>Signal:</strong> ${coin.signal}<br>
-        <strong>Confidence:</strong> ${score(coin.confidence)}%<br>
-        <strong>Risk:</strong> ${coin.risk}
-      </p>
-
-      <p>
-        <strong>Score Breakdown:</strong><br>
-        Momentum: ${score(coin.momentumScore)}<br>
-        Opportunity: ${score(coin.opportunityScore)}<br>
-        Liquidity: ${score(coin.liquidityScore)}<br>
-        Market Strength: ${score(coin.marketStrengthScore)}<br>
-        Volatility: ${score(coin.volatilityScore)}<br>
-        Risk Score: ${score(coin.riskScore)}
-      </p>
-
-      <p>
-        <strong>Strengths:</strong><br>
-        ${(coin.strengths || ["No major strength detected"])
-          .map(item => "• " + item)
-          .join("<br>")}
-      </p>
-
-      <p>
-        <strong>Weaknesses:</strong><br>
-        ${(coin.weaknesses || ["No major weakness detected"])
-          .map(item => "• " + item)
-          .join("<br>")}
-      </p>
-
-    </div>
-  `;
 
 }
 
-function buildRanking(rankings){
+async function askCopilot(){
 
-  return rankings.map((coin,index)=>`
-    #${index + 1} ${coin.asset} — ${score(coin.confidence)}% • ${coin.signal}<br>
-    Momentum: ${score(coin.momentumScore)} | Opportunity: ${score(coin.opportunityScore)}
-  `).join("<br><br>");
+  const question =
+    document.getElementById("userQuestion").value.trim();
 
-}
+  if(!question){
+    alert("Ask Zella a question.");
+    return;
+  }
 
-function buildComparison(a,b){
+  document.getElementById("aiHeadline").textContent =
+    "Zella is analyzing...";
 
-  const winner =
-    Number(a.confidence) >= Number(b.confidence)
-      ? a
-      : b;
-
-  return `
-    <div class="analysis-card">
-
-      <h3>${a.asset} vs ${b.asset}</h3>
-
-      <p>
-        <strong>${a.asset}</strong><br>
-        Confidence: ${score(a.confidence)}%<br>
-        Momentum: ${score(a.momentumScore)}<br>
-        Opportunity: ${score(a.opportunityScore)}<br>
-        Risk: ${a.risk}
-      </p>
-
-      <p>
-        <strong>${b.asset}</strong><br>
-        Confidence: ${score(b.confidence)}%<br>
-        Momentum: ${score(b.momentumScore)}<br>
-        Opportunity: ${score(b.opportunityScore)}<br>
-        Risk: ${b.risk}
-      </p>
-
-      <p>
-        <strong>Zella Verdict:</strong> ${winner.asset} has the stronger current setup.
-      </p>
-
-    </div>
-  `;
-
-}
-
-async function loadInsights(){
+  document.getElementById("aiSummary").textContent =
+    "Reading scanner data, portfolio context and risk signals.";
 
   try{
 
-    const response = await fetch(API_URL + "/scanner");
-    const data = await response.json();
+    const response =
+      await fetch(API_URL + "/scanner");
 
-    const top = data.items?.[0];
+    const data =
+      await response.json();
 
-    if(!top) return;
+    const rankings =
+      data.items || [];
 
-    document.getElementById("topAsset").textContent =
-      top.asset;
+    const q =
+      question.toLowerCase();
 
-    document.getElementById("topConfidence").textContent =
-      score(top.confidence) + "%";
+    const selectedAsset =
+      detectAsset(question);
 
-    document.getElementById("topSignal").textContent =
-      top.signal;
+    const top =
+      rankings[0];
 
-    document.getElementById("topRisk").textContent =
-      top.risk;
+    let answerHeadline =
+      "Zella AI Verdict";
 
-  }catch(error){
-    console.error(error);
-  }
-
-}
-
-async function sendMessage(){
-
-  const input = document.getElementById("userInput");
-  const text = input.value.trim();
-
-  if(!text) return;
-
-  addMessage("user", text);
-
-  input.value = "";
-
-  addMessage("bot", "Analyzing live scanner intelligence...");
-
-  try{
-
-    const response = await fetch(API_URL + "/scanner");
-    const data = await response.json();
-
-    const rankings = data.items || [];
-    const top = rankings[0];
-
-    const q = text.toLowerCase();
-    const coins = detectCoins(text);
-
-    let answer = "";
+    let answerSummary =
+      "";
 
     if(q.includes("rank")){
-      answer = buildRanking(rankings);
-    }
 
-    else if(q.includes("compare") && coins.length >= 2){
+      answerHeadline =
+        "Asset Ranking";
 
-      const a = findCoin(rankings, coins[0]);
-      const b = findCoin(rankings, coins[1]);
-
-      answer =
-        a && b
-          ? buildComparison(a,b)
-          : "One of those coins is unavailable right now.";
+      answerSummary =
+        rankings.map((asset,index)=>
+          `#${index + 1} ${asset.asset}: ${asset.confidence}% confidence, ${asset.signal}`
+        ).join(" | ");
 
     }
 
-    else if(q.includes("why") || q.includes("explain")){
+    else if(q.includes("portfolio")){
 
-      const coin =
-        coins.length
-          ? findCoin(rankings, coins[0])
-          : top;
+      const wallet =
+        JSON.parse(
+          localStorage.getItem("zellaWalletV5")
+        ) || [];
 
-      answer =
-        coin
-          ? buildScoreBreakdown(coin)
-          : "Coin data unavailable.";
+      answerHeadline =
+        "Portfolio Risk Review";
+
+      answerSummary =
+        wallet.length
+          ? `You currently have ${wallet.length} portfolio holding(s). Zella recommends checking allocation balance, avoiding overexposure to one asset, and using stop loss rules before entering new trades.`
+          : "No portfolio holdings detected. Add holdings in Wallet so Zella can review your risk properly.";
+
+    }
+
+    else if(selectedAsset){
+
+      const asset =
+        rankings.find(
+          item => item.asset === selectedAsset
+        );
+
+      if(!asset){
+
+        answerHeadline =
+          `${selectedAsset} unavailable`;
+
+        answerSummary =
+          "Zella could not find scanner data for that asset.";
+
+      }else{
+
+        const confidence =
+          Number(asset.confidence || 0);
+
+        const momentum =
+          Number(asset.momentumScore || 0);
+
+        const opportunity =
+          Number(asset.opportunityScore || 0);
+
+        const risk =
+          Number(asset.riskScore || 100);
+
+        let verdict =
+          "WAIT";
+
+        if(
+          confidence >= 80 &&
+          momentum >= 80 &&
+          opportunity >= 80 &&
+          risk <= 45
+        ){
+          verdict =
+            "BUY SETUP";
+        }
+
+        else if(
+          confidence < 60 ||
+          risk >= 70
+        ){
+          verdict =
+            "AVOID / SELL RISK";
+        }
+
+        answerHeadline =
+          `${asset.asset}: ${verdict}`;
+
+        answerSummary =
+          `${asset.asset} is trading around $${Number(asset.price).toLocaleString()}. Confidence is ${confidence}%, momentum is ${momentum}, opportunity is ${opportunity}, and risk score is ${risk}. Current scanner signal is ${asset.signal}. Zella verdict: ${verdict}. This is analysis only, not financial advice.`;
+
+      }
 
     }
 
     else if(q.includes("strongest") || q.includes("best")){
 
-      answer = buildScoreBreakdown(top);
+      answerHeadline =
+        `${top.asset} is strongest`;
 
-    }
-
-    else if(q.includes("price") && coins.length){
-
-      const coin = findCoin(rankings, coins[0]);
-
-      answer =
-        coin
-          ? `${coin.asset} price is approximately ${money(coin.price)}. 24H change is ${percent(coin.change)}. Current signal: ${coin.signal}.`
-          : "Price data unavailable.";
+      answerSummary =
+        `${top.asset} currently leads the scanner with ${top.confidence}% confidence, momentum score ${top.momentumScore}, opportunity score ${top.opportunityScore}, and signal ${top.signal}.`;
 
     }
 
     else{
 
-      answer =
-        top
-          ? buildScoreBreakdown(top)
-          : "Zella could not read scanner data.";
+      answerHeadline =
+        "Market Intelligence Summary";
+
+      answerSummary =
+        `${top.asset} currently leads the market scanner with ${top.confidence}% confidence. Ask about BTC, ETH, SOL, BNB, XRP, portfolio risk, or asset rankings for a deeper answer.`;
 
     }
 
-    const botMessages =
-      document.querySelectorAll(".chat-message.bot");
+    document.getElementById("aiHeadline").textContent =
+      answerHeadline;
 
-    botMessages[botMessages.length - 1].innerHTML =
-      `<strong>Zella</strong>${answer}`;
+    document.getElementById("aiSummary").textContent =
+      answerSummary;
 
-  }catch(error){
+  }
+
+  catch(error){
 
     console.error(error);
 
-    const botMessages =
-      document.querySelectorAll(".chat-message.bot");
+    document.getElementById("aiHeadline").textContent =
+      "Copilot unavailable";
 
-    botMessages[botMessages.length - 1].innerHTML =
-      `<strong>Zella</strong>Unable to reach the scanner engine.`;
+    document.getElementById("aiSummary").textContent =
+      "Zella could not connect to the scanner engine.";
 
   }
 
 }
-
-document
-  .getElementById("userInput")
-  .addEventListener("keypress", function(event){
-
-    if(event.key === "Enter"){
-      sendMessage();
-    }
-
-  });
-
-loadInsights();
-
-setInterval(loadInsights, 30000);
 
 </script>
 

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zella Exchange Integration V1</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">X</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+    <div>
+      <div class="eyebrow">ZELLA EXCHANGE HUB</div>
+      <h1 class="command-title">Exchange<br>Setup.</h1>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">SAFE MODE</span>
+    </div>
+  </div>
+
+  <p class="briefing-text">
+    Prepare exchange connections for paper trading, API setup,
+    risk control and future auto-trading. No real trades are executed here.
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Mode</div>
+    <div class="mini-value blue">Paper</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Connections</div>
+    <div class="mini-value green" id="connectionCount">0</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Trading Status</div>
+    <div class="mini-value orange">Disabled</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Safety</div>
+    <div class="mini-value green">Protected</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">EXCHANGE CONNECTIONS</div>
+
+  <div class="ranking-list" id="exchangeList">
+
+    <div class="rank-row">
+      <div class="rank-position">🟡</div>
+      <div class="rank-asset">
+        Binance<br>
+        <small>Paper mode setup only</small>
+      </div>
+      <div class="rank-score">Ready</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">🟡</div>
+      <div class="rank-asset">
+        Coinbase<br>
+        <small>Paper mode setup only</small>
+      </div>
+      <div class="rank-score">Ready</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">🟡</div>
+      <div class="rank-asset">
+        Kraken<br>
+        <small>Paper mode setup only</small>
+      </div>
+      <div class="rank-score">Ready</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">API SETUP PLACEHOLDER</div>
+
+  <div class="chat-input-bar">
+    <input id="exchangeName" placeholder="Exchange e.g Binance" />
+    <input id="apiLabel" placeholder="API label e.g Paper Key" />
+    <button type="button" onclick="saveConnection()">Save</button>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ZELLA SAFETY CHECK</div>
+
+  <h2 class="briefing-headline" id="exchangeHeadline">
+    Auto-trading is disabled.
+  </h2>
+
+  <p class="briefing-text" id="exchangeSummary">
+    Zella is currently in safe setup mode. Do not paste real API secrets into this prototype.
+  </p>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="journal.html">Wallet</a>
+</div>
+
+<script>
+
+let connections =
+  JSON.parse(
+    localStorage.getItem("zellaExchangeConnections")
+  ) || [];
+
+function saveConnections(){
+
+  localStorage.setItem(
+    "zellaExchangeConnections",
+    JSON.stringify(connections)
+  );
+
+}
+
+function saveConnection(){
+
+  const exchange =
+    document.getElementById("exchangeName")
+      .value.trim();
+
+  const label =
+    document.getElementById("apiLabel")
+      .value.trim();
+
+  if(!exchange || !label){
+
+    alert(
+      "Please enter exchange and label."
+    );
+
+    return;
+
+  }
+
+  connections.push({
+
+    exchange,
+    label,
+    status:"Paper Mode"
+
+  });
+
+  saveConnections();
+
+  document.getElementById("exchangeName").value = "";
+  document.getElementById("apiLabel").value = "";
+
+  loadConnections();
+
+}
+
+function deleteConnection(index){
+
+  connections.splice(index,1);
+
+  saveConnections();
+
+  loadConnections();
+
+}
+
+function loadConnections(){
+
+  document.getElementById(
+    "connectionCount"
+  ).textContent =
+    connections.length;
+
+  document.getElementById(
+    "exchangeList"
+  ).innerHTML =
+
+    connections.length
+
+    ?
+
+    connections.map((item,index)=>`
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          🟢
+        </div>
+
+        <div class="rank-asset">
+
+          ${item.exchange}<br>
+
+          <small>
+            ${item.label}
+          </small>
+
+        </div>
+
+        <div class="rank-score">
+
+          ${item.status}
+
+          <br><br>
+
+          <button
+            onclick="deleteConnection(${index})"
+            style="
+              border:none;
+              border-radius:10px;
+              padding:6px 10px;
+              cursor:pointer;
+            ">
+            ✕
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("")
+
+    :
+
+    `
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          🔒
+        </div>
+
+        <div class="rank-asset">
+          No exchange connected
+        </div>
+
+        <div class="rank-score">
+          Safe
+        </div>
+
+      </div>
+
+    `;
+
+  document.getElementById(
+    "exchangeHeadline"
+  ).textContent =
+
+    connections.length
+
+    ? `${connections.length} exchange connection(s) configured`
+
+    : "Auto-trading is disabled.";
+
+  document.getElementById(
+    "exchangeSummary"
+  ).textContent =
+
+    connections.length
+
+    ? "Paper trading setup detected. Real exchange execution remains disabled until Exchange Integration V2."
+
+    : "Zella is currently in safe setup mode. Do not paste real API secrets into this prototype.";
+
+}
+
+loadConnections();
+
+</script>
+
+</body>
+</html>

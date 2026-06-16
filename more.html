@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella More Hub V1</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="pro-particles">
+  <span>⚙️</span>
+  <span>MORE</span>
+  <span>PRO</span>
+  <span>📊</span>
+  <span>🤖</span>
+  <span>💎</span>
+</div>
+
+<style>
+
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+
+  position:absolute;
+  top:-100px;
+
+  opacity:.10;
+
+  font-size:30px;
+
+  font-weight:900;
+
+  color:#38bdf8;
+
+  animation:
+    moreRain 14s linear infinite;
+
+}
+
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:20%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:35%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:75%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes moreRain{
+
+  from{
+    transform:
+      translateY(-140px)
+      rotate(0deg);
+  }
+
+  to{
+    transform:
+      translateY(120vh)
+      rotate(360deg);
+  }
+
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+
+</style>
+
+<nav class="navbar">
+
+  <div class="nav-inner">
+
+    <div class="logo">
+      ZELLA
+    </div>
+
+    <div class="avatar-dot">
+      +
+    </div>
+
+  </div>
+
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+
+    <div>
+
+      <div class="eyebrow">
+        ZELLA COMMAND HUB
+      </div>
+
+      <h1 class="command-title">
+
+        More<br>
+        Tools.
+
+      </h1>
+
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+
+      <div class="live-dot"></div>
+
+      <span class="live-label">
+
+        HUB
+
+      </span>
+
+    </div>
+
+  </div>
+
+  <p class="briefing-text">
+
+    Access all advanced Zella modules,
+    analytics tools,
+    trading utilities
+    and premium features
+    from one central hub.
+
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Modules</div>
+    <div class="mini-value green">9</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Status</div>
+    <div class="mini-value blue">Online</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">AI</div>
+    <div class="mini-value orange">Active</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Version</div>
+    <div class="mini-value green">V1</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA MODULES
+  </div>
+
+  <div class="mini-grid">
+
+    <a href="learn.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">🎓 Learn Center</div>
+      <div class="mini-value blue">Open</div>
+    </a>
+
+    <a href="alerts.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">🔔 Notifications</div>
+      <div class="mini-value green">Open</div>
+    </a>
+
+    <a href="analytics.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">📊 Analytics</div>
+      <div class="mini-value orange">Open</div>
+    </a>
+
+    <a href="setup.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">⚙️ Setup</div>
+      <div class="mini-value blue">Open</div>
+    </a>
+
+    <a href="exchange.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">🔗 Exchange Hub</div>
+      <div class="mini-value green">Open</div>
+    </a>
+
+    <a href="autotrader.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">🤖 AutoTrader</div>
+      <div class="mini-value orange">Open</div>
+    </a>
+
+    <a href="pro.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">💎 Zella Pro</div>
+      <div class="mini-value blue">Open</div>
+    </a>
+
+    <a href="journal.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">💰 Wallet</div>
+      <div class="mini-value green">Open</div>
+    </a>
+
+    <a href="autotrade.html" class="mini-box" style="text-decoration:none;">
+      <div class="mini-label">📈 Trade Prep</div>
+      <div class="mini-value orange">Open</div>
+    </a>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    QUICK ACCESS
+  </div>
+
+  <div class="ranking-list">
+
+    <div class="rank-row">
+      <div class="rank-position">🔥</div>
+      <div class="rank-asset">
+        Most Used<br>
+        <small>Scanner + Copilot + AutoTrader</small>
+      </div>
+      <div class="rank-score">Top</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">📊</div>
+      <div class="rank-asset">
+        Analytics Suite<br>
+        <small>Portfolio, scanner and AI performance</small>
+      </div>
+      <div class="rank-score">Live</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">💎</div>
+      <div class="rank-asset">
+        Premium Features<br>
+        <small>Cloud Sync, Pro AI and future upgrades</small>
+      </div>
+      <div class="rank-score">Pro</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA COMMAND CENTER
+  </div>
+
+  <h2 class="briefing-headline" id="hubHeadline">
+    All systems online.
+  </h2>
+
+  <p class="briefing-text" id="hubSummary">
+    Zella modules are connected and ready. Access trading tools,
+    analytics, learning resources and premium features from one hub.
+  </p>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+
+  <a href="dashboard.html">
+    Home
+  </a>
+
+  <a href="scanner.html">
+    Scanner
+  </a>
+
+  <a href="copilot.html">
+    Copilot
+  </a>
+
+  <a href="market.html">
+    Market
+  </a>
+
+  <a href="more.html">
+    More
+  </a>
+
+</div>
+
+<script>
+
+function updateHubStats(){
+
+  let modules = 9;
+
+  let activeModules = 0;
+
+  const pages = [
+
+    "zellaWalletV5",
+    "zellaGrowthV5",
+    "zellaSettingsV2",
+    "zellaExchangeV2",
+    "zellaPaperTrades"
+
+  ];
+
+  pages.forEach(key => {
+
+    const data =
+      localStorage.getItem(key);
+
+    if(data){
+      activeModules++;
+    }
+
+  });
+
+  const readiness =
+
+    Math.round(
+      (activeModules / 5) * 100
+    );
+
+  document.getElementById(
+    "hubHeadline"
+  ).textContent =
+
+    `Zella Readiness ${readiness}%`;
+
+  document.getElementById(
+    "hubSummary"
+  ).textContent =
+
+    `${activeModules}/5 core systems are configured. Scanner, Copilot, Portfolio, Analytics, Exchange and AutoTrader modules are available from the Zella ecosystem.`;
+
+}
+
+updateHubStats();
+
+</script>
+
+</body>
+</html>

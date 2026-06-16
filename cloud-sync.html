@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zella Cloud Sync V1</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div class="pro-particles">
+  <span>☁️</span>
+  <span>SYNC</span>
+  <span>USER</span>
+  <span>DATA</span>
+  <span>🔐</span>
+  <span>ZELLA</span>
+</div>
+
+<style>
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+  position:absolute;
+  top:-100px;
+  opacity:.10;
+  font-size:28px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:syncRain 14s linear infinite;
+}
+
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes syncRain{
+  from{transform:translateY(-140px) rotate(0deg);}
+  to{transform:translateY(120vh) rotate(360deg);}
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+</style>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">☁️</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+    <div>
+      <div class="eyebrow">ZELLA CLOUD SYNC</div>
+      <h1 class="command-title">Cloud<br>Sync.</h1>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">FIRESTORE</span>
+    </div>
+  </div>
+
+  <p class="briefing-text">
+    Sync portfolio, settings, trades, AutoTrader data and user profile to Firebase Firestore.
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">User</div>
+    <div class="mini-value blue" id="syncUser">Checking</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Cloud Status</div>
+    <div class="mini-value green" id="cloudStatus">Standby</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Synced Items</div>
+    <div class="mini-value orange" id="syncedItems">0</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Mode</div>
+    <div class="mini-value blue">Secure</div>
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    CLOUD ACTIONS
+  </div>
+
+  <div class="hero-actions">
+    <button class="btn" onclick="syncToCloud()">
+      Sync To Cloud
+    </button>
+
+    <button class="btn secondary" onclick="loadFromCloud()">
+      Load From Cloud
+    </button>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    SYNC MODULES
+  </div>
+
+  <div id="syncModules">
+
+    <div class="rank-row">
+      <div class="rank-position">💰</div>
+      <div class="rank-asset">Portfolio</div>
+      <div class="rank-score">Ready</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">📒</div>
+      <div class="rank-asset">Trade Journal</div>
+      <div class="rank-score">Ready</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">⚙️</div>
+      <div class="rank-asset">Settings</div>
+      <div class="rank-score">Ready</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">🤖</div>
+      <div class="rank-asset">AutoTrader</div>
+      <div class="rank-score">Ready</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA CLOUD REVIEW
+  </div>
+
+  <h2 class="briefing-headline" id="syncHeadline">
+    Cloud Sync is standing by.
+  </h2>
+
+  <p class="briefing-text" id="syncSummary">
+    Sign in with Google, then sync your Zella data to Firestore.
+  </p>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="more.html">More</a>
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+
+  authDomain: "zella-424f2.firebaseapp.com",
+
+  projectId: "zella-424f2",
+
+  storageBucket: "zella-424f2.firebasestorage.app",
+
+  messagingSenderId: "1008967672362",
+
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
+
+};
+
+const app =
+  initializeApp(firebaseConfig);
+
+const db =
+  getFirestore(app);
+
+const user =
+  JSON.parse(
+    localStorage.getItem("zellaUser")
+  );
+
+if(user){
+
+  document.getElementById(
+    "syncUser"
+  ).textContent =
+    user.name;
+
+}
+
+window.syncToCloud =
+async function(){
+
+  if(!user){
+
+    alert(
+      "Please sign in first."
+    );
+
+    return;
+  }
+
+  try{
+
+    const cloudData = {
+
+      user,
+
+      portfolio:
+        JSON.parse(
+          localStorage.getItem("zellaWalletV5")
+        ) || [],
+
+      settings:
+        JSON.parse(
+          localStorage.getItem("zellaSettingsV2")
+        ) || {},
+
+      positions:
+        JSON.parse(
+          localStorage.getItem("zellaOpenPositionsV2")
+        ) || [],
+
+      growth:
+        JSON.parse(
+          localStorage.getItem("zellaGrowthV5")
+        ) || [],
+
+      updated:
+        new Date().toISOString()
+
+    };
+
+    await setDoc(
+
+      doc(
+        db,
+        "users",
+        user.uid
+      ),
+
+      cloudData
+
+    );
+
+    document.getElementById(
+      "cloudStatus"
+    ).textContent =
+      "Synced";
+
+    document.getElementById(
+      "syncedItems"
+    ).textContent =
+      "5";
+
+    document.getElementById(
+      "syncHeadline"
+    ).textContent =
+      "Cloud sync successful";
+
+    document.getElementById(
+      "syncSummary"
+    ).textContent =
+      "Portfolio, settings, positions and profile uploaded to Firestore.";
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Cloud sync failed."
+    );
+
+  }
+
+};
+
+window.loadFromCloud =
+async function(){
+
+  if(!user){
+
+    alert(
+      "Please sign in first."
+    );
+
+    return;
+  }
+
+  try{
+
+    const snapshot =
+      await getDoc(
+
+        doc(
+          db,
+          "users",
+          user.uid
+        )
+
+      );
+
+    if(!snapshot.exists()){
+
+      alert(
+        "No cloud data found."
+      );
+
+      return;
+    }
+
+    const data =
+      snapshot.data();
+
+    localStorage.setItem(
+      "zellaWalletV5",
+      JSON.stringify(
+        data.portfolio || []
+      )
+    );
+
+    localStorage.setItem(
+      "zellaSettingsV2",
+      JSON.stringify(
+        data.settings || {}
+      )
+    );
+
+    localStorage.setItem(
+      "zellaOpenPositionsV2",
+      JSON.stringify(
+        data.positions || []
+      )
+    );
+
+    localStorage.setItem(
+      "zellaGrowthV5",
+      JSON.stringify(
+        data.growth || []
+      )
+    );
+
+    document.getElementById(
+      "cloudStatus"
+    ).textContent =
+      "Loaded";
+
+    document.getElementById(
+      "syncHeadline"
+    ).textContent =
+      "Cloud data restored";
+
+    document.getElementById(
+      "syncSummary"
+    ).textContent =
+      "Your Zella data was restored from Firestore.";
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "Cloud load failed."
+    );
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>

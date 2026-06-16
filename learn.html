@@ -1,101 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Learning Hub</title>
-
-<style>
-
-body{
-background:#050816;
-color:white;
-font-family:Arial,sans-serif;
-padding:20px;
-}
-
-.logo{
-font-size:2rem;
-font-weight:bold;
-color:#00d4ff;
-margin-bottom:20px;
-}
-
-.card{
-background:#0b1226;
-padding:20px;
-margin-bottom:15px;
-border-radius:15px;
-}
-
-.card h3{
-color:#00d4ff;
-margin-bottom:10px;
-}
-
-a{
-color:#00d4ff;
-text-decoration:none;
-}
-
-</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zella Learn Center V2</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<div class="logo">ZELLA LEARNING HUB</div>
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">L</div>
+  </div>
+</nav>
 
-<p>
-Master trading one lesson at a time.
-</p>
+<main class="container">
 
-<br>
+<section class="command-card">
 
-<div class="card">
-<h3>📈 What is Forex Trading?</h3>
-<p>
-Forex is the buying and selling of currencies to profit from price movements.
-</p>
-</div>
+  <div class="live-row">
+    <div>
+      <div class="eyebrow">ZELLA LEARN CENTER</div>
+      <h1 class="command-title">Trading<br>Academy.</h1>
+    </div>
 
-<div class="card">
-<h3>₿ What is Crypto Trading?</h3>
-<p>
-Crypto trading involves buying and selling digital assets like Bitcoin and Ethereum.
-</p>
-</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">LEARN</span>
+    </div>
+  </div>
 
-<div class="card">
-<h3>🛡 Risk Management</h3>
-<p>
-Never risk more than you can afford to lose. Protect capital first.
-</p>
-</div>
+  <p class="briefing-text">
+    Learn crypto trading from the basics to risk management,
+    market structure, signals, journaling and disciplined execution.
+  </p>
 
-<div class="card">
-<h3>📊 Support & Resistance</h3>
-<p>
-Support is where price tends to stop falling. Resistance is where price tends to stop rising.
-</p>
-</div>
+</section>
 
-<div class="card">
-<h3>🕯 Candlestick Patterns</h3>
-<p>
-Candlesticks help traders understand market sentiment and potential reversals.
-</p>
-</div>
+<section class="mini-grid">
 
-<div class="card">
-<h3>🧠 Trading Psychology</h3>
-<p>
-Control emotions. Discipline beats emotion in trading.
-</p>
-</div>
+  <div class="mini-box">
+    <div class="mini-label">Lessons</div>
+    <div class="mini-value blue" id="lessonCount">6</div>
+  </div>
 
-<br>
+  <div class="mini-box">
+    <div class="mini-label">Level</div>
+    <div class="mini-value green">Beginner</div>
+  </div>
 
-<a href="dashboard.html">← Back to Dashboard</a>
+  <div class="mini-box">
+    <div class="mini-label">Progress</div>
+    <div class="mini-value orange" id="learnProgress">0%</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Quiz Score</div>
+    <div class="mini-value blue" id="quizScore">--</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">BEGINNER ROADMAP</div>
+
+  <div class="ranking-list" id="lessonList">
+
+    <div class="rank-row">
+      <div class="rank-position">1</div>
+      <div class="rank-asset">
+        What is crypto trading?<br>
+        <small>Understand coins, exchanges and market movement.</small>
+      </div>
+      <div class="rank-score">Start</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">2</div>
+      <div class="rank-asset">
+        Risk management<br>
+        <small>Learn position sizing, stop loss and capital protection.</small>
+      </div>
+      <div class="rank-score">Core</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">3</div>
+      <div class="rank-asset">
+        Market trends<br>
+        <small>Identify bullish, bearish and sideways markets.</small>
+      </div>
+      <div class="rank-score">Core</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">CRYPTO GLOSSARY</div>
+
+  <div class="ranking-list">
+
+    <div class="rank-row">
+      <div class="rank-position">📌</div>
+      <div class="rank-asset">Bullish<br><small>When the market is expected to move upward.</small></div>
+      <div class="rank-score">Term</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">📌</div>
+      <div class="rank-asset">Bearish<br><small>When the market is expected to move downward.</small></div>
+      <div class="rank-score">Term</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">📌</div>
+      <div class="rank-asset">Stop Loss<br><small>A price level used to limit losses.</small></div>
+      <div class="rank-score">Risk</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">QUICK QUIZ</div>
+
+  <p class="briefing-text">
+    What is the main purpose of a stop loss?
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn secondary" onclick="checkQuiz(false)">Increase risk</button>
+    <button class="btn secondary" onclick="checkQuiz(true)">Limit losses</button>
+    <button class="btn secondary" onclick="checkQuiz(false)">Avoid profits</button>
+  </div>
+
+</section>
+
+<script>
+
+let progress =
+  Number(
+    localStorage.getItem("zellaLearnProgress")
+  ) || 0;
+
+let bestScore =
+  localStorage.getItem("zellaQuizScore") || "--";
+
+function updateLearningStats(){
+
+  document.getElementById(
+    "learnProgress"
+  ).textContent =
+    progress + "%";
+
+  document.getElementById(
+    "quizScore"
+  ).textContent =
+    bestScore;
+
+}
+
+function checkQuiz(correct){
+
+  if(correct){
+
+    progress =
+      Math.min(
+        100,
+        progress + 20
+      );
+
+    bestScore = "100%";
+
+    alert(
+      "Correct! A stop loss helps limit losses and protect capital."
+    );
+
+  }
+
+  else{
+
+    bestScore = "0%";
+
+    alert(
+      "Incorrect. The purpose of a stop loss is to limit losses."
+    );
+
+  }
+
+  localStorage.setItem(
+    "zellaLearnProgress",
+    progress
+  );
+
+  localStorage.setItem(
+    "zellaQuizScore",
+    bestScore
+  );
+
+  updateLearningStats();
+
+}
+
+updateLearningStats();
+
+</script>
 
 </body>
 </html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella News Engine</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="pro-particles">
+  <span>📰</span>
+  <span>NEWS</span>
+  <span>BTC</span>
+  <span>ETH</span>
+  <span>AI</span>
+  <span>ZELLA</span>
+</div>
+
+<style>
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+  position:absolute;
+  top:-100px;
+  opacity:.10;
+  font-size:28px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:newsRain 14s linear infinite;
+}
+
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes newsRain{
+  from{transform:translateY(-140px) rotate(0deg);}
+  to{transform:translateY(120vh) rotate(360deg);}
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+
+.news-img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:22px;
+  margin-bottom:14px;
+}
+</style>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">📰</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+  <div class="live-row">
+    <div>
+      <div class="eyebrow">ZELLA NEWS ENGINE</div>
+      <h1 class="command-title">Crypto<br>News.</h1>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">LIVE RSS</span>
+    </div>
+  </div>
+
+  <p class="briefing-text">
+    Track real-time crypto news, sentiment scores, source links,
+    article images and market-impact headlines.
+  </p>
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Articles</div>
+    <div class="mini-value blue" id="newsCount">0</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Sentiment</div>
+    <div class="mini-value green" id="newsSentiment">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Top Source</div>
+    <div class="mini-value orange" id="topSource">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Status</div>
+    <div class="mini-value green" id="newsStatus">Loading</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    AI NEWS SUMMARY
+  </div>
+
+  <h2 class="briefing-headline" id="newsHeadline">
+    Loading crypto news...
+  </h2>
+
+  <p class="briefing-text" id="newsSummary">
+    Zella is reading real-time crypto headlines.
+  </p>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    LIVE CRYPTO NEWS FEED
+  </div>
+
+  <div id="newsFeed">
+
+    <div class="rank-row">
+      <div class="rank-position">📰</div>
+      <div class="rank-asset">
+        Loading news feed...
+      </div>
+      <div class="rank-score">--</div>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="watchlist.html">Watchlist</a>
+  <a href="more.html">More</a>
+</div>
+
+<script>
+
+const NEWS_API =
+"https://zella-backend.onrender.com/news";
+
+async function loadNews(){
+
+  try{
+
+    const response =
+    await fetch(NEWS_API);
+
+    const data =
+    await response.json();
+
+    const news =
+    data.news || [];
+
+    document.getElementById(
+      "newsCount"
+    ).textContent = news.length;
+
+    document.getElementById(
+      "newsStatus"
+    ).textContent = "LIVE";
+
+    if(news.length > 0){
+
+      document.getElementById(
+        "newsHeadline"
+      ).textContent =
+      news[0].title;
+
+      document.getElementById(
+        "newsSummary"
+      ).textContent =
+      news[0].body;
+
+      document.getElementById(
+        "topSource"
+      ).textContent =
+      news[0].source;
+
+      document.getElementById(
+        "newsSentiment"
+      ).textContent =
+      news[0].sentiment;
+    }
+
+    const feed =
+    document.getElementById(
+      "newsFeed"
+    );
+
+    feed.innerHTML = "";
+
+    news.forEach(article => {
+
+      const sentimentColor =
+      article.sentiment === "Bullish"
+      ? "#22c55e"
+      : article.sentiment === "Bearish"
+      ? "#ef4444"
+      : "#f59e0b";
+
+      feed.innerHTML += `
+
+      <div class="briefing-card">
+
+        <img
+          src="${article.image}"
+          class="news-img"
+          onerror="this.style.display='none'"
+        >
+
+        <div class="briefing-title">
+          ${article.source}
+        </div>
+
+        <h3 style="margin-top:10px;">
+          ${article.title}
+        </h3>
+
+        <p class="briefing-text">
+          ${article.body}
+        </p>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          margin-top:15px;
+        ">
+
+          <span style="
+            color:${sentimentColor};
+            font-weight:700;
+          ">
+            ${article.sentiment}
+            (${article.sentimentScore})
+          </span>
+
+          <a
+            href="${article.url}"
+            target="_blank"
+            style="
+              color:#38bdf8;
+              text-decoration:none;
+              font-weight:700;
+            "
+          >
+            Read →
+          </a>
+
+        </div>
+
+      </div>
+
+      `;
+
+    });
+
+  }
+
+  catch(error){
+
+    document.getElementById(
+      "newsStatus"
+    ).textContent = "ERROR";
+
+    console.error(error);
+
+  }
+
+}
+
+loadNews();
+
+setInterval(
+  loadNews,
+  60000
+);
+
+</script>
+
+</body>
+</html>

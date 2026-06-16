@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella AutoTrader V2</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella AutoTrader V3</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="pro-particles">
   <span>🤖</span>
-  <span>AUTO</span>
-  <span>TP</span>
-  <span>SL</span>
-  <span>📈</span>
-  <span>RISK</span>
+  <span>BUY</span>
+  <span>SELL</span>
+  <span>BTC</span>
+  <span>ETH</span>
+  <span>SOL</span>
 </div>
 
 <style>
+
 .pro-particles{
   position:fixed;
   inset:0;
@@ -31,7 +32,7 @@
   position:absolute;
   top:-100px;
   opacity:.10;
-  font-size:28px;
+  font-size:30px;
   font-weight:900;
   color:#38bdf8;
   animation:autoRain 14s linear infinite;
@@ -45,12 +46,19 @@
 .pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
 
 @keyframes autoRain{
+
   from{
-    transform:translateY(-140px) rotate(0deg);
+    transform:
+      translateY(-140px)
+      rotate(0deg);
   }
+
   to{
-    transform:translateY(120vh) rotate(360deg);
+    transform:
+      translateY(120vh)
+      rotate(360deg);
   }
+
 }
 
 .container,
@@ -58,13 +66,23 @@
   position:relative;
   z-index:2;
 }
+
 </style>
 
 <nav class="navbar">
+
   <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">AT</div>
+
+    <div class="logo">
+      ZELLA
+    </div>
+
+    <div class="avatar-dot">
+      AI
+    </div>
+
   </div>
+
 </nav>
 
 <main class="container">
@@ -72,20 +90,42 @@
 <section class="command-card">
 
   <div class="live-row">
+
     <div>
-      <div class="eyebrow">ZELLA AUTOTRADER</div>
-      <h1 class="command-title">AutoTrader<br>V2.</h1>
+
+      <div class="eyebrow">
+        AUTOTRADER V3
+      </div>
+
+      <h1 class="command-title">
+
+        AI Trade<br>
+        Setup.
+
+      </h1>
+
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
+
       <div class="live-dot"></div>
-      <span class="live-label">PAPER MODE</span>
+
+      <span class="live-label">
+
+        ANALYZING
+
+      </span>
+
     </div>
+
   </div>
 
   <p class="briefing-text">
-    Simulate automated trades using Zella scanner signals,
-    stop loss rules, take profit rules and open position monitoring.
+
+    Select a cryptocurrency and let Zella AI
+    generate a complete trading setup with
+    entry, stop loss, take profit and verdict.
+
   </p>
 
 </section>
@@ -93,84 +133,93 @@
 <section class="mini-grid">
 
   <div class="mini-box">
-    <div class="mini-label">Status</div>
-    <div class="mini-value green" id="autoStatus">OFF</div>
+    <div class="mini-label">Asset</div>
+    <div class="mini-value blue" id="assetView">
+      BTC
+    </div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Open Positions</div>
-    <div class="mini-value blue" id="openCount">0</div>
+    <div class="mini-label">Verdict</div>
+    <div class="mini-value green" id="verdictView">
+      WAIT
+    </div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Closed Trades</div>
-    <div class="mini-value orange" id="closedCount">0</div>
+    <div class="mini-label">Confidence</div>
+    <div class="mini-value orange" id="confidenceView">
+      0%
+    </div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Paper PnL</div>
-    <div class="mini-value green" id="paperPnl">$0</div>
+    <div class="mini-label">Risk</div>
+    <div class="mini-value blue" id="riskView">
+      --
+    </div>
   </div>
 
 </section>
 
 <section class="command-card">
 
-  <div class="card-label">AUTOTRADER RULES</div>
+  <div class="card-label">
+    SELECT ASSET
+  </div>
 
   <div class="chat-input-bar">
-    <input id="minConfidence" placeholder="Min Confidence %" value="80" />
-    <input id="maxRiskScore" placeholder="Max Risk Score" value="40" />
-  </div>
 
-  <div class="chat-input-bar" style="margin-top:12px;">
-    <input id="takeProfitPercent" placeholder="Take Profit %" value="4" />
-    <input id="stopLossPercent" placeholder="Stop Loss %" value="2" />
-  </div>
+    <select id="assetSelector">
 
-  <div class="hero-actions" style="margin-top:15px;">
-    <button class="btn" onclick="toggleAutoTrader()">Start / Stop</button>
-    <button class="btn secondary" onclick="clearTrades()">Clear Trades</button>
+      <option>BTC</option>
+      <option>ETH</option>
+      <option>SOL</option>
+      <option>BNB</option>
+      <option>XRP</option>
+
+    </select>
+
+    <button class="btn" onclick="analyzeTrade()">
+      Analyze
+    </button>
+
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">OPEN POSITIONS</div>
+  <div class="briefing-title">
+    AI TRADE SETUP
+  </div>
 
-  <div id="openPositions">
+  <h2 class="briefing-headline" id="setupHeadline">
+    Waiting for asset analysis...
+  </h2>
+
+  <div class="ranking-list" id="tradeSetup">
+
     <div class="rank-row">
       <div class="rank-position">🤖</div>
-      <div class="rank-asset">No open positions</div>
+      <div class="rank-asset">
+        Select an asset and tap Analyze
+      </div>
       <div class="rank-score">--</div>
     </div>
+
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">CLOSED PAPER TRADES</div>
-
-  <div id="closedTrades">
-    <div class="rank-row">
-      <div class="rank-position">📄</div>
-      <div class="rank-asset">No closed trades yet</div>
-      <div class="rank-score">--</div>
-    </div>
+  <div class="briefing-title">
+    ZELLA AUTOTRADER REVIEW
   </div>
 
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">ZELLA AUTOTRADER REVIEW</div>
-
-  <h2 class="briefing-headline" id="autoHeadline">AutoTrader is standing by.</h2>
-
-  <p class="briefing-text" id="autoSummary">
-    Start AutoTrader to simulate entries, stop losses, take profits and trade monitoring.
+  <p class="briefing-text" id="autoReview">
+    Zella will review scanner confidence, momentum, opportunity, liquidity and risk before generating a paper trade setup.
   </p>
 
 </section>
@@ -182,7 +231,7 @@
   <a href="scanner.html">Scanner</a>
   <a href="copilot.html">Copilot</a>
   <a href="market.html">Market</a>
-  <a href="journal.html">Wallet</a>
+  <a href="more.html">More</a>
 </div>
 
 <script>
@@ -190,75 +239,10 @@
 const API_URL =
   "https://zella-backend.onrender.com";
 
-let autoTraderRunning = false;
+async function analyzeTrade(){
 
-let openPositions =
-  JSON.parse(
-    localStorage.getItem("zellaOpenPositionsV2")
-  ) || [];
-
-let closedTrades =
-  JSON.parse(
-    localStorage.getItem("zellaClosedTradesV2")
-  ) || [];
-
-function saveAutoTrader(){
-
-  localStorage.setItem(
-    "zellaOpenPositionsV2",
-    JSON.stringify(openPositions)
-  );
-
-  localStorage.setItem(
-    "zellaClosedTradesV2",
-    JSON.stringify(closedTrades)
-  );
-
-}
-
-function toggleAutoTrader(){
-
-  autoTraderRunning =
-    !autoTraderRunning;
-
-  document.getElementById(
-    "autoStatus"
-  ).textContent =
-
-    autoTraderRunning
-      ? "ON"
-      : "OFF";
-
-  document.getElementById(
-    "autoHeadline"
-  ).textContent =
-
-    autoTraderRunning
-      ? "AutoTrader V2 running."
-      : "AutoTrader is standing by.";
-
-  if(autoTraderRunning){
-    runAutoTrader();
-  }
-
-}
-
-function clearTrades(){
-
-  openPositions = [];
-  closedTrades = [];
-
-  saveAutoTrader();
-
-  renderAutoTrader();
-
-}
-
-async function runAutoTrader(){
-
-  if(!autoTraderRunning){
-    return;
-  }
+  const selectedAsset =
+    document.getElementById("assetSelector").value;
 
   try{
 
@@ -271,77 +255,125 @@ async function runAutoTrader(){
     const rankings =
       data.items || [];
 
-    const minConfidence =
-      Number(
-        document.getElementById("minConfidence").value
+    const asset =
+      rankings.find(
+        item => item.asset === selectedAsset
       );
 
-    const maxRisk =
-      Number(
-        document.getElementById("maxRiskScore").value
-      );
+    if(!asset){
+      alert("Asset data unavailable.");
+      return;
+    }
 
-    const tp =
-      Number(
-        document.getElementById("takeProfitPercent").value
-      );
+    const price =
+      Number(asset.price);
 
-    const sl =
-      Number(
-        document.getElementById("stopLossPercent").value
-      );
+    const confidence =
+      Number(asset.confidence || 0);
 
-    rankings.forEach(asset => {
+    const momentum =
+      Number(asset.momentumScore || 0);
 
-      const confidence =
-        Number(asset.confidence || 0);
+    const opportunity =
+      Number(asset.opportunityScore || 0);
 
-      const risk =
-        Number(asset.riskScore || 100);
+    const riskScore =
+      Number(asset.riskScore || 100);
 
-      const alreadyOpen =
-        openPositions.some(
-          p => p.asset === asset.asset
-        );
+    let verdict = "WAIT";
 
-      if(
-        confidence >= minConfidence &&
-        risk <= maxRisk &&
-        !alreadyOpen
-      ){
+    if(
+      confidence >= 80 &&
+      momentum >= 80 &&
+      opportunity >= 80 &&
+      riskScore <= 45
+    ){
+      verdict = "BUY";
+    }
 
-        openPositions.push({
+    else if(
+      confidence < 60 ||
+      momentum < 55 ||
+      riskScore >= 70
+    ){
+      verdict = "SELL / AVOID";
+    }
 
-          asset: asset.asset,
+    const entry =
+      price;
 
-          entry:
-            Number(asset.price || 100),
+    const stopLoss =
+      verdict === "BUY"
+      ? price * 0.98
+      : price * 1.02;
 
-          confidence,
+    const takeProfit =
+      verdict === "BUY"
+      ? price * 1.04
+      : price * 0.96;
 
-          takeProfit: tp,
+    const riskAmount =
+      Math.abs(entry - stopLoss);
 
-          stopLoss: sl,
+    const rewardAmount =
+      Math.abs(takeProfit - entry);
 
-          created:
-            new Date().toLocaleString()
+    const rr =
+      riskAmount > 0
+      ? (rewardAmount / riskAmount).toFixed(2)
+      : "0";
 
-        });
+    document.getElementById("assetView").textContent =
+      asset.asset;
 
-      }
+    document.getElementById("verdictView").textContent =
+      verdict;
 
-    });
+    document.getElementById("confidenceView").textContent =
+      confidence + "%";
 
-    monitorPositions();
+    document.getElementById("riskView").textContent =
+      riskScore;
 
-    saveAutoTrader();
+    document.getElementById("setupHeadline").textContent =
+      `${asset.asset} ${verdict} Setup`;
 
-    renderAutoTrader();
+    document.getElementById("tradeSetup").innerHTML = `
 
-    setTimeout(
-      runAutoTrader,
-      30000
-    );
+      <div class="rank-row">
+        <div class="rank-position">🎯</div>
+        <div class="rank-asset">Entry Price</div>
+        <div class="rank-score">$${entry.toLocaleString()}</div>
+      </div>
+
+      <div class="rank-row">
+        <div class="rank-position">🛑</div>
+        <div class="rank-asset">Stop Loss</div>
+        <div class="rank-score">$${stopLoss.toLocaleString()}</div>
+      </div>
+
+      <div class="rank-row">
+        <div class="rank-position">🚀</div>
+        <div class="rank-asset">Take Profit</div>
+        <div class="rank-score">$${takeProfit.toLocaleString()}</div>
+      </div>
+
+      <div class="rank-row">
+        <div class="rank-position">⚖️</div>
+        <div class="rank-asset">Risk / Reward</div>
+        <div class="rank-score">${rr}:1</div>
+      </div>
+
+      <div class="rank-row">
+        <div class="rank-position">📊</div>
+        <div class="rank-asset">Signal</div>
+        <div class="rank-score">${asset.signal}</div>
+      </div>
+
+    `;
+
+    document.getElementById("autoReview").textContent =
+      `Zella analyzed ${asset.asset}. Confidence is ${confidence}%, momentum is ${momentum}, opportunity is ${opportunity}, and risk score is ${riskScore}. Current verdict: ${verdict}. This is a simulated setup only, not real trade execution.`;
 
   }
 
@@ -349,219 +381,15 @@ async function runAutoTrader(){
 
     console.error(error);
 
+    document.getElementById("setupHeadline").textContent =
+      "AutoTrader analysis unavailable.";
+
+    document.getElementById("autoReview").textContent =
+      "Unable to connect to Zella scanner engine.";
+
   }
 
 }
-
-function monitorPositions(){
-
-  openPositions = openPositions.filter(position => {
-
-    const randomMove =
-      (Math.random() * 12) - 4;
-
-    if(
-      randomMove >= position.takeProfit
-    ){
-
-      closedTrades.unshift({
-
-        asset: position.asset,
-
-        result: "Take Profit",
-
-        pnl: randomMove.toFixed(2)
-
-      });
-
-      return false;
-
-    }
-
-    if(
-      randomMove <=
-      (-position.stopLoss)
-    ){
-
-      closedTrades.unshift({
-
-        asset: position.asset,
-
-        result: "Stop Loss",
-
-        pnl: randomMove.toFixed(2)
-
-      });
-
-      return false;
-
-    }
-
-    return true;
-
-  });
-
-  if(closedTrades.length > 50){
-    closedTrades.length = 50;
-  }
-
-}
-
-function renderAutoTrader(){
-
-  document.getElementById(
-    "openCount"
-  ).textContent =
-    openPositions.length;
-
-  document.getElementById(
-    "closedCount"
-  ).textContent =
-    closedTrades.length;
-
-  const pnl =
-    closedTrades.reduce(
-      (sum,trade)=>
-        sum + Number(trade.pnl),
-      0
-    );
-
-  document.getElementById(
-    "paperPnl"
-  ).textContent =
-    "$" + pnl.toFixed(2);
-
-  document.getElementById(
-    "openPositions"
-  ).innerHTML =
-
-    openPositions.length
-
-    ?
-
-    openPositions.map(position => `
-
-      <div class="rank-row">
-
-        <div class="rank-position">
-          🤖
-        </div>
-
-        <div class="rank-asset">
-
-          ${position.asset}<br>
-
-          <small>
-            Confidence:
-            ${position.confidence}%
-          </small>
-
-        </div>
-
-        <div class="rank-score">
-
-          TP ${position.takeProfit}%<br>
-          SL ${position.stopLoss}%
-
-        </div>
-
-      </div>
-
-    `).join("")
-
-    :
-
-    `
-
-      <div class="rank-row">
-
-        <div class="rank-position">
-          🤖
-        </div>
-
-        <div class="rank-asset">
-          No open positions
-        </div>
-
-        <div class="rank-score">
-          --
-        </div>
-
-      </div>
-
-    `;
-
-  document.getElementById(
-    "closedTrades"
-  ).innerHTML =
-
-    closedTrades.length
-
-    ?
-
-    closedTrades.map(trade => `
-
-      <div class="rank-row">
-
-        <div class="rank-position">
-
-          ${trade.result === "Take Profit"
-            ? "✅"
-            : "❌"}
-
-        </div>
-
-        <div class="rank-asset">
-
-          ${trade.asset}<br>
-
-          <small>
-            ${trade.result}
-          </small>
-
-        </div>
-
-        <div class="rank-score">
-
-          ${trade.pnl}%
-
-        </div>
-
-      </div>
-
-    `).join("")
-
-    :
-
-    `
-
-      <div class="rank-row">
-
-        <div class="rank-position">
-          📄
-        </div>
-
-        <div class="rank-asset">
-          No closed trades yet
-        </div>
-
-        <div class="rank-score">
-          --
-        </div>
-
-      </div>
-
-    `;
-
-  document.getElementById(
-    "autoSummary"
-  ).textContent =
-
-    `Open Positions: ${openPositions.length}. Closed Trades: ${closedTrades.length}. Total Paper PnL: $${pnl.toFixed(2)}. AutoTrader is monitoring stop loss and take profit conditions.`;
-
-}
-
-renderAutoTrader();
 
 </script>
 

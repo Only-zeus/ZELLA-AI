@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zella Analytics Center V1</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div class="pro-particles">
+  <span>📊</span>
+  <span>PNL</span>
+  <span>WIN</span>
+  <span>AI</span>
+  <span>📈</span>
+  <span>DATA</span>
+</div>
+
+<style>
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+  position:absolute;
+  top:-100px;
+  opacity:.10;
+  font-size:28px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:analyticsRain 14s linear infinite;
+}
+
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes analyticsRain{
+  from{
+    transform:translateY(-140px) rotate(0deg);
+  }
+  to{
+    transform:translateY(120vh) rotate(360deg);
+  }
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+</style>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">AN</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+    <div>
+      <div class="eyebrow">ZELLA ANALYTICS CENTER</div>
+      <h1 class="command-title">Performance<br>Intelligence.</h1>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">ANALYTICS</span>
+    </div>
+  </div>
+
+  <p class="briefing-text">
+    Analyze wallet value, trade performance, win rate,
+    scanner strength and overall Zella activity in one place.
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Portfolio Value</div>
+    <div class="mini-value green" id="portfolioValue">$0</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Trade Win Rate</div>
+    <div class="mini-value blue" id="winRate">0%</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Scanner Leader</div>
+    <div class="mini-value orange" id="scannerLeader">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Zella Score</div>
+    <div class="mini-value green" id="zellaScore">--</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    PERFORMANCE SNAPSHOT
+  </div>
+
+  <div id="performanceList">
+
+    <div class="rank-row">
+
+      <div class="rank-position">
+        📊
+      </div>
+
+      <div class="rank-asset">
+        Loading analytics...
+      </div>
+
+      <div class="rank-score">
+        --
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    PORTFOLIO GROWTH
+  </div>
+
+  <div
+    id="analyticsChart"
+    style="
+      height:180px;
+      display:flex;
+      align-items:end;
+      gap:8px;
+      margin-top:15px;
+    ">
+
+    <div class="rank-row">
+
+      <div class="rank-position">
+        📈
+      </div>
+
+      <div class="rank-asset">
+        Growth chart loading...
+      </div>
+
+      <div class="rank-score">
+        --
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA AI ANALYTICS REVIEW
+  </div>
+
+  <h2
+    class="briefing-headline"
+    id="analyticsHeadline">
+
+    Reading your activity...
+
+  </h2>
+
+  <p
+    class="briefing-text"
+    id="analyticsSummary">
+
+    Zella is analyzing portfolio performance,
+    scanner rankings and trading activity.
+
+  </p>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+
+  <a href="dashboard.html">
+    Home
+  </a>
+
+  <a href="scanner.html">
+    Scanner
+  </a>
+
+  <a href="copilot.html">
+    Copilot
+  </a>
+
+  <a href="market.html">
+    Market
+  </a>
+
+  <a href="journal.html">
+    Wallet
+  </a>
+
+</div>
+
+<script>
+
+const API_URL =
+  "https://zella-backend.onrender.com";
+
+async function loadAnalytics(){
+
+  try{
+
+    const response =
+      await fetch(API_URL + "/scanner");
+
+    const data =
+      await response.json();
+
+    const rankings =
+      data.items || [];
+
+    const wallet =
+      JSON.parse(
+        localStorage.getItem("zellaWalletV5")
+      ) || [];
+
+    const paperTrades =
+      JSON.parse(
+        localStorage.getItem("zellaPaperTrades")
+      ) || [];
+
+    const growthHistory =
+      JSON.parse(
+        localStorage.getItem("zellaGrowthV5")
+      ) || [];
+
+    let portfolioValue = 0;
+
+    wallet.forEach(item=>{
+
+      const asset =
+        rankings.find(
+          x =>
+          String(x.asset).toUpperCase() ===
+          String(item.symbol).toUpperCase()
+        );
+
+      if(asset){
+
+        portfolioValue +=
+          Number(item.amount) *
+          Number(asset.price);
+
+      }
+
+    });
+
+    const wins =
+      paperTrades.filter(
+        trade => Number(trade.pnl) > 0
+      ).length;
+
+    const totalTrades =
+      paperTrades.length;
+
+    const winRate =
+      totalTrades
+      ? Math.round(
+          (wins / totalTrades) * 100
+        )
+      : 0;
+
+    const topAsset =
+      rankings.length
+      ? rankings[0].asset
+      : "--";
+
+    const zellaScore =
+
+      Math.min(
+
+        100,
+
+        Math.round(
+
+          (winRate * 0.4) +
+
+          (wallet.length * 8) +
+
+          (growthHistory.length * 3)
+
+        )
+
+      );
+
+    document.getElementById(
+      "portfolioValue"
+    ).textContent =
+      "$" +
+      portfolioValue.toLocaleString();
+
+    document.getElementById(
+      "winRate"
+    ).textContent =
+      winRate + "%";
+
+    document.getElementById(
+      "scannerLeader"
+    ).textContent =
+      topAsset;
+
+    document.getElementById(
+      "zellaScore"
+    ).textContent =
+      zellaScore;
+
+    document.getElementById(
+      "performanceList"
+    ).innerHTML = `
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          💰
+        </div>
+
+        <div class="rank-asset">
+          Portfolio Holdings
+        </div>
+
+        <div class="rank-score">
+          ${wallet.length}
+        </div>
+
+      </div>
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          📈
+        </div>
+
+        <div class="rank-asset">
+          Paper Trades
+        </div>
+
+        <div class="rank-score">
+          ${totalTrades}
+        </div>
+
+      </div>
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          🏆
+        </div>
+
+        <div class="rank-asset">
+          Win Rate
+        </div>
+
+        <div class="rank-score">
+          ${winRate}%
+        </div>
+
+      </div>
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          🤖
+        </div>
+
+        <div class="rank-asset">
+          Scanner Leader
+        </div>
+
+        <div class="rank-score">
+          ${topAsset}
+        </div>
+
+      </div>
+
+    `;
+
+    const maxValue = Math.max(
+      ...growthHistory.map(x=>x.value),
+      1
+    );
+
+    document.getElementById(
+      "analyticsChart"
+    ).innerHTML =
+
+      growthHistory.length
+
+      ?
+
+      growthHistory.map(item=>{
+
+        const height =
+
+          Math.max(
+
+            12,
+
+            (item.value / maxValue) * 160
+
+          );
+
+        return `
+
+          <div
+            style="
+              flex:1;
+              height:${height}px;
+              border-radius:12px 12px 4px 4px;
+              background:linear-gradient(
+                180deg,
+                #38bdf8,
+                #2563eb
+              );
+              box-shadow:
+                0 0 18px rgba(56,189,248,.35);
+            ">
+          </div>
+
+        `;
+
+      }).join("")
+
+      :
+
+      `
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          📊
+        </div>
+
+        <div class="rank-asset">
+          No growth data yet
+        </div>
+
+        <div class="rank-score">
+          --
+        </div>
+
+      </div>
+
+      `;
+
+    document.getElementById(
+      "analyticsHeadline"
+    ).textContent =
+
+      `Zella Score ${zellaScore}/100`;
+
+    document.getElementById(
+      "analyticsSummary"
+    ).textContent =
+
+      `Portfolio value is $${portfolioValue.toLocaleString()}. Win rate is ${winRate}%. Scanner leader is ${topAsset}. Zella Analytics indicates overall performance strength of ${zellaScore}/100.`;
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "analyticsHeadline"
+    ).textContent =
+
+      "Analytics unavailable";
+
+  }
+
+}
+
+loadAnalytics();
+
+setInterval(
+  loadAnalytics,
+  30000
+);
+
+</script>
+
+</body>
+</html>

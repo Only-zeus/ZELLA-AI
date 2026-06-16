@@ -85,8 +85,8 @@
     <div class="logo">ZELLA</div>
 
     <div style="display:flex;gap:10px;">
-      <a href="account.html" class="btn secondary">Login</a>
-      <a href="dashboard.html" class="btn">Launch</a>
+      <a href="account.html" class="btn">Launch Zella</a>
+<a href="account.html" class="btn secondary">Login</a>
     </div>
   </div>
 </nav>
@@ -316,6 +316,29 @@
 </footer>
 
 </main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+  authDomain: "zella-424f2.firebaseapp.com",
+  projectId: "zella-424f2",
+  storageBucket: "zella-424f2.firebasestorage.app",
+  messagingSenderId: "1008967672362",
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    window.location.href = "account.html";
+  }
+});
+</script>
 
 </body>
 </html>

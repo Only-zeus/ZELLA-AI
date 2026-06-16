@@ -1,13 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella AutoTrader V1</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zella AutoTrader V2</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+
+<div class="pro-particles">
+  <span>🤖</span>
+  <span>AUTO</span>
+  <span>TP</span>
+  <span>SL</span>
+  <span>📈</span>
+  <span>RISK</span>
+</div>
+
+<style>
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+  position:absolute;
+  top:-100px;
+  opacity:.10;
+  font-size:28px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:autoRain 14s linear infinite;
+}
+
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes autoRain{
+  from{
+    transform:translateY(-140px) rotate(0deg);
+  }
+  to{
+    transform:translateY(120vh) rotate(360deg);
+  }
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+</style>
 
 <nav class="navbar">
   <div class="nav-inner">
@@ -21,24 +72,20 @@
 <section class="command-card">
 
   <div class="live-row">
-
     <div>
       <div class="eyebrow">ZELLA AUTOTRADER</div>
-      <h1 class="command-title">
-        AutoTrader<br>V1
-      </h1>
+      <h1 class="command-title">AutoTrader<br>V2.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="live-dot"></div>
       <span class="live-label">PAPER MODE</span>
     </div>
-
   </div>
 
   <p class="briefing-text">
-    Simulate automated trading decisions using Zella scanner signals,
-    confidence scores and risk controls.
+    Simulate automated trades using Zella scanner signals,
+    stop loss rules, take profit rules and open position monitoring.
   </p>
 
 </section>
@@ -47,112 +94,83 @@
 
   <div class="mini-box">
     <div class="mini-label">Status</div>
-    <div class="mini-value green" id="autoStatus">
-      OFF
-    </div>
+    <div class="mini-value green" id="autoStatus">OFF</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Active Trades</div>
-    <div class="mini-value blue" id="activeTrades">
-      0
-    </div>
+    <div class="mini-label">Open Positions</div>
+    <div class="mini-value blue" id="openCount">0</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Win Rate</div>
-    <div class="mini-value orange" id="autoWinRate">
-      0%
-    </div>
+    <div class="mini-label">Closed Trades</div>
+    <div class="mini-value orange" id="closedCount">0</div>
   </div>
 
   <div class="mini-box">
     <div class="mini-label">Paper PnL</div>
-    <div class="mini-value green" id="autoPnl">
-      $0
-    </div>
+    <div class="mini-value green" id="paperPnl">$0</div>
   </div>
 
 </section>
 
 <section class="command-card">
 
-  <div class="card-label">
-    STRATEGY SETTINGS
-  </div>
+  <div class="card-label">AUTOTRADER RULES</div>
 
   <div class="chat-input-bar">
-    <input
-      id="minConfidence"
-      placeholder="Min Confidence %"
-      value="80">
-
-    <input
-      id="maxRiskScore"
-      placeholder="Max Risk Score"
-      value="40">
+    <input id="minConfidence" placeholder="Min Confidence %" value="80" />
+    <input id="maxRiskScore" placeholder="Max Risk Score" value="40" />
   </div>
 
   <div class="chat-input-bar" style="margin-top:12px;">
-    <button onclick="toggleAutoTrader()">
-      Start AutoTrader
-    </button>
+    <input id="takeProfitPercent" placeholder="Take Profit %" value="4" />
+    <input id="stopLossPercent" placeholder="Stop Loss %" value="2" />
+  </div>
+
+  <div class="hero-actions" style="margin-top:15px;">
+    <button class="btn" onclick="toggleAutoTrader()">Start / Stop</button>
+    <button class="btn secondary" onclick="clearTrades()">Clear Trades</button>
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    AUTO SIGNAL QUEUE
-  </div>
+  <div class="briefing-title">OPEN POSITIONS</div>
 
-  <div id="signalQueue">
-
+  <div id="openPositions">
     <div class="rank-row">
       <div class="rank-position">🤖</div>
-      <div class="rank-asset">
-        Waiting for scanner signals
-      </div>
+      <div class="rank-asset">No open positions</div>
       <div class="rank-score">--</div>
     </div>
-
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    PAPER TRADE HISTORY
-  </div>
+  <div class="briefing-title">CLOSED PAPER TRADES</div>
 
-  <div id="paperTrades">
-
+  <div id="closedTrades">
     <div class="rank-row">
       <div class="rank-position">📄</div>
-      <div class="rank-asset">
-        No paper trades yet
-      </div>
+      <div class="rank-asset">No closed trades yet</div>
       <div class="rank-score">--</div>
     </div>
-
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    ZELLA AUTOTRADER REVIEW
-  </div>
+  <div class="briefing-title">ZELLA AUTOTRADER REVIEW</div>
 
-  <h2 class="briefing-headline" id="autoHeadline">
-    AutoTrader is standing by.
-  </h2>
+  <h2 class="briefing-headline" id="autoHeadline">AutoTrader is standing by.</h2>
 
   <p class="briefing-text" id="autoSummary">
-    Start AutoTrader to scan Zella signals and simulate paper trades.
+    Start AutoTrader to simulate entries, stop losses, take profits and trade monitoring.
   </p>
 
 </section>
@@ -174,16 +192,26 @@ const API_URL =
 
 let autoTraderRunning = false;
 
-let paperTrades =
+let openPositions =
   JSON.parse(
-    localStorage.getItem("zellaPaperTrades")
+    localStorage.getItem("zellaOpenPositionsV2")
   ) || [];
 
-function savePaperTrades(){
+let closedTrades =
+  JSON.parse(
+    localStorage.getItem("zellaClosedTradesV2")
+  ) || [];
+
+function saveAutoTrader(){
 
   localStorage.setItem(
-    "zellaPaperTrades",
-    JSON.stringify(paperTrades)
+    "zellaOpenPositionsV2",
+    JSON.stringify(openPositions)
+  );
+
+  localStorage.setItem(
+    "zellaClosedTradesV2",
+    JSON.stringify(closedTrades)
   );
 
 }
@@ -198,20 +226,31 @@ function toggleAutoTrader(){
   ).textContent =
 
     autoTraderRunning
-    ? "ON"
-    : "OFF";
+      ? "ON"
+      : "OFF";
 
   document.getElementById(
     "autoHeadline"
   ).textContent =
 
     autoTraderRunning
-    ? "AutoTrader is running."
-    : "AutoTrader is standing by.";
+      ? "AutoTrader V2 running."
+      : "AutoTrader is standing by.";
 
   if(autoTraderRunning){
     runAutoTrader();
   }
+
+}
+
+function clearTrades(){
+
+  openPositions = [];
+  closedTrades = [];
+
+  saveAutoTrader();
+
+  renderAutoTrader();
 
 }
 
@@ -234,98 +273,70 @@ async function runAutoTrader(){
 
     const minConfidence =
       Number(
-        document.getElementById("minConfidence").value || 80
+        document.getElementById("minConfidence").value
       );
 
     const maxRisk =
       Number(
-        document.getElementById("maxRiskScore").value || 40
+        document.getElementById("maxRiskScore").value
       );
 
-    const candidates =
-      rankings.filter(asset =>
-
-        Number(asset.confidence) >= minConfidence &&
-
-        Number(asset.riskScore || 100) <= maxRisk
-
+    const tp =
+      Number(
+        document.getElementById("takeProfitPercent").value
       );
 
-    document.getElementById(
-      "signalQueue"
-    ).innerHTML =
+    const sl =
+      Number(
+        document.getElementById("stopLossPercent").value
+      );
 
-      candidates.length
+    rankings.forEach(asset => {
 
-      ?
+      const confidence =
+        Number(asset.confidence || 0);
 
-      candidates.map(asset => `
+      const risk =
+        Number(asset.riskScore || 100);
 
-        <div class="rank-row">
+      const alreadyOpen =
+        openPositions.some(
+          p => p.asset === asset.asset
+        );
 
-          <div class="rank-position">
-            🤖
-          </div>
+      if(
+        confidence >= minConfidence &&
+        risk <= maxRisk &&
+        !alreadyOpen
+      ){
 
-          <div class="rank-asset">
+        openPositions.push({
 
-            ${asset.asset}<br>
+          asset: asset.asset,
 
-            <small>
-              ${asset.signal}
-            </small>
+          entry:
+            Number(asset.price || 100),
 
-          </div>
+          confidence,
 
-          <div class="rank-score">
+          takeProfit: tp,
 
-            ${asset.confidence}%
+          stopLoss: sl,
 
-          </div>
+          created:
+            new Date().toLocaleString()
 
-        </div>
+        });
 
-      `).join("")
-
-      :
-
-      `
-        <div class="rank-row">
-          <div class="rank-position">⏳</div>
-          <div class="rank-asset">
-            No qualifying signals
-          </div>
-          <div class="rank-score">--</div>
-        </div>
-      `;
-
-    if(candidates.length){
-
-      const top =
-        candidates[0];
-
-      const simulatedPnL =
-        (Math.random() * 40 - 10).toFixed(2);
-
-      paperTrades.unshift({
-
-        asset: top.asset,
-        signal: top.signal,
-        confidence: top.confidence,
-        pnl: Number(simulatedPnL),
-        date: new Date().toLocaleString()
-
-      });
-
-      if(paperTrades.length > 20){
-        paperTrades.pop();
       }
 
-      savePaperTrades();
+    });
 
-    }
+    monitorPositions();
 
-    renderPaperTrades();
+    saveAutoTrader();
+
+    renderAutoTrader();
 
     setTimeout(
       runAutoTrader,
@@ -342,71 +353,115 @@ async function runAutoTrader(){
 
 }
 
-function renderPaperTrades(){
+function monitorPositions(){
 
-  const wins =
-    paperTrades.filter(
-      trade => trade.pnl > 0
-    ).length;
+  openPositions = openPositions.filter(position => {
 
-  const total =
-    paperTrades.length;
+    const randomMove =
+      (Math.random() * 12) - 4;
 
-  const winRate =
-    total
-    ? Math.round((wins / total) * 100)
-    : 0;
+    if(
+      randomMove >= position.takeProfit
+    ){
 
-  const totalPnl =
-    paperTrades.reduce(
-      (sum,trade)=> sum + trade.pnl,
+      closedTrades.unshift({
+
+        asset: position.asset,
+
+        result: "Take Profit",
+
+        pnl: randomMove.toFixed(2)
+
+      });
+
+      return false;
+
+    }
+
+    if(
+      randomMove <=
+      (-position.stopLoss)
+    ){
+
+      closedTrades.unshift({
+
+        asset: position.asset,
+
+        result: "Stop Loss",
+
+        pnl: randomMove.toFixed(2)
+
+      });
+
+      return false;
+
+    }
+
+    return true;
+
+  });
+
+  if(closedTrades.length > 50){
+    closedTrades.length = 50;
+  }
+
+}
+
+function renderAutoTrader(){
+
+  document.getElementById(
+    "openCount"
+  ).textContent =
+    openPositions.length;
+
+  document.getElementById(
+    "closedCount"
+  ).textContent =
+    closedTrades.length;
+
+  const pnl =
+    closedTrades.reduce(
+      (sum,trade)=>
+        sum + Number(trade.pnl),
       0
     );
 
   document.getElementById(
-    "activeTrades"
+    "paperPnl"
   ).textContent =
-    total;
+    "$" + pnl.toFixed(2);
 
   document.getElementById(
-    "autoWinRate"
-  ).textContent =
-    winRate + "%";
-
-  document.getElementById(
-    "autoPnl"
-  ).textContent =
-    "$" + totalPnl.toFixed(2);
-
-  document.getElementById(
-    "paperTrades"
+    "openPositions"
   ).innerHTML =
 
-    total
+    openPositions.length
 
     ?
 
-    paperTrades.map(trade => `
+    openPositions.map(position => `
 
       <div class="rank-row">
 
         <div class="rank-position">
-          ${trade.pnl >= 0 ? "✅" : "❌"}
+          🤖
         </div>
 
         <div class="rank-asset">
 
-          ${trade.asset}<br>
+          ${position.asset}<br>
 
           <small>
-            ${trade.signal}
+            Confidence:
+            ${position.confidence}%
           </small>
 
         </div>
 
         <div class="rank-score">
 
-          $${trade.pnl.toFixed(2)}
+          TP ${position.takeProfit}%<br>
+          SL ${position.stopLoss}%
 
         </div>
 
@@ -417,28 +472,96 @@ function renderPaperTrades(){
     :
 
     `
+
       <div class="rank-row">
-        <div class="rank-position">📄</div>
-        <div class="rank-asset">
-          No paper trades yet
+
+        <div class="rank-position">
+          🤖
         </div>
-        <div class="rank-score">--</div>
+
+        <div class="rank-asset">
+          No open positions
+        </div>
+
+        <div class="rank-score">
+          --
+        </div>
+
       </div>
+
+    `;
+
+  document.getElementById(
+    "closedTrades"
+  ).innerHTML =
+
+    closedTrades.length
+
+    ?
+
+    closedTrades.map(trade => `
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+
+          ${trade.result === "Take Profit"
+            ? "✅"
+            : "❌"}
+
+        </div>
+
+        <div class="rank-asset">
+
+          ${trade.asset}<br>
+
+          <small>
+            ${trade.result}
+          </small>
+
+        </div>
+
+        <div class="rank-score">
+
+          ${trade.pnl}%
+
+        </div>
+
+      </div>
+
+    `).join("")
+
+    :
+
+    `
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          📄
+        </div>
+
+        <div class="rank-asset">
+          No closed trades yet
+        </div>
+
+        <div class="rank-score">
+          --
+        </div>
+
+      </div>
+
     `;
 
   document.getElementById(
     "autoSummary"
   ).textContent =
 
-    total
-
-    ? `Paper trading engine has simulated ${total} trades with a ${winRate}% win rate and total paper PnL of $${totalPnl.toFixed(2)}.`
-
-    : "Start AutoTrader to begin paper trade simulation.";
+    `Open Positions: ${openPositions.length}. Closed Trades: ${closedTrades.length}. Total Paper PnL: $${pnl.toFixed(2)}. AutoTrader is monitoring stop loss and take profit conditions.`;
 
 }
 
-renderPaperTrades();
+renderAutoTrader();
 
 </script>
 

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Watchlist Center</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="pro-particles">
+  <span>⭐</span>
+  <span>WATCH</span>
+  <span>BTC</span>
+  <span>ETH</span>
+  <span>SOL</span>
+  <span>ZELLA</span>
+</div>
+
+<style>
+
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+.pro-particles span{
+  position:absolute;
+  top:-100px;
+  opacity:.10;
+  font-size:30px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:watchRain 14s linear infinite;
+}
+
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes watchRain{
+  from{
+    transform:translateY(-140px) rotate(0deg);
+  }
+  to{
+    transform:translateY(120vh) rotate(360deg);
+  }
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+
+</style>
+
+<nav class="navbar">
+
+  <div class="nav-inner">
+
+    <div class="logo">
+      ZELLA
+    </div>
+
+    <div class="avatar-dot">
+      WL
+    </div>
+
+  </div>
+
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+
+    <div>
+
+      <div class="eyebrow">
+        WATCHLIST CENTER
+      </div>
+
+      <h1 class="command-title">
+
+        Smart<br>
+        Watchlists.
+
+      </h1>
+
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+
+      <div class="live-dot"></div>
+
+      <span class="live-label">
+        TRACKING
+      </span>
+
+    </div>
+
+  </div>
+
+  <p class="briefing-text">
+
+    Save assets you want to monitor.
+    Zella will track confidence,
+    signals and future opportunities.
+
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Assets</div>
+    <div class="mini-value blue" id="watchCount">
+      0
+    </div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Status</div>
+    <div class="mini-value green">
+      Active
+    </div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Sync</div>
+    <div class="mini-value orange">
+      Ready
+    </div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Mode</div>
+    <div class="mini-value blue">
+      Smart
+    </div>
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    ADD TO WATCHLIST
+  </div>
+
+  <div class="chat-input-bar">
+
+    <select id="watchAsset">
+
+      <option>BTC</option>
+      <option>ETH</option>
+      <option>SOL</option>
+      <option>BNB</option>
+      <option>XRP</option>
+
+    </select>
+
+    <button class="btn" onclick="addWatchAsset()">
+      Add
+    </button>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    MY WATCHLIST
+  </div>
+
+  <div id="watchlistArea">
+
+    <div class="rank-row">
+      <div class="rank-position">⭐</div>
+      <div class="rank-asset">
+        No assets added yet
+      </div>
+      <div class="rank-score">--</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    WATCHLIST AI REVIEW
+  </div>
+
+  <h2 class="briefing-headline" id="watchHeadline">
+    No watchlist data yet.
+  </h2>
+
+  <p class="briefing-text" id="watchSummary">
+    Add coins to your watchlist and Zella will track their signals.
+  </p>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="more.html">More</a>
+</div>
+
+<script>
+
+let watchlist =
+  JSON.parse(
+    localStorage.getItem("zellaWatchlistV1")
+  ) || [];
+
+function addWatchAsset(){
+
+  const asset =
+    document.getElementById("watchAsset").value;
+
+  const exists =
+    watchlist.find(
+      item => item.asset === asset
+    );
+
+  if(exists){
+    alert("Asset already added.");
+    return;
+  }
+
+  watchlist.push({
+
+    asset,
+
+    signal:"Monitoring",
+
+    confidence:
+      Math.floor(
+        Math.random()*25
+      ) + 70,
+
+    added:
+      new Date().toLocaleDateString()
+
+  });
+
+  saveWatchlist();
+
+}
+
+function removeWatchAsset(asset){
+
+  watchlist =
+    watchlist.filter(
+      item => item.asset !== asset
+    );
+
+  saveWatchlist();
+
+}
+
+function saveWatchlist(){
+
+  localStorage.setItem(
+    "zellaWatchlistV1",
+    JSON.stringify(watchlist)
+  );
+
+  renderWatchlist();
+
+}
+
+function renderWatchlist(){
+
+  document.getElementById(
+    "watchCount"
+  ).textContent =
+    watchlist.length;
+
+  if(!watchlist.length){
+
+    document.getElementById(
+      "watchlistArea"
+    ).innerHTML = `
+
+      <div class="rank-row">
+        <div class="rank-position">⭐</div>
+        <div class="rank-asset">
+          No assets added yet
+        </div>
+        <div class="rank-score">
+          --
+        </div>
+      </div>
+
+    `;
+
+    document.getElementById(
+      "watchHeadline"
+    ).textContent =
+      "No watchlist data yet.";
+
+    document.getElementById(
+      "watchSummary"
+    ).textContent =
+      "Add coins to your watchlist and Zella will track their signals.";
+
+    return;
+
+  }
+
+  const topAsset =
+    watchlist.reduce(
+      (best,current)=>
+        current.confidence >
+        best.confidence
+          ? current
+          : best
+    );
+
+  document.getElementById(
+    "watchTop"
+  ).textContent =
+    topAsset.asset;
+
+  document.getElementById(
+    "watchSignal"
+  ).textContent =
+    topAsset.signal;
+
+  document.getElementById(
+    "watchHeadline"
+  ).textContent =
+    `${watchlist.length} asset(s) monitored`;
+
+  document.getElementById(
+    "watchSummary"
+  ).textContent =
+    `${topAsset.asset} currently has the strongest watchlist confidence score at ${topAsset.confidence}%.`;
+
+  document.getElementById(
+    "watchlistArea"
+  ).innerHTML =
+
+    watchlist.map(asset => `
+
+      <div class="rank-row">
+
+        <div class="rank-position">
+          ⭐
+        </div>
+
+        <div class="rank-asset">
+
+          ${asset.asset}
+
+          <br>
+
+          <small>
+            Confidence:
+            ${asset.confidence}%
+          </small>
+
+        </div>
+
+        <div class="rank-score">
+
+          ${asset.signal}
+
+          <br><br>
+
+          <button
+            onclick="
+              removeWatchAsset(
+                '${asset.asset}'
+              )
+            "
+            style="
+              border:none;
+              border-radius:10px;
+              padding:6px 10px;
+              cursor:pointer;
+            ">
+            ✕
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+renderWatchlist();
+
+</script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Exchange Integration V1</title>
+<title>Zella Exchange Integration V2</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -19,11 +19,10 @@
 <main class="container">
 
 <section class="command-card">
-
   <div class="live-row">
     <div>
       <div class="eyebrow">ZELLA EXCHANGE HUB</div>
-      <h1 class="command-title">Exchange<br>Setup.</h1>
+      <h1 class="command-title">Exchange<br>Control.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
@@ -33,18 +32,12 @@
   </div>
 
   <p class="briefing-text">
-    Prepare exchange connections for paper trading, API setup,
-    risk control and future auto-trading. No real trades are executed here.
+    Configure paper-mode exchange profiles, check permissions,
+    simulate trading readiness and protect Zella from unsafe auto-trading.
   </p>
-
 </section>
 
 <section class="mini-grid">
-
-  <div class="mini-box">
-    <div class="mini-label">Mode</div>
-    <div class="mini-value blue">Paper</div>
-  </div>
 
   <div class="mini-box">
     <div class="mini-label">Connections</div>
@@ -52,57 +45,25 @@
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Trading Status</div>
-    <div class="mini-value orange">Disabled</div>
+    <div class="mini-label">Readiness</div>
+    <div class="mini-value blue" id="readinessScore">0%</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Safety</div>
-    <div class="mini-value green">Protected</div>
+    <div class="mini-label">Permission</div>
+    <div class="mini-value orange" id="permissionStatus">Locked</div>
   </div>
 
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">EXCHANGE CONNECTIONS</div>
-
-  <div class="ranking-list" id="exchangeList">
-
-    <div class="rank-row">
-      <div class="rank-position">🟡</div>
-      <div class="rank-asset">
-        Binance<br>
-        <small>Paper mode setup only</small>
-      </div>
-      <div class="rank-score">Ready</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🟡</div>
-      <div class="rank-asset">
-        Coinbase<br>
-        <small>Paper mode setup only</small>
-      </div>
-      <div class="rank-score">Ready</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🟡</div>
-      <div class="rank-asset">
-        Kraken<br>
-        <small>Paper mode setup only</small>
-      </div>
-      <div class="rank-score">Ready</div>
-    </div>
-
+  <div class="mini-box">
+    <div class="mini-label">Trading</div>
+    <div class="mini-value blue" id="tradingStatus">Disabled</div>
   </div>
 
 </section>
 
 <section class="command-card">
 
-  <div class="card-label">API SETUP PLACEHOLDER</div>
+  <div class="card-label">ADD EXCHANGE PROFILE</div>
 
   <div class="chat-input-bar">
     <input id="exchangeName" placeholder="Exchange e.g Binance" />
@@ -114,14 +75,54 @@
 
 <section class="briefing-card">
 
-  <div class="briefing-title">ZELLA SAFETY CHECK</div>
+  <div class="briefing-title">EXCHANGE STATUS</div>
+
+  <div id="exchangeList">
+    <div class="rank-row">
+      <div class="rank-position">🔒</div>
+      <div class="rank-asset">No exchange connected</div>
+      <div class="rank-score">Safe</div>
+    </div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">SAFETY CHECKLIST</div>
+
+  <div class="ranking-list">
+    <div class="rank-row">
+      <div class="rank-position">✅</div>
+      <div class="rank-asset">Paper mode enabled</div>
+      <div class="rank-score">Safe</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">✅</div>
+      <div class="rank-asset">Real trading disabled</div>
+      <div class="rank-score">Locked</div>
+    </div>
+
+    <div class="rank-row">
+      <div class="rank-position">✅</div>
+      <div class="rank-asset">API secrets not stored</div>
+      <div class="rank-score">Protected</div>
+    </div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ZELLA EXCHANGE REVIEW</div>
 
   <h2 class="briefing-headline" id="exchangeHeadline">
     Auto-trading is disabled.
   </h2>
 
   <p class="briefing-text" id="exchangeSummary">
-    Zella is currently in safe setup mode. Do not paste real API secrets into this prototype.
+    Zella is in safe exchange setup mode. Add paper exchange profiles to prepare for future auto-trading.
   </p>
 
 </section>
@@ -140,13 +141,13 @@
 
 let connections =
   JSON.parse(
-    localStorage.getItem("zellaExchangeConnections")
+    localStorage.getItem("zellaExchangeV2")
   ) || [];
 
 function saveConnections(){
 
   localStorage.setItem(
-    "zellaExchangeConnections",
+    "zellaExchangeV2",
     JSON.stringify(connections)
   );
 
@@ -176,7 +177,8 @@ function saveConnection(){
 
     exchange,
     label,
-    status:"Paper Mode"
+    permission:"Paper Only",
+    status:"Ready"
 
   });
 
@@ -199,12 +201,45 @@ function deleteConnection(index){
 
 }
 
+function calculateReadiness(){
+
+  if(connections.length === 0){
+    return 0;
+  }
+
+  return Math.min(
+    100,
+    40 + (connections.length * 20)
+  );
+
+}
+
 function loadConnections(){
+
+  const readiness =
+    calculateReadiness();
 
   document.getElementById(
     "connectionCount"
   ).textContent =
     connections.length;
+
+  document.getElementById(
+    "readinessScore"
+  ).textContent =
+    readiness + "%";
+
+  document.getElementById(
+    "permissionStatus"
+  ).textContent =
+    connections.length
+      ? "Paper"
+      : "Locked";
+
+  document.getElementById(
+    "tradingStatus"
+  ).textContent =
+    "Disabled";
 
   document.getElementById(
     "exchangeList"
@@ -234,7 +269,7 @@ function loadConnections(){
 
         <div class="rank-score">
 
-          ${item.status}
+          ${item.permission}
 
           <br><br>
 
@@ -244,8 +279,7 @@ function loadConnections(){
               border:none;
               border-radius:10px;
               padding:6px 10px;
-              cursor:pointer;
-            ">
+              cursor:pointer;">
             ✕
           </button>
 
@@ -281,9 +315,9 @@ function loadConnections(){
     "exchangeHeadline"
   ).textContent =
 
-    connections.length
+    readiness >= 80
 
-    ? `${connections.length} exchange connection(s) configured`
+    ? "AutoTrader preparation complete."
 
     : "Auto-trading is disabled.";
 
@@ -291,11 +325,11 @@ function loadConnections(){
     "exchangeSummary"
   ).textContent =
 
-    connections.length
+    readiness >= 80
 
-    ? "Paper trading setup detected. Real exchange execution remains disabled until Exchange Integration V2."
+    ? `Readiness score ${readiness}%. Exchange profiles are configured for paper trading. Real trading remains disabled until a future AutoTrader release.`
 
-    : "Zella is currently in safe setup mode. Do not paste real API secrets into this prototype.";
+    : `Readiness score ${readiness}%. Add more exchange profiles to continue preparing the Zella trading environment.`;
 
 }
 

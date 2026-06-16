@@ -35,7 +35,7 @@
 
   <div class="live-row">
     <div>
-      <div class="eyebrow">GOOD MORNING ZEUS</div>
+      <div class="eyebrow" id="welcomeMessage">GOOD MORNING TRADER</div>
       <h1 class="command-title">
         AI Daily<br>Briefing.
       </h1>
@@ -417,6 +417,34 @@ async function loadDashboard(){
   }
 
 }
+
+function loadUserGreeting(){
+
+  const user =
+    JSON.parse(
+      localStorage.getItem("zellaUser")
+    );
+
+  const hour =
+    new Date().getHours();
+
+  let greeting = "GOOD MORNING";
+
+  if(hour >= 12 && hour < 17){
+    greeting = "GOOD AFTERNOON";
+  }
+  else if(hour >= 17){
+    greeting = "GOOD EVENING";
+  }
+
+  document.getElementById("welcomeMessage").textContent =
+    user
+    ? `${greeting} ${user.name.toUpperCase()}`
+    : `${greeting} TRADER`;
+
+}
+
+loadUserGreeting();
 
 loadDashboard();
 

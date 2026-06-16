@@ -1,217 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Settings</title>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;min-height:100%;overflow-x:hidden}
-body{
-font-family:Arial,sans-serif;
-background:#050b12;
-color:#f8fafc;
-}
-
-.app{
-width:100%;
-min-height:100vh;
-padding:42px 16px 170px;
-background:
-radial-gradient(circle at top right,rgba(37,99,235,.35),transparent 35%),
-linear-gradient(180deg,#07111d,#050b12);
-}
-
-.top-label{
-color:#9ca3af;
-font-size:12px;
-letter-spacing:5px;
-text-transform:uppercase;
-margin-bottom:10px;
-}
-
-h1{
-font-size:36px;
-color:#d8ecff;
-margin-bottom:20px;
-}
-
-.card{
-background:linear-gradient(145deg,#111a26,#0b111a);
-border:1px solid #1f2937;
-border-radius:26px;
-padding:22px;
-margin-bottom:70px;
-}
-
-.card-title{
-color:#38bdf8;
-font-size:14px;
-letter-spacing:4px;
-text-transform:uppercase;
-margin-bottom:16px;
-}
-
-input,select{
-width:100%;
-padding:14px;
-background:#101722;
-border:1px solid #263241;
-border-radius:16px;
-color:white;
-margin-bottom:12px;
-}
-
-.setting{
-padding:16px;
-border-radius:18px;
-background:#101722;
-border:1px solid #263241;
-margin-bottom:12px;
-}
-
-button{
-width:100%;
-padding:14px;
-border:none;
-border-radius:18px;
-background:#2563eb;
-color:white;
-font-weight:bold;
-}
-
-.green{color:#4ade80}
-.orange{color:#f59e0b}
-.blue{color:#4dabff}
-.muted{color:#9ca3af}
-
-.bottom-nav{
-position:fixed;
-bottom:70px;
-left:50%;
-transform:translateX(-50%);
-width:calc(100% - 32px);
-max-width:460px;
-background:rgba(15,23,42,.92);
-border:1px solid #263241;
-border-radius:30px;
-padding:12px;
-display:flex;
-justify-content:space-between;
-}
-
-.bottom-nav a{
-color:#9ca3af;
-text-decoration:none;
-padding:10px;
-}
-
-.bottom-nav a.active{
-color:#4dabff;
-}
-</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zella Setup Center V2</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<div class="app">
-
-<div class="top-label">
-ZELLA AI • SETTINGS
+<div class="pro-particles">
+  <span>⚙️</span>
+  <span>RISK</span>
+  <span>AI</span>
+  <span>⚙️</span>
+  <span>SYNC</span>
+  <span>PRO</span>
 </div>
 
-<h1>Setup</h1>
+<style>
+.pro-particles{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
 
-<div class="card">
+.pro-particles span{
+  position:absolute;
+  top:-100px;
+  opacity:.10;
+  font-size:28px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:settingsRain 14s linear infinite;
+}
 
-<div class="card-title">
-EXCHANGE CONNECTION
-</div>
+.pro-particles span:nth-child(1){left:8%;}
+.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
+.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
+.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
 
-<input type="text" placeholder="Binance API Key">
+@keyframes settingsRain{
+  from{
+    transform:translateY(-140px) rotate(0deg);
+  }
+  to{
+    transform:translateY(120vh) rotate(360deg);
+  }
+}
 
-<input type="password" placeholder="Binance Secret Key">
+.container,
+.navbar{
+  position:relative;
+  z-index:2;
+}
+</style>
 
-<button>Connect Exchange</button>
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">⚙</div>
+  </div>
+</nav>
 
-</div>
+<main class="container">
 
-<div class="card">
+<section class="command-card">
 
-<div class="card-title">
-RISK MANAGEMENT
-</div>
+  <div class="live-row">
+    <div>
+      <div class="eyebrow">ZELLA SETUP CENTER</div>
+      <h1 class="command-title">Control<br>Settings.</h1>
+    </div>
 
-<select>
-<option>Risk Per Trade</option>
-<option>1%</option>
-<option>2%</option>
-<option>3%</option>
-<option>5%</option>
-</select>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">READY</span>
+    </div>
+  </div>
 
-<select>
-<option>Trading Style</option>
-<option>Scalping</option>
-<option>Day Trading</option>
-<option>Swing Trading</option>
-</select>
+  <p class="briefing-text">
+    Customize Zella’s risk profile, trading preferences,
+    notification mode, learning level and AutoTrader behavior.
+  </p>
 
-</div>
+</section>
 
-<div class="card">
+<section class="mini-grid">
 
-<div class="card-title">
-ZELLA PREFERENCES
-</div>
+  <div class="mini-box">
+    <div class="mini-label">Risk Profile</div>
+    <div class="mini-value green" id="riskView">Medium</div>
+  </div>
 
-<div class="setting">
-<h3>AI Signals</h3>
-<p class="muted">Enabled</p>
-</div>
+  <div class="mini-box">
+    <div class="mini-label">Theme</div>
+    <div class="mini-value blue" id="themeView">Dark</div>
+  </div>
 
-<div class="setting">
-<h3>Push Notifications</h3>
-<p class="muted">Enabled</p>
-</div>
+  <div class="mini-box">
+    <div class="mini-label">Notifications</div>
+    <div class="mini-value orange" id="notifyView">Off</div>
+  </div>
 
-<div class="setting">
-<h3>Auto Trading</h3>
-<p class="orange">Disabled</p>
-</div>
+  <div class="mini-box">
+    <div class="mini-label">AutoTrader</div>
+    <div class="mini-value blue" id="autoView">Paper</div>
+  </div>
 
-</div>
+</section>
 
-<div class="card">
+<section class="command-card">
 
-<div class="card-title">
-ACCOUNT STATUS
-</div>
+  <div class="card-label">
+    PERSONAL SETTINGS
+  </div>
 
-<h2 class="green">Premium Plan</h2>
+  <div class="chat-input-bar">
+    <select id="riskProfile">
+      <option>Conservative</option>
+      <option selected>Medium</option>
+      <option>Aggressive</option>
+    </select>
 
-<br>
+    <select id="themeMode">
+      <option selected>Dark</option>
+      <option>Light</option>
+    </select>
+  </div>
 
-<p class="muted">
-Real-Time Market Data Active
-<br>
-AI Copilot Active
-<br>
-Alerts Active
-</p>
+  <div class="chat-input-bar" style="margin-top:12px;">
 
-</div>
+    <select id="notificationMode">
+      <option selected>Off</option>
+      <option>On</option>
+    </select>
+
+    <select id="learningLevel">
+      <option selected>Beginner</option>
+      <option>Intermediate</option>
+      <option>Advanced</option>
+    </select>
+
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    AUTOTRADER SETTINGS
+  </div>
+
+  <div class="chat-input-bar">
+
+    <select id="autoTraderMode">
+      <option selected>Paper</option>
+      <option>Simulation</option>
+    </select>
+
+    <select id="exchangePreference">
+      <option selected>Binance</option>
+      <option>Coinbase</option>
+      <option>Kraken</option>
+    </select>
+
+  </div>
+
+  <div class="hero-actions" style="margin-top:15px;">
+    <button class="btn" onclick="saveSettings()">
+      Save Settings
+    </button>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA PROFILE SUMMARY
+  </div>
+
+  <h2 class="briefing-headline" id="settingsHeadline">
+    Settings not configured.
+  </h2>
+
+  <p class="briefing-text" id="settingsSummary">
+    Configure your preferences and save them to personalize the Zella experience.
+  </p>
+
+</section>
+
+</main>
 
 <div class="bottom-nav">
-<a href="dashboard.html">Command</a>
-<a href="market.html">Markets</a>
-<a href="copilot.html">Copilot</a>
-<a href="alert.html">Alerts</a>
-<a href="setup.html" class="active">Setup</a>
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="journal.html">Wallet</a>
 </div>
 
-</div>
+<script>
+
+function saveSettings(){
+
+  const settings = {
+
+    risk:
+      document.getElementById("riskProfile").value,
+
+    theme:
+      document.getElementById("themeMode").value,
+
+    notifications:
+      document.getElementById("notificationMode").value,
+
+    learning:
+      document.getElementById("learningLevel").value,
+
+    autoTrader:
+      document.getElementById("autoTraderMode").value,
+
+    exchange:
+      document.getElementById("exchangePreference").value
+
+  };
+
+  localStorage.setItem(
+    "zellaSettingsV2",
+    JSON.stringify(settings)
+  );
+
+  loadSettings();
+
+}
+
+function loadSettings(){
+
+  const settings =
+    JSON.parse(
+      localStorage.getItem("zellaSettingsV2")
+    );
+
+  if(!settings){
+    return;
+  }
+
+  document.getElementById("riskProfile").value =
+    settings.risk;
+
+  document.getElementById("themeMode").value =
+    settings.theme;
+
+  document.getElementById("notificationMode").value =
+    settings.notifications;
+
+  document.getElementById("learningLevel").value =
+    settings.learning;
+
+  document.getElementById("autoTraderMode").value =
+    settings.autoTrader;
+
+  document.getElementById("exchangePreference").value =
+    settings.exchange;
+
+  document.getElementById("riskView").textContent =
+    settings.risk;
+
+  document.getElementById("themeView").textContent =
+    settings.theme;
+
+  document.getElementById("notifyView").textContent =
+    settings.notifications;
+
+  document.getElementById("autoView").textContent =
+    settings.autoTrader;
+
+  document.getElementById("settingsHeadline").textContent =
+    `${settings.risk} Trader Profile`;
+
+  document.getElementById("settingsSummary").textContent =
+    `Learning Level: ${settings.learning}. Notifications: ${settings.notifications}. AutoTrader Mode: ${settings.autoTrader}. Preferred Exchange: ${settings.exchange}. Theme: ${settings.theme}.`;
+
+}
+
+loadSettings();
+
+</script>
 
 </body>
 </html>

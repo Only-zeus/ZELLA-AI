@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Alerts V2</title>
+<title>Zella Alert Engine V3</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -21,25 +21,20 @@
 <section class="command-card">
 
   <div class="live-row">
-
     <div>
-      <div class="eyebrow">ZELLA ALERT CENTER</div>
-      <h1 class="command-title">
-        Smart<br>Alerts.
-      </h1>
+      <div class="eyebrow">ZELLA ALERT ENGINE</div>
+      <h1 class="command-title">Smart<br>Alerts.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
       <div class="live-dot"></div>
       <span class="live-label">LIVE</span>
     </div>
-
   </div>
 
   <p class="briefing-text">
-    Zella monitors all tracked assets and automatically
-    highlights opportunities, risks, momentum changes
-    and important market events.
+    Zella monitors confidence, momentum, opportunity,
+    risk and market strength to surface important trading alerts.
   </p>
 
 </section>
@@ -47,32 +42,41 @@
 <section class="mini-grid">
 
   <div class="mini-box">
-    <div class="mini-label">Strongest Setup</div>
-    <div class="mini-value green" id="strongestSetup">
-      Loading
-    </div>
+    <div class="mini-label">Active Alerts</div>
+    <div class="mini-value green" id="activeAlerts">0</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Risk Alert</div>
-    <div class="mini-value orange" id="riskAlert">
-      --
-    </div>
+    <div class="mini-label">Strongest Asset</div>
+    <div class="mini-value blue" id="strongestAsset">--</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Highest Risk</div>
+    <div class="mini-value orange" id="highestRisk">--</div>
   </div>
 
   <div class="mini-box">
     <div class="mini-label">Market Status</div>
-    <div class="mini-value blue" id="marketStatus">
-      --
-    </div>
+    <div class="mini-value blue" id="marketStatus">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Active Alerts</div>
-    <div class="mini-value green" id="alertCount">
-      0
-    </div>
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA AI ALERT SUMMARY
   </div>
+
+  <h2 class="briefing-headline" id="alertHeadline">
+    Monitoring market conditions...
+  </h2>
+
+  <p class="briefing-text" id="alertSummary">
+    Zella is scanning the market for high-confidence opportunities,
+    momentum breakouts and risk warnings.
+  </p>
 
 </section>
 
@@ -82,31 +86,19 @@
     LIVE ALERT FEED
   </div>
 
-  <div class="ranking-list" id="alertFeed">
+  <div id="alertFeed">
 
     <div class="rank-row">
-      <div class="rank-position">...</div>
-      <div class="rank-asset">Loading alerts</div>
-      <div class="rank-score">...</div>
+      <div class="rank-position">🚨</div>
+      <div class="rank-asset">
+        Waiting for scanner data...
+      </div>
+      <div class="rank-score">
+        --
+      </div>
     </div>
 
   </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA ALERT SUMMARY
-  </div>
-
-  <h2 class="briefing-headline" id="alertHeadline">
-    Scanning live market conditions...
-  </h2>
-
-  <p class="briefing-text" id="alertSummary">
-    Zella is checking strongest setups, weak assets, momentum and risk alerts.
-  </p>
 
 </section>
 
@@ -117,12 +109,13 @@
   <a href="scanner.html">Scanner</a>
   <a href="copilot.html">Copilot</a>
   <a href="market.html">Market</a>
-  <a href="alerts.html" class="active">Alerts</a>
+  <a href="journal.html">Wallet</a>
 </div>
 
 <script>
 
-const API_URL = "https://zella-backend.onrender.com";
+const API_URL =
+  "https://zella-backend.onrender.com";
 
 async function loadAlerts(){
 
@@ -137,9 +130,7 @@ async function loadAlerts(){
     const rankings =
       data.items || [];
 
-    if(!rankings.length){
-      return;
-    }
+    if(!rankings.length) return;
 
     const strongest =
       rankings[0];
@@ -147,76 +138,93 @@ async function loadAlerts(){
     const weakest =
       rankings[rankings.length - 1];
 
-    document.getElementById("strongestSetup").textContent =
-      strongest.asset;
-
-    document.getElementById("riskAlert").textContent =
-      weakest.asset;
-
-    const avgConfidence =
-      rankings.reduce(
-        (sum,item)=>
-          sum + Number(item.confidence || 0),
-        0
-      ) / rankings.length;
-
-    let marketStatus = "WATCH";
-
-    if(avgConfidence >= 80){
-      marketStatus = "BULLISH";
-    }
-    else if(avgConfidence < 65){
-      marketStatus = "RISK OFF";
-    }
-
-    document.getElementById("marketStatus").textContent =
-      marketStatus;
-
     const alerts = [];
 
-    alerts.push({
-      type:"🚀",
-      text:`${strongest.asset} is the strongest setup (${strongest.confidence}%)`
-    });
+    rankings.forEach(asset=>{
 
-    alerts.push({
-      type:"⚠️",
-      text:`${weakest.asset} has the weakest ranking (${weakest.confidence}%)`
-    });
-
-    rankings.forEach(asset => {
-
-      if(Number(asset.confidence) >= 80){
+      if(Number(asset.confidence) >= 85){
 
         alerts.push({
           type:"🔥",
-          text:`${asset.asset} entered high-confidence territory`
+          title:"High Confidence Alert",
+          text:`${asset.asset} confidence reached ${asset.confidence}%`
         });
 
       }
 
-      if(asset.signal === "STRONG BUY"){
+      if(Number(asset.momentumScore) >= 85){
 
         alerts.push({
-          type:"📈",
-          text:`${asset.asset} triggered a STRONG BUY signal`
+          type:"⚡",
+          title:"Momentum Breakout",
+          text:`${asset.asset} momentum score is ${asset.momentumScore}`
+        });
+
+      }
+
+      if(Number(asset.riskScore) >= 75){
+
+        alerts.push({
+          type:"⚠️",
+          title:"Risk Warning",
+          text:`${asset.asset} risk score is elevated`
+        });
+
+      }
+
+      if(Number(asset.opportunityScore) >= 85){
+
+        alerts.push({
+          type:"🎯",
+          title:"Opportunity Alert",
+          text:`${asset.asset} shows strong opportunity conditions`
         });
 
       }
 
     });
 
-    document.getElementById("alertCount").textContent =
+    alerts.unshift({
+
+      type:"🏆",
+      title:"Strongest Asset",
+      text:`${strongest.asset} currently leads the scanner`
+
+    });
+
+    alerts.push({
+
+      type:"📉",
+      title:"Weakest Asset",
+      text:`${weakest.asset} ranks lowest in current rankings`
+
+    });
+
+    document.getElementById("activeAlerts").textContent =
       alerts.length;
 
+    document.getElementById("strongestAsset").textContent =
+      strongest.asset;
+
+    document.getElementById("highestRisk").textContent =
+      weakest.asset;
+
+    document.getElementById("marketStatus").textContent =
+      strongest.confidence >= 75
+      ? "Bullish"
+      : strongest.confidence >= 60
+      ? "Neutral"
+      : "Risk Off";
+
     document.getElementById("alertHeadline").textContent =
-      `${alerts.length} active alerts detected`;
+      `${alerts.length} active market alerts`;
 
     document.getElementById("alertSummary").textContent =
-      `${strongest.asset} currently leads the market while ${weakest.asset} remains the weakest ranked asset. Market conditions are ${marketStatus.toLowerCase()}.`;
+      `${strongest.asset} is currently the strongest setup. Zella has detected multiple opportunities and risk conditions requiring attention.`;
 
     document.getElementById("alertFeed").innerHTML =
-      alerts.map((alert,index)=>`
+
+      alerts.map(alert => `
 
         <div class="rank-row">
 
@@ -225,11 +233,15 @@ async function loadAlerts(){
           </div>
 
           <div class="rank-asset">
+
+            <strong>${alert.title}</strong><br>
+
             ${alert.text}
+
           </div>
 
           <div class="rank-score">
-            #${index + 1}
+            LIVE
           </div>
 
         </div>
@@ -243,10 +255,10 @@ async function loadAlerts(){
     console.error(error);
 
     document.getElementById("alertHeadline").textContent =
-      "Alert engine unavailable";
+      "Alert Engine Offline";
 
     document.getElementById("alertSummary").textContent =
-      "Unable to connect to the scanner backend.";
+      "Unable to connect to scanner engine.";
 
   }
 

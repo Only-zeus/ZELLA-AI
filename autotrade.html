@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zella Auto Trading Prep V1</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">A</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="live-row">
+    <div>
+      <div class="eyebrow">ZELLA AUTO TRADING</div>
+      <h1 class="command-title">Trade<br>Control.</h1>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="live-dot"></div>
+      <span class="live-label">SIMULATION</span>
+    </div>
+  </div>
+
+  <p class="briefing-text">
+    Prepare auto-trading settings, calculate position size,
+    simulate trades, and define risk rules before connecting real exchanges.
+  </p>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box">
+    <div class="mini-label">Mode</div>
+    <div class="mini-value blue">Demo</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Risk Profile</div>
+    <div class="mini-value green" id="riskProfile">Medium</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Max Risk</div>
+    <div class="mini-value orange" id="maxRiskView">2%</div>
+  </div>
+
+  <div class="mini-box">
+    <div class="mini-label">Status</div>
+    <div class="mini-value blue">Safe</div>
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    RISK SETTINGS
+  </div>
+
+  <div class="chat-input-bar">
+    <input id="accountBalance" placeholder="Account Balance ($)" />
+    <input id="maxRisk" placeholder="Max Risk % (e.g 2)" />
+  </div>
+
+  <div class="chat-input-bar" style="margin-top:12px;">
+    <input id="stopLossPercent" placeholder="Stop Loss %" />
+    <input id="takeProfitPercent" placeholder="Take Profit %" />
+  </div>
+
+</section>
+
+<section class="command-card">
+
+  <div class="card-label">
+    TRADE SIMULATOR
+  </div>
+
+  <div class="chat-input-bar">
+    <input id="entryPrice" placeholder="Entry Price" />
+    <input id="stopLossPrice" placeholder="Stop Loss Price" />
+  </div>
+
+  <div class="chat-input-bar" style="margin-top:12px;">
+    <input id="targetPrice" placeholder="Target Price" />
+    <button onclick="calculateTrade()">
+      Simulate
+    </button>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    ZELLA TRADE PLAN
+  </div>
+
+  <h2 class="briefing-headline" id="tradeHeadline">
+    Waiting for simulation...
+  </h2>
+
+  <p class="briefing-text" id="tradeSummary">
+    Enter trade parameters and Zella will calculate position sizing and risk.
+  </p>
+
+</section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="dashboard.html">Home</a>
+  <a href="scanner.html">Scanner</a>
+  <a href="copilot.html">Copilot</a>
+  <a href="market.html">Market</a>
+  <a href="journal.html">Wallet</a>
+</div>
+
+<script>
+
+function calculateTrade(){
+
+  const balance =
+    parseFloat(
+      document.getElementById("accountBalance").value
+    );
+
+  const maxRisk =
+    parseFloat(
+      document.getElementById("maxRisk").value
+    );
+
+  const stopLossPercent =
+    parseFloat(
+      document.getElementById("stopLossPercent").value
+    );
+
+  const takeProfitPercent =
+    parseFloat(
+      document.getElementById("takeProfitPercent").value
+    );
+
+  const entry =
+    parseFloat(
+      document.getElementById("entryPrice").value
+    );
+
+  const stop =
+    parseFloat(
+      document.getElementById("stopLossPrice").value
+    );
+
+  const target =
+    parseFloat(
+      document.getElementById("targetPrice").value
+    );
+
+  if(
+    isNaN(balance) ||
+    isNaN(maxRisk) ||
+    isNaN(entry) ||
+    isNaN(stop) ||
+    isNaN(target)
+  ){
+    alert("Please complete all required fields.");
+    return;
+  }
+
+  const riskAmount =
+    balance * (maxRisk / 100);
+
+  const riskPerUnit =
+    Math.abs(entry - stop);
+
+  const positionSize =
+    riskPerUnit > 0
+    ? riskAmount / riskPerUnit
+    : 0;
+
+  const rewardPerUnit =
+    Math.abs(target - entry);
+
+  const rewardRiskRatio =
+    riskPerUnit > 0
+    ? (rewardPerUnit / riskPerUnit).toFixed(2)
+    : 0;
+
+  let profile = "Medium";
+
+  if(maxRisk <= 1){
+    profile = "Conservative";
+  }
+  else if(maxRisk >= 3){
+    profile = "Aggressive";
+  }
+
+  document.getElementById("riskProfile").textContent =
+    profile;
+
+  document.getElementById("maxRiskView").textContent =
+    maxRisk + "%";
+
+  document.getElementById("tradeHeadline").textContent =
+    `Position Size: ${positionSize.toFixed(2)} Units`;
+
+  document.getElementById("tradeSummary").textContent =
+    `Risk Amount: $${riskAmount.toFixed(2)} | Reward/Risk Ratio: ${rewardRiskRatio}:1 | Stop Loss: ${stopLossPercent || 0}% | Take Profit: ${takeProfitPercent || 0}% | Risk Profile: ${profile}. Zella recommends a minimum reward/risk ratio above 2.0 before taking a trade.`;
+
+}
+
+</script>
+
+</body>
+</html>

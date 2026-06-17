@@ -1,218 +1,652 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Learn Center V2</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Learn V11 Ultra</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<style>
+*{box-sizing:border-box}
+body{overflow-x:hidden}
+
+.learn-bg{
+position:fixed;
+inset:0;
+z-index:0;
+pointer-events:none;
+background:
+radial-gradient(circle at 20% 15%,rgba(56,189,248,.25),transparent 30%),
+radial-gradient(circle at 80% 15%,rgba(37,99,235,.22),transparent 30%),
+radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+#020617;
+}
+
+.learn-grid{
+position:fixed;
+inset:0;
+z-index:0;
+pointer-events:none;
+background-image:
+linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
+background-size:40px 40px;
+animation:gridMove 18s linear infinite;
+}
+
+@keyframes gridMove{
+from{background-position:0 0}
+to{background-position:0 400px}
+}
+
+.learn-particles{
+position:fixed;
+inset:0;
+overflow:hidden;
+pointer-events:none;
+z-index:1;
+}
+
+.learn-particles span{
+position:absolute;
+width:6px;
+height:6px;
+border-radius:50%;
+background:#38bdf8;
+box-shadow:0 0 20px #38bdf8;
+animation:floatLearn 12s linear infinite;
+}
+
+.learn-particles span:nth-child(1){left:8%;animation-delay:0s}
+.learn-particles span:nth-child(2){left:23%;animation-delay:2s}
+.learn-particles span:nth-child(3){left:41%;animation-delay:4s}
+.learn-particles span:nth-child(4){left:59%;animation-delay:1s}
+.learn-particles span:nth-child(5){left:78%;animation-delay:3s}
+.learn-particles span:nth-child(6){left:93%;animation-delay:5s}
+
+@keyframes floatLearn{
+from{transform:translateY(110vh)}
+to{transform:translateY(-100px)}
+}
+
+.learn-orbits{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:1;
+}
+
+.learn-orbits::before,
+.learn-orbits::after{
+content:"";
+position:absolute;
+width:450px;
+height:450px;
+border-radius:50%;
+border:1px solid rgba(56,189,248,.08);
+animation:orbitMove 25s linear infinite;
+}
+
+.learn-orbits::before{
+left:-220px;
+top:120px;
+}
+
+.learn-orbits::after{
+right:-220px;
+bottom:120px;
+animation-duration:35s;
+}
+
+@keyframes orbitMove{
+from{transform:rotate(0deg)}
+to{transform:rotate(360deg)}
+}
+
+.container,.navbar{
+position:relative;
+z-index:3;
+}
+
+.learn-hero{
+padding:24px;
+border-radius:34px;
+position:relative;
+overflow:hidden;
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+box-shadow:
+inset 0 0 30px rgba(56,189,248,.03),
+0 20px 60px rgba(0,0,0,.35);
+}
+
+.learn-core-wrap{
+width:280px;
+height:280px;
+margin:auto;
+position:relative;
+}
+
+.learn-ring{
+position:absolute;
+border-radius:50%;
+border:1px solid rgba(56,189,248,.35);
+animation:spin 12s linear infinite;
+}
+
+.learn-ring.r1{inset:0}
+.learn-ring.r2{inset:25px;animation-duration:18s}
+.learn-ring.r3{inset:50px;animation-duration:25s}
+.learn-ring.r4{inset:75px;animation-duration:32s}
+
+.learn-ring::before{
+content:"";
+position:absolute;
+width:10px;
+height:10px;
+border-radius:50%;
+background:#38bdf8;
+left:50%;
+top:12px;
+box-shadow:0 0 20px #38bdf8;
+}
+
+@keyframes spin{
+from{transform:rotate(0)}
+to{transform:rotate(360deg)}
+}
+
+.learn-core{
+position:absolute;
+inset:95px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:
+radial-gradient(circle,#e0f2fe 0%,#38bdf8 25%,#0f172a 65%);
+box-shadow:
+0 0 40px rgba(56,189,248,.9),
+0 0 100px rgba(56,189,248,.35);
+animation:pulseLearn 4s ease-in-out infinite;
+}
+
+@keyframes pulseLearn{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.12)}
+}
+
+.learn-core svg{
+width:80px;
+height:80px;
+stroke:#020617;
+stroke-width:2;
+fill:none;
+}
+
+.learn-card{
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+border-radius:28px;
+padding:18px;
+margin-top:16px;
+box-shadow:0 18px 48px rgba(0,0,0,.25);
+}
+
+.learn-card:hover{
+transform:translateY(-4px);
+transition:.3s;
+}
+
+.academy-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+margin-top:16px;
+}
+
+.academy-module{
+padding:18px;
+border-radius:24px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+position:relative;
+overflow:hidden;
+}
+
+.academy-module::after{
+content:"";
+position:absolute;
+width:90px;
+height:90px;
+right:-30px;
+bottom:-30px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(56,189,248,.15),transparent 70%);
+}
+
+.module-title{
+font-size:16px;
+font-weight:900;
+color:#e5eefb;
+}
+
+.module-desc{
+font-size:12px;
+line-height:1.7;
+margin-top:8px;
+color:#94a3b8;
+}
+
+.module-progress{
+margin-top:12px;
+height:10px;
+border-radius:999px;
+overflow:hidden;
+background:rgba(255,255,255,.08);
+}
+
+.module-fill{
+height:100%;
+background:linear-gradient(90deg,#38bdf8,#22c55e);
+box-shadow:0 0 18px rgba(56,189,248,.45);
+}
+
+.learning-path{
+display:grid;
+gap:12px;
+margin-top:16px;
+}
+
+.path-node{
+padding:16px;
+border-radius:22px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.path-node strong{
+color:#e5eefb;
+}
+
+.path-node small{
+color:#94a3b8;
+}
+
+@media(max-width:430px){
+.academy-grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+
+<div class="learn-bg"></div>
+<div class="learn-grid"></div>
+<div class="learn-orbits"></div>
+
+<div class="learn-particles">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+
 <nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">L</div>
-  </div>
+<div class="nav-inner">
+<div class="logo">ZELLA</div>
+<div class="avatar-dot">ED</div>
+</div>
 </nav>
 
 <main class="container">
 
-<section class="command-card">
+<section class="learn-hero">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA LEARN CENTER</div>
-      <h1 class="command-title">Trading<br>Academy.</h1>
-    </div>
+<div class="learn-core-wrap">
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">LEARN</span>
-    </div>
-  </div>
+<div class="learn-ring r1"></div>
+<div class="learn-ring r2"></div>
+<div class="learn-ring r3"></div>
+<div class="learn-ring r4"></div>
 
-  <p class="briefing-text">
-    Learn crypto trading from the basics to risk management,
-    market structure, signals, journaling and disciplined execution.
-  </p>
+<div class="learn-core">
+<svg viewBox="0 0 24 24">
+<path d="M4 6L12 3L20 6L12 9L4 6Z"/>
+<path d="M4 6V14L12 17L20 14V6"/>
+<path d="M12 9V17"/>
+</svg>
+</div>
+
+</div>
+
+<div class="eyebrow">
+ZELLA LEARN V11 ULTRA
+</div>
+
+<h1 class="command-title">
+AI Trading<br>
+Academy
+</h1>
+
+<p class="briefing-text">
+Master crypto trading through structured learning paths,
+AI-guided lessons, practical exercises and skill progression.
+</p>
+
+<div class="command-status-pill">
+Academy Online
+</div>
 
 </section>
 
 <section class="mini-grid">
 
-  <div class="mini-box">
-    <div class="mini-label">Lessons</div>
-    <div class="mini-value blue" id="lessonCount">6</div>
-  </div>
+<div class="mini-box learn-card">
+<div class="mini-label">Level</div>
+<div class="mini-value green" id="userLevel">1</div>
+</div>
 
-  <div class="mini-box">
-    <div class="mini-label">Level</div>
-    <div class="mini-value green">Beginner</div>
-  </div>
+<div class="mini-box learn-card">
+<div class="mini-label">XP</div>
+<div class="mini-value blue" id="userXP">0</div>
+</div>
 
-  <div class="mini-box">
-    <div class="mini-label">Progress</div>
-    <div class="mini-value orange" id="learnProgress">0%</div>
-  </div>
+<div class="mini-box learn-card">
+<div class="mini-label">Courses</div>
+<div class="mini-value orange">12</div>
+</div>
 
-  <div class="mini-box">
-    <div class="mini-label">Quiz Score</div>
-    <div class="mini-value blue" id="quizScore">--</div>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">BEGINNER ROADMAP</div>
-
-  <div class="ranking-list" id="lessonList">
-
-    <div class="rank-row">
-      <div class="rank-position">1</div>
-      <div class="rank-asset">
-        What is crypto trading?<br>
-        <small>Understand coins, exchanges and market movement.</small>
-      </div>
-      <div class="rank-score">Start</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">2</div>
-      <div class="rank-asset">
-        Risk management<br>
-        <small>Learn position sizing, stop loss and capital protection.</small>
-      </div>
-      <div class="rank-score">Core</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">3</div>
-      <div class="rank-asset">
-        Market trends<br>
-        <small>Identify bullish, bearish and sideways markets.</small>
-      </div>
-      <div class="rank-score">Core</div>
-    </div>
-
-  </div>
+<div class="mini-box learn-card">
+<div class="mini-label">Certificates</div>
+<div class="mini-value blue">0</div>
+</div>
 
 </section>
 
-<section class="briefing-card">
+<section class="learn-card">
 
-  <div class="briefing-title">CRYPTO GLOSSARY</div>
+<div class="briefing-title">
+ACADEMY MODULES
+</div>
 
-  <div class="ranking-list">
+<div class="academy-grid">
 
-    <div class="rank-row">
-      <div class="rank-position">📌</div>
-      <div class="rank-asset">Bullish<br><small>When the market is expected to move upward.</small></div>
-      <div class="rank-score">Term</div>
-    </div>
+<div class="academy-module">
+<div class="module-title">Crypto Fundamentals</div>
+<div class="module-desc">
+Learn blockchain, wallets, exchanges and market structure.
+</div>
+<div class="module-progress">
+<div class="module-fill" style="width:15%"></div>
+</div>
+</div>
 
-    <div class="rank-row">
-      <div class="rank-position">📌</div>
-      <div class="rank-asset">Bearish<br><small>When the market is expected to move downward.</small></div>
-      <div class="rank-score">Term</div>
-    </div>
+<div class="academy-module">
+<div class="module-title">Technical Analysis</div>
+<div class="module-desc">
+Master support, resistance, trends and chart reading.
+</div>
+<div class="module-progress">
+<div class="module-fill" style="width:10%"></div>
+</div>
+</div>
 
-    <div class="rank-row">
-      <div class="rank-position">📌</div>
-      <div class="rank-asset">Stop Loss<br><small>A price level used to limit losses.</small></div>
-      <div class="rank-score">Risk</div>
-    </div>
+<div class="academy-module">
+<div class="module-title">Risk Management</div>
+<div class="module-desc">
+Position sizing, risk control and capital preservation.
+</div>
+<div class="module-progress">
+<div class="module-fill" style="width:5%"></div>
+</div>
+</div>
 
-  </div>
+<div class="academy-module">
+<div class="module-title">Advanced Trading</div>
+<div class="module-desc">
+Professional trading workflows and execution strategies.
+</div>
+<div class="module-progress">
+<div class="module-fill" style="width:0%"></div>
+</div>
+</div>
+
+</div>
 
 </section>
 
-<section class="command-card">
+<section class="learn-card">
 
-  <div class="card-label">QUICK QUIZ</div>
+<div class="briefing-title">
+LEARNING ROADMAP
+</div>
 
-  <p class="briefing-text">
-    What is the main purpose of a stop loss?
-  </p>
+<div class="learning-path">
 
-  <div class="hero-actions">
-    <button class="btn secondary" onclick="checkQuiz(false)">Increase risk</button>
-    <button class="btn secondary" onclick="checkQuiz(true)">Limit losses</button>
-    <button class="btn secondary" onclick="checkQuiz(false)">Avoid profits</button>
-  </div>
+<div class="path-node">
+<div>
+<strong>Stage 1</strong><br>
+<small>Crypto Basics</small>
+</div>
+<div>✓</div>
+</div>
+
+<div class="path-node">
+<div>
+<strong>Stage 2</strong><br>
+<small>Technical Analysis</small>
+</div>
+<div>▶</div>
+</div>
+
+<div class="path-node">
+<div>
+<strong>Stage 3</strong><br>
+<small>Risk Management</small>
+</div>
+<div>🔒</div>
+</div>
+
+<div class="path-node">
+<div>
+<strong>Stage 4</strong><br>
+<small>Professional Trader</small>
+</div>
+<div>🔒</div>
+</div>
+
+</div>
 
 </section>
+
+<section class="learn-card">
+
+<div class="briefing-title">
+AI TUTOR ENGINE
+</div>
+
+<h2 class="briefing-headline" id="lessonTitle">
+Today’s lesson: Risk before reward.
+</h2>
+
+<p class="briefing-text" id="lessonText">
+Professional traders protect capital first. Before entering any trade, define your invalidation, risk amount, position size and target.
+</p>
+
+<div class="hero-actions">
+<button class="btn" onclick="completeLesson()">Complete Lesson</button>
+<button class="btn secondary" onclick="speakLesson()">Voice Lesson</button>
+</div>
+
+</section>
+
+<section class="learn-card">
+
+<div class="briefing-title">
+DAILY LEARNING MISSIONS
+</div>
+
+<div class="learning-path">
+
+<div class="path-node">
+<div>
+<strong>Read one lesson</strong><br>
+<small>Earn 20 XP</small>
+</div>
+<div id="missionOne">Pending</div>
+</div>
+
+<div class="path-node">
+<div>
+<strong>Ask Zella one trading question</strong><br>
+<small>Build learning memory</small>
+</div>
+<a href="copilot.html" class="btn secondary">Ask</a>
+</div>
+
+<div class="path-node">
+<div>
+<strong>Review risk management</strong><br>
+<small>Strengthen discipline</small>
+</div>
+<div>Ready</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="learn-card">
+
+<div class="briefing-title">
+CERTIFICATION CENTER
+</div>
+
+<div class="academy-grid">
+
+<div class="academy-module">
+<div class="module-title">Beginner Trader Certificate</div>
+<div class="module-desc">Unlocked after completing fundamentals and risk basics.</div>
+<div class="module-progress">
+<div class="module-fill" id="certOne" style="width:0%"></div>
+</div>
+</div>
+
+<div class="academy-module">
+<div class="module-title">Risk Management Certificate</div>
+<div class="module-desc">Unlocked after completing trade safety lessons.</div>
+<div class="module-progress">
+<div class="module-fill" style="width:0%"></div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<nav class="zella-nav">
+
+<a href="dashboard.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+<span>Home</span>
+</a>
+
+<a href="scanner.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+<span>Scanner</span>
+</a>
+
+<a href="copilot.html" class="nav-item copilot-center">
+<div class="copilot-core">
+<svg viewBox="0 0 24 24" class="copilot-icon">
+<rect x="6" y="8" width="12" height="9" rx="2"/>
+<circle cx="9" cy="12" r="1"/>
+<circle cx="15" cy="12" r="1"/>
+<path d="M12 4V8"/>
+</svg>
+</div>
+<span>Copilot</span>
+</a>
+
+<a href="market.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+<span>Market</span>
+</a>
+
+<a href="watchlist.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+<span>Watchlist</span>
+</a>
+
+<a href="more.html" class="nav-item active">
+<svg viewBox="0 0 24 24" class="nav-icon">
+<circle cx="12" cy="5" r="1.5"/>
+<circle cx="12" cy="12" r="1.5"/>
+<circle cx="12" cy="19" r="1.5"/>
+</svg>
+<span>More</span>
+</a>
+
+</nav>
 
 <script>
+let xp = Number(localStorage.getItem("zellaLearnXP") || 0);
 
-let progress =
-  Number(
-    localStorage.getItem("zellaLearnProgress")
-  ) || 0;
+function updateLearning(){
+  const level = Math.floor(xp / 100) + 1;
 
-let bestScore =
-  localStorage.getItem("zellaQuizScore") || "--";
+  document.getElementById("userXP").textContent = xp;
+  document.getElementById("userLevel").textContent = level;
 
-function updateLearningStats(){
-
-  document.getElementById(
-    "learnProgress"
-  ).textContent =
-    progress + "%";
-
-  document.getElementById(
-    "quizScore"
-  ).textContent =
-    bestScore;
-
+  const certProgress = Math.min(100,xp);
+  document.getElementById("certOne").style.width = certProgress + "%";
 }
 
-function checkQuiz(correct){
+function completeLesson(){
+  xp += 20;
+  localStorage.setItem("zellaLearnXP",xp);
 
-  if(correct){
+  document.getElementById("lessonTitle").textContent =
+    "Lesson completed.";
 
-    progress =
-      Math.min(
-        100,
-        progress + 20
-      );
+  document.getElementById("lessonText").textContent =
+    "You earned 20 XP. Keep building discipline, risk awareness and market understanding.";
 
-    bestScore = "100%";
+  document.getElementById("missionOne").textContent =
+    "Complete";
 
-    alert(
-      "Correct! A stop loss helps limit losses and protect capital."
-    );
-
-  }
-
-  else{
-
-    bestScore = "0%";
-
-    alert(
-      "Incorrect. The purpose of a stop loss is to limit losses."
-    );
-
-  }
-
-  localStorage.setItem(
-    "zellaLearnProgress",
-    progress
-  );
-
-  localStorage.setItem(
-    "zellaQuizScore",
-    bestScore
-  );
-
-  updateLearningStats();
-
+  updateLearning();
 }
 
-updateLearningStats();
+function speakLesson(){
+  const text =
+    document.getElementById("lessonTitle").textContent + ". " +
+    document.getElementById("lessonText").textContent;
 
+  if(!window.speechSynthesis){
+    alert("Voice lesson is not supported on this browser.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 1;
+  utterance.pitch = 1.05;
+  speechSynthesis.speak(utterance);
+}
+
+updateLearning();
 </script>
 
+</main>
 </body>
 </html>

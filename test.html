@@ -3,12 +3,25 @@
 <body>
 
 <h1 id="status">Testing Firebase...</h1>
+<pre id="error" style="white-space:pre-wrap;color:red;"></pre>
 
 <script type="module">
-import { auth, db, realtimeDB } from "./firebase.js";
+try {
+  const firebase = await import("./firebase.js");
 
-document.getElementById("status").innerText =
-"✅ Firebase Loaded Successfully";
+  document.getElementById("status").innerText =
+    "✅ Firebase Loaded Successfully";
+
+  document.getElementById("error").innerText =
+    "Auth: " + !!firebase.auth + "\nFirestore: " + !!firebase.db + "\nRealtimeDB: " + !!firebase.realtimeDB;
+
+} catch (err) {
+  document.getElementById("status").innerText =
+    "❌ Firebase Failed To Load";
+
+  document.getElementById("error").innerText =
+    err.message;
+}
 </script>
 
 </body>

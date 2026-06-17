@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Portfolio V11 Ultra</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<style>
+*{box-sizing:border-box}
+body{overflow-x:hidden}
+
+.portfolio-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 10%,rgba(56,189,248,.25),transparent 30%),
+    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    #020617;
+}
+
+.portfolio-grid-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:portfolioGrid 18s linear infinite;
+}
+
+@keyframes portfolioGrid{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+
+.wealth-particles{
+  position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+}
+
+.wealth-particles span{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:#38bdf8;box-shadow:0 0 18px #38bdf8;opacity:.42;
+  animation:wealthFloat 12s linear infinite;
+}
+
+.wealth-particles span:nth-child(1){left:7%;animation-delay:0s}
+.wealth-particles span:nth-child(2){left:24%;animation-delay:2s}
+.wealth-particles span:nth-child(3){left:41%;animation-delay:5s}
+.wealth-particles span:nth-child(4){left:58%;animation-delay:1s}
+.wealth-particles span:nth-child(5){left:76%;animation-delay:4s}
+.wealth-particles span:nth-child(6){left:91%;animation-delay:3s}
+
+@keyframes wealthFloat{
+  from{transform:translateY(110vh) scale(.6)}
+  to{transform:translateY(-140px) scale(1.4)}
+}
+
+.container,.navbar{position:relative;z-index:3}
+
+.portfolio-hero{
+  position:relative;overflow:hidden;padding:22px;border-radius:34px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:inset 0 0 34px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.30);
+}
+
+.portfolio-hero::after{
+  content:"";position:absolute;width:170px;height:170px;right:-65px;bottom:-65px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
+}
+
+.wealth-core-wrap{
+  width:265px;height:265px;margin:8px auto 22px;position:relative;
+}
+
+.wealth-ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(56,189,248,.38);
+  animation:spin 12s linear infinite;
+}
+
+.wealth-ring.r1{inset:12px}
+.wealth-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s}
+.wealth-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s}
+.wealth-ring.r4{inset:64px;border-color:rgba(56,189,248,.18);animation-duration:28s}
+
+.wealth-ring::before{
+  content:"";width:11px;height:11px;border-radius:50%;
+  position:absolute;top:18px;left:50%;
+  background:#38bdf8;box-shadow:0 0 24px #38bdf8;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.wealth-core{
+  position:absolute;inset:68px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
+  box-shadow:0 0 44px rgba(56,189,248,.92),0 0 105px rgba(37,99,235,.46);
+  animation:wealthPulse 4s ease-in-out infinite;
+}
+
+.wealth-core svg{
+  width:72px;height:72px;fill:none;stroke:#020617;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+
+@keyframes wealthPulse{
+  0%,100%{transform:scale(1);filter:brightness(1)}
+  50%{transform:scale(1.13);filter:brightness(1.35)}
+}
+
+.wealth-sweep{
+  position:absolute;left:0;right:0;top:50%;height:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 26px rgba(56,189,248,.85);
+  animation:wealthSweep 3s ease-in-out infinite;
+}
+
+@keyframes wealthSweep{
+  0%,100%{transform:translateY(-82px);opacity:.2}
+  50%{transform:translateY(82px);opacity:1}
+}
+
+.wealth-card{
+  position:relative;overflow:hidden;padding:18px;border-radius:28px;
+  background:rgba(15,23,42,.84);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:inset 0 0 28px rgba(56,189,248,.035),0 18px 48px rgba(0,0,0,.26);
+  transition:.28s ease;
+}
+
+.wealth-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(56,189,248,.34);
+  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+
+.portfolio-board{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px;
+}
+
+.holding-card{
+  padding:18px;border-radius:26px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+  position:relative;
+  overflow:hidden;
+}
+
+.holding-card::after{
+  content:"";position:absolute;width:100px;height:100px;right:-40px;bottom:-40px;border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.18),transparent 70%);
+}
+
+.holding-symbol{
+  font-size:24px;font-weight:950;color:#e5eefb;
+}
+
+.holding-value{
+  font-size:22px;font-weight:950;color:#38bdf8;margin-top:8px;
+}
+
+.holding-meta{
+  color:#94a3b8;font-size:12px;line-height:1.7;margin-top:8px;
+}
+
+.allocation-wrap{
+  width:100%;height:12px;border-radius:999px;overflow:hidden;
+  background:rgba(255,255,255,.08);margin-top:12px;
+}
+
+.allocation-fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,#38bdf8,#22c55e);
+  box-shadow:0 0 18px rgba(56,189,248,.45);
+}
+
+.wealth-panel-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px;
+}
+
+.wealth-panel{
+  padding:18px;border-radius:26px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+}
+
+.wealth-panel strong{color:#e5eefb}
+.wealth-panel small{color:#94a3b8;line-height:1.7}
+
+@media(max-width:430px){
+  .portfolio-board,.wealth-panel-grid{grid-template-columns:1fr}
+}
+</style>
+
+<div class="portfolio-bg"></div>
+<div class="portfolio-grid-bg"></div>
+
+<div class="wealth-particles">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+</div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">PF</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<section class="portfolio-hero">
+
+  <div class="wealth-core-wrap">
+    <div class="wealth-ring r1"></div>
+    <div class="wealth-ring r2"></div>
+    <div class="wealth-ring r3"></div>
+    <div class="wealth-ring r4"></div>
+
+    <div class="wealth-core">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 8H20V19H4Z"/>
+        <path d="M8 8V5H16V8"/>
+        <path d="M4 12H20"/>
+        <path d="M8 16H10"/>
+        <path d="M14 16H16"/>
+      </svg>
+    </div>
+
+    <div class="wealth-sweep"></div>
+  </div>
+
+  <div class="eyebrow">ZELLA PORTFOLIO V11 ULTRA</div>
+
+  <h1 class="command-title">
+    Wealth<br>
+    Command.
+  </h1>
+
+  <p class="briefing-text">
+    Track holdings, risk exposure, performance, exchange sync readiness,
+    portfolio health, tax estimate, live scanner context and AI wealth intelligence.
+  </p>
+
+  <div class="command-status-pill">
+    Portfolio intelligence online
+  </div>
+
+</section>
+
+<section class="mini-grid">
+
+  <div class="mini-box wealth-card">
+    <div class="mini-label">Portfolio Value</div>
+    <div class="mini-value green" id="portfolioValue">--</div>
+  </div>
+
+  <div class="mini-box wealth-card">
+    <div class="mini-label">Today PnL</div>
+    <div class="mini-value blue" id="todayPnl">--</div>
+  </div>
+
+  <div class="mini-box wealth-card">
+    <div class="mini-label">Health Score</div>
+    <div class="mini-value orange" id="healthScore">--</div>
+  </div>
+
+  <div class="mini-box wealth-card">
+    <div class="mini-label">Risk Exposure</div>
+    <div class="mini-value blue" id="riskExposure">--</div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ADVANCED PORTFOLIO SYSTEMS</div>
+
+  <div class="wealth-panel-grid">
+
+    <div class="wealth-panel">
+      <strong>Exchange Sync</strong><br>
+      <small>Connect exchanges later for automated balance updates.</small>
+      <div class="allocation-wrap"><div class="allocation-fill" style="width:35%"></div></div>
+    </div>
+
+    <div class="wealth-panel">
+      <strong>Live Holdings Import</strong><br>
+      <small>Prepared for Binance, Bybit, Coinbase and Kraken import.</small>
+      <div class="allocation-wrap"><div class="allocation-fill" style="width:42%"></div></div>
+    </div>
+
+    <div class="wealth-panel">
+      <strong>Real PnL Tracking</strong><br>
+      <small>Simulated now, exchange-based PnL later.</small>
+      <div class="allocation-wrap"><div class="allocation-fill" style="width:58%"></div></div>
+    </div>
+
+    <div class="wealth-panel">
+      <strong>Tax Estimation</strong><br>
+      <small>Future-ready gain/loss estimate module.</small>
+      <div class="allocation-wrap"><div class="allocation-fill" style="width:40%"></div></div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">HOLDINGS ALLOCATION</div>
+
+  <div class="portfolio-board" id="portfolioBoard">
+    <div class="holding-card">
+      <div class="holding-symbol">Loading...</div>
+      <div class="holding-value">--</div>
+      <div class="holding-meta">Connecting portfolio intelligence.</div>
+    </div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ZELLA PORTFOLIO COPILOT</div>
+
+  <h2 class="briefing-headline" id="portfolioBriefTitle">
+    Loading portfolio report...
+  </h2>
+
+  <p class="briefing-text" id="portfolioBriefText">
+    Zella is analyzing allocation, exposure, performance and risk.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn" onclick="speakPortfolio()">Voice Report</button>
+    <a href="copilot.html" class="btn secondary">Ask Zella</a>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">WEALTH FORECAST ENGINE</div>
+
+  <div class="wealth-panel-grid">
+
+    <div class="wealth-panel">
+      <strong>Multi-Exchange Portfolio</strong><br>
+      <small>Unified view prepared for Binance, Bybit, Coinbase and Kraken.</small>
+      <div class="allocation-wrap"><div class="allocation-fill" style="width:48%"></div></div>
+    </div>
+
+    <div class="wealth-panel">
+      <strong>Portfolio Health Score</strong><br>
+      <small>Diversification, risk exposure and scanner confidence combined.</small>
+      <div class="allocation-wrap"><div class="allocation-fill" id="healthFill" style="width:0%"></div></div>
+    </div>
+
+    <div class="wealth-panel">
+      <strong>Wealth Forecast</strong><br>
+      <small>Projection engine prepared for future live holdings history.</small>
+      <div class="allocation-wrap"><div class="allocation-fill" style="width:52%"></div></div>
+    </div>
+
+    <div class="wealth-panel">
+      <strong>Tax Estimate</strong><br>
+      <small>Future module for realized and unrealized gain tracking.</small>
+      <div class="allocation-wrap"><div class="allocation-fill" style="width:38%"></div></div>
+    </div>
+
+  </div>
+
+</section>
+
+<nav class="zella-nav">
+
+  <a href="dashboard.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+    <span>Home</span>
+  </a>
+
+  <a href="scanner.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+    <span>Scanner</span>
+  </a>
+
+  <a href="copilot.html" class="nav-item copilot-center">
+    <div class="copilot-core">
+      <svg viewBox="0 0 24 24" class="copilot-icon">
+        <rect x="6" y="8" width="12" height="9" rx="2"/>
+        <circle cx="9" cy="12" r="1"/>
+        <circle cx="15" cy="12" r="1"/>
+        <path d="M12 4V8"/>
+      </svg>
+    </div>
+    <span>Copilot</span>
+  </a>
+
+  <a href="market.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+    <span>Market</span>
+  </a>
+
+  <a href="watchlist.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+    <span>Watchlist</span>
+  </a>
+
+  <a href="more.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <circle cx="12" cy="5" r="1.5"/>
+      <circle cx="12" cy="12" r="1.5"/>
+      <circle cx="12" cy="19" r="1.5"/>
+    </svg>
+    <span>More</span>
+  </a>
+
+</nav>
+
+<script>
+const API_URL = "https://zella-backend.onrender.com";
+
+let portfolioHoldings = [
+  { asset:"BTC", amount:0.025 },
+  { asset:"ETH", amount:0.65 },
+  { asset:"SOL", amount:8 },
+  { asset:"BNB", amount:1.2 },
+  { asset:"XRP", amount:300 }
+];
+
+function formatMoney(value){
+  const num = Number(value || 0);
+  return "$" + num.toLocaleString(undefined,{
+    maximumFractionDigits: num < 10 ? 4 : 2
+  });
+}
+
+function renderPortfolio(scannerItems){
+  const board = document.getElementById("portfolioBoard");
+
+  const enriched = portfolioHoldings.map(holding=>{
+    const market = scannerItems.find(item=>item.asset === holding.asset);
+
+    const value = market
+      ? holding.amount * Number(market.price || 0)
+      : 0;
+
+    return {
+      ...holding,
+      ...market,
+      value
+    };
+  }).filter(item=>item.asset);
+
+  const totalValue =
+    enriched.reduce((sum,item)=>sum + item.value,0);
+
+  const todayPnl =
+    enriched.reduce((sum,item)=>{
+      const change = Number(item.change24h || 0) / 100;
+      return sum + (item.value * change);
+    },0);
+
+  const avgConfidence =
+    enriched.length
+      ? enriched.reduce((sum,item)=>sum + Number(item.confidence || 0),0) / enriched.length
+      : 0;
+
+  const avgRisk =
+    enriched.length
+      ? enriched.reduce((sum,item)=>sum + Number(item.riskScore || 0),0) / enriched.length
+      : 0;
+
+  const health =
+    Math.max(0,Math.min(100,Math.round(avgConfidence - avgRisk * .35 + 30)));
+
+  const riskiest =
+    [...enriched].sort((a,b)=>b.riskScore - a.riskScore)[0];
+
+  const best =
+    [...enriched].sort((a,b)=>b.confidence - a.confidence)[0];
+
+  document.getElementById("portfolioValue").textContent =
+    formatMoney(totalValue);
+
+  document.getElementById("todayPnl").textContent =
+    formatMoney(todayPnl);
+
+  document.getElementById("healthScore").textContent =
+    health + "%";
+
+  document.getElementById("riskExposure").textContent =
+    riskiest?.asset || "--";
+
+  document.getElementById("healthFill").style.width =
+    health + "%";
+
+  document.getElementById("portfolioBriefTitle").textContent =
+    `${best?.asset || "Portfolio"} leads your portfolio intelligence`;
+
+  document.getElementById("portfolioBriefText").textContent =
+    `Estimated portfolio value is ${formatMoney(totalValue)}. ${best?.asset || "Your top asset"} has the strongest confidence, while ${riskiest?.asset || "one asset"} carries the highest risk exposure. Portfolio health score is ${health}%.`;
+
+  board.innerHTML = enriched.map(item=>{
+    const allocation =
+      totalValue ? (item.value / totalValue) * 100 : 0;
+
+    return `
+      <div class="holding-card">
+        <div class="holding-symbol">${item.asset}</div>
+        <div class="holding-value">${formatMoney(item.value)}</div>
+
+        <div class="holding-meta">
+          Amount ${item.amount}<br>
+          Allocation ${allocation.toFixed(1)}%<br>
+          Confidence ${item.confidence || "--"}% • Risk ${item.riskScore || "--"}%
+        </div>
+
+        <div class="allocation-wrap">
+          <div class="allocation-fill" style="width:${allocation}%"></div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+async function loadPortfolio(){
+  try{
+    const res = await fetch(API_URL + "/scanner");
+    const data = await res.json();
+
+    renderPortfolio(data.items || []);
+
+  }catch(error){
+    console.error(error);
+
+    document.getElementById("portfolioBriefTitle").textContent =
+      "Zella could not load portfolio intelligence.";
+
+    document.getElementById("portfolioBriefText").textContent =
+      "Check scanner backend connection.";
+  }
+}
+
+function speakPortfolio(){
+  const text =
+    document.getElementById("portfolioBriefTitle").textContent + ". " +
+    document.getElementById("portfolioBriefText").textContent;
+
+  if(!window.speechSynthesis){
+    alert("Voice report is not supported on this browser.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 1;
+  utterance.pitch = 1.05;
+  speechSynthesis.speak(utterance);
+}
+
+loadPortfolio();
+setInterval(loadPortfolio,30000);
+</script>
+
+</main>
+</body>
+</html>

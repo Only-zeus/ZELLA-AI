@@ -138,6 +138,8 @@ let progress = 0;
 const bar = document.getElementById("bar");
 const percent = document.getElementById("percent");
 
+const loadingText = document.querySelector(".loading-text");
+
 const loader = setInterval(() => {
 
 progress++;
@@ -145,9 +147,32 @@ progress++;
 bar.style.width = progress + "%";
 percent.innerText = progress + "%";
 
+if(progress <= 20){
+loadingText.innerText = "Initializing AI Core...";
+}
+
+else if(progress <= 40){
+loadingText.innerText = "Connecting Cloud...";
+}
+
+else if(progress <= 60){
+loadingText.innerText = "Loading Portfolio...";
+}
+
+else if(progress <= 80){
+loadingText.innerText = "Syncing Watchlist...";
+}
+
+else{
+loadingText.innerText = "Preparing Dashboard...";
+}
+
 if(progress >= 100){
 
 clearInterval(loader);
+
+loadingText.innerText =
+"Launch Complete";
 
 setTimeout(() => {
 

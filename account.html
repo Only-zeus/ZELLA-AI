@@ -1,52 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Firebase Login</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Account</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="pro-particles">
-  <span>👤</span>
-  <span>GOOGLE</span>
-  <span>LOGIN</span>
-  <span>🔐</span>
-  <span>CLOUD</span>
-  <span>SYNC</span>
-</div>
+<div class="zella-orb"></div>
 
 <style>
-.pro-particles{
+.zella-orb{
   position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
+  width:420px;
+  height:420px;
+  right:-160px;
+  top:80px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.35),transparent 70%);
+  filter:blur(24px);
+  animation:pulse 5s ease-in-out infinite;
   z-index:0;
 }
 
-.pro-particles span{
-  position:absolute;
-  top:-100px;
-  opacity:.10;
-  font-size:28px;
-  font-weight:900;
-  color:#38bdf8;
-  animation:accountRain 14s linear infinite;
-}
-
-.pro-particles span:nth-child(1){left:8%;}
-.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
-.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
-.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
-.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
-.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
-
-@keyframes accountRain{
-  from{transform:translateY(-140px) rotate(0deg);}
-  to{transform:translateY(120vh) rotate(360deg);}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:.7;}
+  50%{transform:scale(1.2);opacity:1;}
 }
 
 .container,
@@ -54,12 +35,30 @@
   position:relative;
   z-index:2;
 }
+
+.auth-input{
+  width:100%;
+  padding:18px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(15,23,42,.85);
+  color:#fff;
+  font-size:16px;
+  margin-top:12px;
+  outline:none;
+}
+
+.auth-switch{
+  color:#38bdf8;
+  font-weight:800;
+  cursor:pointer;
+}
 </style>
 
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">G</div>
+    <a href="index.html" class="btn secondary">Home</a>
   </div>
 </nav>
 
@@ -67,79 +66,56 @@
 
 <section class="command-card">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA ACCOUNT</div>
-      <h1 class="command-title">Google<br>Login.</h1>
-    </div>
+  <div class="eyebrow">ZELLA ACCOUNT</div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">FIREBASE</span>
-    </div>
-  </div>
+  <h1 class="command-title">
+    Welcome to<br>
+    Zella AI.
+  </h1>
 
   <p class="briefing-text">
-    Sign in with Google to personalize Zella and prepare your account for future cloud sync.
+    Login or create your account to access your Zella dashboard,
+    AI Copilot, scanner, market center and watchlist.
   </p>
-
-</section>
-
-<section class="mini-grid">
-
-  <div class="mini-box">
-    <div class="mini-label">Status</div>
-    <div class="mini-value green" id="accountStatus">Guest</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Name</div>
-    <div class="mini-value blue" id="profileName">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Provider</div>
-    <div class="mini-value orange" id="providerName">Google</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Cloud Sync</div>
-    <div class="mini-value green">Soon</div>
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">ACCOUNT ACTIONS</div>
-
-  <div class="hero-actions">
-    <button class="btn" onclick="signInWithGoogle()">
-      Continue with Google
-    </button>
-
-    <button class="btn secondary" onclick="logoutUser()">
-      Sign Out
-    </button>
-
-    <a href="dashboard.html" class="btn secondary">
-      Go Dashboard
-    </a>
-  </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">PROFILE STATUS</div>
+  <div class="briefing-title" id="formTitle">
+    LOGIN
+  </div>
 
-  <h2 class="briefing-headline" id="accountHeadline">
-    No user signed in.
-  </h2>
+  <button class="btn" style="width:100%;margin-bottom:18px;" onclick="loginWithGoogle()">
+    Continue with Google
+  </button>
 
-  <p class="briefing-text" id="accountSummary">
-    Sign in with Google to personalize Zella.
+  <div style="text-align:center;color:#94a3b8;margin:14px 0;">
+    OR
+  </div>
+
+  <input id="nameInput" class="auth-input" type="text" placeholder="Full name" style="display:none;">
+
+  <input id="emailInput" class="auth-input" type="email" placeholder="Email address">
+
+  <input id="passwordInput" class="auth-input" type="password" placeholder="Password">
+
+  <input id="confirmPasswordInput" class="auth-input" type="password" placeholder="Confirm password" style="display:none;">
+
+  <button class="btn" style="width:100%;margin-top:18px;" id="mainAuthBtn" onclick="loginWithEmail()">
+    Login
+  </button>
+
+  <p class="briefing-text" style="text-align:center;margin-top:20px;">
+    <span id="switchText">Don't have an account?</span>
+    <span class="auth-switch" onclick="toggleMode()" id="switchBtn">Create account</span>
   </p>
+
+  <p class="briefing-text" style="text-align:center;">
+    <span class="auth-switch" onclick="resetPassword()">Forgot password?</span>
+  </p>
+
+  <p class="briefing-text" id="authMessage" style="text-align:center;color:#38bdf8;"></p>
 
 </section>
 
@@ -147,191 +123,173 @@
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
 import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  updateProfile,
   onAuthStateChanged,
   signOut
-}
-from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
-
   authDomain: "zella-424f2.firebaseapp.com",
-
   projectId: "zella-424f2",
-
   storageBucket: "zella-424f2.firebasestorage.app",
-
   messagingSenderId: "1008967672362",
-
   appId: "1:1008967672362:web:20cdc14e463c1e81949953"
-
 };
 
-const app =
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-const auth =
-  getAuth(app);
+let isSignup = false;
 
-const provider =
-  new GoogleAuthProvider();
+const msg = document.getElementById("authMessage");
 
-window.signInWithGoogle =
-async function(){
+function showMessage(text){
+  msg.textContent = text;
+}
+
+window.toggleMode = function(){
+  isSignup = !isSignup;
+
+  document.getElementById("formTitle").textContent =
+    isSignup ? "CREATE ACCOUNT" : "LOGIN";
+
+  document.getElementById("nameInput").style.display =
+    isSignup ? "block" : "none";
+
+  document.getElementById("confirmPasswordInput").style.display =
+    isSignup ? "block" : "none";
+
+  document.getElementById("mainAuthBtn").textContent =
+    isSignup ? "Create Account" : "Login";
+
+  document.getElementById("mainAuthBtn").setAttribute(
+    "onclick",
+    isSignup ? "createAccount()" : "loginWithEmail()"
+  );
+
+  document.getElementById("switchText").textContent =
+    isSignup ? "Already have an account?" : "Don't have an account?";
+
+  document.getElementById("switchBtn").textContent =
+    isSignup ? "Login" : "Create account";
+
+  showMessage("");
+};
+
+window.loginWithGoogle = async function(){
+  try{
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+
+    localStorage.setItem("zellaUserId", user.uid);
+    localStorage.setItem("zellaUser", user.displayName || user.email);
+
+    window.location.href = "dashboard.html";
+  }catch(error){
+    showMessage(error.message);
+  }
+};
+
+window.createAccount = async function(){
+  const name = document.getElementById("nameInput").value.trim();
+  const email = document.getElementById("emailInput").value.trim();
+  const password = document.getElementById("passwordInput").value;
+  const confirmPassword = document.getElementById("confirmPasswordInput").value;
+
+  if(!name || !email || !password || !confirmPassword){
+    showMessage("Please fill all fields.");
+    return;
+  }
+
+  if(password !== confirmPassword){
+    showMessage("Passwords do not match.");
+    return;
+  }
 
   try{
+    const result = await createUserWithEmailAndPassword(auth, email, password);
 
-    const result =
-      await signInWithPopup(
-        auth,
-        provider
-      );
+    await updateProfile(result.user, {
+      displayName: name
+    });
 
-    const user =
-      result.user;
+    await sendEmailVerification(result.user);
 
-    saveUser(user);
+    showMessage("Verification email sent. Please verify your email, then login.");
 
+    await signOut(auth);
+
+    toggleMode();
+
+  }catch(error){
+    showMessage(error.message);
   }
-
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Google Sign-In failed."
-    );
-
-  }
-
 };
 
-window.logoutUser =
-async function(){
+window.loginWithEmail = async function(){
+  const email = document.getElementById("emailInput").value.trim();
+  const password = document.getElementById("passwordInput").value;
 
-  await signOut(auth);
+  if(!email || !password){
+    showMessage("Enter your email and password.");
+    return;
+  }
 
-  localStorage.removeItem(
-    "zellaUser"
-  );
+  try{
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const user = result.user;
 
-  updateGuest();
+    await user.reload();
 
+    if(!user.emailVerified){
+      await signOut(auth);
+      showMessage("Please verify your email before logging in.");
+      return;
+    }
+
+    localStorage.setItem("zellaUserId", user.uid);
+    localStorage.setItem("zellaUser", user.displayName || user.email);
+
+    window.location.href = "dashboard.html";
+
+  }catch(error){
+    showMessage(error.message);
+  }
 };
 
-function saveUser(user){
+window.resetPassword = async function(){
+  const email = document.getElementById("emailInput").value.trim();
 
-  const profile = {
-
-    uid: user.uid,
-
-    name:
-      user.displayName,
-
-    email:
-      user.email,
-
-    photo:
-      user.photoURL,
-
-    provider:
-      "Google"
-
-  };
-
-  localStorage.setItem(
-    "zellaUser",
-    JSON.stringify(profile)
-  );
-
-  updateProfile(profile);
-
-}
-
-function updateProfile(user){
-
-  document.getElementById(
-    "accountStatus"
-  ).textContent =
-    "Active";
-
-  document.getElementById(
-    "profileName"
-  ).textContent =
-    user.name;
-
-  document.getElementById(
-    "providerName"
-  ).textContent =
-    user.provider;
-
-  document.getElementById(
-    "accountHeadline"
-  ).textContent =
-    `Welcome ${user.name}`;
-
-  document.getElementById(
-    "accountSummary"
-  ).textContent =
-    `${user.email} connected successfully through Google Authentication.`;
-
-}
-
-function updateGuest(){
-
-  document.getElementById(
-    "accountStatus"
-  ).textContent =
-    "Guest";
-
-  document.getElementById(
-    "profileName"
-  ).textContent =
-    "--";
-
-  document.getElementById(
-    "providerName"
-  ).textContent =
-    "Google";
-
-  document.getElementById(
-    "accountHeadline"
-  ).textContent =
-    "No user signed in.";
-
-  document.getElementById(
-    "accountSummary"
-  ).textContent =
-    "Sign in with Google to personalize Zella.";
-
-}
-
-onAuthStateChanged(
-  auth,
-  user => {
-
-    if(user){
-
-      saveUser(user);
-
-    }
-
-    else{
-
-      updateGuest();
-
-    }
-
+  if(!email){
+    showMessage("Enter your email first.");
+    return;
   }
-);
+
+  try{
+    await sendPasswordResetEmail(auth, email);
+    showMessage("Password reset email sent.");
+  }catch(error){
+    showMessage(error.message);
+  }
+};
+
+onAuthStateChanged(auth, user => {
+  if(user && user.emailVerified){
+    window.location.href = "dashboard.html";
+  }
+});
 
 </script>
 

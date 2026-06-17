@@ -3,70 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella More Hub V1</title>
+<title>Zella More Hub V7</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="pro-particles">
-  <span>⚙️</span>
-  <span>MORE</span>
-  <span>PRO</span>
-  <span>📊</span>
-  <span>🤖</span>
-  <span>💎</span>
-</div>
-
 <style>
-
-.pro-particles{
+.more-bg{
   position:fixed;
   inset:0;
-  overflow:hidden;
-  pointer-events:none;
   z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(56,189,248,.20),transparent 30%),
+    radial-gradient(circle at 80% 25%,rgba(34,197,94,.12),transparent 28%),
+    radial-gradient(circle at 50% 95%,rgba(37,99,235,.18),transparent 34%);
 }
 
-.pro-particles span{
-
-  position:absolute;
-  top:-100px;
-
-  opacity:.10;
-
-  font-size:30px;
-
-  font-weight:900;
-
-  color:#38bdf8;
-
-  animation:
-    moreRain 14s linear infinite;
-
+.more-grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,.06) 1px, transparent 1px);
+  background-size:42px 42px;
+  animation:moreGridMove 18s linear infinite;
 }
 
-.pro-particles span:nth-child(1){left:8%;}
-.pro-particles span:nth-child(2){left:20%;animation-delay:2s;}
-.pro-particles span:nth-child(3){left:35%;animation-delay:4s;}
-.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
-.pro-particles span:nth-child(5){left:75%;animation-delay:5s;}
-.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
-
-@keyframes moreRain{
-
-  from{
-    transform:
-      translateY(-140px)
-      rotate(0deg);
-  }
-
-  to{
-    transform:
-      translateY(120vh)
-      rotate(360deg);
-  }
-
+@keyframes moreGridMove{
+  from{background-position:0 0;}
+  to{background-position:0 420px;}
 }
 
 .container,
@@ -75,22 +44,115 @@
   z-index:2;
 }
 
+.more-hub-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:20px;
+}
+
+.more-card{
+  position:relative;
+  min-height:138px;
+  padding:18px;
+  border-radius:28px;
+  text-decoration:none;
+  color:#e5eefb;
+  overflow:hidden;
+  background:rgba(15,23,42,.84);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:
+    inset 0 0 26px rgba(56,189,248,.035),
+    0 20px 45px rgba(0,0,0,.25);
+  transition:.28s ease;
+}
+
+.more-card:hover{
+  transform:translateY(-6px) scale(1.02);
+  border-color:rgba(56,189,248,.42);
+  box-shadow:
+    0 0 36px rgba(56,189,248,.18),
+    0 20px 55px rgba(0,0,0,.38);
+}
+
+.more-card:active{
+  transform:scale(.97);
+}
+
+.more-icon-wrap{
+  width:54px;
+  height:54px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,rgba(56,189,248,.18),rgba(37,99,235,.10));
+  border:1px solid rgba(56,189,248,.22);
+  margin-bottom:15px;
+}
+
+.more-svg{
+  width:30px;
+  height:30px;
+  fill:none;
+  stroke:#38bdf8;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.more-title{
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.more-sub{
+  font-size:12px;
+  color:#94a3b8;
+  line-height:1.4;
+}
+
+.more-card::after{
+  content:"";
+  position:absolute;
+  width:90px;
+  height:90px;
+  right:-35px;
+  bottom:-35px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.22),transparent 70%);
+}
+
+.logout-card{
+  cursor:pointer;
+  border-color:rgba(248,113,113,.25);
+}
+
+.logout-card .more-svg{
+  stroke:#fb7185;
+}
+
+.logout-card .more-icon-wrap{
+  background:linear-gradient(135deg,rgba(248,113,113,.18),rgba(127,29,29,.08));
+  border-color:rgba(248,113,113,.22);
+}
+
+@media(max-width:430px){
+  .more-hub-grid{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 
+<div class="more-bg"></div>
+<div class="more-grid-bg"></div>
+
 <nav class="navbar">
-
   <div class="nav-inner">
-
-    <div class="logo">
-      ZELLA
-    </div>
-
-    <div class="avatar-dot">
-      +
-    </div>
-
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">MO</div>
   </div>
-
 </nav>
 
 <main class="container">
@@ -98,274 +160,179 @@
 <section class="command-card">
 
   <div class="live-row">
-
     <div>
-
-      <div class="eyebrow">
-        ZELLA COMMAND HUB
-      </div>
-
-      <h1 class="command-title">
-
-        More<br>
-        Tools.
-
-      </h1>
-
+      <div class="eyebrow">ZELLA CONTROL HUB</div>
+      <h1 class="command-title">More<br>Intelligence.</h1>
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;">
-
       <div class="live-dot"></div>
-
-      <span class="live-label">
-
-        HUB
-
-      </span>
-
+      <span class="live-label">SECURE</span>
     </div>
-
   </div>
 
   <p class="briefing-text">
-
-    Access all advanced Zella modules,
-    analytics tools,
-    trading utilities
-    and premium features
-    from one central hub.
-
+    Access Zella’s advanced tools, account controls, intelligence modules,
+    trading utilities, cloud systems and security center.
   </p>
 
 </section>
 
-<section class="mini-grid">
+<section class="more-hub-grid">
 
-  <div class="mini-box">
-    <div class="mini-label">Modules</div>
-    <div class="mini-value green">9</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Status</div>
-    <div class="mini-value blue">Online</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">AI</div>
-    <div class="mini-value orange">Active</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Version</div>
-    <div class="mini-value green">V1</div>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA MODULES
-  </div>
-
-  <div class="mini-grid">
-    
-    <a href="news.html" class="mini-box" style="text-decoration:none;">
-
-  <div class="mini-label">
-    📰 News Engine
-  </div>
-
-  <div class="mini-value blue">
-    Open
-  </div>
-
-</a>
-
-    <a href="learn.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">🎓 Learn Center</div>
-      <div class="mini-value blue">Open</div>
-    </a>
-
-    <a href="alerts.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">🔔 Notifications</div>
-      <div class="mini-value green">Open</div>
-    </a>
-
-    <a href="analytics.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">📊 Analytics</div>
-      <div class="mini-value orange">Open</div>
-    </a>
-    
-    <a href="journal.html" class="mini-box" style="text-decoration:none;">
-
-  <div class="mini-label">
-    📒 Journal
-  </div>
-
-  <div class="mini-value blue">
-    Open
-  </div>
-
-</a>
-
-    <a href="setup.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">⚙️ Setup</div>
-      <div class="mini-value blue">Open</div>
-    </a>
-
-    <a href="exchange.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">🔗 Exchange Hub</div>
-      <div class="mini-value green">Open</div>
-    </a>
-
-    <a href="autotrader.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">🤖 AutoTrader</div>
-      <div class="mini-value orange">Open</div>
-    </a>
-
-    <a href="pro.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">💎 Zella Pro</div>
-      <div class="mini-value blue">Open</div>
-    </a>
-
-    <a href="watchlist.html" class="mini-box" style="text-decoration:none;">
-  <div class="mini-label">⭐ Watchlist</div>
-  <div class="mini-value blue">Open</div>
-</a>
-
-    <a href="journal.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">💰 Wallet</div>
-      <div class="mini-value green">Open</div>
-    </a>
-
-    <a href="autotrade.html" class="mini-box" style="text-decoration:none;">
-      <div class="mini-label">📈 Trade Prep</div>
-      <div class="mini-value orange">Open</div>
-    </a>
-
-<a href="cloud-sync.html" class="mini-box" style="text-decoration:none;">
-  <div class="mini-label">☁️ Cloud Sync</div>
-  <div class="mini-value orange">Open</div>
-</a>
-
-<div class="mini-box" onclick="logoutUser()" style="cursor:pointer;">
-
-  <div class="mini-label">
-    🚪 Logout
-  </div>
-
-  <div class="mini-value orange">
-    Exit
-  </div>
-
-</div>
-
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    QUICK ACCESS
-  </div>
-
-  <div class="ranking-list">
-
-    <div class="rank-row">
-      <div class="rank-position">🔥</div>
-      <div class="rank-asset">
-        Most Used<br>
-        <small>Scanner + Copilot + AutoTrader</small>
-      </div>
-      <div class="rank-score">Top</div>
+  <a href="autotrader.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M4 17L9 12L13 15L20 7"/><path d="M20 7V13"/><path d="M20 7H14"/></svg>
     </div>
+    <div class="more-title">AutoTrader</div>
+    <div class="more-sub">Automated trade execution control.</div>
+  </a>
 
-    <div class="rank-row">
-      <div class="rank-position">📊</div>
-      <div class="rank-asset">
-        Analytics Suite<br>
-        <small>Portfolio, scanner and AI performance</small>
-      </div>
-      <div class="rank-score">Live</div>
+  <a href="autotrade.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M6 4H18V20H6Z"/><path d="M9 8H15"/><path d="M9 12H15"/><path d="M9 16H13"/></svg>
     </div>
+    <div class="more-title">Trade Prep</div>
+    <div class="more-sub">Prepare and validate trade setups.</div>
+  </a>
 
-    <div class="rank-row">
-      <div class="rank-position">💎</div>
-      <div class="rank-asset">
-        Premium Features<br>
-        <small>Cloud Sync, Pro AI and future upgrades</small>
-      </div>
-      <div class="rank-score">Pro</div>
+  <a href="portfolio.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M4 8H20V19H4Z"/><path d="M8 8V5H16V8"/><path d="M4 12H20"/></svg>
     </div>
+    <div class="more-title">Portfolio</div>
+    <div class="more-sub">Track holdings and exposure.</div>
+  </a>
 
+  <a href="journal.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M6 3H18V21H6Z"/><path d="M9 7H15"/><path d="M9 11H15"/><path d="M9 15H13"/></svg>
+    </div>
+    <div class="more-title">Journal</div>
+    <div class="more-sub">Record trades and lessons.</div>
+  </a>
+
+  <a href="calculator.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7H16"/><path d="M8 11H9"/><path d="M12 11H13"/><path d="M16 11H17"/><path d="M8 15H9"/><path d="M12 15H13"/><path d="M16 15H17"/></svg>
+    </div>
+    <div class="more-title">Calculator</div>
+    <div class="more-sub">Risk, fees and position sizing.</div>
+  </a>
+
+  <a href="learn.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M4 6.5C6 5.5 8 5 12 7V20C8 18 6 18.5 4 19.5Z"/><path d="M20 6.5C18 5.5 16 5 12 7V20C16 18 18 18.5 20 19.5Z"/></svg>
+    </div>
+    <div class="more-title">Learn</div>
+    <div class="more-sub">Beginner-friendly crypto lessons.</div>
+  </a>
+
+  <a href="alert.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M18 8A6 6 0 0 0 6 8C6 15 3 16 3 16H21S18 15 18 8Z"/><path d="M10 20H14"/></svg>
+    </div>
+    <div class="more-title">Alerts</div>
+    <div class="more-sub">Price, news and scanner alerts.</div>
+  </a>
+
+  <a href="news.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M4 5H18V19H4Z"/><path d="M18 8H21V18C21 18.6 20.6 19 20 19H18"/><path d="M7 9H15"/><path d="M7 13H15"/><path d="M7 16H12"/></svg>
+    </div>
+    <div class="more-title">News Engine</div>
+    <div class="more-sub">Live crypto news intelligence.</div>
+  </a>
+
+  <a href="analytics.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M5 19V11"/><path d="M12 19V5"/><path d="M19 19V8"/></svg>
+    </div>
+    <div class="more-title">Analytics</div>
+    <div class="more-sub">Advanced market breakdowns.</div>
+  </a>
+
+  <a href="exchange.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M7 7H20L17 4"/><path d="M17 17H4L7 20"/><path d="M20 7L14 13"/><path d="M4 17L10 11"/></svg>
+    </div>
+    <div class="more-title">Exchange</div>
+    <div class="more-sub">Connect exchange accounts later.</div>
+  </a>
+
+  <a href="cloud.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M7 18H18A4 4 0 0 0 18 10A6 6 0 0 0 6.5 12A3 3 0 0 0 7 18Z"/></svg>
+    </div>
+    <div class="more-title">Cloud Sync</div>
+    <div class="more-sub">Sync watchlists and setups.</div>
+  </a>
+
+  <a href="security.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M12 3L19 6V11C19 16 16 19 12 21C8 19 5 16 5 11V6Z"/><path d="M9 12L11 14L15 10"/></svg>
+    </div>
+    <div class="more-title">Security</div>
+    <div class="more-sub">Account protection and verification.</div>
+  </a>
+
+  <a href="setup.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><circle cx="12" cy="12" r="3"/><path d="M19 12A7 7 0 0 0 18.8 10.4L21 8.7L19 5.3L16.4 6.4A7 7 0 0 0 14.9 5.5L14.5 3H9.5L9.1 5.5A7 7 0 0 0 7.6 6.4L5 5.3L3 8.7L5.2 10.4A7 7 0 0 0 5 12A7 7 0 0 0 5.2 13.6L3 15.3L5 18.7L7.6 17.6A7 7 0 0 0 9.1 18.5L9.5 21H14.5L14.9 18.5A7 7 0 0 0 16.4 17.6L19 18.7L21 15.3L18.8 13.6A7 7 0 0 0 19 12Z"/></svg>
+    </div>
+    <div class="more-title">Settings</div>
+    <div class="more-sub">Customize Zella preferences.</div>
+  </a>
+
+  <a href="pro.html" class="more-card">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M12 3L15 9L21 10L16.5 14.5L17.5 21L12 18L6.5 21L7.5 14.5L3 10L9 9Z"/></svg>
+    </div>
+    <div class="more-title">Zella Pro</div>
+    <div class="more-sub">Premium intelligence tools.</div>
+  </a>
+
+  <div class="more-card logout-card" onclick="logoutUser()">
+    <div class="more-icon-wrap">
+      <svg viewBox="0 0 24 24" class="more-svg"><path d="M10 4H5V20H10"/><path d="M14 8L18 12L14 16"/><path d="M18 12H9"/></svg>
+    </div>
+    <div class="more-title">Logout</div>
+    <div class="more-sub">Exit Zella securely.</div>
   </div>
 
 </section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA COMMAND CENTER
-  </div>
-
-  <h2 class="briefing-headline" id="hubHeadline">
-    All systems online.
-  </h2>
-
-  <p class="briefing-text" id="hubSummary">
-    Zella modules are connected and ready. Access trading tools,
-    analytics, learning resources and premium features from one hub.
-  </p>
-
-</section>
-
-</main>
 
 <nav class="zella-nav">
 
   <a href="dashboard.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
     <span>Home</span>
   </a>
 
   <a href="scanner.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M5 19V11M12 19V5M19 19V8"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
     <span>Scanner</span>
   </a>
 
   <a href="copilot.html" class="nav-item copilot-center">
     <div class="copilot-core">
-
       <svg viewBox="0 0 24 24" class="copilot-icon">
         <rect x="6" y="8" width="12" height="9" rx="2"/>
         <circle cx="9" cy="12" r="1"/>
         <circle cx="15" cy="12" r="1"/>
         <path d="M12 4V8"/>
       </svg>
-
     </div>
     <span>Copilot</span>
   </a>
 
   <a href="market.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M4 16L9 11L13 14L20 7"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
     <span>Market</span>
   </a>
 
   <a href="watchlist.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M6 3H18V21L12 17L6 21V3Z"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
     <span>Watchlist</span>
   </a>
 
@@ -380,67 +347,9 @@
 
 </nav>
 
-<script>
-
-function updateHubStats(){
-
-  let modules = 9;
-
-  let activeModules = 0;
-
-  const pages = [
-
-    "zellaWalletV5",
-    "zellaGrowthV5",
-    "zellaSettingsV2",
-    "zellaExchangeV2",
-    "zellaPaperTrades"
-
-  ];
-
-  pages.forEach(key => {
-
-    const data =
-      localStorage.getItem(key);
-
-    if(data){
-      activeModules++;
-    }
-
-  });
-
-  const readiness =
-
-    Math.round(
-      (activeModules / 5) * 100
-    );
-
-  document.getElementById(
-    "hubHeadline"
-  ).textContent =
-
-    `Zella Readiness ${readiness}%`;
-
-  document.getElementById(
-    "hubSummary"
-  ).textContent =
-
-    `${activeModules}/5 core systems are configured. Scanner, Copilot, Portfolio, Analytics, Exchange and AutoTrader modules are available from the Zella ecosystem.`;
-
-}
-
-updateHubStats();
-
-</script>
-
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-
-import {
-  getAuth,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
@@ -454,28 +363,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-window.logoutUser = async function () {
-
-  try {
-
+window.logoutUser = async function(){
+  try{
     await signOut(auth);
-
     localStorage.clear();
     sessionStorage.clear();
-
     window.location.href = "index.html";
-
-  } catch (error) {
-
-    console.error(error);
-
+  }catch(error){
     alert("Logout failed.");
-
   }
-
 };
-
 </script>
 
+</main>
 </body>
 </html>

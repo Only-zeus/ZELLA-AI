@@ -117,14 +117,60 @@
 
 </main>
 
-<div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html">Copilot</a>
-  <a href="market.html">Market</a>
-  <a href="watchlist.html">Watchlist</a>
-  <a href="more.html">More</a>
-</div>
+<nav class="zella-nav">
+
+  <a href="dashboard.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/>
+    </svg>
+    <span>Home</span>
+  </a>
+
+  <a href="scanner.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M5 19V11M12 19V5M19 19V8"/>
+    </svg>
+    <span>Scanner</span>
+  </a>
+
+  <a href="copilot.html" class="nav-item copilot-center">
+    <div class="copilot-core">
+
+      <svg viewBox="0 0 24 24" class="copilot-icon">
+        <rect x="6" y="8" width="12" height="9" rx="2"/>
+        <circle cx="9" cy="12" r="1"/>
+        <circle cx="15" cy="12" r="1"/>
+        <path d="M12 4V8"/>
+      </svg>
+
+    </div>
+    <span>Copilot</span>
+  </a>
+
+  <a href="market.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M4 16L9 11L13 14L20 7"/>
+    </svg>
+    <span>Market</span>
+  </a>
+
+  <a href="watchlist.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M6 3H18V21L12 17L6 21V3Z"/>
+    </svg>
+    <span>Watchlist</span>
+  </a>
+
+  <a href="more.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <circle cx="12" cy="5" r="1.5"/>
+      <circle cx="12" cy="12" r="1.5"/>
+      <circle cx="12" cy="19" r="1.5"/>
+    </svg>
+    <span>More</span>
+  </a>
+
+</nav>
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";

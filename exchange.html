@@ -3,355 +3,615 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Exchange Center</title>
+<title>Zella Exchange V11 Ultra</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="pro-particles">
-  <span>📈</span>
-  <span>BINANCE</span>
-  <span>BYBIT</span>
-  <span>API</span>
-  <span>🔐</span>
-  <span>ZELLA</span>
-</div>
-
 <style>
+*{box-sizing:border-box}
+body{overflow-x:hidden}
 
-.pro-particles{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:0;
+.exchange-bg{
+position:fixed;inset:0;z-index:0;pointer-events:none;
+background:
+radial-gradient(circle at 20% 15%,rgba(56,189,248,.25),transparent 30%),
+radial-gradient(circle at 80% 15%,rgba(37,99,235,.22),transparent 30%),
+radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+#020617;
 }
 
-.pro-particles span{
-  position:absolute;
-  top:-100px;
-  opacity:.10;
-  font-size:28px;
-  font-weight:900;
-  color:#38bdf8;
-  animation:exchangeRain 14s linear infinite;
+.exchange-grid{
+position:fixed;inset:0;z-index:0;pointer-events:none;
+background-image:
+linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
+background-size:40px 40px;
+animation:gridMove 18s linear infinite;
 }
 
-.pro-particles span:nth-child(1){left:8%;}
-.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
-.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
-.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
-.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
-.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
-
-@keyframes exchangeRain{
-  from{
-    transform:translateY(-140px) rotate(0deg);
-  }
-  to{
-    transform:translateY(120vh) rotate(360deg);
-  }
+@keyframes gridMove{
+from{background-position:0 0}
+to{background-position:0 400px}
 }
 
-.container,
-.navbar{
-  position:relative;
-  z-index:2;
+.exchange-particles{
+position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
 }
 
+.exchange-particles span{
+position:absolute;width:6px;height:6px;border-radius:50%;
+background:#38bdf8;box-shadow:0 0 20px #38bdf8;
+animation:exchangeFloat 12s linear infinite;
+}
+
+.exchange-particles span:nth-child(1){left:8%;animation-delay:0s}
+.exchange-particles span:nth-child(2){left:23%;animation-delay:2s}
+.exchange-particles span:nth-child(3){left:41%;animation-delay:4s}
+.exchange-particles span:nth-child(4){left:59%;animation-delay:1s}
+.exchange-particles span:nth-child(5){left:78%;animation-delay:3s}
+.exchange-particles span:nth-child(6){left:93%;animation-delay:5s}
+
+@keyframes exchangeFloat{
+from{transform:translateY(110vh)}
+to{transform:translateY(-100px)}
+}
+
+.container,.navbar{position:relative;z-index:3}
+
+.exchange-hero{
+padding:24px;border-radius:34px;position:relative;overflow:hidden;
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+box-shadow:inset 0 0 30px rgba(56,189,248,.03),0 20px 60px rgba(0,0,0,.35);
+}
+
+.exchange-core-wrap{
+width:285px;height:285px;margin:auto;position:relative;
+}
+
+.exchange-ring{
+position:absolute;border-radius:50%;
+border:1px solid rgba(56,189,248,.35);
+animation:spin 12s linear infinite;
+}
+
+.exchange-ring.r1{inset:0}
+.exchange-ring.r2{inset:25px;animation-duration:18s}
+.exchange-ring.r3{inset:50px;animation-duration:25s}
+.exchange-ring.r4{inset:75px;animation-duration:32s}
+
+.exchange-ring::before{
+content:"";position:absolute;width:10px;height:10px;border-radius:50%;
+background:#38bdf8;left:50%;top:12px;box-shadow:0 0 20px #38bdf8;
+}
+
+@keyframes spin{
+from{transform:rotate(0)}
+to{transform:rotate(360deg)}
+}
+
+.exchange-core{
+position:absolute;inset:95px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 25%,#0f172a 65%);
+box-shadow:0 0 40px rgba(56,189,248,.9),0 0 100px rgba(56,189,248,.35);
+animation:pulseExchange 4s ease-in-out infinite;
+}
+
+@keyframes pulseExchange{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.12)}
+}
+
+.exchange-core svg{
+width:82px;height:82px;stroke:#020617;stroke-width:2;fill:none;
+}
+
+.exchange-card{
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+border-radius:28px;
+padding:18px;
+margin-top:16px;
+box-shadow:0 18px 48px rgba(0,0,0,.25);
+transition:.3s;
+}
+
+.exchange-card:hover{
+transform:translateY(-4px);
+border-color:rgba(56,189,248,.32);
+box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+
+.exchange-board{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+margin-top:16px;
+}
+
+.exchange-tile{
+padding:18px;
+border-radius:26px;
+background:rgba(255,255,255,.035);
+border:1px solid rgba(255,255,255,.07);
+position:relative;
+overflow:hidden;
+}
+
+.exchange-tile::after{
+content:"";
+position:absolute;
+width:100px;
+height:100px;
+right:-40px;
+bottom:-40px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(56,189,248,.18),transparent 70%);
+}
+
+.exchange-name{
+font-size:20px;
+font-weight:950;
+color:#e5eefb;
+}
+
+.exchange-status{
+margin-top:8px;
+font-size:12px;
+line-height:1.7;
+color:#94a3b8;
+}
+
+.exchange-pill{
+display:inline-flex;
+padding:8px 11px;
+border-radius:999px;
+font-size:11px;
+font-weight:950;
+margin-top:12px;
+background:rgba(56,189,248,.12);
+color:#38bdf8;
+}
+
+.exchange-form{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+margin-top:16px;
+}
+
+.exchange-input,.exchange-select{
+width:100%;
+margin-top:12px;
+padding:15px;
+border-radius:18px;
+background:#0f172a;
+border:1px solid rgba(148,163,184,.12);
+color:#fff;
+outline:none;
+}
+
+.exchange-input:focus,.exchange-select:focus{
+border-color:#38bdf8;
+box-shadow:0 0 18px rgba(56,189,248,.18);
+}
+
+.exchange-panel-title{
+font-size:15px;
+font-weight:950;
+color:#e5eefb;
+}
+
+.exchange-panel-sub{
+font-size:12px;
+line-height:1.7;
+margin-top:8px;
+color:#94a3b8;
+}
+
+.permission-row{
+padding:16px;
+border-radius:22px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:14px;
+margin-top:12px;
+}
+
+.permission-row strong{color:#e5eefb}
+.permission-row small{color:#94a3b8;line-height:1.7}
+
+.permission-lock{
+width:42px;
+height:42px;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(56,189,248,.12);
+border:1px solid rgba(56,189,248,.18);
+}
+
+.permission-lock svg{
+width:22px;
+height:22px;
+stroke:#38bdf8;
+fill:none;
+stroke-width:2;
+}
+
+@media(max-width:430px){
+.exchange-board,.exchange-form{grid-template-columns:1fr}
+}
 </style>
 
+<div class="exchange-bg"></div>
+<div class="exchange-grid"></div>
+
+<div class="exchange-particles">
+<span></span><span></span><span></span>
+<span></span><span></span><span></span>
+</div>
+
 <nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">EX</div>
-  </div>
+<div class="nav-inner">
+<div class="logo">ZELLA</div>
+<div class="avatar-dot">EX</div>
+</div>
 </nav>
 
 <main class="container">
 
-<section class="command-card">
+<section class="exchange-hero">
 
-  <div class="live-row">
+<div class="exchange-core-wrap">
+<div class="exchange-ring r1"></div>
+<div class="exchange-ring r2"></div>
+<div class="exchange-ring r3"></div>
+<div class="exchange-ring r4"></div>
 
-    <div>
+<div class="exchange-core">
+<svg viewBox="0 0 24 24">
+<path d="M4 7H20"/>
+<path d="M7 4L4 7L7 10"/>
+<path d="M20 17H4"/>
+<path d="M17 14L20 17L17 20"/>
+<path d="M8 12H16"/>
+</svg>
+</div>
+</div>
 
-      <div class="eyebrow">
-        LIVE EXCHANGE CENTER
-      </div>
+<div class="eyebrow">ZELLA EXCHANGE V11 ULTRA</div>
 
-      <h1 class="command-title">
-        Exchange<br>
-        Connect.
-      </h1>
+<h1 class="command-title">
+Exchange<br>
+Command.
+</h1>
 
-    </div>
+<p class="briefing-text">
+Connect exchange accounts, prepare encrypted API sync, import portfolio data,
+monitor connection health and protect AutoTrader execution permissions.
+</p>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">
-        READ ONLY
-      </span>
-    </div>
-
-  </div>
-
-  <p class="briefing-text">
-
-    Connect your exchange account safely.
-    Zella will only read balances and positions.
-    Trading is disabled in V1.
-
-  </p>
+<div class="command-status-pill">
+Exchange connection layer ready
+</div>
 
 </section>
 
 <section class="mini-grid">
 
-  <div class="mini-box">
-    <div class="mini-label">Exchange</div>
-    <div class="mini-value blue" id="exchangeName">
-      None
-    </div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Connection</div>
-    <div class="mini-value green" id="connectionStatus">
-      Offline
-    </div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Mode</div>
-    <div class="mini-value orange">
-      Read Only
-    </div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Security</div>
-    <div class="mini-value blue">
-      High
-    </div>
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">
-    SELECT EXCHANGE
-  </div>
-
-  <div class="chat-input-bar">
-
-    <select id="exchangeSelect">
-
-      <option>Binance</option>
-      <option>Bybit</option>
-      <option>Coinbase</option>
-
-    </select>
-
-    <button class="btn" onclick="connectExchange()">
-      Connect
-    </button>
-
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    READ-ONLY API SETUP
-  </div>
-
-  <p class="briefing-text">
-    Do not paste real secret keys into this frontend prototype. V1 only simulates connection status.
-  </p>
-
-  <div class="chat-input-bar">
-    <input id="apiKeyLabel" placeholder="API Label e.g Binance Read Only" />
-    <button class="btn secondary" onclick="saveReadOnlyProfile()">Save Profile</button>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    EXCHANGE PORTFOLIO SNAPSHOT
-  </div>
-
-  <div id="exchangePortfolio">
-    <div class="rank-row">
-      <div class="rank-position">🔒</div>
-      <div class="rank-asset">No exchange connected</div>
-      <div class="rank-score">Safe</div>
-    </div>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA EXCHANGE REVIEW
-  </div>
-
-  <h2 class="briefing-headline" id="exchangeHeadline">
-    Exchange not connected.
-  </h2>
-
-  <p class="briefing-text" id="exchangeSummary">
-    Select an exchange and create a read-only profile to prepare for future balance syncing.
-  </p>
-
-</section>
-
-</main>
-
-<div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html">Copilot</a>
-  <a href="market.html">Market</a>
-  <a href="more.html">More</a>
+<div class="mini-box exchange-card">
+<div class="mini-label">Connected</div>
+<div class="mini-value green" id="connectedCount">0</div>
 </div>
 
+<div class="mini-box exchange-card">
+<div class="mini-label">Health Score</div>
+<div class="mini-value blue" id="healthScore">--</div>
+</div>
+
+<div class="mini-box exchange-card">
+<div class="mini-label">Sync Mode</div>
+<div class="mini-value orange" id="syncMode">Read Only</div>
+</div>
+
+<div class="mini-box exchange-card">
+<div class="mini-label">Execution</div>
+<div class="mini-value blue" id="executionMode">Locked</div>
+</div>
+
+</section>
+
+<section class="exchange-card">
+
+<div class="briefing-title">SUPPORTED EXCHANGES</div>
+
+<div class="exchange-board" id="exchangeBoard">
+
+<div class="exchange-tile">
+<div class="exchange-name">Binance</div>
+<div class="exchange-status">Read-only portfolio sync prepared.</div>
+<div class="exchange-pill" id="status-Binance">Not Connected</div>
+</div>
+
+<div class="exchange-tile">
+<div class="exchange-name">Bybit</div>
+<div class="exchange-status">Balance and portfolio import prepared.</div>
+<div class="exchange-pill" id="status-Bybit">Not Connected</div>
+</div>
+
+<div class="exchange-tile">
+<div class="exchange-name">Coinbase</div>
+<div class="exchange-status">Spot portfolio sync prepared.</div>
+<div class="exchange-pill" id="status-Coinbase">Not Connected</div>
+</div>
+
+<div class="exchange-tile">
+<div class="exchange-name">Kraken</div>
+<div class="exchange-status">Portfolio and balance sync prepared.</div>
+<div class="exchange-pill" id="status-Kraken">Not Connected</div>
+</div>
+
+<div class="exchange-tile">
+<div class="exchange-name">OKX</div>
+<div class="exchange-status">Advanced exchange integration prepared.</div>
+<div class="exchange-pill" id="status-OKX">Not Connected</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="exchange-card">
+
+<div class="briefing-title">CONNECT EXCHANGE</div>
+
+<div class="exchange-form">
+
+<div>
+<div class="exchange-panel-title">Exchange</div>
+<div class="exchange-panel-sub">Choose the exchange provider.</div>
+<select class="exchange-select" id="exchangeInput">
+<option>Binance</option>
+<option>Bybit</option>
+<option>Coinbase</option>
+<option>Kraken</option>
+<option>OKX</option>
+</select>
+</div>
+
+<div>
+<div class="exchange-panel-title">Permission Mode</div>
+<div class="exchange-panel-sub">Start safe with read-only keys.</div>
+<select class="exchange-select" id="permissionInput">
+<option>Read Only</option>
+<option>Portfolio Sync</option>
+<option>Trading Permission Locked</option>
+</select>
+</div>
+
+<div>
+<div class="exchange-panel-title">API Key</div>
+<div class="exchange-panel-sub">For V11 demo, this is stored locally only.</div>
+<input class="exchange-input" id="apiKeyInput" placeholder="Paste API key">
+</div>
+
+<div>
+<div class="exchange-panel-title">API Secret</div>
+<div class="exchange-panel-sub">Backend encryption will be added in V12.</div>
+<input class="exchange-input" id="apiSecretInput" type="password" placeholder="Paste API secret">
+</div>
+
+</div>
+
+<div class="hero-actions">
+<button class="btn" onclick="connectExchange()">Connect</button>
+<button class="btn secondary" onclick="clearConnections()">Clear</button>
+</div>
+
+</section>
+
+<section class="exchange-card">
+
+<div class="briefing-title">PERMISSION SAFETY CENTER</div>
+
+<div class="permission-row">
+<div>
+<strong>Read-only first</strong><br>
+<small>Zella should start with portfolio import before trading permission.</small>
+</div>
+<div class="permission-lock">
+<svg viewBox="0 0 24 24"><path d="M7 11V8C7 5 9 3 12 3C15 3 17 5 17 8V11"/><path d="M5 11H19V21H5Z"/></svg>
+</div>
+</div>
+
+<div class="permission-row">
+<div>
+<strong>AutoTrader locked</strong><br>
+<small>Real execution stays locked until backend security is complete.</small>
+</div>
+<div class="permission-lock">
+<svg viewBox="0 0 24 24"><path d="M12 3L20 7V12C20 17 16 20 12 21C8 20 4 17 4 12V7Z"/><path d="M9 12L11 14L15 10"/></svg>
+</div>
+</div>
+
+<div class="permission-row">
+<div>
+<strong>Encrypted storage required</strong><br>
+<small>V12 backend will encrypt keys before saving them.</small>
+</div>
+<div class="permission-lock">
+<svg viewBox="0 0 24 24"><path d="M4 12H20"/><path d="M12 4V20"/><path d="M6 6L18 18"/></svg>
+</div>
+</div>
+
+</section>
+
+<section class="exchange-card">
+
+<div class="briefing-title">ZELLA EXCHANGE BRIEFING</div>
+
+<h2 class="briefing-headline" id="exchangeTitle">
+Exchange layer standing by.
+</h2>
+
+<p class="briefing-text" id="exchangeText">
+Connect an exchange in read-only mode to prepare portfolio sync and future AutoTrader permissions.
+</p>
+
+<div class="hero-actions">
+<a href="portfolio.html" class="btn">Open Portfolio</a>
+<a href="autotrader.html" class="btn secondary">Open AutoTrader</a>
+</div>
+
+</section>
+
+<nav class="zella-nav">
+
+<a href="dashboard.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+<span>Home</span>
+</a>
+
+<a href="scanner.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+<span>Scanner</span>
+</a>
+
+<a href="copilot.html" class="nav-item copilot-center">
+<div class="copilot-core">
+<svg viewBox="0 0 24 24" class="copilot-icon">
+<rect x="6" y="8" width="12" height="9" rx="2"/>
+<circle cx="9" cy="12" r="1"/>
+<circle cx="15" cy="12" r="1"/>
+<path d="M12 4V8"/>
+</svg>
+</div>
+<span>Copilot</span>
+</a>
+
+<a href="market.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+<span>Market</span>
+</a>
+
+<a href="watchlist.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+<span>Watchlist</span>
+</a>
+
+<a href="more.html" class="nav-item active">
+<svg viewBox="0 0 24 24" class="nav-icon">
+<circle cx="12" cy="5" r="1.5"/>
+<circle cx="12" cy="12" r="1.5"/>
+<circle cx="12" cy="19" r="1.5"/>
+</svg>
+<span>More</span>
+</a>
+
+</nav>
+
 <script>
-
-let exchangeProfiles =
-  JSON.parse(
-    localStorage.getItem("zellaLiveExchangeV1")
-  ) || [];
-
-function connectExchange(){
-
-  const exchange =
-    document.getElementById("exchangeSelect").value;
-
-  document.getElementById("exchangeName").textContent =
-    exchange;
-
-  document.getElementById("connectionStatus").textContent =
-    "Ready";
-
-  document.getElementById("exchangeHeadline").textContent =
-    `${exchange} read-only mode selected`;
-
-  document.getElementById("exchangeSummary").textContent =
-    `${exchange} is selected for read-only exchange preparation. Real trading remains disabled.`;
-
+function getConnections(){
+  return JSON.parse(localStorage.getItem("zellaExchangeConnections")) || [];
 }
 
-function saveReadOnlyProfile(){
+function saveConnections(connections){
+  localStorage.setItem("zellaExchangeConnections",JSON.stringify(connections));
+}
 
-  const exchange =
-    document.getElementById("exchangeSelect").value;
+function connectExchange(){
+  const exchange = document.getElementById("exchangeInput").value;
+  const permission = document.getElementById("permissionInput").value;
+  const apiKey = document.getElementById("apiKeyInput").value.trim();
+  const apiSecret = document.getElementById("apiSecretInput").value.trim();
 
-  const label =
-    document.getElementById("apiKeyLabel").value.trim();
+  if(!apiKey || !apiSecret){
+    document.getElementById("exchangeTitle").textContent =
+      "Connection needs API details.";
 
-  if(!label){
-    alert("Enter an API label.");
+    document.getElementById("exchangeText").textContent =
+      "Enter API key and secret to create a local V11 connection preview.";
     return;
   }
 
-  exchangeProfiles.push({
+  let connections = getConnections();
+
+  connections = connections.filter(item=>item.exchange !== exchange);
+
+  connections.unshift({
     exchange,
-    label,
-    mode:"Read Only",
-    created:new Date().toLocaleDateString()
+    permission,
+    status:"Connected",
+    health: permission === "Read Only" ? 85 : 68,
+    created:new Date().toLocaleString()
   });
 
-  localStorage.setItem(
-    "zellaLiveExchangeV1",
-    JSON.stringify(exchangeProfiles)
-  );
+  saveConnections(connections);
 
-  document.getElementById("apiKeyLabel").value = "";
+  document.getElementById("apiKeyInput").value = "";
+  document.getElementById("apiSecretInput").value = "";
 
-  loadExchangeProfiles();
+  renderConnections();
 
+  document.getElementById("exchangeTitle").textContent =
+    `${exchange} connection preview active`;
+
+  document.getElementById("exchangeText").textContent =
+    `${exchange} is saved locally in ${permission} mode. V12 backend will move this into encrypted server storage and real portfolio sync.`;
 }
 
-function deleteProfile(index){
-
-  exchangeProfiles.splice(index,1);
-
-  localStorage.setItem(
-    "zellaLiveExchangeV1",
-    JSON.stringify(exchangeProfiles)
-  );
-
-  loadExchangeProfiles();
-
+function clearConnections(){
+  localStorage.removeItem("zellaExchangeConnections");
+  renderConnections();
 }
 
-function loadExchangeProfiles(){
+function renderConnections(){
+  const connections = getConnections();
 
-  document.getElementById("exchangePortfolio").innerHTML =
-    exchangeProfiles.length
-    ? exchangeProfiles.map((profile,index)=>`
+  document.getElementById("connectedCount").textContent = connections.length;
 
-      <div class="rank-row">
+  const avgHealth = connections.length
+    ? Math.round(connections.reduce((sum,item)=>sum + item.health,0) / connections.length)
+    : 0;
 
-        <div class="rank-position">
-          🔐
-        </div>
+  document.getElementById("healthScore").textContent =
+    connections.length ? avgHealth + "%" : "--";
 
-        <div class="rank-asset">
-          ${profile.exchange}<br>
-          <small>${profile.label} • ${profile.mode}</small>
-        </div>
+  document.getElementById("syncMode").textContent =
+    connections[0]?.permission || "Read Only";
 
-        <div class="rank-score">
-          Saved<br><br>
-          <button
-            onclick="deleteProfile(${index})"
-            style="
-              border:none;
-              border-radius:10px;
-              padding:6px 10px;
-              cursor:pointer;
-            ">
-            ✕
-          </button>
-        </div>
+  document.getElementById("executionMode").textContent =
+    "Locked";
 
-      </div>
+  ["Binance","Bybit","Coinbase","Kraken","OKX"].forEach(exchange=>{
+    const badge = document.getElementById("status-" + exchange);
+    const found = connections.find(item=>item.exchange === exchange);
 
-    `).join("")
-    : `
-      <div class="rank-row">
-        <div class="rank-position">🔒</div>
-        <div class="rank-asset">No exchange connected</div>
-        <div class="rank-score">Safe</div>
-      </div>
-    `;
+    if(badge){
+      badge.textContent = found ? found.status : "Not Connected";
+    }
+  });
 
-  document.getElementById("connectionStatus").textContent =
-    exchangeProfiles.length ? "Saved" : "Offline";
+  if(!connections.length){
+    document.getElementById("exchangeTitle").textContent =
+      "Exchange layer standing by.";
 
-  document.getElementById("exchangeHeadline").textContent =
-    exchangeProfiles.length
-      ? `${exchangeProfiles.length} read-only profile saved`
-      : "Exchange not connected.";
-
-  document.getElementById("exchangeSummary").textContent =
-    exchangeProfiles.length
-      ? "Zella has saved read-only exchange profiles for future balance syncing. Real trading remains disabled."
-      : "Select an exchange and create a read-only profile to prepare for future balance syncing.";
-
+    document.getElementById("exchangeText").textContent =
+      "Connect an exchange in read-only mode to prepare portfolio sync and future AutoTrader permissions.";
+  }
 }
 
-loadExchangeProfiles();
-
+renderConnections();
 </script>
 
+</main>
 </body>
 </html>

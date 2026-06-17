@@ -1,63 +1,915 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zella Setup V11 Ultra</title>
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css">
 </head>
  
 <body>
+ 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{overflow-x:hidden;background:#020617;color:#e5eefb;font-family:Arial,sans-serif;padding-bottom:110px}
-.setup-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 20% 15%,rgba(56,189,248,.25),transparent 30%),radial-gradient(circle at 80% 18%,rgba(37,99,235,.22),transparent 32%),radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),#020617}
-.setup-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(56,189,248,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.055) 1px,transparent 1px);background-size:42px 42px;animation:setupGrid 18s linear infinite}
-@keyframes setupGrid{from{background-position:0 0}to{background-position:0 420px}}
-.setup-particles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
-.setup-particles span{position:absolute;width:6px;height:6px;border-radius:50%;background:#38bdf8;box-shadow:0 0 20px #38bdf8;opacity:.52;animation:setupFloat 12s linear infinite}
-.setup-particles span:nth-child(1){left:8%;animation-delay:0s}.setup-particles span:nth-child(2){left:23%;animation-delay:2s}.setup-particles span:nth-child(3){left:41%;animation-delay:4s}.setup-particles span:nth-child(4){left:59%;animation-delay:1s}.setup-particles span:nth-child(5){left:78%;animation-delay:3s}.setup-particles span:nth-child(6){left:93%;animation-delay:5s}
-@keyframes setupFloat{from{transform:translateY(110vh)}to{transform:translateY(-120px)}}
-.navbar,.container{position:relative;z-index:3}.navbar{padding:16px 18px}.nav-inner{display:flex;justify-content:space-between;align-items:center}.logo{font-weight:950;letter-spacing:3px;color:#38bdf8;font-size:21px}.avatar-dot{width:42px;height:42px;border-radius:16px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.22);display:flex;align-items:center;justify-content:center;color:#38bdf8;font-weight:950}.container{width:92%;max-width:760px;margin:auto}
-.setup-hero{padding:24px;border-radius:34px;position:relative;overflow:hidden;background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.14);box-shadow:inset 0 0 30px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.35)}
-.setup-core-wrap{width:285px;height:285px;margin:auto;position:relative}.setup-ring{position:absolute;border-radius:50%;border:1px solid rgba(56,189,248,.35);animation:spin 12s linear infinite}.setup-ring.r1{inset:0}.setup-ring.r2{inset:25px;animation-duration:18s;border-color:rgba(34,197,94,.28)}.setup-ring.r3{inset:50px;animation-duration:25s;border-color:rgba(147,197,253,.22)}.setup-ring.r4{inset:75px;animation-duration:32s;border-color:rgba(56,189,248,.18)}.setup-ring::before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:#38bdf8;left:50%;top:12px;box-shadow:0 0 22px #38bdf8}@keyframes spin{to{transform:rotate(360deg)}}
-.setup-core{position:absolute;inset:95px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 25%,#0f172a 65%);box-shadow:0 0 42px rgba(56,189,248,.9),0 0 105px rgba(56,189,248,.35);animation:setupPulse 4s ease-in-out infinite}@keyframes setupPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12);filter:brightness(1.35)}}.setup-core svg{width:82px;height:82px;stroke:#020617;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}.setup-scan{position:absolute;left:35px;right:35px;top:50%;height:2px;background:linear-gradient(90deg,transparent,#38bdf8,transparent);box-shadow:0 0 26px rgba(56,189,248,.9);animation:setupScan 2.8s ease-in-out infinite}@keyframes setupScan{0%,100%{transform:translateY(-82px);opacity:.25}50%{transform:translateY(82px);opacity:1}}
-.eyebrow{margin-top:12px;color:#38bdf8;font-weight:950;font-size:12px;letter-spacing:2.5px}.command-title{font-size:54px;line-height:.98;margin-top:10px;color:#fff}.briefing-text{color:#94a3b8;line-height:1.7;margin-top:14px;font-size:14px}.command-status-pill{display:inline-flex;margin-top:17px;padding:10px 14px;border-radius:999px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.22);color:#38bdf8;font-weight:950;font-size:12px}
-.mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.mini-box{min-height:95px}.mini-label{font-size:11px;color:#94a3b8;font-weight:850}.mini-value{font-size:22px;font-weight:950;margin-top:10px}.green{color:#22c55e}.blue{color:#38bdf8}.orange{color:#f59e0b}
-.setup-card{background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.14);border-radius:28px;padding:18px;margin-top:16px;box-shadow:0 18px 48px rgba(0,0,0,.25);transition:.3s ease}.setup-card:hover{transform:translateY(-4px);border-color:rgba(56,189,248,.32);box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35)}.briefing-title{font-size:13px;letter-spacing:2px;color:#38bdf8;font-weight:950}.setup-grid-layout{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}.setup-panel{padding:18px;border-radius:24px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden}.setup-panel::after{content:"";position:absolute;width:100px;height:100px;right:-40px;bottom:-40px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,.18),transparent 70%)}.setup-title{font-size:16px;font-weight:950;color:#e5eefb}.setup-sub{font-size:12px;line-height:1.7;margin-top:8px;color:#94a3b8}.setup-input,.setup-select{width:100%;margin-top:12px;padding:15px;border-radius:18px;background:#0f172a;border:1px solid rgba(148,163,184,.12);color:#fff;outline:none}.setup-input:focus,.setup-select:focus{border-color:#38bdf8;box-shadow:0 0 18px rgba(56,189,248,.18)}.setup-pill{display:inline-flex;padding:8px 11px;border-radius:999px;font-size:11px;font-weight:950;margin-top:12px;background:rgba(56,189,248,.12);color:#38bdf8}.setup-row{padding:16px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:12px}.setup-row strong{color:#e5eefb}.setup-row small{color:#94a3b8;line-height:1.7}.setup-toggle{width:48px;height:28px;border-radius:999px;background:rgba(15,23,42,.9);border:1px solid rgba(148,163,184,.18);position:relative;cursor:pointer;flex:0 0 auto}.setup-toggle::after{content:"";position:absolute;width:19px;height:19px;border-radius:50%;left:4px;top:3.5px;background:#64748b;transition:.25s ease}.setup-toggle.active{background:rgba(34,197,94,.18);border-color:rgba(34,197,94,.35)}.setup-toggle.active::after{left:23px;background:#22c55e;box-shadow:0 0 16px rgba(34,197,94,.72)}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}.btn{border:none;border-radius:999px;padding:14px 18px;background:linear-gradient(135deg,#38bdf8,#2563eb);color:#020617;font-weight:950;text-decoration:none}.btn.secondary{background:rgba(255,255,255,.06);color:#e5eefb;border:1px solid rgba(255,255,255,.1)}
-.zella-nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:space-around;align-items:center;padding:10px 6px;background:rgba(2,6,23,.92);border-top:1px solid rgba(56,189,248,.14);backdrop-filter:blur(14px)}.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#94a3b8;text-decoration:none;font-size:11px;font-weight:850}.nav-item.active{color:#38bdf8}.nav-icon{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2}.copilot-core{width:48px;height:48px;border-radius:20px;background:linear-gradient(135deg,#38bdf8,#2563eb);display:flex;align-items:center;justify-content:center;box-shadow:0 0 26px rgba(56,189,248,.45)}.copilot-icon{width:25px;height:25px;stroke:#020617;fill:none;stroke-width:2}
-@media(max-width:520px){.mini-grid{grid-template-columns:repeat(2,1fr)}.setup-grid-layout{grid-template-columns:1fr}.command-title{font-size:46px}.setup-core-wrap{width:255px;height:255px}.setup-core{inset:86px}}
+*{
+ box-sizing:border-box;
+}
+ 
+body{
+ overflow-x:hidden;
+}
+ 
+.setup-bg{
+ position:fixed;
+ inset:0;
+ z-index:0;
+ pointer-events:none;
+ background:
+   radial-gradient(circle at 20% 15%,rgba(56,189,248,.25),transparent 30%),
+   radial-gradient(circle at 80% 18%,rgba(37,99,235,.22),transparent 32%),
+   radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+   #020617;
+}
+ 
+.setup-grid{
+ position:fixed;
+ inset:0;
+ z-index:0;
+ pointer-events:none;
+ background-image:
+   linear-gradient(rgba(56,189,248,.055) 1px,transparent 1px),
+   linear-gradient(90deg,rgba(56,189,248,.055) 1px,transparent 1px);
+ background-size:42px 42px;
+ animation:setupGrid 18s linear infinite;
+}
+ 
+@keyframes setupGrid{
+ from{
+   background-position:0 0;
+ }
+ 
+ to{
+   background-position:0 420px;
+ }
+}
+ 
+.setup-particles{
+ position:fixed;
+ inset:0;
+ overflow:hidden;
+ pointer-events:none;
+ z-index:1;
+}
+ 
+.setup-particles span{
+ position:absolute;
+ width:6px;
+ height:6px;
+ border-radius:50%;
+ background:#38bdf8;
+ box-shadow:0 0 20px #38bdf8;
+ opacity:.52;
+ animation:setupFloat 12s linear infinite;
+}
+ 
+.setup-particles span:nth-child(1){
+ left:8%;
+ animation-delay:0s;
+}
+ 
+.setup-particles span:nth-child(2){
+ left:23%;
+ animation-delay:2s;
+}
+ 
+.setup-particles span:nth-child(3){
+ left:41%;
+ animation-delay:4s;
+}
+ 
+.setup-particles span:nth-child(4){
+ left:59%;
+ animation-delay:1s;
+}
+ 
+.setup-particles span:nth-child(5){
+ left:78%;
+ animation-delay:3s;
+}
+ 
+.setup-particles span:nth-child(6){
+ left:93%;
+ animation-delay:5s;
+}
+ 
+@keyframes setupFloat{
+ from{
+   transform:translateY(110vh);
+ }
+ 
+ to{
+   transform:translateY(-120px);
+ }
+}
+ 
+.container,
+.navbar{
+ position:relative;
+ z-index:3;
+}
+ 
+.setup-hero{
+ padding:24px;
+ border-radius:34px;
+ position:relative;
+ overflow:hidden;
+ background:rgba(15,23,42,.88);
+ border:1px solid rgba(148,163,184,.14);
+ box-shadow:
+   inset 0 0 30px rgba(56,189,248,.035),
+   0 22px 65px rgba(0,0,0,.35);
+}
+ 
+.setup-core-wrap{
+ width:285px;
+ height:285px;
+ margin:auto;
+ position:relative;
+}
+ 
+.setup-ring{
+ position:absolute;
+ border-radius:50%;
+ border:1px solid rgba(56,189,248,.35);
+ animation:spin 12s linear infinite;
+}
+ 
+.setup-ring.r1{
+ inset:0;
+}
+ 
+.setup-ring.r2{
+ inset:25px;
+ animation-duration:18s;
+ border-color:rgba(34,197,94,.28);
+}
+ 
+.setup-ring.r3{
+ inset:50px;
+ animation-duration:25s;
+ border-color:rgba(147,197,253,.22);
+}
+ 
+.setup-ring.r4{
+ inset:75px;
+ animation-duration:32s;
+ border-color:rgba(56,189,248,.18);
+}
+ 
+.setup-ring::before{
+ content:"";
+ position:absolute;
+ width:10px;
+ height:10px;
+ border-radius:50%;
+ background:#38bdf8;
+ left:50%;
+ top:12px;
+ box-shadow:0 0 22px #38bdf8;
+}
+ 
+@keyframes spin{
+ to{
+   transform:rotate(360deg);
+ }
+}
+ 
+.setup-core{
+ position:absolute;
+ inset:95px;
+ border-radius:50%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 25%,#0f172a 65%);
+ box-shadow:
+   0 0 42px rgba(56,189,248,.9),
+   0 0 105px rgba(56,189,248,.35);
+ animation:setupPulse 4s ease-in-out infinite;
+}
+ 
+@keyframes setupPulse{
+ 0%,100%{
+   transform:scale(1);
+ }
+ 
+ 50%{
+   transform:scale(1.12);
+   filter:brightness(1.35);
+ }
+}
+ 
+.setup-core svg{
+ width:82px;
+ height:82px;
+ stroke:#020617;
+ stroke-width:2;
+ fill:none;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+ 
+.setup-scan{
+ position:absolute;
+ left:35px;
+ right:35px;
+ top:50%;
+ height:2px;
+ background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+ box-shadow:0 0 26px rgba(56,189,248,.9);
+ animation:setupScan 2.8s ease-in-out infinite;
+}
+ 
+@keyframes setupScan{
+ 0%,100%{
+   transform:translateY(-82px);
+   opacity:.25;
+ }
+ 
+ 50%{
+   transform:translateY(82px);
+   opacity:1;
+ }
+}
+ 
+.setup-card{
+ background:rgba(15,23,42,.88);
+ border:1px solid rgba(148,163,184,.14);
+ border-radius:28px;
+ padding:18px;
+ margin-top:16px;
+ box-shadow:0 18px 48px rgba(0,0,0,.25);
+ transition:.3s ease;
+}
+ 
+.setup-card:hover{
+ transform:translateY(-4px);
+ border-color:rgba(56,189,248,.32);
+ box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+ 
+.setup-grid-layout{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px;
+ margin-top:16px;
+}
+ 
+.setup-panel{
+ padding:18px;
+ border-radius:24px;
+ background:rgba(255,255,255,.035);
+ border:1px solid rgba(255,255,255,.07);
+ position:relative;
+ overflow:hidden;
+}
+ 
+.setup-panel::after{
+ content:"";
+ position:absolute;
+ width:100px;
+ height:100px;
+ right:-40px;
+ bottom:-40px;
+ border-radius:50%;
+ background:radial-gradient(circle,rgba(56,189,248,.18),transparent 70%);
+}
+ 
+.setup-title{
+ font-size:16px;
+ font-weight:950;
+ color:#e5eefb;
+}
+ 
+.setup-sub{
+ font-size:12px;
+ line-height:1.7;
+ margin-top:8px;
+ color:#94a3b8;
+}
+ 
+.setup-input,
+.setup-select{
+ width:100%;
+ margin-top:12px;
+ padding:15px;
+ border-radius:18px;
+ background:#0f172a;
+ border:1px solid rgba(148,163,184,.12);
+ color:#fff;
+ outline:none;
+}
+ 
+.setup-input:focus,
+.setup-select:focus{
+ border-color:#38bdf8;
+ box-shadow:0 0 18px rgba(56,189,248,.18);
+}
+ 
+.setup-pill{
+ display:inline-flex;
+ padding:8px 11px;
+ border-radius:999px;
+ font-size:11px;
+ font-weight:950;
+ margin-top:12px;
+ background:rgba(56,189,248,.12);
+ color:#38bdf8;
+}
+ 
+.setup-row{
+ padding:16px;
+ border-radius:22px;
+ background:rgba(255,255,255,.04);
+ border:1px solid rgba(255,255,255,.08);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:14px;
+ margin-top:12px;
+}
+ 
+.setup-row strong{
+ color:#e5eefb;
+}
+ 
+.setup-row small{
+ color:#94a3b8;
+ line-height:1.7;
+}
+ 
+.setup-toggle{
+ width:48px;
+ height:28px;
+ border-radius:999px;
+ background:rgba(15,23,42,.9);
+ border:1px solid rgba(148,163,184,.18);
+ position:relative;
+ cursor:pointer;
+ flex:0 0 auto;
+}
+ 
+.setup-toggle::after{
+ content:"";
+ position:absolute;
+ width:19px;
+ height:19px;
+ border-radius:50%;
+ left:4px;
+ top:3.5px;
+ background:#64748b;
+ transition:.25s ease;
+}
+ 
+.setup-toggle.active{
+ background:rgba(34,197,94,.18);
+ border-color:rgba(34,197,94,.35);
+}
+ 
+.setup-toggle.active::after{
+ left:23px;
+ background:#22c55e;
+ box-shadow:0 0 16px rgba(34,197,94,.72);
+}
+ 
+@media(max-width:430px){
+ .setup-grid-layout{
+   grid-template-columns:1fr;
+ }
+}
 </style>
  
-<div class="setup-bg"></div><div class="setup-grid"></div><div class="setup-particles"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-<nav class="navbar"><div class="nav-inner"><div class="logo">ZELLA</div><div class="avatar-dot">ST</div></div></nav>
+<div class="setup-bg"></div>
+<div class="setup-grid"></div>
+ 
+<div class="setup-particles">
+ <span></span>
+ <span></span>
+ <span></span>
+ <span></span>
+ <span></span>
+ <span></span>
+</div>
+ 
+<nav class="navbar">
+ <div class="nav-inner">
+   <div class="logo">ZELLA</div>
+   <div class="avatar-dot">ST</div>
+ </div>
+</nav>
+ 
 <main class="container">
-<section class="setup-hero"><div class="setup-core-wrap"><div class="setup-ring r1"></div><div class="setup-ring r2"></div><div class="setup-ring r3"></div><div class="setup-ring r4"></div><div class="setup-core"><svg viewBox="0 0 24 24"><path d="M12 15.5A3.5 3.5 0 1 0 12 8.5A3.5 3.5 0 0 0 12 15.5Z"/><path d="M19.4 15A1.8 1.8 0 0 0 19.8 17L20 17.2A2 2 0 0 1 17.2 20L17 19.8A1.8 1.8 0 0 0 15 19.4"/><path d="M9 19.4A1.8 1.8 0 0 0 7 19.8L6.8 20A2 2 0 0 1 4 17.2L4.2 17A1.8 1.8 0 0 0 4.6 15"/><path d="M4.6 9A1.8 1.8 0 0 0 4.2 7L4 6.8A2 2 0 0 1 6.8 4L7 4.2A1.8 1.8 0 0 0 9 4.6"/><path d="M15 4.6A1.8 1.8 0 0 0 17 4.2L17.2 4A2 2 0 0 1 20 6.8L19.8 7A1.8 1.8 0 0 0 19.4 9"/></svg></div><div class="setup-scan"></div></div><div class="eyebrow">ZELLA SETUP V11 ULTRA</div><h1 class="command-title">Control<br>Center.</h1><p class="briefing-text">Manage your Firebase profile, Zella ID, email verification, password reset, cloud preferences, risk profile, voice mode and premium account settings.</p><div class="command-status-pill" id="setupStatusPill">Loading account system</div></section>
-<section class="mini-grid"><div class="mini-box setup-card"><div class="mini-label">Account</div><div class="mini-value green" id="accountStatus">--</div></div><div class="mini-box setup-card"><div class="mini-label">Zella ID</div><div class="mini-value blue" id="zellaId">--</div></div><div class="mini-box setup-card"><div class="mini-label">Verified</div><div class="mini-value orange" id="verifyStatus">--</div></div><div class="mini-box setup-card"><div class="mini-label">Membership</div><div class="mini-value blue" id="membershipStatus">Free</div></div></section>
-<section class="setup-card"><div class="briefing-title">USER PROFILE</div><div class="setup-grid-layout"><div class="setup-panel"><div class="setup-title">Firebase Email</div><div class="setup-sub">Your active Zella cloud account email.</div><input class="setup-input" id="emailDisplay" disabled value="Loading..."></div><div class="setup-panel"><div class="setup-title">Firebase UID</div><div class="setup-sub">Secure account identity generated by Firebase.</div><input class="setup-input" id="uidDisplay" disabled value="Loading..."></div><div class="setup-panel"><div class="setup-title">Display Name</div><div class="setup-sub">Set your Zella profile name.</div><input class="setup-input" id="displayNameInput" placeholder="Trader name"></div><div class="setup-panel"><div class="setup-title">Trading Style</div><div class="setup-sub">Personalize Zella intelligence.</div><select class="setup-select" id="tradingStyleInput"><option>Beginner Trader</option><option>Scalper</option><option>Day Trader</option><option>Swing Trader</option><option>Investor</option></select></div></div><div class="hero-actions"><button class="btn" onclick="saveSetupProfile()">Save Profile</button><button class="btn secondary" onclick="reloadUser()">Refresh Account</button></div></section>
-<section class="setup-card"><div class="briefing-title">ACCOUNT SECURITY</div><div class="setup-row"><div><strong>Email Verification</strong><br><small id="emailVerifyText">Checking verification status...</small></div><button class="btn secondary" onclick="resendVerification()">Resend</button></div><div class="setup-row"><div><strong>Password Reset</strong><br><small>Send password reset link to your Firebase email.</small></div><button class="btn secondary" onclick="sendReset()">Reset</button></div><div class="setup-row"><div><strong>Cloud Protection</strong><br><small>Require active Firebase session before entering protected pages.</small></div><div class="setup-toggle active" onclick="toggleSetup(this)"></div></div></section>
-<section class="setup-card"><div class="briefing-title">ZELLA PREFERENCES</div><div class="setup-grid-layout"><div class="setup-panel"><div class="setup-title">Risk Profile</div><div class="setup-sub">Controls calculator and AutoTrader defaults.</div><select class="setup-select" id="riskProfileInput"><option>Strict</option><option>Balanced</option><option>Aggressive</option></select></div><div class="setup-panel"><div class="setup-title">Voice Mode</div><div class="setup-sub">Controls spoken responses in Zella pages.</div><select class="setup-select" id="voiceModeInput"><option>Enabled</option><option>Disabled</option></select></div><div class="setup-panel"><div class="setup-title">Theme Mode</div><div class="setup-sub">Premium visual mode for Zella UI.</div><select class="setup-select" id="themeInput"><option>Ultra Dark</option><option>Neon Blue</option><option>Quantum Green</option></select></div><div class="setup-panel"><div class="setup-title">Market Refresh</div><div class="setup-sub">Choose preferred market refresh interval.</div><select class="setup-select" id="refreshInput"><option>30 seconds</option><option>60 seconds</option><option>Manual</option></select></div></div></section>
-<section class="setup-card"><div class="briefing-title">ZELLA SETUP BRIEFING</div><h2 class="briefing-headline" id="setupBriefTitle">Loading setup intelligence...</h2><p class="briefing-text" id="setupBriefText">Zella is checking your Firebase account and profile settings.</p><div class="hero-actions"><button class="btn" onclick="saveSetupProfile()">Save All Settings</button><button class="btn secondary" onclick="logoutZella()">Logout</button></div></section>
-<nav class="zella-nav"><a href="dashboard.html" class="nav-item"><svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg><span>Home</span></a><a href="scanner.html" class="nav-item"><svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg><span>Scanner</span></a><a href="copilot.html" class="nav-item copilot-center"><div class="copilot-core"><svg viewBox="0 0 24 24" class="copilot-icon"><rect x="6" y="8" width="12" height="9" rx="2"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M12 4V8"/></svg></div><span>Copilot</span></a><a href="market.html" class="nav-item"><svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg><span>Market</span></a><a href="watchlist.html" class="nav-item"><svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg><span>Watchlist</span></a><a href="more.html" class="nav-item active"><svg viewBox="0 0 24 24" class="nav-icon"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg><span>More</span></a></nav>
+ 
+<section class="setup-hero">
+ 
+ <div class="setup-core-wrap">
+   <div class="setup-ring r1"></div>
+   <div class="setup-ring r2"></div>
+   <div class="setup-ring r3"></div>
+   <div class="setup-ring r4"></div>
+ 
+   <div class="setup-core">
+     <svg viewBox="0 0 24 24">
+       <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5A3.5 3.5 0 0 0 12 15.5Z"/>
+       <path d="M19.4 15A1.8 1.8 0 0 0 19.8 17L20 17.2A2 2 0 0 1 17.2 20L17 19.8A1.8 1.8 0 0 0 15 19.4"/>
+       <path d="M9 19.4A1.8 1.8 0 0 0 7 19.8L6.8 20A2 2 0 0 1 4 17.2L4.2 17A1.8 1.8 0 0 0 4.6 15"/>
+       <path d="M4.6 9A1.8 1.8 0 0 0 4.2 7L4 6.8A2 2 0 0 1 6.8 4L7 4.2A1.8 1.8 0 0 0 9 4.6"/>
+       <path d="M15 4.6A1.8 1.8 0 0 0 17 4.2L17.2 4A2 2 0 0 1 20 6.8L19.8 7A1.8 1.8 0 0 0 19.4 9"/>
+     </svg>
+   </div>
+ 
+   <div class="setup-scan"></div>
+ </div>
+ 
+ <div class="eyebrow">ZELLA SETUP V11 ULTRA</div>
+ 
+ <h1 class="command-title">
+   Control<br>
+   Center.
+ </h1>
+ 
+ <p class="briefing-text">
+   Manage your Firebase profile, Zella ID, email verification, password reset,
+   cloud preferences, risk profile, voice mode and premium account settings.
+ </p>
+ 
+ <div class="command-status-pill" id="setupStatusPill">
+   Loading account system
+ </div>
+ 
+</section>
+ 
+<section class="mini-grid">
+ 
+ <div class="mini-box setup-card">
+   <div class="mini-label">Account</div>
+   <div class="mini-value green" id="accountStatus">--</div>
+ </div>
+ 
+ <div class="mini-box setup-card">
+   <div class="mini-label">Zella ID</div>
+   <div class="mini-value blue" id="zellaId">--</div>
+ </div>
+ 
+ <div class="mini-box setup-card">
+   <div class="mini-label">Verified</div>
+   <div class="mini-value orange" id="verifyStatus">--</div>
+ </div>
+ 
+ <div class="mini-box setup-card">
+   <div class="mini-label">Membership</div>
+   <div class="mini-value blue" id="membershipStatus">Free</div>
+ </div>
+ 
+</section>
+ 
+<section class="setup-card">
+ 
+ <div class="briefing-title">USER PROFILE</div>
+ 
+ <div class="setup-grid-layout">
+ 
+   <div class="setup-panel">
+     <div class="setup-title">Firebase Email</div>
+     <div class="setup-sub">Your active Zella cloud account email.</div>
+     <input class="setup-input" id="emailDisplay" disabled value="Loading...">
+   </div>
+ 
+   <div class="setup-panel">
+     <div class="setup-title">Firebase UID</div>
+     <div class="setup-sub">Secure account identity generated by Firebase.</div>
+     <input class="setup-input" id="uidDisplay" disabled value="Loading...">
+   </div>
+ 
+   <div class="setup-panel">
+     <div class="setup-title">Display Name</div>
+     <div class="setup-sub">Set your Zella profile name.</div>
+     <input class="setup-input" id="displayNameInput" placeholder="Trader name">
+   </div>
+ 
+   <div class="setup-panel">
+     <div class="setup-title">Trading Style</div>
+     <div class="setup-sub">Personalize Zella intelligence.</div>
+     <select class="setup-select" id="tradingStyleInput">
+       <option>Beginner Trader</option>
+       <option>Scalper</option>
+       <option>Day Trader</option>
+       <option>Swing Trader</option>
+       <option>Investor</option>
+     </select>
+   </div>
+ 
+ </div>
+ 
+ <div class="hero-actions">
+   <button class="btn" onclick="saveSetupProfile()">Save Profile</button>
+   <button class="btn secondary" onclick="reloadUser()">Refresh Account</button>
+ </div>
+ 
+</section>
+ 
+<section class="setup-card">
+ 
+ <div class="briefing-title">ACCOUNT SECURITY</div>
+ 
+ <div class="setup-row">
+   <div>
+     <strong>Email Verification</strong><br>
+     <small id="emailVerifyText">Checking verification status...</small>
+   </div>
+   <button class="btn secondary" onclick="resendVerification()">Resend</button>
+ </div>
+ 
+ <div class="setup-row">
+   <div>
+     <strong>Password Reset</strong><br>
+     <small>Send password reset link to your Firebase email.</small>
+   </div>
+   <button class="btn secondary" onclick="sendReset()">Reset</button>
+ </div>
+ 
+ <div class="setup-row">
+   <div>
+     <strong>Cloud Protection</strong><br>
+     <small>Require active Firebase session before entering protected pages.</small>
+   </div>
+   <div class="setup-toggle active" onclick="toggleSetup(this)"></div>
+ </div>
+ 
+</section>
+ 
+<section class="setup-card">
+ 
+ <div class="briefing-title">TRADING PREFERENCES</div>
+ 
+ <div class="setup-grid-layout">
+ 
+   <div class="setup-panel">
+     <div class="setup-title">Risk Profile</div>
+     <div class="setup-sub">Choose how aggressive Zella should be with insights.</div>
+     <select class="setup-select" id="riskProfileInput">
+       <option>Low Risk</option>
+       <option>Balanced</option>
+       <option>Aggressive</option>
+     </select>
+   </div>
+ 
+   <div class="setup-panel">
+     <div class="setup-title">Default Asset</div>
+     <div class="setup-sub">Select the coin Zella should prioritize.</div>
+     <select class="setup-select" id="defaultAssetInput">
+       <option>BTC</option>
+       <option>ETH</option>
+       <option>SOL</option>
+       <option>BNB</option>
+       <option>XRP</option>
+     </select>
+   </div>
+ 
+   <div class="setup-panel">
+     <div class="setup-title">Voice Mode</div>
+     <div class="setup-sub">Enable Zella spoken replies and briefings.</div>
+     <select class="setup-select" id="voiceModeInput">
+       <option>Enabled</option>
+       <option>Disabled</option>
+     </select>
+   </div>
+ 
+   <div class="setup-panel">
+     <div class="setup-title">Theme Mode</div>
+     <div class="setup-sub">Keep the premium Zella interface style.</div>
+     <select class="setup-select" id="themeModeInput">
+       <option>Ultra Dark</option>
+       <option>Neon Blue</option>
+       <option>Pro Purple</option>
+     </select>
+   </div>
+ 
+ </div>
+ 
+ <div class="hero-actions">
+   <button class="btn" onclick="savePreferences()">Save Preferences</button>
+   <button class="btn secondary" onclick="speakSetupBriefing()">Voice Briefing</button>
+ </div>
+ 
+</section>
+ 
+<section class="setup-card">
+ 
+ <div class="briefing-title">SETUP BRIEFING</div>
+ 
+ <h2 class="briefing-headline" id="setupBriefTitle">
+   Loading Zella account system.
+ </h2>
+ 
+ <p class="briefing-text" id="setupBriefText">
+   Zella is checking your Firebase session, profile, verification status and cloud settings.
+ </p>
+ 
+</section>
+ 
+<nav class="zella-nav">
+ 
+ <a href="dashboard.html" class="nav-item">
+   <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+   <span>Home</span>
+ </a>
+ 
+ <a href="scanner.html" class="nav-item">
+   <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+   <span>Scanner</span>
+ </a>
+ 
+ <a href="copilot.html" class="nav-item copilot-center">
+   <div class="copilot-core">
+     <svg viewBox="0 0 24 24" class="copilot-icon">
+       <rect x="6" y="8" width="12" height="9" rx="2"/>
+       <circle cx="9" cy="12" r="1"/>
+       <circle cx="15" cy="12" r="1"/>
+       <path d="M12 4V8"/>
+     </svg>
+   </div>
+   <span>Copilot</span>
+ </a>
+ 
+ <a href="market.html" class="nav-item">
+   <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+   <span>Market</span>
+ </a>
+ 
+ <a href="watchlist.html" class="nav-item">
+   <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+   <span>Watchlist</span>
+ </a>
+ 
+ <a href="more.html" class="nav-item active">
+   <svg viewBox="0 0 24 24" class="nav-icon">
+     <circle cx="12" cy="5" r="1.5"/>
+     <circle cx="12" cy="12" r="1.5"/>
+     <circle cx="12" cy="19" r="1.5"/>
+   </svg>
+   <span>More</span>
+ </a>
+ 
+</nav>
+ 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import { getAuth,onAuthStateChanged,sendEmailVerification,sendPasswordResetEmail,signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-import { getFirestore,doc,setDoc,getDoc,serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",authDomain:"zella-424f2.firebaseapp.com",projectId:"zella-424f2",storageBucket:"zella-424f2.firebasestorage.app",messagingSenderId:"1008967672362",appId:"1:1008967672362:web:20cdc14e463c1e81949953",databaseURL:"https://zella-424f2-default-rtdb.firebaseio.com"};
-const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getFirestore(app);let currentUser=null;
-function makeZellaId(uid){return "ZLA-"+uid.slice(0,6).toUpperCase();}
-function msg(title,text){document.getElementById("setupBriefTitle").textContent=title;document.getElementById("setupBriefText").textContent=text;}
-function toggleSetup(el){el.classList.toggle("active");}
-window.toggleSetup=toggleSetup;
-async function loadProfile(user){const zellaId=makeZellaId(user.uid);document.getElementById("accountStatus").textContent="Online";document.getElementById("emailDisplay").value=user.email||"No email";document.getElementById("uidDisplay").value=user.uid;document.getElementById("zellaId").textContent=zellaId;document.getElementById("verifyStatus").textContent=user.emailVerified?"Yes":"No";document.getElementById("emailVerifyText").textContent=user.emailVerified?"Your email is verified.":"Your email is not verified yet.";document.getElementById("setupStatusPill").textContent="Firebase account loaded";const snap=await getDoc(doc(db,"users",user.uid,"settings","setup"));if(snap.exists()){const data=snap.data();document.getElementById("displayNameInput").value=data.displayName||"";document.getElementById("tradingStyleInput").value=data.tradingStyle||"Beginner Trader";document.getElementById("riskProfileInput").value=data.riskProfile||"Strict";document.getElementById("voiceModeInput").value=data.voiceMode||"Enabled";document.getElementById("themeInput").value=data.theme||"Ultra Dark";document.getElementById("refreshInput").value=data.refresh||"30 seconds";document.getElementById("membershipStatus").textContent=data.membership||"Free";}msg("Setup connected.",`Signed in as ${user.email}. Zella ID ${zellaId} is active.`);}
-window.saveSetupProfile=async function(){if(!currentUser){msg("No active user.","Please login before saving setup settings.");return;}const data={uid:currentUser.uid,email:currentUser.email,zellaId:makeZellaId(currentUser.uid),displayName:document.getElementById("displayNameInput").value.trim(),tradingStyle:document.getElementById("tradingStyleInput").value,riskProfile:document.getElementById("riskProfileInput").value,voiceMode:document.getElementById("voiceModeInput").value,theme:document.getElementById("themeInput").value,refresh:document.getElementById("refreshInput").value,membership:document.getElementById("membershipStatus").textContent||"Free",updatedAt:serverTimestamp()};await setDoc(doc(db,"users",currentUser.uid,"settings","setup"),data,{merge:true});msg("Setup saved.","Your Zella profile, risk, voice, theme and cloud settings have been saved to Firestore.");};
-window.reloadUser=async function(){if(!currentUser){msg("No active user.","Zella could not find a Firebase account.");return;}await currentUser.reload();currentUser=auth.currentUser;loadProfile(currentUser);};
-window.resendVerification=async function(){if(!currentUser){msg("Please wait.","Zella is still loading your account.");return;}try{await sendEmailVerification(currentUser);msg("Verification sent.","Check your email inbox for the Firebase verification link.");}catch(e){msg("Verification failed.",e.message);}};
-window.sendReset=async function(){if(!currentUser?.email){msg("No email found.","Login again before requesting password reset.");return;}try{await sendPasswordResetEmail(auth,currentUser.email);msg("Password reset sent.","Check your email for the reset link.");}catch(e){msg("Reset failed.",e.message);}};
-window.logoutZella=async function(){await signOut(auth);window.location.href="index.html";};
-onAuthStateChanged(auth,(user)=>{currentUser=user;if(user){loadProfile(user);}else{document.getElementById("accountStatus").textContent="Offline";document.getElementById("emailDisplay").value="No active user";document.getElementById("uidDisplay").value="No active UID";document.getElementById("setupStatusPill").textContent="Account not signed in";msg("No active user found.","Login through Zella Cloud or Authentication page before using Setup.");}});
+ 
+import {
+ getAuth,
+ onAuthStateChanged,
+ sendEmailVerification,
+ sendPasswordResetEmail,
+ signOut,
+ updateProfile
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+ 
+import {
+ getFirestore,
+ doc,
+ setDoc,
+ getDoc,
+ serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+ 
+const firebaseConfig = {
+ apiKey:"AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+ authDomain:"zella-424f2.firebaseapp.com",
+ projectId:"zella-424f2",
+ storageBucket:"zella-424f2.firebasestorage.app",
+ messagingSenderId:"1008967672362",
+ appId:"1:1008967672362:web:20cdc14e463c1e81949953",
+ databaseURL:"https://zella-424f2-default-rtdb.firebaseio.com"
+};
+ 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+ 
+let currentUser = null;
+let currentZellaId = null;
+ 
+function setSetupMessage(title,text){
+ document.getElementById("setupBriefTitle").textContent = title;
+ document.getElementById("setupBriefText").textContent = text;
+}
+ 
+function generateZellaId(uid){
+ const clean = uid.replace(/[^a-zA-Z0-9]/g,"").toUpperCase();
+ const shortId = clean.slice(0,6);
+ return "ZLA-" + shortId;
+}
+ 
+function toggleSetup(element){
+ element.classList.toggle("active");
+}
+ 
+window.toggleSetup = toggleSetup;
+ 
+async function loadProfile(user){
+ const profileRef = doc(db,"users",user.uid,"profile","main");
+ const snap = await getDoc(profileRef);
+ 
+ currentZellaId = generateZellaId(user.uid);
+ 
+ if(snap.exists()){
+   const data = snap.data();
+ 
+   currentZellaId = data.zellaId || currentZellaId;
+ 
+   document.getElementById("displayNameInput").value = data.displayName || "";
+   document.getElementById("tradingStyleInput").value = data.tradingStyle || "Beginner Trader";
+   document.getElementById("riskProfileInput").value = data.riskProfile || "Balanced";
+   document.getElementById("defaultAssetInput").value = data.defaultAsset || "BTC";
+   document.getElementById("voiceModeInput").value = data.voiceMode || "Enabled";
+   document.getElementById("themeModeInput").value = data.themeMode || "Ultra Dark";
+   document.getElementById("membershipStatus").textContent = data.membership || "Free";
+ }
+ 
+ document.getElementById("zellaId").textContent = currentZellaId;
+}
+ 
+function updateAccountUI(user){
+ const verified = user.emailVerified ? "Yes" : "No";
+ 
+ document.getElementById("accountStatus").textContent = "Online";
+ document.getElementById("verifyStatus").textContent = verified;
+ document.getElementById("emailDisplay").value = user.email || "No email";
+ document.getElementById("uidDisplay").value = user.uid;
+ document.getElementById("setupStatusPill").textContent = "Firebase account connected";
+ document.getElementById("emailVerifyText").textContent = user.emailVerified
+   ? "Your email is verified."
+   : "Verification required. Tap resend to receive a new verification email.";
+ 
+ setSetupMessage(
+   "Zella account connected.",
+   "Your Firebase account is active. Setup can now manage your profile, security, cloud preferences and trading intelligence settings."
+ );
+}
+ 
+window.saveSetupProfile = async function(){
+ if(!currentUser){
+   setSetupMessage("Account still loading.","Please wait while Zella loads your Firebase account.");
+   return;
+ }
+ 
+ const displayName = document.getElementById("displayNameInput").value.trim();
+ const tradingStyle = document.getElementById("tradingStyleInput").value;
+ 
+ try{
+   if(displayName){
+     await updateProfile(currentUser,{displayName});
+   }
+ 
+   await setDoc(doc(db,"users",currentUser.uid,"profile","main"),{
+     uid:currentUser.uid,
+     email:currentUser.email,
+     zellaId:currentZellaId || generateZellaId(currentUser.uid),
+     displayName,
+     tradingStyle,
+     membership:"Free",
+     updatedAt:serverTimestamp()
+   },{merge:true});
+ 
+   setSetupMessage("Profile saved.","Your Zella profile has been updated in Firestore.");
+ }catch(error){
+   setSetupMessage("Profile save failed.",error.message);
+ }
+};
+ 
+window.savePreferences = async function(){
+ if(!currentUser){
+   setSetupMessage("Account still loading.","Please wait while Zella loads your Firebase account.");
+   return;
+ }
+ 
+ const preferences = {
+   riskProfile:document.getElementById("riskProfileInput").value,
+   defaultAsset:document.getElementById("defaultAssetInput").value,
+   voiceMode:document.getElementById("voiceModeInput").value,
+   themeMode:document.getElementById("themeModeInput").value,
+   updatedAt:serverTimestamp()
+ };
+ 
+ try{
+   await setDoc(doc(db,"users",currentUser.uid,"profile","main"),preferences,{merge:true});
+   setSetupMessage("Preferences saved.","Zella will use these preferences across scanner, market, copilot and dashboard intelligence.");
+ }catch(error){
+   setSetupMessage("Preference save failed.",error.message);
+ }
+};
+ 
+window.resendVerification = async function(){
+ if(!currentUser){
+   setSetupMessage("Account still loading.","Please wait while Zella loads your Firebase account.");
+   return;
+ }
+ 
+ try{
+   await sendEmailVerification(currentUser);
+   setSetupMessage("Verification sent.","A new email verification link has been sent to your Firebase email.");
+ }catch(error){
+   setSetupMessage("Verification failed.",error.message);
+ }
+};
+ 
+window.sendReset = async function(){
+ if(!currentUser || !currentUser.email){
+   setSetupMessage("No email found.","Zella could not find an active email address for this account.");
+   return;
+ }
+ 
+ try{
+   await sendPasswordResetEmail(auth,currentUser.email);
+   setSetupMessage("Password reset sent.","A password reset link has been sent to your Firebase email.");
+ }catch(error){
+   setSetupMessage("Password reset failed.",error.message);
+ }
+};
+ 
+window.reloadUser = async function(){
+ if(!currentUser){
+   setSetupMessage("Account still loading.","Please wait while Zella loads your Firebase account.");
+   return;
+ }
+ 
+ try{
+   await currentUser.reload();
+   currentUser = auth.currentUser;
+   updateAccountUI(currentUser);
+   await loadProfile(currentUser);
+   setSetupMessage("Account refreshed.","Zella has refreshed your Firebase account status.");
+ }catch(error){
+   setSetupMessage("Refresh failed.",error.message);
+ }
+};
+ 
+window.logoutSetup = async function(){
+ try{
+   await signOut(auth);
+   window.location.href = "index.html";
+ }catch(error){
+   setSetupMessage("Logout failed.",error.message);
+ }
+};
+ 
+window.speakSetupBriefing = function(){
+ const text = document.getElementById("setupBriefTitle").textContent + ". " + document.getElementById("setupBriefText").textContent;
+ 
+ if(!window.speechSynthesis){
+   alert("Voice briefing is not supported on this browser.");
+   return;
+ }
+ 
+ speechSynthesis.cancel();
+ 
+ const utterance = new SpeechSynthesisUtterance(text);
+ utterance.rate = 1;
+ utterance.pitch = 1.05;
+ speechSynthesis.speak(utterance);
+};
+ 
+onAuthStateChanged(auth,async(user)=>{
+ currentUser = user;
+ 
+ if(!user){
+   document.getElementById("accountStatus").textContent = "Offline";
+   document.getElementById("setupStatusPill").textContent = "Firebase account required";
+   document.getElementById("emailDisplay").value = "No active user";
+   document.getElementById("uidDisplay").value = "No active user";
+   document.getElementById("zellaId").textContent = "--";
+   document.getElementById("verifyStatus").textContent = "--";
+ 
+   setSetupMessage(
+     "No active user found.",
+     "Login from the authentication page or Cloud page before using Setup V11 Ultra."
+   );
+ 
+   return;
+ }
+ 
+ updateAccountUI(user);
+ 
+ try{
+   await loadProfile(user);
+ }catch(error){
+   setSetupMessage("Profile load failed.",error.message);
+ }
+});
 </script>
+ 
 <script type="module" src="auth-guard.js"></script>
+ 
 </main>
 </body>
 </html>

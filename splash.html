@@ -30,19 +30,8 @@ width:90%;
 max-width:500px;
 }
 
-.logo{
-width:150px;
-height:150px;
-border-radius:50%;
-margin:auto;
-margin-bottom:25px;
-background:linear-gradient(135deg,#00d4ff,#0066ff);
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:60px;
-box-shadow:0 0 40px #00d4ff;
-animation:pulse 2s infinite;
+.zella-avatar{
+   ...
 }
 
 @keyframes pulse{
@@ -103,8 +92,19 @@ color:#64748b;
 
 <div class="container">
 
-<div class="logo">
-🤖
+<div class="zella-avatar">
+  <div class="avatar-ring ring-one"></div>
+  <div class="avatar-ring ring-two"></div>
+
+  <div class="avatar-head">
+    <div class="avatar-eye left"></div>
+    <div class="avatar-eye right"></div>
+    <div class="avatar-mouth"></div>
+  </div>
+
+  <div class="avatar-body">
+    <div class="avatar-core"></div>
+  </div>
 </div>
 
 <h1>ZELLA</h1>

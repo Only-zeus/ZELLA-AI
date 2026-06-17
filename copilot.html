@@ -3,69 +3,267 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella AI Copilot V4</title>
+<title>Zella Copilot V8 Ultra</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="pro-particles">
-  <span>🤖</span>
-  <span>AI</span>
-  <span>BTC</span>
-  <span>TRADE</span>
-  <span>NEWS</span>
-  <span>ZELLA</span>
-</div>
-
 <style>
-.pro-particles{
+*{box-sizing:border-box}
+
+body{
+  overflow-x:hidden;
+}
+
+.ultra-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 10%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 18%,rgba(37,99,235,.20),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    #020617;
+}
+
+.ultra-grid{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:gridFlow 18s linear infinite;
+}
+
+@keyframes gridFlow{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+
+.ultra-rain{
   position:fixed;
   inset:0;
   overflow:hidden;
   pointer-events:none;
-  z-index:0;
+  z-index:1;
 }
 
-.pro-particles span{
+.ultra-rain span{
   position:absolute;
-  top:-100px;
-  opacity:.10;
-  font-size:28px;
-  font-weight:900;
+  top:-120px;
   color:#38bdf8;
-  animation:copilotRain 14s linear infinite;
+  opacity:.10;
+  font-size:30px;
+  font-weight:950;
+  animation:ultraRain 16s linear infinite;
 }
 
-.pro-particles span:nth-child(1){left:8%;}
-.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
-.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
-.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
-.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
-.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+.ultra-rain span:nth-child(1){left:6%}
+.ultra-rain span:nth-child(2){left:20%;animation-delay:2s}
+.ultra-rain span:nth-child(3){left:37%;animation-delay:4s}
+.ultra-rain span:nth-child(4){left:54%;animation-delay:1s}
+.ultra-rain span:nth-child(5){left:72%;animation-delay:5s}
+.ultra-rain span:nth-child(6){left:90%;animation-delay:3s}
 
-@keyframes copilotRain{
-  from{transform:translateY(-140px) rotate(0deg);}
-  to{transform:translateY(120vh) rotate(360deg);}
+@keyframes ultraRain{
+  from{transform:translateY(-140px) rotate(0deg)}
+  to{transform:translateY(125vh) rotate(360deg)}
 }
 
-.container,
-.navbar{
+.container,.navbar{
   position:relative;
-  z-index:2;
+  z-index:3;
 }
 
-.chat-box{
+.ai-avatar-stage{
+  position:relative;
+  width:280px;
+  height:300px;
+  margin:10px auto 20px;
+}
+
+.avatar-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.35);
+  animation:spin 12s linear infinite;
+}
+
+.avatar-ring.r1{inset:14px}
+.avatar-ring.r2{inset:36px;border-color:rgba(34,197,94,.28);animation-duration:16s}
+.avatar-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:22s}
+
+.avatar-ring::before{
+  content:"";
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:#38bdf8;
+  position:absolute;
+  top:18px;
+  left:50%;
+  box-shadow:0 0 22px #38bdf8;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.zella-avatar{
+  position:absolute;
+  inset:58px 42px 18px;
+  border-radius:120px 120px 42px 42px;
+  background:
+    radial-gradient(circle at 50% 22%,rgba(224,242,254,.98),rgba(56,189,248,.55) 22%,transparent 38%),
+    linear-gradient(180deg,rgba(56,189,248,.55),rgba(15,23,42,.96));
+  border:1px solid rgba(56,189,248,.30);
+  box-shadow:
+    0 0 55px rgba(56,189,248,.55),
+    inset 0 0 35px rgba(56,189,248,.16);
+  animation:avatarBreath 4s ease-in-out infinite;
+  overflow:hidden;
+}
+
+@keyframes avatarBreath{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.045)}
+}
+
+.avatar-face{
+  position:absolute;
+  top:48px;
+  left:50%;
+  transform:translateX(-50%);
+  width:130px;
+  height:95px;
+  border-radius:50%;
+  background:radial-gradient(circle,#0f172a 0%,#020617 72%);
+  box-shadow:inset 0 0 35px rgba(56,189,248,.45);
+}
+
+.avatar-eyes{
+  position:absolute;
+  top:36px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:32px;
+}
+
+.avatar-eyes span{
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:#e0f2fe;
+  box-shadow:0 0 22px #38bdf8;
+  animation:blink 5s infinite;
+}
+
+@keyframes blink{
+  0%,92%,100%{height:16px}
+  96%{height:2px}
+}
+
+.avatar-core{
+  position:absolute;
+  bottom:34px;
+  left:50%;
+  transform:translateX(-50%);
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#e0f2fe;
+  font-size:32px;
+  font-weight:950;
+  background:radial-gradient(circle,#38bdf8,#0f172a 68%);
+  box-shadow:0 0 38px rgba(56,189,248,.80);
+  animation:coreGlow 2.8s ease-in-out infinite;
+}
+
+@keyframes coreGlow{
+  50%{box-shadow:0 0 65px rgba(56,189,248,1);transform:translateX(-50%) scale(1.08)}
+}
+
+.avatar-scan{
+  position:absolute;
+  left:0;
+  right:0;
+  top:45%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 28px rgba(56,189,248,.9);
+  animation:avatarScan 3s ease-in-out infinite;
+}
+
+@keyframes avatarScan{
+  0%,100%{transform:translateY(-70px);opacity:.18}
+  50%{transform:translateY(88px);opacity:1}
+}
+
+.ultra-card{
+  position:relative;
+  overflow:hidden;
+  padding:22px;
+  border-radius:32px;
+  background:rgba(15,23,42,.84);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:
+    inset 0 0 32px rgba(56,189,248,.035),
+    0 22px 60px rgba(0,0,0,.28);
+}
+
+.ultra-card::after{
+  content:"";
+  position:absolute;
+  width:120px;
+  height:120px;
+  right:-45px;
+  bottom:-45px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.24),transparent 70%);
+}
+
+.ultra-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#22c55e;
+  font-size:12px;
+  font-weight:950;
+}
+
+.ultra-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 18px #22c55e;
+}
+
+.chat-panel{
   display:flex;
   flex-direction:column;
   gap:14px;
-  margin-top:20px;
+  margin-top:18px;
 }
 
 .chat-bubble{
-  padding:18px;
+  max-width:90%;
+  padding:16px 18px;
   border-radius:24px;
-  line-height:1.6;
+  line-height:1.65;
   font-size:15px;
   border:1px solid rgba(255,255,255,.08);
 }
@@ -73,95 +271,148 @@
 .user-bubble{
   align-self:flex-end;
   background:linear-gradient(135deg,#0284c7,#2563eb);
-  color:white;
-  max-width:85%;
+  color:#fff;
 }
 
 .zella-bubble{
   align-self:flex-start;
-  background:rgba(15,23,42,.88);
+  background:rgba(15,23,42,.90);
   color:#e5eefb;
-  max-width:90%;
 }
 
-.trade-card{
-  margin-top:14px;
-  padding:16px;
-  border-radius:22px;
-  background:rgba(15,23,42,.92);
-  border:1px solid rgba(56,189,248,.25);
-}
-
-.trade-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:12px;
-}
-
-.trade-metric{
-  padding:12px;
-  border-radius:16px;
-  background:rgba(255,255,255,.05);
-}
-
-.trade-label{
-  font-size:11px;
-  letter-spacing:2px;
-  color:#94a3b8;
-}
-
-.trade-value{
-  font-size:18px;
-  font-weight:900;
-  margin-top:5px;
-}
-
-.quick-actions{
+.ultra-input{
   display:flex;
-  flex-wrap:wrap;
   gap:10px;
-  margin-top:15px;
+  margin-top:16px;
+  padding:10px;
+  border-radius:999px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(56,189,248,.16);
 }
 
-.quick-actions button{
+.ultra-input input{
+  flex:1;
+  border:none;
+  outline:none;
+  background:transparent;
+  color:#fff;
+  font-size:15px;
+  padding:0 12px;
+}
+
+.ultra-input button{
   border:none;
   border-radius:999px;
-  padding:10px 14px;
-  background:rgba(56,189,248,.12);
-  color:#38bdf8;
-  font-weight:800;
+  padding:14px 18px;
+  font-weight:950;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  color:#020617;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:16px;
+}
+
+.quick-card{
+  padding:14px;
+  border-radius:22px;
+  border:1px solid rgba(148,163,184,.12);
+  background:rgba(255,255,255,.045);
+  color:#e5eefb;
+  font-weight:900;
   cursor:pointer;
 }
+
+@media(max-width:430px){
+  .quick-grid{grid-template-columns:1fr}
+}
 </style>
+
+<div class="ultra-bg"></div>
+<div class="ultra-grid"></div>
+
+<div class="ultra-rain">
+  <span>BTC</span>
+  <span>ETH</span>
+  <span>AI</span>
+  <span>SCAN</span>
+  <span>ZELLA</span>
+  <span>ULTRA</span>
+</div>
 
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">AI</div>
+    <div class="avatar-dot">V8</div>
   </div>
 </nav>
 
 <main class="container">
 
-<section class="command-card">
+<section class="ultra-card">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA AI COPILOT V4</div>
-      <h1 class="command-title">Talk.<br>Analyze.<br>Trade Smarter.</h1>
-    </div>
+  <div class="ultra-badge">
+    <span class="ultra-dot"></span>
+    Zella Copilot V8 Ultra Online
+  </div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">ONLINE</span>
+  <div class="ai-avatar-stage">
+    <div class="avatar-ring r1"></div>
+    <div class="avatar-ring r2"></div>
+    <div class="avatar-ring r3"></div>
+
+    <div class="zella-avatar">
+      <div class="avatar-face">
+        <div class="avatar-eyes">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div class="avatar-core">Z</div>
+      <div class="avatar-scan"></div>
     </div>
   </div>
 
+  <div class="eyebrow">THE BRAIN OF ZELLA</div>
+
+  <h1 class="command-title">
+    Ask Zella<br>
+    anything.
+  </h1>
+
   <p class="briefing-text">
-    Chat naturally with Zella like a real AI assistant. Ask questions,
-    learn crypto, analyze markets, review news, and generate live trade setups.
+    Talk to your AI trading copilot. Analyze markets, understand signals,
+    explain crypto concepts, review risk, and prepare smarter trading decisions.
   </p>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ULTRA CHAT</div>
+
+  <div class="chat-panel" id="chatBox">
+    <div class="chat-bubble zella-bubble">
+      Hey, I’m Zella. I can chat naturally, explain crypto, analyze live scanner data,
+      review risk, and help you understand trade setups before execution.
+    </div>
+  </div>
+
+  <div class="ultra-input">
+    <input id="userMessage" placeholder="Ask Zella anything..." onkeydown="handleEnter(event)">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <div class="quick-grid">
+    <div class="quick-card" onclick="quickAsk('Analyze BTC with live market context')">Analyze BTC</div>
+    <div class="quick-card" onclick="quickAsk('What is the best opportunity right now?')">Best Opportunity</div>
+    <div class="quick-card" onclick="quickAsk('Explain market risk like I am a beginner')">Explain Risk</div>
+    <div class="quick-card" onclick="quickAsk('Summarize the current market mood')">Market Mood</div>
+  </div>
 
 </section>
 
@@ -169,163 +420,71 @@
 
   <div class="mini-box">
     <div class="mini-label">AI Mode</div>
-    <div class="mini-value green">Chat</div>
+    <div class="mini-value blue">Ultra</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Market Data</div>
-    <div class="mini-value blue">Live</div>
+    <div class="mini-label">Confidence</div>
+    <div class="mini-value green" id="aiConfidence">--</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Trade Setup</div>
-    <div class="mini-value orange">Ready</div>
+    <div class="mini-label">Top Asset</div>
+    <div class="mini-value orange" id="topAsset">--</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Memory</div>
-    <div class="mini-value green">Session</div>
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">ASK ZELLA ANYTHING</div>
-
-  <div class="chat-input-bar">
-    <input
-      id="userMessage"
-      placeholder="Hi Zella, analyze BTC or explain RSI..."
-      onkeydown="handleEnter(event)"
-    >
-
-    <button class="btn" onclick="sendMessage()">
-      Send
-    </button>
-  </div>
-
-  <div class="quick-actions">
-    <button onclick="quickAsk('Hi Zella')">Hi Zella</button>
-    <button onclick="quickAsk('Explain RSI like I am a beginner')">Explain RSI</button>
-    <button onclick="quickAsk('Analyze BTC and give me entry zone and stop loss')">Analyze BTC</button>
-    <button onclick="quickAsk('What is the best setup right now?')">Best Setup</button>
-    <button onclick="quickAsk('Summarize today crypto news')">News Summary</button>
+    <div class="mini-label">Market Mood</div>
+    <div class="mini-value blue" id="marketMood">--</div>
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">LIVE CHAT</div>
+  <div class="briefing-title">LIVE INTELLIGENCE FEED</div>
 
-  <div class="chat-box" id="chatBox">
-
-    <div class="chat-bubble zella-bubble">
-      Hey, I’m Zella 👋<br><br>
-      Ask me anything — crypto education, market news, portfolio risk,
-      or live trade setups with entry zone, stop loss and take profits.
+  <div id="marketFeed" class="ranking-list">
+    <div class="rank-row">
+      <div class="rank-position">--</div>
+      <div class="rank-asset">Loading live intelligence...</div>
+      <div class="rank-score">--</div>
     </div>
-
   </div>
 
 </section>
-
-<section class="briefing-card" id="setupCard" style="display:none;">
-
-  <div class="briefing-title">AUTOTRADER SETUP</div>
-
-  <h2 class="briefing-headline" id="setupAsset">
-    Waiting for setup...
-  </h2>
-
-  <div class="trade-card">
-
-    <div class="trade-grid">
-
-      <div class="trade-metric">
-        <div class="trade-label">VERDICT</div>
-        <div class="trade-value" id="setupVerdict">--</div>
-      </div>
-
-      <div class="trade-metric">
-        <div class="trade-label">CONFIDENCE</div>
-        <div class="trade-value" id="setupConfidence">--</div>
-      </div>
-
-      <div class="trade-metric">
-        <div class="trade-label">ENTRY ZONE</div>
-        <div class="trade-value" id="setupEntry">--</div>
-      </div>
-
-      <div class="trade-metric">
-        <div class="trade-label">STOP LOSS</div>
-        <div class="trade-value" id="setupStop">--</div>
-      </div>
-
-      <div class="trade-metric">
-        <div class="trade-label">TAKE PROFIT 1</div>
-        <div class="trade-value" id="setupTP1">--</div>
-      </div>
-
-      <div class="trade-metric">
-        <div class="trade-label">TAKE PROFIT 2</div>
-        <div class="trade-value" id="setupTP2">--</div>
-      </div>
-
-    </div>
-
-    <button class="btn" style="margin-top:16px;" onclick="saveSetup()">
-      Save AutoTrader Setup
-    </button>
-
-  </div>
-
-</section>
-
-</main>
 
 <nav class="zella-nav">
 
   <a href="dashboard.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
     <span>Home</span>
   </a>
 
   <a href="scanner.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M5 19V11M12 19V5M19 19V8"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
     <span>Scanner</span>
   </a>
 
-  <a href="copilot.html" class="nav-item copilot-center">
+  <a href="copilot.html" class="nav-item copilot-center active">
     <div class="copilot-core">
-
       <svg viewBox="0 0 24 24" class="copilot-icon">
         <rect x="6" y="8" width="12" height="9" rx="2"/>
         <circle cx="9" cy="12" r="1"/>
         <circle cx="15" cy="12" r="1"/>
         <path d="M12 4V8"/>
       </svg>
-
     </div>
     <span>Copilot</span>
   </a>
 
   <a href="market.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M4 16L9 11L13 14L20 7"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
     <span>Market</span>
   </a>
 
   <a href="watchlist.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M6 3H18V21L12 17L6 21V3Z"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
     <span>Watchlist</span>
   </a>
 
@@ -343,7 +502,7 @@
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 
-let lastSetup = null;
+let scannerItems = [];
 
 function handleEnter(event){
   if(event.key === "Enter"){
@@ -356,7 +515,7 @@ function quickAsk(text){
   sendMessage();
 }
 
-function addBubble(role, text){
+function addBubble(role,text){
   const chatBox = document.getElementById("chatBox");
 
   const bubble = document.createElement("div");
@@ -365,41 +524,78 @@ function addBubble(role, text){
       ? "chat-bubble user-bubble"
       : "chat-bubble zella-bubble";
 
-  bubble.innerHTML = text.replace(/\n/g, "<br>");
+  bubble.innerHTML = text.replace(/\n/g,"<br>");
 
   chatBox.appendChild(bubble);
-  bubble.scrollIntoView({ behavior:"smooth" });
+  bubble.scrollIntoView({behavior:"smooth"});
 }
 
-function formatMoney(value){
-  const num = Number(value || 0);
-
-  return "$" + num.toLocaleString(undefined, {
-    maximumFractionDigits: num < 10 ? 4 : 2
-  });
+function thinkingBubble(){
+  addBubble(
+    "zella",
+    "Zella Ultra is thinking...<br>Scanning market intelligence...<br>Preparing response..."
+  );
 }
 
-function renderSetup(setup){
-  if(!setup) return;
+function removeLastBubble(){
+  const chatBox = document.getElementById("chatBox");
+  if(chatBox.lastChild){
+    chatBox.lastChild.remove();
+  }
+}
 
-  lastSetup = setup;
+function decideMood(items){
+  if(!items.length) return "--";
 
-  document.getElementById("setupCard").style.display = "block";
-  document.getElementById("setupAsset").textContent = setup.asset + " Live Setup";
-  document.getElementById("setupVerdict").textContent = setup.verdict || "--";
-  document.getElementById("setupConfidence").textContent = setup.confidence + "%";
+  const avg =
+    items.reduce((sum,item)=>sum + Number(item.confidence || 0),0) / items.length;
 
-  document.getElementById("setupEntry").textContent =
-    formatMoney(setup.entryZone.low) + " - " + formatMoney(setup.entryZone.high);
+  if(avg >= 70) return "Bullish";
+  if(avg >= 55) return "Neutral";
+  return "Risk Off";
+}
 
-  document.getElementById("setupStop").textContent =
-    formatMoney(setup.stopLoss);
+function renderFeed(items){
+  const feed = document.getElementById("marketFeed");
 
-  document.getElementById("setupTP1").textContent =
-    formatMoney(setup.takeProfit1);
+  feed.innerHTML = items.map((asset,index)=>`
+    <div class="rank-row">
+      <div class="rank-position">#${index + 1}</div>
 
-  document.getElementById("setupTP2").textContent =
-    formatMoney(setup.takeProfit2);
+      <div class="rank-asset">
+        ${asset.asset} • ${asset.signal}<br>
+        <small>
+          Momentum ${asset.momentumScore}% • Risk ${asset.riskScore}% • ${asset.source}
+        </small>
+      </div>
+
+      <div class="rank-score">
+        ${asset.confidence}%
+      </div>
+    </div>
+  `).join("");
+}
+
+async function loadCopilotMarket(){
+  try{
+    const res = await fetch(API_URL + "/scanner");
+    const data = await res.json();
+
+    scannerItems = data.items || [];
+
+    if(!scannerItems.length) return;
+
+    const top = scannerItems[0];
+
+    document.getElementById("topAsset").textContent = top.asset;
+    document.getElementById("aiConfidence").textContent = top.confidence + "%";
+    document.getElementById("marketMood").textContent = decideMood(scannerItems);
+
+    renderFeed(scannerItems);
+
+  }catch(error){
+    console.error(error);
+  }
 }
 
 async function sendMessage(){
@@ -408,74 +604,53 @@ async function sendMessage(){
 
   if(!message) return;
 
-  addBubble("user", message);
+  addBubble("user",message);
   input.value = "";
 
-  addBubble("zella", "Zella is thinking...");
+  thinkingBubble();
 
   try{
-    const response = await fetch(API_URL + "/copilot", {
+    const response = await fetch(API_URL + "/copilot",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
       },
       body:JSON.stringify({
         message,
-        userId: localStorage.getItem("zellaUserId") || "guest",
+        userId:localStorage.getItem("zellaUserId") || "guest",
         context:{
-          source:"copilot.html",
-          mode:"interactive"
+          page:"copilot.html",
+          mode:"v8-ultra",
+          scanner:scannerItems.slice(0,5)
         }
       })
     });
 
     const data = await response.json();
 
-    const chatBox = document.getElementById("chatBox");
-    chatBox.lastChild.remove();
+    removeLastBubble();
 
-    if(data.reply){
-      addBubble("zella", data.reply);
-    }else{
-      addBubble("zella", "I couldn't generate a response right now.");
-    }
-
-    if(data.tradeSetup){
-      renderSetup(data.tradeSetup);
-    }
+    addBubble(
+      "zella",
+      data.reply || "I couldn't generate a response right now."
+    );
 
   }catch(error){
     console.error(error);
 
-    const chatBox = document.getElementById("chatBox");
-    chatBox.lastChild.remove();
+    removeLastBubble();
 
-    addBubble("zella", "Connection error. Please try again.");
+    addBubble(
+      "zella",
+      "Connection error. Zella Ultra could not reach the backend."
+    );
   }
 }
 
-function saveSetup(){
-  if(!lastSetup){
-    alert("No setup to save yet.");
-    return;
-  }
-
-  const saved =
-    JSON.parse(localStorage.getItem("zellaAutoTraderSetups")) || [];
-
-  saved.push({
-    ...lastSetup,
-    savedAt:new Date().toISOString()
-  });
-
-  localStorage.setItem(
-    "zellaAutoTraderSetups",
-    JSON.stringify(saved)
-  );
-
-  alert("AutoTrader setup saved.");
-}
+loadCopilotMarket();
+setInterval(loadCopilotMarket,30000);
 </script>
 
+</main>
 </body>
 </html>

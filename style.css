@@ -829,3 +829,107 @@ body::before{
   }
 
 }
+
+.zella-nav{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  width:min(94%,760px);
+  height:86px;
+  padding:10px 14px;
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  align-items:center;
+  gap:4px;
+  z-index:999;
+  border-radius:34px;
+  background:rgba(8,15,28,.86);
+  border:1px solid rgba(148,163,184,.18);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.45),
+    inset 0 0 30px rgba(56,189,248,.04);
+}
+
+.nav-item{
+  text-decoration:none;
+  color:#94a3b8;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-size:11px;
+  font-weight:800;
+  transition:.25s ease;
+}
+
+.nav-icon{
+  width:25px;
+  height:25px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.nav-item:hover{
+  color:#38bdf8;
+  transform:translateY(-3px);
+}
+
+.copilot-center{
+  transform:translateY(-22px);
+}
+
+.copilot-center span{
+  margin-top:2px;
+  color:#38bdf8;
+}
+
+.copilot-core{
+  width:74px;
+  height:74px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  box-shadow:
+    0 0 35px rgba(56,189,248,.55),
+    0 18px 45px rgba(37,99,235,.35);
+  animation:zellaPulse 3s ease-in-out infinite;
+}
+
+.copilot-icon{
+  width:34px;
+  height:34px;
+  fill:none;
+  stroke:#020617;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+@keyframes zellaPulse{
+  0%,100%{
+    transform:scale(1);
+    box-shadow:
+      0 0 30px rgba(56,189,248,.45),
+      0 18px 45px rgba(37,99,235,.30);
+  }
+
+  50%{
+    transform:scale(1.08);
+    box-shadow:
+      0 0 55px rgba(56,189,248,.85),
+      0 22px 60px rgba(37,99,235,.50);
+  }
+}
+
+body{
+  padding-bottom:120px;
+}

@@ -1,317 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Pro V2</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Premium V11 Ultra</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
+ 
 <body>
-
-<div class="pro-particles">
-  <span>💎</span>
-  <span>PRO</span>
-  <span>AI</span>
-  <span>⚡</span>
-  <span>SYNC</span>
-  <span>💎</span>
-</div>
-
+ 
 <style>
-.pro-particles{
+*{
+  box-sizing:border-box;
+}
+ 
+body{
+  overflow-x:hidden;
+}
+ 
+.premium-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 12%,rgba(56,189,248,.26),transparent 30%),
+    radial-gradient(circle at 80% 18%,rgba(139,92,246,.24),transparent 31%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    #020617;
+}
+ 
+.premium-grid{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.055) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:premiumGridMove 18s linear infinite;
+}
+ 
+@keyframes premiumGridMove{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+ 
+.premium-particles{
   position:fixed;
   inset:0;
   overflow:hidden;
   pointer-events:none;
-  z-index:0;
+  z-index:1;
 }
-
-.pro-particles span{
+ 
+.premium-particles span{
   position:absolute;
-  top:-100px;
-  opacity:.12;
-  font-size:30px;
-  font-weight:900;
-  color:#a855f7;
-  animation:proRain 14s linear infinite;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 20px #38bdf8;
+  opacity:.55;
+  animation:premiumFloat 12s linear infinite;
 }
-
-.pro-particles span:nth-child(1){left:8%;}
-.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
-.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
-.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
-.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
-.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
-
-@keyframes proRain{
-  from{transform:translateY(-140px) rotate(0deg);}
-  to{transform:translateY(120vh) rotate(360deg);}
+ 
+.premium-particles span:nth-child(1){left:8%;animation-delay:0s}
+.premium-particles span:nth-child(2){left:23%;animation-delay:2s}
+.premium-particles span:nth-child(3){left:41%;animation-delay:4s}
+.premium-particles span:nth-child(4){left:59%;animation-delay:1s}
+.premium-particles span:nth-child(5){left:78%;animation-delay:3s}
+.premium-particles span:nth-child(6){left:93%;animation-delay:5s}
+ 
+@keyframes premiumFloat{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-120px)}
 }
-
+ 
 .container,
 .navbar{
   position:relative;
-  z-index:2;
+  z-index:3;
+}
+ 
+.premium-hero{
+  padding:24px;
+  border-radius:34px;
+  position:relative;
+  overflow:hidden;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:
+    inset 0 0 30px rgba(56,189,248,.035),
+    0 22px 65px rgba(0,0,0,.35);
+}
+ 
+.premium-core-wrap{
+  width:295px;
+  height:295px;
+  margin:auto;
+  position:relative;
+}
+ 
+.premium-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.35);
+  animation:spin 12s linear infinite;
+}
+ 
+.premium-ring.r1{inset:0}
+.premium-ring.r2{inset:25px;animation-duration:18s;border-color:rgba(139,92,246,.35)}
+.premium-ring.r3{inset:50px;animation-duration:25s;border-color:rgba(34,197,94,.24)}
+.premium-ring.r4{inset:75px;animation-duration:32s;border-color:rgba(56,189,248,.18)}
+ 
+.premium-ring::before{
+  content:"";
+  position:absolute;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#38bdf8;
+  left:50%;
+  top:12px;
+  box-shadow:0 0 22px #38bdf8;
+}
+ 
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+ 
+.premium-core{
+  position:absolute;
+  inset:95px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#2563eb 48%,#0f172a 68%);
+  box-shadow:
+    0 0 45px rgba(56,189,248,.92),
+    0 0 110px rgba(139,92,246,.38);
+  animation:premiumPulse 4s ease-in-out infinite;
+}
+ 
+@keyframes premiumPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.13);filter:brightness(1.35)}
+}
+ 
+.premium-core svg{
+  width:86px;
+  height:86px;
+  stroke:#020617;
+  stroke-width:2;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+ 
+.premium-scan{
+  position:absolute;
+  left:35px;
+  right:35px;
+  top:50%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 26px rgba(56,189,248,.9);
+  animation:premiumScan 2.8s ease-in-out infinite;
+}
+ 
+@keyframes premiumScan{
+  0%,100%{transform:translateY(-86px);opacity:.25}
+  50%{transform:translateY(86px);opacity:1}
+}
+ 
+.premium-card{
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  border-radius:28px;
+  padding:18px;
+  margin-top:16px;
+  box-shadow:0 18px 48px rgba(0,0,0,.25);
+  transition:.3s ease;
+}
+ 
+.premium-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(56,189,248,.32);
+  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+ 
+.premium-grid-layout{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:16px;
+}
+ 
+.premium-panel{
+  padding:18px;
+  border-radius:24px;
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.07);
+  position:relative;
+  overflow:hidden;
+}
+ 
+.premium-panel::after{
+  content:"";
+  position:absolute;
+  width:110px;
+  height:110px;
+  right:-44px;
+  bottom:-44px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.18),transparent 70%);
+}
+ 
+.premium-title{
+  font-size:16px;
+  font-weight:950;
+  color:#e5eefb;
+}
+ 
+.premium-sub{
+  font-size:12px;
+  line-height:1.7;
+  margin-top:8px;
+  color:#94a3b8;
+}
+ 
+.premium-pill{
+  display:inline-flex;
+  padding:8px 11px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:950;
+  margin-top:12px;
+  background:rgba(56,189,248,.12);
+  color:#38bdf8;
+}
+ 
+.premium-bar{
+  width:100%;
+  height:12px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+  margin-top:12px;
+}
+ 
+.premium-fill{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#38bdf8,#8b5cf6,#22c55e);
+  box-shadow:0 0 18px rgba(56,189,248,.45);
+}
+ 
+.plan-card{
+  padding:20px;
+  border-radius:28px;
+  border:1px solid rgba(56,189,248,.16);
+  background:linear-gradient(180deg,rgba(15,23,42,.90),rgba(2,6,23,.88));
+  box-shadow:inset 0 0 35px rgba(56,189,248,.035);
+}
+ 
+.plan-name{
+  color:#e5eefb;
+  font-size:22px;
+  font-weight:950;
+}
+ 
+.plan-price{
+  color:#38bdf8;
+  font-size:30px;
+  font-weight:950;
+  margin-top:10px;
+}
+ 
+.plan-list{
+  margin-top:14px;
+  display:grid;
+  gap:10px;
+}
+ 
+.plan-item{
+  color:#cbd5e1;
+  font-size:13px;
+  line-height:1.6;
+}
+ 
+.unlock-row{
+  padding:16px;
+  border-radius:22px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-top:12px;
+}
+ 
+.unlock-row strong{color:#e5eefb}
+.unlock-row small{color:#94a3b8;line-height:1.7}
+ 
+.unlock-badge{
+  padding:8px 11px;
+  border-radius:999px;
+  background:rgba(56,189,248,.12);
+  color:#38bdf8;
+  font-size:11px;
+  font-weight:950;
+  flex:0 0 auto;
+}
+ 
+@media(max-width:430px){
+  .premium-grid-layout{grid-template-columns:1fr}
 }
 </style>
-
+ 
+<div class="premium-bg"></div>
+<div class="premium-grid"></div>
+ 
+<div class="premium-particles">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+</div>
+ 
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">PRO</div>
+    <div class="avatar-dot">PR</div>
   </div>
 </nav>
-
+ 
 <main class="container">
-
-<section class="command-card">
-
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA PRO LAYER</div>
-      <h1 class="command-title">Premium<br>Control.</h1>
+ 
+<section class="premium-hero">
+ 
+  <div class="premium-core-wrap">
+    <div class="premium-ring r1"></div>
+    <div class="premium-ring r2"></div>
+    <div class="premium-ring r3"></div>
+    <div class="premium-ring r4"></div>
+ 
+    <div class="premium-core">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3L15 9L21 10L16.5 14.5L17.7 21L12 18L6.3 21L7.5 14.5L3 10L9 9Z"/>
+        <path d="M8.5 12H15.5"/>
+        <path d="M12 8.5V15.5"/>
+      </svg>
     </div>
-
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">PRO</span>
-    </div>
+ 
+    <div class="premium-scan"></div>
   </div>
-
+ 
+  <div class="eyebrow">ZELLA PREMIUM V11 ULTRA</div>
+ 
+  <h1 class="command-title">
+    Premium<br>
+    Intelligence.
+  </h1>
+ 
   <p class="briefing-text">
-    Unlock premium scanner tools, cloud sync, saved watchlists,
-    advanced AI analysis and future AutoTrader Pro features.
+    Unlock Zella's highest intelligence layer: unlimited AI Copilot access,
+    premium signals, advanced scanner tools, cloud priority, portfolio insights,
+    voice intelligence and elite trading utilities.
   </p>
-
+ 
+  <div class="command-status-pill" id="premiumStatusPill">
+    Premium engine initializing
+  </div>
+ 
 </section>
-
+ 
 <section class="mini-grid">
-
-  <div class="mini-box">
-    <div class="mini-label">Plan</div>
-    <div class="mini-value blue" id="planStatus">Free</div>
+ 
+  <div class="mini-box premium-card">
+    <div class="mini-label">Membership</div>
+    <div class="mini-value green" id="membershipTier">Free</div>
   </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Pro Access</div>
-    <div class="mini-value green" id="proAccess">Locked</div>
+ 
+  <div class="mini-box premium-card">
+    <div class="mini-label">AI Power</div>
+    <div class="mini-value blue" id="aiPower">35%</div>
   </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Features</div>
-    <div class="mini-value orange" id="featureCount">0/7</div>
+ 
+  <div class="mini-box premium-card">
+    <div class="mini-label">Signals</div>
+    <div class="mini-value orange" id="signalAccess">Limited</div>
   </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Sync</div>
-    <div class="mini-value blue" id="syncStatus">Limited</div>
+ 
+  <div class="mini-box premium-card">
+    <div class="mini-label">Cloud Priority</div>
+    <div class="mini-value blue" id="cloudPriority">Standard</div>
   </div>
-
+ 
 </section>
-
-<section class="command-card">
-
-  <div class="card-label">MEMBERSHIP CONTROL</div>
-
-  <div class="hero-actions">
-    <button class="btn" onclick="activatePro()">
-      Activate Pro Preview
-    </button>
-
-    <button class="btn secondary" onclick="deactivatePro()">
-      Return to Free
-    </button>
+ 
+<section class="premium-card">
+ 
+  <div class="briefing-title">PREMIUM MEMBERSHIP CARD</div>
+ 
+  <div class="premium-grid-layout">
+ 
+    <div class="plan-card">
+      <div class="plan-name">Free</div>
+      <div class="plan-price">$0</div>
+      <div class="plan-list">
+        <div class="plan-item">Basic dashboard access</div>
+        <div class="plan-item">Limited AI Copilot usage</div>
+        <div class="plan-item">Basic watchlist and alerts</div>
+        <div class="plan-item">Standard cloud sync</div>
+      </div>
+      <button class="btn secondary" onclick="setPlan('FREE')">Use Free</button>
+    </div>
+ 
+    <div class="plan-card">
+      <div class="plan-name">Premium</div>
+      <div class="plan-price">$19/mo</div>
+      <div class="plan-list">
+        <div class="plan-item">Unlimited AI Copilot</div>
+        <div class="plan-item">Premium scanner intelligence</div>
+        <div class="plan-item">Advanced portfolio insights</div>
+        <div class="plan-item">Priority cloud and VIP themes</div>
+      </div>
+      <button class="btn" onclick="setPlan('PREMIUM')">Activate Premium</button>
+    </div>
+ 
   </div>
-
+ 
 </section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">PRO FEATURES</div>
-
-  <div class="ranking-list" id="proFeatureList">
-
-    <div class="rank-row">
-      <div class="rank-position">🔒</div>
-      <div class="rank-asset">Advanced Scanner<br><small>Premium score filters and deeper signals.</small></div>
-      <div class="rank-score">Locked</div>
+ 
+<section class="premium-card">
+ 
+  <div class="briefing-title">AI POWER CENTER</div>
+ 
+  <div class="premium-grid-layout">
+ 
+    <div class="premium-panel">
+      <div class="premium-title">AI Copilot Access</div>
+      <div class="premium-sub">Premium unlocks unlimited advanced AI market reasoning.</div>
+      <div class="premium-bar"><div class="premium-fill" id="copilotFill" style="width:35%"></div></div>
+      <div class="premium-pill" id="copilotStatus">Limited</div>
     </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🔒</div>
-      <div class="rank-asset">Cloud Sync<br><small>Sync portfolio, settings and trades across devices.</small></div>
-      <div class="rank-score">Locked</div>
+ 
+    <div class="premium-panel">
+      <div class="premium-title">Signal Intelligence</div>
+      <div class="premium-sub">Upgrade for AI signal scoring, setup quality and risk evaluation.</div>
+      <div class="premium-bar"><div class="premium-fill" id="signalFill" style="width:40%"></div></div>
+      <div class="premium-pill" id="signalStatus">Basic</div>
     </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🔒</div>
-      <div class="rank-asset">Premium AI Analysis<br><small>Deeper Copilot explanations and trading insights.</small></div>
-      <div class="rank-score">Locked</div>
+ 
+    <div class="premium-panel">
+      <div class="premium-title">Portfolio Pro</div>
+      <div class="premium-sub">Unlock deeper portfolio analytics, risk exposure and wealth forecast.</div>
+      <div class="premium-bar"><div class="premium-fill" id="portfolioFill" style="width:45%"></div></div>
+      <div class="premium-pill" id="portfolioStatus">Standard</div>
     </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🔒</div>
-      <div class="rank-asset">AutoTrader Pro<br><small>Advanced paper-trading strategy tools.</small></div>
-      <div class="rank-score">Locked</div>
+ 
+    <div class="premium-panel">
+      <div class="premium-title">Voice Intelligence</div>
+      <div class="premium-sub">Premium members get priority voice-based AI briefings.</div>
+      <div class="premium-bar"><div class="premium-fill" id="voiceFill" style="width:30%"></div></div>
+      <div class="premium-pill" id="voiceStatus">Locked</div>
     </div>
-
+ 
   </div>
-
+ 
 </section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA PRO STATUS
+ 
+<section class="premium-card">
+ 
+  <div class="briefing-title">PREMIUM UNLOCK CENTER</div>
+ 
+  <div class="unlock-row">
+    <div>
+      <strong>Unlimited AI Copilot</strong><br>
+      <small>Ask unlimited market, risk, portfolio and trade setup questions.</small>
+    </div>
+    <div class="unlock-badge" id="unlockCopilot">LOCKED</div>
   </div>
-
-  <h2 class="briefing-headline" id="proHeadline">
-    Free Plan Active
+ 
+  <div class="unlock-row">
+    <div>
+      <strong>Advanced Scanner</strong><br>
+      <small>Access premium signals, momentum scans and opportunity scoring.</small>
+    </div>
+    <div class="unlock-badge" id="unlockScanner">LOCKED</div>
+  </div>
+ 
+  <div class="unlock-row">
+    <div>
+      <strong>Premium Cloud Priority</strong><br>
+      <small>Higher cloud sync priority, restore history and device continuity.</small>
+    </div>
+    <div class="unlock-badge" id="unlockCloud">LOCKED</div>
+  </div>
+ 
+  <div class="unlock-row">
+    <div>
+      <strong>VIP Market Intelligence</strong><br>
+      <small>Daily AI briefings, premium analytics and pro market insights.</small>
+    </div>
+    <div class="unlock-badge" id="unlockMarket">LOCKED</div>
+  </div>
+ 
+</section>
+ 
+<section class="premium-card">
+ 
+  <div class="briefing-title">ZELLA PREMIUM BRIEFING</div>
+ 
+  <h2 class="briefing-headline" id="premiumBriefTitle">
+    Premium system ready.
   </h2>
-
-  <p class="briefing-text" id="proSummary">
-    Upgrade to Zella Pro to unlock advanced scanner tools, cloud sync, premium AI analysis and future AutoTrader Pro capabilities.
+ 
+  <p class="briefing-text" id="premiumBriefText">
+    Upgrade to Premium to unlock Zella's strongest AI intelligence, advanced scanner tools,
+    premium cloud priority and VIP market features.
   </p>
-
+ 
+  <div class="hero-actions">
+    <button class="btn" onclick="speakPremium()">Voice Briefing</button>
+    <a href="pro.html" class="btn secondary">Open Pro Center</a>
+  </div>
+ 
 </section>
-
-</main>
-
-<div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html">Copilot</a>
-  <a href="market.html">Market</a>
-  <a href="more.html">More</a>
-</div>
-
-<script>
-
-function activatePro(){
-
-  const plan = {
-    tier: "PRO",
-    features: 7
-  };
-
-  localStorage.setItem(
-    "zellaProV2",
-    JSON.stringify(plan)
-  );
-
-  loadPro();
-
+ 
+<nav class="zella-nav">
+ 
+  <a href="dashboard.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+    <span>Home</span>
+  </a>
+ 
+  <a href="scanner.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+    <span>Scanner</span>
+  </a>
+ 
+  <a href="copilot.html" class="nav-item copilot-center">
+    <div class="copilot-core">
+      <svg viewBox="0 0 24 24" class="copilot-icon">
+        <rect x="6" y="8" width="12" height="9" rx="2"/>
+        <circle cx="9" cy="12" r="1"/>
+        <circle cx="15" cy="12" r="1"/>
+        <path d="M12 4V8"/>
+      </svg>
+    </div>
+    <span>Copilot</span>
+  </a>
+ 
+  <a href="market.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+    <span>Market</span>
+  </a>
+ 
+  <a href="watchlist.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+    <span>Watchlist</span>
+  </a>
+ 
+  <a href="more.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <circle cx="12" cy="5" r="1.5"/>
+      <circle cx="12" cy="12" r="1.5"/>
+      <circle cx="12" cy="19" r="1.5"/>
+    </svg>
+    <span>More</span>
+  </a>
+ 
+</nav>
+ 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+ 
+const firebaseConfig = {
+  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+  authDomain: "zella-424f2.firebaseapp.com",
+  projectId: "zella-424f2",
+  storageBucket: "zella-424f2.firebasestorage.app",
+  messagingSenderId: "1008967672362",
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953",
+  databaseURL: "https://zella-424f2-default-rtdb.firebaseio.com"
+};
+ 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+ 
+let currentUser = null;
+let currentTier = "FREE";
+ 
+function setPremiumUI(tier){
+  currentTier = tier;
+ 
+  const premium = tier === "PREMIUM" || tier === "PRO" || tier === "ELITE";
+ 
+  document.getElementById("membershipTier").textContent = premium ? "Premium" : "Free";
+  document.getElementById("aiPower").textContent = premium ? "100%" : "35%";
+  document.getElementById("signalAccess").textContent = premium ? "VIP" : "Limited";
+  document.getElementById("cloudPriority").textContent = premium ? "Priority" : "Standard";
+ 
+  document.getElementById("premiumStatusPill").textContent = premium
+    ? "Premium intelligence active"
+    : "Premium upgrade available";
+ 
+  const fill = premium ? "100%" : "35%";
+  ["copilotFill","signalFill","portfolioFill","voiceFill"].forEach(id=>{
+    document.getElementById(id).style.width = fill;
+  });
+ 
+  document.getElementById("copilotStatus").textContent = premium ? "Unlimited" : "Limited";
+  document.getElementById("signalStatus").textContent = premium ? "VIP" : "Basic";
+  document.getElementById("portfolioStatus").textContent = premium ? "Pro" : "Standard";
+  document.getElementById("voiceStatus").textContent = premium ? "Unlocked" : "Locked";
+ 
+  ["unlockCopilot","unlockScanner","unlockCloud","unlockMarket"].forEach(id=>{
+    document.getElementById(id).textContent = premium ? "UNLOCKED" : "LOCKED";
+  });
+ 
+  document.getElementById("premiumBriefTitle").textContent = premium
+    ? "Premium intelligence is active."
+    : "Premium system ready.";
+ 
+  document.getElementById("premiumBriefText").textContent = premium
+    ? "Your Zella Premium layer is active. You now have access to enhanced AI intelligence, premium signal access, portfolio insights and VIP cloud priority."
+    : "Upgrade to Premium to unlock Zella's strongest AI intelligence, advanced scanner tools, premium cloud priority and VIP market features.";
 }
-
-function deactivatePro(){
-
-  localStorage.removeItem(
-    "zellaProV2"
-  );
-
-  loadPro();
-
+ 
+window.setPlan = async function(tier){
+  setPremiumUI(tier);
+  localStorage.setItem("zellaMembershipTier",tier);
+ 
+  if(currentUser){
+    await setDoc(doc(db,"users",currentUser.uid,"membership","status"),{
+      tier,
+      email:currentUser.email,
+      updatedAt:serverTimestamp()
+    },{merge:true});
+  }
 }
-
-function loadPro(){
-
-  const plan =
-    JSON.parse(
-      localStorage.getItem("zellaProV2")
-    );
-
-  if(!plan){
-
-    document.getElementById("planStatus").textContent =
-      "Free";
-
-    document.getElementById("proAccess").textContent =
-      "Locked";
-
-    document.getElementById("featureCount").textContent =
-      "0/7";
-
-    document.getElementById("syncStatus").textContent =
-      "Limited";
-
-    document.getElementById("proHeadline").textContent =
-      "Free Plan Active";
-
-    document.getElementById("proSummary").textContent =
-      "Upgrade to Zella Pro to unlock advanced features.";
-
+ 
+window.speakPremium = function(){
+  const text =
+    document.getElementById("premiumBriefTitle").textContent + ". " +
+    document.getElementById("premiumBriefText").textContent;
+ 
+  if(!window.speechSynthesis){
+    alert("Voice briefing is not supported on this browser.");
     return;
   }
-
-  document.getElementById("planStatus").textContent =
-    "PRO";
-
-  document.getElementById("proAccess").textContent =
-    "Unlocked";
-
-  document.getElementById("featureCount").textContent =
-    "7/7";
-
-  document.getElementById("syncStatus").textContent =
-    "Full";
-
-  document.getElementById("proHeadline").textContent =
-    "Zella Pro Active";
-
-  document.getElementById("proSummary").textContent =
-    "Premium scanner filters, AI analysis, cloud sync, watchlists and AutoTrader Pro features are unlocked.";
-
-  document.getElementById("proFeatureList").innerHTML = `
-
-    <div class="rank-row">
-      <div class="rank-position">💎</div>
-      <div class="rank-asset">Advanced Scanner</div>
-      <div class="rank-score">Unlocked</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">☁️</div>
-      <div class="rank-asset">Cloud Sync</div>
-      <div class="rank-score">Unlocked</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🤖</div>
-      <div class="rank-asset">Premium AI Analysis</div>
-      <div class="rank-score">Unlocked</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">⚡</div>
-      <div class="rank-asset">AutoTrader Pro</div>
-      <div class="rank-score">Unlocked</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">📊</div>
-      <div class="rank-asset">Advanced Analytics</div>
-      <div class="rank-score">Unlocked</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">⭐</div>
-      <div class="rank-asset">Saved Watchlists</div>
-      <div class="rank-score">Unlocked</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🚀</div>
-      <div class="rank-asset">Future Pro Upgrades</div>
-      <div class="rank-score">Unlocked</div>
-    </div>
-
-  `;
+ 
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 1;
+  utterance.pitch = 1.05;
+  speechSynthesis.speak(utterance);
 }
-
-loadPro();
-
+ 
+onAuthStateChanged(auth,async(user)=>{
+  currentUser = user;
+ 
+  if(!user){
+    setPremiumUI(localStorage.getItem("zellaMembershipTier") || "FREE");
+    return;
+  }
+ 
+  try{
+    const snap = await getDoc(doc(db,"users",user.uid,"membership","status"));
+    const tier = snap.exists() ? snap.data().tier : "FREE";
+    setPremiumUI(tier || "FREE");
+  }catch(error){
+    console.error(error);
+    setPremiumUI(localStorage.getItem("zellaMembershipTier") || "FREE");
+  }
+});
 </script>
+ 
 <script type="module" src="auth-guard.js"></script>
+ 
+</main>
 </body>
 </html>

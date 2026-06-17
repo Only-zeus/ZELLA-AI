@@ -1,315 +1,576 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Notification Center V1</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Alerts V11 Ultra</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<style>
+*{box-sizing:border-box}
+body{overflow-x:hidden}
+
+.alert-bg{
+position:fixed;inset:0;z-index:0;pointer-events:none;
+background:
+radial-gradient(circle at 20% 15%,rgba(56,189,248,.25),transparent 30%),
+radial-gradient(circle at 80% 15%,rgba(37,99,235,.22),transparent 30%),
+radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+#020617;
+}
+
+.alert-grid{
+position:fixed;inset:0;z-index:0;pointer-events:none;
+background-image:
+linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
+background-size:40px 40px;
+animation:gridMove 18s linear infinite;
+}
+
+@keyframes gridMove{
+from{background-position:0 0}
+to{background-position:0 400px}
+}
+
+.alert-particles{
+position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+}
+
+.alert-particles span{
+position:absolute;width:6px;height:6px;border-radius:50%;
+background:#38bdf8;box-shadow:0 0 20px #38bdf8;
+animation:alertFloat 12s linear infinite;
+}
+
+.alert-particles span:nth-child(1){left:8%;animation-delay:0s}
+.alert-particles span:nth-child(2){left:23%;animation-delay:2s}
+.alert-particles span:nth-child(3){left:41%;animation-delay:4s}
+.alert-particles span:nth-child(4){left:59%;animation-delay:1s}
+.alert-particles span:nth-child(5){left:78%;animation-delay:3s}
+.alert-particles span:nth-child(6){left:93%;animation-delay:5s}
+
+@keyframes alertFloat{
+from{transform:translateY(110vh)}
+to{transform:translateY(-100px)}
+}
+
+.alert-orbits{
+position:fixed;inset:0;pointer-events:none;z-index:1;
+}
+
+.alert-orbits::before,
+.alert-orbits::after{
+content:"";
+position:absolute;width:450px;height:450px;border-radius:50%;
+border:1px solid rgba(56,189,248,.08);
+animation:orbitMove 25s linear infinite;
+}
+
+.alert-orbits::before{left:-220px;top:120px}
+.alert-orbits::after{right:-220px;bottom:120px;animation-duration:35s}
+
+@keyframes orbitMove{
+from{transform:rotate(0deg)}
+to{transform:rotate(360deg)}
+}
+
+.container,.navbar{position:relative;z-index:3}
+
+.alert-hero{
+padding:24px;border-radius:34px;position:relative;overflow:hidden;
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+box-shadow:inset 0 0 30px rgba(56,189,248,.03),0 20px 60px rgba(0,0,0,.35);
+}
+
+.alert-core-wrap{
+width:280px;height:280px;margin:auto;position:relative;
+}
+
+.alert-ring{
+position:absolute;border-radius:50%;
+border:1px solid rgba(56,189,248,.35);
+animation:spin 12s linear infinite;
+}
+
+.alert-ring.r1{inset:0}
+.alert-ring.r2{inset:25px;animation-duration:18s}
+.alert-ring.r3{inset:50px;animation-duration:25s}
+.alert-ring.r4{inset:75px;animation-duration:32s}
+
+.alert-ring::before{
+content:"";position:absolute;width:10px;height:10px;border-radius:50%;
+background:#38bdf8;left:50%;top:12px;box-shadow:0 0 20px #38bdf8;
+}
+
+@keyframes spin{
+from{transform:rotate(0)}
+to{transform:rotate(360deg)}
+}
+
+.alert-core{
+position:absolute;inset:95px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 25%,#0f172a 65%);
+box-shadow:0 0 40px rgba(56,189,248,.9),0 0 100px rgba(56,189,248,.35);
+animation:pulseAlert 4s ease-in-out infinite;
+}
+
+@keyframes pulseAlert{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.12)}
+}
+
+.alert-core svg{
+width:78px;height:78px;stroke:#020617;stroke-width:2;fill:none;
+}
+
+.alert-card{
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+border-radius:28px;
+padding:18px;
+margin-top:16px;
+box-shadow:0 18px 48px rgba(0,0,0,.25);
+transition:.3s;
+}
+
+.alert-card:hover{
+transform:translateY(-4px);
+border-color:rgba(56,189,248,.32);
+box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+
+.alert-builder{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+margin-top:16px;
+}
+
+.alert-panel{
+padding:18px;border-radius:24px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+}
+
+.alert-title{
+font-size:15px;font-weight:950;color:#e5eefb;
+}
+
+.alert-sub{
+font-size:12px;line-height:1.7;margin-top:8px;color:#94a3b8;
+}
+
+.alert-input,.alert-select{
+width:100%;
+margin-top:12px;
+padding:15px;
+border-radius:18px;
+background:#0f172a;
+border:1px solid rgba(148,163,184,.12);
+color:#fff;
+outline:none;
+}
+
+.alert-input:focus,.alert-select:focus{
+border-color:#38bdf8;
+box-shadow:0 0 18px rgba(56,189,248,.18);
+}
+
+.alert-feed{
+display:grid;
+gap:12px;
+margin-top:16px;
+}
+
+.alert-row{
+padding:16px;
+border-radius:22px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.08);
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:14px;
+}
+
+.alert-row strong{color:#e5eefb}
+.alert-row small{color:#94a3b8;line-height:1.7}
+
+.alert-pill{
+padding:8px 11px;
+border-radius:999px;
+font-size:11px;
+font-weight:950;
+background:rgba(56,189,248,.12);
+color:#38bdf8;
+}
+
+@media(max-width:430px){
+.alert-builder{grid-template-columns:1fr}
+}
+</style>
+
+<div class="alert-bg"></div>
+<div class="alert-grid"></div>
+<div class="alert-orbits"></div>
+
+<div class="alert-particles">
+<span></span><span></span><span></span>
+<span></span><span></span><span></span>
+</div>
+
 <nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">N</div>
-  </div>
+<div class="nav-inner">
+<div class="logo">ZELLA</div>
+<div class="avatar-dot">AL</div>
+</div>
 </nav>
 
 <main class="container">
 
-<section class="command-card">
+<section class="alert-hero">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA NOTIFICATION CENTER</div>
-      <h1 class="command-title">Smart<br>Notifications.</h1>
-    </div>
+<div class="alert-core-wrap">
+<div class="alert-ring r1"></div>
+<div class="alert-ring r2"></div>
+<div class="alert-ring r3"></div>
+<div class="alert-ring r4"></div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">ALERTS</span>
-    </div>
-  </div>
+<div class="alert-core">
+<svg viewBox="0 0 24 24">
+<path d="M12 4C9 4 7 6 7 9V13L5 17H19L17 13V9C17 6 15 4 12 4Z"/>
+<path d="M10 20H14"/>
+<path d="M12 2V4"/>
+</svg>
+</div>
+</div>
 
-  <p class="briefing-text">
-    Enable browser notifications and let Zella notify you about
-    high-confidence setups, momentum breakouts and market risk.
-  </p>
+<div class="eyebrow">ZELLA ALERTS V11 ULTRA</div>
+
+<h1 class="command-title">
+Signal<br>
+Command.
+</h1>
+
+<p class="briefing-text">
+Create price alerts, scanner alerts, confidence alerts, risk alerts and news pulse alerts.
+Zella monitors the market and keeps your trading desk aware.
+</p>
+
+<div class="command-status-pill">
+Alert Engine Online
+</div>
 
 </section>
 
 <section class="mini-grid">
 
-  <div class="mini-box">
-    <div class="mini-label">Permission</div>
-    <div class="mini-value blue" id="permissionStatus">Unknown</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Active Alerts</div>
-    <div class="mini-value green" id="activeAlerts">0</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Top Signal</div>
-    <div class="mini-value orange" id="topSignal">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Status</div>
-    <div class="mini-value blue" id="notifyStatus">Standby</div>
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">
-    NOTIFICATION CONTROLS
-  </div>
-
-  <div class="hero-actions">
-
-    <button class="btn" onclick="enableNotifications()">
-      Enable Notifications
-    </button>
-
-    <button class="btn secondary" onclick="sendTestNotification()">
-      Test Notification
-    </button>
-
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA NOTIFICATION SUMMARY
-  </div>
-
-  <h2 class="briefing-headline" id="notificationHeadline">
-    Notification system ready.
-  </h2>
-
-  <p class="briefing-text" id="notificationSummary">
-    Enable notifications to receive scanner alerts, momentum breakouts and daily briefings.
-  </p>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    LIVE NOTIFICATION FEED
-  </div>
-
-  <div id="notificationFeed">
-
-    <div class="rank-row">
-      <div class="rank-position">🔔</div>
-      <div class="rank-asset">
-        Waiting for notification events...
-      </div>
-      <div class="rank-score">
-        --
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-</main>
-
-<div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html">Copilot</a>
-  <a href="market.html">Market</a>
-  <a href="journal.html">Wallet</a>
+<div class="mini-box alert-card">
+<div class="mini-label">Active Alerts</div>
+<div class="mini-value green" id="activeAlerts">0</div>
 </div>
 
-<script>
+<div class="mini-box alert-card">
+<div class="mini-label">Triggered</div>
+<div class="mini-value blue" id="triggeredAlerts">0</div>
+</div>
 
+<div class="mini-box alert-card">
+<div class="mini-label">Scanner Watch</div>
+<div class="mini-value orange" id="scannerWatch">Live</div>
+</div>
+
+<div class="mini-box alert-card">
+<div class="mini-label">Risk Pulse</div>
+<div class="mini-value blue" id="riskPulse">Safe</div>
+</div>
+
+</section>
+
+<section class="alert-card">
+
+<div class="briefing-title">CREATE SMART ALERT</div>
+
+<div class="alert-builder">
+
+<div class="alert-panel">
+<div class="alert-title">Asset</div>
+<div class="alert-sub">Choose asset to monitor.</div>
+<select class="alert-select" id="assetInput">
+<option>BTC</option>
+<option>ETH</option>
+<option>SOL</option>
+<option>BNB</option>
+<option>XRP</option>
+</select>
+</div>
+
+<div class="alert-panel">
+<div class="alert-title">Alert Type</div>
+<div class="alert-sub">Select the alert intelligence.</div>
+<select class="alert-select" id="typeInput">
+<option>Price Above</option>
+<option>Price Below</option>
+<option>Confidence Above</option>
+<option>Risk Above</option>
+<option>News Pulse</option>
+</select>
+</div>
+
+<div class="alert-panel">
+<div class="alert-title">Trigger Value</div>
+<div class="alert-sub">Enter price, confidence or risk value.</div>
+<input class="alert-input" id="valueInput" type="number" placeholder="Example: 75000">
+</div>
+
+<div class="alert-panel">
+<div class="alert-title">Delivery</div>
+<div class="alert-sub">Voice and app alert ready.</div>
+<select class="alert-select" id="deliveryInput">
+<option>In-App</option>
+<option>Voice</option>
+<option>In-App + Voice</option>
+</select>
+</div>
+
+</div>
+
+<div class="hero-actions">
+<button class="btn" onclick="createAlert()">Create Alert</button>
+<button class="btn secondary" onclick="clearAlerts()">Clear Alerts</button>
+</div>
+
+</section>
+
+<section class="alert-card">
+
+<div class="briefing-title">ALERT INTELLIGENCE FEED</div>
+
+<div class="alert-feed" id="alertFeed">
+<div class="alert-row">
+<div>
+<strong>No alerts created</strong><br>
+<small>Create your first smart alert above.</small>
+</div>
+<div class="alert-pill">READY</div>
+</div>
+</div>
+
+</section>
+
+<section class="alert-card">
+
+<div class="briefing-title">ZELLA ALERT BRIEFING</div>
+
+<h2 class="briefing-headline" id="alertBriefTitle">
+Alert system standing by.
+</h2>
+
+<p class="briefing-text" id="alertBriefText">
+Zella is ready to monitor price, confidence, risk and news events.
+</p>
+
+<div class="hero-actions">
+<button class="btn" onclick="speakAlertBriefing()">Voice Briefing</button>
+<a href="scanner.html" class="btn secondary">Open Scanner</a>
+</div>
+
+</section>
+
+<nav class="zella-nav">
+
+<a href="dashboard.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+<span>Home</span>
+</a>
+
+<a href="scanner.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+<span>Scanner</span>
+</a>
+
+<a href="copilot.html" class="nav-item copilot-center">
+<div class="copilot-core">
+<svg viewBox="0 0 24 24" class="copilot-icon">
+<rect x="6" y="8" width="12" height="9" rx="2"/>
+<circle cx="9" cy="12" r="1"/>
+<circle cx="15" cy="12" r="1"/>
+<path d="M12 4V8"/>
+</svg>
+</div>
+<span>Copilot</span>
+</a>
+
+<a href="market.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+<span>Market</span>
+</a>
+
+<a href="watchlist.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+<span>Watchlist</span>
+</a>
+
+<a href="more.html" class="nav-item active">
+<svg viewBox="0 0 24 24" class="nav-icon">
+<circle cx="12" cy="5" r="1.5"/>
+<circle cx="12" cy="12" r="1.5"/>
+<circle cx="12" cy="19" r="1.5"/>
+</svg>
+<span>More</span>
+</a>
+
+</nav>
+
+<script>
 const API_URL = "https://zella-backend.onrender.com";
 
-let sentAlerts =
-  JSON.parse(localStorage.getItem("zellaSentNotifications")) || [];
-
-function updatePermissionStatus(){
-
-  if(!("Notification" in window)){
-    document.getElementById("permissionStatus").textContent = "Unsupported";
-    return;
-  }
-
-  document.getElementById("permissionStatus").textContent =
-    Notification.permission;
-
+function getAlerts(){
+return JSON.parse(localStorage.getItem("zellaAlerts")) || [];
 }
 
-function enableNotifications(){
-
-  if(!("Notification" in window)){
-    alert("Browser notifications are not supported here.");
-    return;
-  }
-
-  Notification.requestPermission().then(permission => {
-    updatePermissionStatus();
-
-    if(permission === "granted"){
-      document.getElementById("notifyStatus").textContent = "Enabled";
-
-      new Notification("Zella Notifications Enabled", {
-        body:"You will receive market alerts when Zella detects strong setups."
-      });
-    }
-  });
-
+function saveAlerts(alerts){
+localStorage.setItem("zellaAlerts",JSON.stringify(alerts));
 }
 
-function sendTestNotification(){
+function createAlert(){
+const alert = {
+asset:document.getElementById("assetInput").value,
+type:document.getElementById("typeInput").value,
+value:document.getElementById("valueInput").value || "Auto",
+delivery:document.getElementById("deliveryInput").value,
+created:new Date().toLocaleString(),
+status:"Active"
+};
 
-  if(!("Notification" in window)){
-    alert("Notifications are not supported.");
-    return;
-  }
+const alerts = getAlerts();
+alerts.unshift(alert);
+saveAlerts(alerts);
 
-  if(Notification.permission !== "granted"){
-    alert("Enable notifications first.");
-    return;
-  }
+document.getElementById("valueInput").value = "";
+renderAlerts();
 
-  new Notification("Zella Test Alert", {
-    body:"This is a test notification from Zella."
-  });
+document.getElementById("alertBriefTitle").textContent =
+`${alert.asset} alert created`;
 
+document.getElementById("alertBriefText").textContent =
+`Zella is now monitoring ${alert.asset} for ${alert.type} with trigger value ${alert.value}. Delivery mode is ${alert.delivery}.`;
 }
 
-function notifyOnce(id,title,message){
-
-  if(sentAlerts.includes(id)){
-    return;
-  }
-
-  sentAlerts.push(id);
-
-  localStorage.setItem(
-    "zellaSentNotifications",
-    JSON.stringify(sentAlerts)
-  );
-
-  if("Notification" in window && Notification.permission === "granted"){
-    new Notification(title, {
-      body:message
-    });
-  }
-
+function clearAlerts(){
+localStorage.removeItem("zellaAlerts");
+renderAlerts();
 }
 
-async function loadNotifications(){
+function renderAlerts(){
+const alerts = getAlerts();
 
-  try{
+document.getElementById("activeAlerts").textContent = alerts.length;
+document.getElementById("triggeredAlerts").textContent =
+alerts.filter(a=>a.status === "Triggered").length;
 
-    const response = await fetch(API_URL + "/scanner");
-    const data = await response.json();
+if(!alerts.length){
+document.getElementById("alertFeed").innerHTML = `
+<div class="alert-row">
+<div>
+<strong>No alerts created</strong><br>
+<small>Create your first smart alert above.</small>
+</div>
+<div class="alert-pill">READY</div>
+</div>
+`;
 
-    const rankings = data.items || [];
+document.getElementById("alertBriefTitle").textContent =
+"Alert system standing by.";
 
-    if(!rankings.length) return;
+document.getElementById("alertBriefText").textContent =
+"Zella is ready to monitor price, confidence, risk and news events.";
 
-    const top = rankings[0];
-
-    const alerts = [];
-
-    rankings.forEach(asset => {
-
-      if(Number(asset.confidence) >= 85){
-        alerts.push({
-          id:`confidence-${asset.asset}`,
-          icon:"🔥",
-          title:"High Confidence Setup",
-          message:`${asset.asset} reached ${asset.confidence}% confidence.`
-        });
-      }
-
-      if(Number(asset.momentumScore) >= 85){
-        alerts.push({
-          id:`momentum-${asset.asset}`,
-          icon:"⚡",
-          title:"Momentum Breakout",
-          message:`${asset.asset} momentum score is ${asset.momentumScore}.`
-        });
-      }
-
-      if(Number(asset.opportunityScore) >= 85){
-        alerts.push({
-          id:`opportunity-${asset.asset}`,
-          icon:"🎯",
-          title:"Opportunity Alert",
-          message:`${asset.asset} shows strong opportunity conditions.`
-        });
-      }
-
-    });
-
-    document.getElementById("activeAlerts").textContent =
-      alerts.length;
-
-    document.getElementById("topSignal").textContent =
-      top.asset;
-
-    document.getElementById("notificationHeadline").textContent =
-      `${alerts.length} notification alert(s) ready`;
-
-    document.getElementById("notificationSummary").textContent =
-      `${top.asset} is currently the top scanner signal. Zella is monitoring confidence, momentum and opportunity conditions.`;
-
-    document.getElementById("notificationFeed").innerHTML =
-      alerts.length
-      ? alerts.map(alert => `
-        <div class="rank-row">
-          <div class="rank-position">${alert.icon}</div>
-          <div class="rank-asset">
-            <strong>${alert.title}</strong><br>
-            ${alert.message}
-          </div>
-          <div class="rank-score">LIVE</div>
-        </div>
-      `).join("")
-      : `
-        <div class="rank-row">
-          <div class="rank-position">🔔</div>
-          <div class="rank-asset">No major notification alerts right now</div>
-          <div class="rank-score">Safe</div>
-        </div>
-      `;
-
-    alerts.forEach(alert => {
-      notifyOnce(alert.id, alert.title, alert.message);
-    });
-
-  }
-
-  catch(error){
-    console.error(error);
-
-    document.getElementById("notificationHeadline").textContent =
-      "Notification engine offline";
-  }
-
+return;
 }
 
-updatePermissionStatus();
+document.getElementById("alertFeed").innerHTML =
+alerts.map(a=>`
+<div class="alert-row">
+<div>
+<strong>${a.asset} • ${a.type}</strong><br>
+<small>Trigger: ${a.value} • Delivery: ${a.delivery}<br>${a.created}</small>
+</div>
+<div class="alert-pill">${a.status}</div>
+</div>
+`).join("");
+}
 
-loadNotifications();
+async function scanAlerts(){
+try{
+const res = await fetch(API_URL + "/scanner");
+const data = await res.json();
+const items = data.items || [];
 
-setInterval(loadNotifications, 30000);
+let alerts = getAlerts();
+let triggered = false;
 
+alerts = alerts.map(alert=>{
+const asset = items.find(i=>i.asset === alert.asset);
+if(!asset || alert.status === "Triggered") return alert;
+
+const value = Number(alert.value);
+
+if(alert.type === "Confidence Above" && asset.confidence >= value){
+alert.status = "Triggered";
+triggered = true;
+}
+
+if(alert.type === "Risk Above" && asset.riskScore >= value){
+alert.status = "Triggered";
+triggered = true;
+}
+
+return alert;
+});
+
+if(triggered){
+saveAlerts(alerts);
+renderAlerts();
+speak("Zella alert triggered. Check your alert intelligence feed.");
+}
+
+const riskiest = [...items].sort((a,b)=>b.riskScore - a.riskScore)[0];
+document.getElementById("riskPulse").textContent =
+riskiest ? riskiest.asset : "Safe";
+
+}catch(error){
+console.error(error);
+}
+}
+
+function speak(text){
+if(!window.speechSynthesis) return;
+speechSynthesis.cancel();
+const utterance = new SpeechSynthesisUtterance(text);
+utterance.rate = 1;
+utterance.pitch = 1.05;
+speechSynthesis.speak(utterance);
+}
+
+function speakAlertBriefing(){
+const text =
+document.getElementById("alertBriefTitle").textContent + ". " +
+document.getElementById("alertBriefText").textContent;
+speak(text);
+}
+
+renderAlerts();
+scanAlerts();
+setInterval(scanAlerts,30000);
 </script>
 
+</main>
 </body>
 </html>

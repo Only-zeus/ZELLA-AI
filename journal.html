@@ -1,343 +1,557 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Portfolio Tracker V5</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Journal V11 Ultra</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<style>
+*{box-sizing:border-box}
+body{overflow-x:hidden}
+
+.journal-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 10%,rgba(56,189,248,.25),transparent 30%),
+    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    #020617;
+}
+
+.journal-grid-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:journalGrid 18s linear infinite;
+}
+
+@keyframes journalGrid{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+
+.journal-particles{
+  position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+}
+
+.journal-particles span{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:#38bdf8;box-shadow:0 0 18px #38bdf8;opacity:.42;
+  animation:journalFloat 12s linear infinite;
+}
+
+.journal-particles span:nth-child(1){left:7%;animation-delay:0s}
+.journal-particles span:nth-child(2){left:24%;animation-delay:2s}
+.journal-particles span:nth-child(3){left:41%;animation-delay:5s}
+.journal-particles span:nth-child(4){left:58%;animation-delay:1s}
+.journal-particles span:nth-child(5){left:76%;animation-delay:4s}
+.journal-particles span:nth-child(6){left:91%;animation-delay:3s}
+
+@keyframes journalFloat{
+  from{transform:translateY(110vh) scale(.6)}
+  to{transform:translateY(-140px) scale(1.4)}
+}
+
+.container,.navbar{position:relative;z-index:3}
+
+.journal-hero{
+  position:relative;overflow:hidden;padding:22px;border-radius:34px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:inset 0 0 34px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.30);
+}
+
+.journal-hero::after{
+  content:"";position:absolute;width:170px;height:170px;right:-65px;bottom:-65px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
+}
+
+.journal-core-wrap{
+  width:260px;height:260px;margin:8px auto 22px;position:relative;
+}
+
+.journal-ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(56,189,248,.38);
+  animation:spin 12s linear infinite;
+}
+
+.journal-ring.r1{inset:12px}
+.journal-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s}
+.journal-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s}
+.journal-ring.r4{inset:64px;border-color:rgba(56,189,248,.18);animation-duration:28s}
+
+.journal-ring::before{
+  content:"";width:11px;height:11px;border-radius:50%;
+  position:absolute;top:18px;left:50%;
+  background:#38bdf8;box-shadow:0 0 24px #38bdf8;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.journal-core{
+  position:absolute;inset:68px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
+  box-shadow:0 0 44px rgba(56,189,248,.92),0 0 105px rgba(37,99,235,.46);
+  animation:journalPulse 4s ease-in-out infinite;
+}
+
+.journal-core svg{
+  width:72px;height:72px;fill:none;stroke:#020617;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+
+@keyframes journalPulse{
+  0%,100%{transform:scale(1);filter:brightness(1)}
+  50%{transform:scale(1.13);filter:brightness(1.35)}
+}
+
+.journal-sweep{
+  position:absolute;left:0;right:0;top:50%;height:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 26px rgba(56,189,248,.85);
+  animation:journalSweep 3s ease-in-out infinite;
+}
+
+@keyframes journalSweep{
+  0%,100%{transform:translateY(-82px);opacity:.2}
+  50%{transform:translateY(82px);opacity:1}
+}
+
+.journal-card{
+  position:relative;overflow:hidden;padding:18px;border-radius:28px;
+  background:rgba(15,23,42,.84);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:inset 0 0 28px rgba(56,189,248,.035),0 18px 48px rgba(0,0,0,.26);
+  transition:.28s ease;
+}
+
+.journal-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(56,189,248,.34);
+  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+
+.journal-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px;
+}
+
+.journal-panel{
+  padding:18px;border-radius:26px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+}
+
+.journal-title{
+  font-size:15px;font-weight:950;color:#e5eefb;
+}
+
+.journal-sub{
+  color:#94a3b8;font-size:12px;line-height:1.7;margin-top:8px;
+}
+
+.journal-input,.journal-select,.journal-textarea{
+  width:100%;
+  margin-top:10px;
+  padding:15px;
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.14);
+  background:rgba(2,6,23,.55);
+  color:#e5eefb;
+  outline:none;
+}
+
+.journal-textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.journal-input:focus,
+.journal-select:focus,
+.journal-textarea:focus{
+  border-color:rgba(56,189,248,.45);
+  box-shadow:0 0 22px rgba(56,189,248,.12);
+}
+
+.emotion-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:12px;
+}
+
+.emotion-btn{
+  border:none;
+  padding:13px 10px;
+  border-radius:18px;
+  background:rgba(15,23,42,.86);
+  color:#94a3b8;
+  font-weight:950;
+  border:1px solid rgba(148,163,184,.14);
+}
+
+.emotion-btn.active{
+  color:#020617;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  box-shadow:0 0 25px rgba(56,189,248,.34);
+}
+
+.trade-entry{
+  padding:18px;border-radius:26px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+  margin-top:12px;
+}
+
+.trade-entry strong{color:#e5eefb}
+.trade-entry small{color:#94a3b8;line-height:1.7}
+
+@media(max-width:430px){
+  .journal-grid{grid-template-columns:1fr}
+  .emotion-grid{grid-template-columns:1fr}
+}
+</style>
+
+<div class="journal-bg"></div>
+<div class="journal-grid-bg"></div>
+
+<div class="journal-particles">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+</div>
+
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">W</div>
+    <div class="avatar-dot">JR</div>
   </div>
 </nav>
 
 <main class="container">
 
-<section class="command-card">
+<section class="journal-hero">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA WALLET</div>
-      <h1 class="command-title">Portfolio<br>Intelligence.</h1>
+  <div class="journal-core-wrap">
+    <div class="journal-ring r1"></div>
+    <div class="journal-ring r2"></div>
+    <div class="journal-ring r3"></div>
+    <div class="journal-ring r4"></div>
+
+    <div class="journal-core">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 3H18V21H6Z"/>
+        <path d="M9 7H15"/>
+        <path d="M9 11H15"/>
+        <path d="M9 15H12"/>
+        <path d="M15 17L19 13"/>
+      </svg>
     </div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">LIVE</span>
-    </div>
+    <div class="journal-sweep"></div>
   </div>
 
+  <div class="eyebrow">ZELLA JOURNAL V11 ULTRA</div>
+
+  <h1 class="command-title">
+    Trading<br>
+    Memory.
+  </h1>
+
   <p class="briefing-text">
-    Track value, PnL, growth history, diversification, best performers and portfolio risk intelligence.
+    Log trades, track behavior, record emotions, review mistakes,
+    calculate performance and let Zella turn experience into intelligence.
   </p>
+
+  <div class="command-status-pill">
+    Journal intelligence online
+  </div>
 
 </section>
 
 <section class="mini-grid">
 
-  <div class="mini-box">
-    <div class="mini-label">Portfolio Value</div>
-    <div class="mini-value green" id="portfolioValue">$0</div>
+  <div class="mini-box journal-card">
+    <div class="mini-label">Total Trades</div>
+    <div class="mini-value green" id="totalTrades">0</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Total PnL</div>
-    <div class="mini-value blue" id="portfolioPnl">$0</div>
+  <div class="mini-box journal-card">
+    <div class="mini-label">Win Rate</div>
+    <div class="mini-value blue" id="winRate">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">PnL %</div>
-    <div class="mini-value orange" id="portfolioPnlPercent">0%</div>
+  <div class="mini-box journal-card">
+    <div class="mini-label">Net PnL</div>
+    <div class="mini-value orange" id="netPnl">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Diversification</div>
-    <div class="mini-value green" id="diversificationScore">--</div>
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">ADD / UPDATE HOLDING</div>
-
-  <div class="chat-input-bar">
-    <input id="coinSymbol" placeholder="Coin e.g BTC" />
-    <input id="coinAmount" placeholder="Amount e.g 0.05" />
-    <input id="coinEntry" placeholder="Entry price e.g 65000" />
-    <button type="button" onclick="addOrUpdateHolding()">Save</button>
+  <div class="mini-box journal-card">
+    <div class="mini-label">Discipline</div>
+    <div class="mini-value blue" id="disciplineScore">--</div>
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">PORTFOLIO GROWTH</div>
+  <div class="briefing-title">NEW TRADE ENTRY</div>
 
-  <div id="growthChart" style="height:180px;display:flex;align-items:end;gap:8px;">
-    <div class="rank-row">
-      <div class="rank-position">📊</div>
-      <div class="rank-asset">Growth chart appears after holdings</div>
-      <div class="rank-score">--</div>
+  <div class="journal-grid">
+
+    <div class="journal-panel">
+      <div class="journal-title">Asset</div>
+      <div class="journal-sub">Choose traded asset.</div>
+      <select class="journal-select" id="assetInput">
+        <option>BTC</option>
+        <option>ETH</option>
+        <option>SOL</option>
+        <option>BNB</option>
+        <option>XRP</option>
+      </select>
     </div>
-  </div>
 
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">MY HOLDINGS</div>
-
-  <div id="holdingsList">
-    <div class="rank-row">
-      <div class="rank-position">₿</div>
-      <div class="rank-asset">No holdings added yet</div>
-      <div class="rank-score">--</div>
+    <div class="journal-panel">
+      <div class="journal-title">Trade Result</div>
+      <div class="journal-sub">Record outcome.</div>
+      <select class="journal-select" id="resultInput">
+        <option>Win</option>
+        <option>Loss</option>
+        <option>Breakeven</option>
+      </select>
     </div>
+
+    <div class="journal-panel">
+      <div class="journal-title">PnL</div>
+      <div class="journal-sub">Enter profit or loss amount.</div>
+      <input class="journal-input" id="pnlInput" type="number" placeholder="Example: 25">
+    </div>
+
+    <div class="journal-panel">
+      <div class="journal-title">Setup Quality</div>
+      <div class="journal-sub">Rate the setup.</div>
+      <select class="journal-select" id="qualityInput">
+        <option>Excellent</option>
+        <option>Good</option>
+        <option>Average</option>
+        <option>Poor</option>
+      </select>
+    </div>
+
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">PORTFOLIO INTELLIGENCE</div>
+  <div class="briefing-title">TRADER PSYCHOLOGY</div>
 
-  <h2 class="briefing-headline" id="portfolioHeadline">
-    No portfolio data yet.
+  <div class="emotion-grid">
+    <button class="emotion-btn active" onclick="setEmotion('Calm',this)">Calm</button>
+    <button class="emotion-btn" onclick="setEmotion('Greedy',this)">Greedy</button>
+    <button class="emotion-btn" onclick="setEmotion('Fearful',this)">Fearful</button>
+  </div>
+
+  <textarea class="journal-textarea" id="noteInput" placeholder="What happened in this trade? What did you learn?"></textarea>
+
+  <div class="hero-actions">
+    <button class="btn" onclick="saveTrade()">Save Trade</button>
+    <button class="btn secondary" onclick="clearJournal()">Clear Journal</button>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ZELLA JOURNAL REVIEW</div>
+
+  <h2 class="briefing-headline" id="journalReviewTitle">
+    No trades logged yet.
   </h2>
 
-  <p class="briefing-text" id="portfolioSummary">
-    Add holdings and Zella will analyze growth, diversification, PnL and risk.
+  <p class="briefing-text" id="journalReviewText">
+    Save your first trade to unlock journal intelligence.
   </p>
 
 </section>
 
-</main>
+<section class="briefing-card">
 
-<div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html">Copilot</a>
-  <a href="market.html">Market</a>
-  <a href="journal.html" class="active">Wallet</a>
-</div>
+  <div class="briefing-title">TRADE MEMORY LOG</div>
+
+  <div id="tradeLog">
+    <div class="trade-entry">
+      <strong>Journal Empty</strong><br>
+      <small>Your saved trades will appear here.</small>
+    </div>
+  </div>
+
+</section>
+
+<nav class="zella-nav">
+
+  <a href="dashboard.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+    <span>Home</span>
+  </a>
+
+  <a href="scanner.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+    <span>Scanner</span>
+  </a>
+
+  <a href="copilot.html" class="nav-item copilot-center">
+    <div class="copilot-core">
+      <svg viewBox="0 0 24 24" class="copilot-icon">
+        <rect x="6" y="8" width="12" height="9" rx="2"/>
+        <circle cx="9" cy="12" r="1"/>
+        <circle cx="15" cy="12" r="1"/>
+        <path d="M12 4V8"/>
+      </svg>
+    </div>
+    <span>Copilot</span>
+  </a>
+
+  <a href="market.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+    <span>Market</span>
+  </a>
+
+  <a href="watchlist.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+    <span>Watchlist</span>
+  </a>
+
+  <a href="more.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <circle cx="12" cy="5" r="1.5"/>
+      <circle cx="12" cy="12" r="1.5"/>
+      <circle cx="12" cy="19" r="1.5"/>
+    </svg>
+    <span>More</span>
+  </a>
+
+</nav>
 
 <script>
+let selectedEmotion = "Calm";
 
-const API_URL = "https://zella-backend.onrender.com";
-
-let holdings =
-  JSON.parse(localStorage.getItem("zellaWalletV5")) || [];
-
-let growthHistory =
-  JSON.parse(localStorage.getItem("zellaGrowthV5")) || [];
-
-function saveData(){
-  localStorage.setItem("zellaWalletV5", JSON.stringify(holdings));
-  localStorage.setItem("zellaGrowthV5", JSON.stringify(growthHistory));
+function getTrades(){
+  return JSON.parse(localStorage.getItem("zellaJournalTrades")) || [];
 }
 
-function addOrUpdateHolding(){
+function setTrades(trades){
+  localStorage.setItem("zellaJournalTrades",JSON.stringify(trades));
+}
 
-  const symbol = document.getElementById("coinSymbol").value.trim().toUpperCase();
-  const amount = parseFloat(document.getElementById("coinAmount").value);
-  const entry = parseFloat(document.getElementById("coinEntry").value);
+function setEmotion(emotion,btn){
+  selectedEmotion = emotion;
 
-  if(!symbol || isNaN(amount) || isNaN(entry) || amount <= 0 || entry <= 0){
-    alert("Please enter valid values.");
+  document.querySelectorAll(".emotion-btn").forEach(button=>{
+    button.classList.remove("active");
+  });
+
+  btn.classList.add("active");
+}
+
+function saveTrade(){
+  const trade = {
+    asset:document.getElementById("assetInput").value,
+    result:document.getElementById("resultInput").value,
+    pnl:Number(document.getElementById("pnlInput").value || 0),
+    quality:document.getElementById("qualityInput").value,
+    emotion:selectedEmotion,
+    note:document.getElementById("noteInput").value.trim(),
+    date:new Date().toLocaleString()
+  };
+
+  const trades = getTrades();
+  trades.unshift(trade);
+  setTrades(trades);
+
+  document.getElementById("pnlInput").value = "";
+  document.getElementById("noteInput").value = "";
+
+  renderJournal();
+}
+
+function clearJournal(){
+  localStorage.removeItem("zellaJournalTrades");
+  renderJournal();
+}
+
+function renderJournal(){
+  const trades = getTrades();
+
+  const total = trades.length;
+  const wins = trades.filter(t=>t.result === "Win").length;
+  const losses = trades.filter(t=>t.result === "Loss").length;
+  const pnl = trades.reduce((sum,t)=>sum + Number(t.pnl || 0),0);
+
+  const winRate = total ? Math.round((wins / total) * 100) : 0;
+
+  const discipline =
+    total
+      ? Math.max(0,Math.min(100,Math.round(
+          80 - losses * 4 + wins * 2
+        )))
+      : 0;
+
+  document.getElementById("totalTrades").textContent = total;
+  document.getElementById("winRate").textContent = total ? winRate + "%" : "--";
+  document.getElementById("netPnl").textContent = "$" + pnl.toFixed(2);
+  document.getElementById("disciplineScore").textContent = total ? discipline + "%" : "--";
+
+  if(!total){
+    document.getElementById("journalReviewTitle").textContent =
+      "No trades logged yet.";
+
+    document.getElementById("journalReviewText").textContent =
+      "Save your first trade to unlock journal intelligence.";
+
+    document.getElementById("tradeLog").innerHTML = `
+      <div class="trade-entry">
+        <strong>Journal Empty</strong><br>
+        <small>Your saved trades will appear here.</small>
+      </div>
+    `;
+
     return;
   }
 
-  const existing = holdings.findIndex(item => item.symbol === symbol);
+  document.getElementById("journalReviewTitle").textContent =
+    `Journal intelligence: ${winRate}% win rate`;
 
-  if(existing >= 0){
-    holdings[existing] = { symbol, amount, entry };
-  }else{
-    holdings.push({ symbol, amount, entry });
-  }
+  document.getElementById("journalReviewText").textContent =
+    `You have logged ${total} trades with total PnL of $${pnl.toFixed(2)}. Zella detects your current discipline score at ${discipline}%. Keep tracking emotions and setup quality to improve decision-making.`;
 
-  saveData();
-
-  document.getElementById("coinSymbol").value = "";
-  document.getElementById("coinAmount").value = "";
-  document.getElementById("coinEntry").value = "";
-
-  loadPortfolio();
+  document.getElementById("tradeLog").innerHTML =
+    trades.map(t=>`
+      <div class="trade-entry">
+        <strong>${t.asset} • ${t.result} • $${Number(t.pnl).toFixed(2)}</strong><br>
+        <small>
+          Quality: ${t.quality}<br>
+          Emotion: ${t.emotion}<br>
+          Note: ${t.note || "No note added."}<br>
+          ${t.date}
+        </small>
+      </div>
+    `).join("");
 }
 
-function deleteHolding(index){
-  holdings.splice(index,1);
-  saveData();
-  loadPortfolio();
-}
-
-async function loadPortfolio(){
-
-  try{
-
-    const response = await fetch(API_URL + "/scanner");
-    const data = await response.json();
-    const assets = data.items || [];
-
-    let portfolioValue = 0;
-    let portfolioCost = 0;
-    let totalPnl = 0;
-
-    let best = { symbol:"--", pnl:-Infinity };
-    let worst = { symbol:"--", pnl:Infinity };
-
-    const values = [];
-
-    const holdingsHtml = holdings.map((holding,index)=>{
-
-      const asset = assets.find(
-        x => String(x.asset).toUpperCase() === String(holding.symbol).toUpperCase()
-      );
-
-      const currentPrice = asset ? Number(asset.price) : 0;
-      const value = holding.amount * currentPrice;
-      const cost = holding.amount * holding.entry;
-      const pnl = value - cost;
-
-      portfolioValue += value;
-      portfolioCost += cost;
-      totalPnl += pnl;
-
-      if(pnl > best.pnl) best = { symbol:holding.symbol, pnl };
-      if(pnl < worst.pnl) worst = { symbol:holding.symbol, pnl };
-
-      values.push({ symbol:holding.symbol, value });
-
-      return `
-        <div class="rank-row">
-          <div class="rank-position">${holding.symbol}</div>
-
-          <div class="rank-asset">
-            Amount: ${holding.amount}<br>
-            Entry: $${holding.entry}<br>
-            Current: $${currentPrice.toLocaleString()}
-          </div>
-
-          <div class="rank-score">
-            $${value.toLocaleString()}<br>
-            ${pnl >= 0 ? "+" : "-"}$${Math.abs(pnl).toLocaleString()}
-            <br><br>
-            <button onclick="deleteHolding(${index})" style="border:none;border-radius:10px;padding:6px 10px;cursor:pointer;">
-              ✕
-            </button>
-          </div>
-        </div>
-      `;
-
-    }).join("");
-
-    const pnlPercent =
-      portfolioCost > 0
-        ? ((totalPnl / portfolioCost) * 100).toFixed(2)
-        : 0;
-
-    let diversification = "Low";
-
-    if(values.length >= 5){
-      diversification = "Strong";
-    }else if(values.length >= 3){
-      diversification = "Medium";
-    }
-
-    growthHistory.push({
-      value: Number(portfolioValue.toFixed(2)),
-      date: new Date().toLocaleTimeString()
-    });
-
-    if(growthHistory.length > 8){
-      growthHistory.shift();
-    }
-
-    saveData();
-
-    const maxValue =
-      Math.max(...growthHistory.map(item => item.value), 1);
-
-    document.getElementById("growthChart").innerHTML =
-      growthHistory.length
-        ? growthHistory.map(item=>{
-
-          const height =
-            maxValue > 0
-              ? Math.max(12, (item.value / maxValue) * 160)
-              : 12;
-
-          return `
-            <div style="flex:1;text-align:center;">
-              <div style="
-                height:${height}px;
-                border-radius:999px 999px 8px 8px;
-                background:linear-gradient(180deg,#1ec8ff,#3478ff);
-                box-shadow:0 0 20px rgba(30,200,255,.25);
-              "></div>
-            </div>
-          `;
-
-        }).join("")
-        : `
-          <div class="rank-row">
-            <div class="rank-position">📊</div>
-            <div class="rank-asset">Growth chart appears after holdings</div>
-            <div class="rank-score">--</div>
-          </div>
-        `;
-
-    document.getElementById("portfolioValue").textContent =
-      "$" + portfolioValue.toLocaleString();
-
-    document.getElementById("portfolioPnl").textContent =
-      (totalPnl >= 0 ? "+" : "-") +
-      "$" +
-      Math.abs(totalPnl).toLocaleString();
-
-    document.getElementById("portfolioPnlPercent").textContent =
-      pnlPercent + "%";
-
-    document.getElementById("diversificationScore").textContent =
-      diversification;
-
-    document.getElementById("holdingsList").innerHTML =
-      holdingsHtml || `
-        <div class="rank-row">
-          <div class="rank-position">₿</div>
-          <div class="rank-asset">No holdings added yet</div>
-          <div class="rank-score">--</div>
-        </div>
-      `;
-
-    document.getElementById("portfolioHeadline").textContent =
-      portfolioValue > 0
-        ? `Portfolio value: $${portfolioValue.toLocaleString()}`
-        : "No portfolio data yet.";
-
-    document.getElementById("portfolioSummary").textContent =
-      portfolioValue > 0
-        ? `PnL is ${pnlPercent}%. Diversification is ${diversification}. Best performer is ${best.symbol}. Worst performer is ${worst.symbol}. Zella recommends balancing allocation and avoiding overexposure to one asset.`
-        : "Add holdings and Zella will analyze growth, diversification, PnL and risk.";
-
-  }
-
-  catch(error){
-    console.error(error);
-  }
-
-}
-
-loadPortfolio();
-
-setInterval(loadPortfolio, 30000);
-
+renderJournal();
 </script>
 
+</main>
 </body>
 </html>

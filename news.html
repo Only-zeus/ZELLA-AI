@@ -3,310 +3,486 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella News Engine</title>
+<title>Zella News Intelligence V10</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="pro-particles">
-  <span>📰</span>
-  <span>NEWS</span>
-  <span>BTC</span>
-  <span>ETH</span>
-  <span>AI</span>
-  <span>ZELLA</span>
-</div>
-
 <style>
-.pro-particles{
+.news-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 10%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 18%,rgba(37,99,235,.20),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.13),transparent 34%),
+    #020617;
+}
+
+.news-grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:newsGridMove 18s linear infinite;
+}
+
+@keyframes newsGridMove{
+  from{background-position:0 0;}
+  to{background-position:0 420px;}
+}
+
+.news-particles{
   position:fixed;
   inset:0;
   overflow:hidden;
   pointer-events:none;
-  z-index:0;
+  z-index:1;
 }
 
-.pro-particles span{
+.news-particles span{
   position:absolute;
-  top:-100px;
-  opacity:.10;
-  font-size:28px;
-  font-weight:900;
-  color:#38bdf8;
-  animation:newsRain 14s linear infinite;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
+  opacity:.42;
+  animation:newsFloat 12s linear infinite;
 }
 
-.pro-particles span:nth-child(1){left:8%;}
-.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
-.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
-.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
-.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
-.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
+.news-particles span:nth-child(1){left:7%;animation-delay:0s;}
+.news-particles span:nth-child(2){left:24%;animation-delay:2s;}
+.news-particles span:nth-child(3){left:41%;animation-delay:5s;}
+.news-particles span:nth-child(4){left:58%;animation-delay:1s;}
+.news-particles span:nth-child(5){left:76%;animation-delay:4s;}
+.news-particles span:nth-child(6){left:91%;animation-delay:3s;}
 
-@keyframes newsRain{
-  from{transform:translateY(-140px) rotate(0deg);}
-  to{transform:translateY(120vh) rotate(360deg);}
+@keyframes newsFloat{
+  from{transform:translateY(110vh) scale(.6);}
+  to{transform:translateY(-140px) scale(1.4);}
 }
 
-.container,
-.navbar{
+.container,.navbar{
   position:relative;
-  z-index:2;
+  z-index:3;
 }
 
-.news-img{
-  width:100%;
-  height:170px;
-  object-fit:cover;
-  border-radius:22px;
-  margin-bottom:14px;
+.news-core-wrap{
+  width:210px;
+  height:210px;
+  margin:8px auto 22px;
+  position:relative;
+}
+
+.news-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.38);
+  animation:spin 12s linear infinite;
+}
+
+.news-ring.r1{inset:12px;}
+.news-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s;}
+.news-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s;}
+
+.news-ring::before{
+  content:"";
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  position:absolute;
+  top:18px;
+  left:50%;
+  background:#38bdf8;
+  box-shadow:0 0 24px #38bdf8;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+.news-core{
+  position:absolute;
+  inset:54px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
+  box-shadow:
+    0 0 42px rgba(56,189,248,.90),
+    0 0 92px rgba(37,99,235,.44);
+  animation:newsPulse 4s ease-in-out infinite;
+}
+
+.news-core svg{
+  width:54px;
+  height:54px;
+  fill:none;
+  stroke:#020617;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+@keyframes newsPulse{
+  0%,100%{transform:scale(1);filter:brightness(1);}
+  50%{transform:scale(1.12);filter:brightness(1.35);}
+}
+
+.news-scan{
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 26px rgba(56,189,248,.85);
+  animation:newsScan 3s ease-in-out infinite;
+}
+
+@keyframes newsScan{
+  0%,100%{transform:translateY(-70px);opacity:.2;}
+  50%{transform:translateY(70px);opacity:1;}
+}
+
+.news-hero{
+  position:relative;
+  overflow:hidden;
+  padding:22px;
+  border-radius:34px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:
+    inset 0 0 34px rgba(56,189,248,.035),
+    0 22px 65px rgba(0,0,0,.30);
+}
+
+.news-hero::after{
+  content:"";
+  position:absolute;
+  width:150px;
+  height:150px;
+  right:-60px;
+  bottom:-60px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
+}
+
+.news-card{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  padding:18px;
+  border-radius:28px;
+  background:rgba(15,23,42,.84);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:
+    inset 0 0 28px rgba(56,189,248,.035),
+    0 18px 48px rgba(0,0,0,.26);
+  transition:.28s ease;
+}
+
+.news-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(56,189,248,.34);
+  box-shadow:
+    0 0 34px rgba(56,189,248,.15),
+    0 20px 54px rgba(0,0,0,.35);
+}
+
+.news-source{
+  display:inline-flex;
+  padding:7px 10px;
+  border-radius:999px;
+  background:rgba(56,189,248,.12);
+  color:#38bdf8;
+  font-size:11px;
+  font-weight:950;
+  margin-bottom:10px;
+}
+
+.news-title{
+  font-size:16px;
+  font-weight:950;
+  color:#e5eefb;
+  line-height:1.4;
+}
+
+.news-summary{
+  margin-top:8px;
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.news-meta{
+  margin-top:12px;
+  color:#64748b;
+  font-size:12px;
+}
+
+.news-list{
+  display:grid;
+  gap:14px;
+  margin-top:18px;
 }
 </style>
+
+<div class="news-bg"></div>
+<div class="news-grid-bg"></div>
+
+<div class="news-particles">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+</div>
 
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">📰</div>
+    <div class="avatar-dot">NW</div>
   </div>
 </nav>
 
 <main class="container">
 
-<section class="command-card">
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA NEWS ENGINE</div>
-      <h1 class="command-title">Crypto<br>News.</h1>
+<section class="news-hero">
+
+  <div class="news-core-wrap">
+    <div class="news-ring r1"></div>
+    <div class="news-ring r2"></div>
+    <div class="news-ring r3"></div>
+
+    <div class="news-core">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 5H18V19H4Z"/>
+        <path d="M18 8H21V18C21 18.6 20.6 19 20 19H18"/>
+        <path d="M7 9H15"/>
+        <path d="M7 13H15"/>
+        <path d="M7 16H12"/>
+      </svg>
     </div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">LIVE RSS</span>
-    </div>
+    <div class="news-scan"></div>
   </div>
 
+  <div class="eyebrow">ZELLA NEWS INTELLIGENCE</div>
+
+  <h1 class="command-title">
+    Market<br>
+    Headlines.
+  </h1>
+
   <p class="briefing-text">
-    Track real-time crypto news, sentiment scores, source links,
-    article images and market-impact headlines.
+    Zella tracks live crypto headlines, market-moving updates,
+    source signals and news pulse intelligence to help traders stay aware.
   </p>
+
 </section>
 
 <section class="mini-grid">
 
   <div class="mini-box">
-    <div class="mini-label">Articles</div>
-    <div class="mini-value blue" id="newsCount">0</div>
+    <div class="mini-label">News Engine</div>
+    <div class="mini-value green">Live</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Sentiment</div>
-    <div class="mini-value green" id="newsSentiment">--</div>
+    <div class="mini-label">Source</div>
+    <div class="mini-value blue" id="newsSource">--</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Top Source</div>
-    <div class="mini-value orange" id="topSource">--</div>
+    <div class="mini-label">Headlines</div>
+    <div class="mini-value orange" id="newsCount">--</div>
   </div>
 
   <div class="mini-box">
-    <div class="mini-label">Status</div>
-    <div class="mini-value green" id="newsStatus">Loading</div>
+    <div class="mini-label">Pulse</div>
+    <div class="mini-value blue" id="newsPulse">Scanning</div>
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    AI NEWS SUMMARY
-  </div>
+  <div class="briefing-title">BREAKING NEWS</div>
 
-  <h2 class="briefing-headline" id="newsHeadline">
-    Loading crypto news...
+  <h2 class="briefing-headline" id="breakingTitle">
+    Loading latest headline...
   </h2>
 
-  <p class="briefing-text" id="newsSummary">
-    Zella is reading real-time crypto headlines.
+  <p class="briefing-text" id="breakingSummary">
+    Zella is scanning live crypto news.
   </p>
+
+  <div class="hero-actions">
+    <a href="copilot.html" class="btn">Ask Zella</a>
+    <button class="btn secondary" onclick="loadNews()">Refresh</button>
+  </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    LIVE CRYPTO NEWS FEED
-  </div>
+  <div class="briefing-title">TOP HEADLINES</div>
 
-  <div id="newsFeed">
-
-    <div class="rank-row">
-      <div class="rank-position">📰</div>
-      <div class="rank-asset">
-        Loading news feed...
-      </div>
-      <div class="rank-score">--</div>
+  <div class="news-list" id="newsList">
+    <div class="news-card">
+      <div class="news-source">Loading</div>
+      <div class="news-title">Fetching live headlines...</div>
+      <div class="news-summary">Please wait while Zella connects to the news engine.</div>
     </div>
-
   </div>
 
 </section>
 
-</main>
+<nav class="zella-nav">
 
-<div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html">Copilot</a>
-  <a href="market.html">Market</a>
-  <a href="watchlist.html">Watchlist</a>
-  <a href="more.html">More</a>
-</div>
+  <a href="dashboard.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+    <span>Home</span>
+  </a>
+
+  <a href="scanner.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+    <span>Scanner</span>
+  </a>
+
+  <a href="copilot.html" class="nav-item copilot-center">
+    <div class="copilot-core">
+      <svg viewBox="0 0 24 24" class="copilot-icon">
+        <rect x="6" y="8" width="12" height="9" rx="2"/>
+        <circle cx="9" cy="12" r="1"/>
+        <circle cx="15" cy="12" r="1"/>
+        <path d="M12 4V8"/>
+      </svg>
+    </div>
+    <span>Copilot</span>
+  </a>
+
+  <a href="market.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+    <span>Market</span>
+  </a>
+
+  <a href="watchlist.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+    <span>Watchlist</span>
+  </a>
+
+  <a href="more.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <circle cx="12" cy="5" r="1.5"/>
+      <circle cx="12" cy="12" r="1.5"/>
+      <circle cx="12" cy="19" r="1.5"/>
+    </svg>
+    <span>More</span>
+  </a>
+
+</nav>
 
 <script>
+const API_URL = "https://zella-backend.onrender.com";
 
-const NEWS_API =
-"https://zella-backend.onrender.com/news";
+function cleanText(text = ""){
+  return String(text).replace(/<[^>]*>/g,"").slice(0,180);
+}
+
+function timeAgo(dateText){
+  const date = new Date(dateText);
+  if(isNaN(date.getTime())) return "Recent";
+
+  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+  if(seconds < 60) return "Just now";
+
+  const minutes = Math.floor(seconds / 60);
+  if(minutes < 60) return `${minutes}m ago`;
+
+  const hours = Math.floor(minutes / 60);
+  if(hours < 24) return `${hours}h ago`;
+
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
+
+function renderNews(items){
+  const list = document.getElementById("newsList");
+
+  if(!items.length){
+    list.innerHTML = `
+      <div class="news-card">
+        <div class="news-source">Offline</div>
+        <div class="news-title">No headlines available</div>
+        <div class="news-summary">Zella could not load live crypto news right now.</div>
+      </div>
+    `;
+    return;
+  }
+
+  const first = items[0];
+
+  document.getElementById("breakingTitle").textContent =
+    first.title || "Latest crypto headline";
+
+  document.getElementById("breakingSummary").textContent =
+    first.summary || cleanText(first.description) || "Open the article to read more.";
+
+  document.getElementById("newsCount").textContent = items.length;
+  document.getElementById("newsSource").textContent = first.source || "Live";
+  document.getElementById("newsPulse").textContent = "Active";
+
+  list.innerHTML = items.map(item => `
+    <a class="news-card" href="${item.link || item.url || "#"}" target="_blank">
+      <div class="news-source">${item.source || "Crypto News"}</div>
+      <div class="news-title">${item.title || "Untitled headline"}</div>
+      <div class="news-summary">
+        ${item.summary || cleanText(item.description) || "Tap to read the full article."}
+      </div>
+      <div class="news-meta">
+        ${timeAgo(item.published || item.publishedAt)}
+      </div>
+    </a>
+  `).join("");
+}
 
 async function loadNews(){
-
   try{
+    document.getElementById("newsPulse").textContent = "Scanning";
 
-    const response =
-    await fetch(NEWS_API);
+    const res = await fetch(API_URL + "/news");
+    const data = await res.json();
 
-    const data =
-    await response.json();
+    const items = data.items || [];
+    renderNews(items);
 
-    const news =
-    data.news || [];
-
-    document.getElementById(
-      "newsCount"
-    ).textContent = news.length;
-
-    document.getElementById(
-      "newsStatus"
-    ).textContent = "LIVE";
-
-    if(news.length > 0){
-
-      document.getElementById(
-        "newsHeadline"
-      ).textContent =
-      news[0].title;
-
-      document.getElementById(
-        "newsSummary"
-      ).textContent =
-      news[0].body;
-
-      document.getElementById(
-        "topSource"
-      ).textContent =
-      news[0].source;
-
-      document.getElementById(
-        "newsSentiment"
-      ).textContent =
-      news[0].sentiment;
-    }
-
-    const feed =
-    document.getElementById(
-      "newsFeed"
-    );
-
-    feed.innerHTML = "";
-
-    news.forEach(article => {
-
-      const sentimentColor =
-      article.sentiment === "Bullish"
-      ? "#22c55e"
-      : article.sentiment === "Bearish"
-      ? "#ef4444"
-      : "#f59e0b";
-
-      feed.innerHTML += `
-
-      <div class="briefing-card">
-
-        <img
-          src="${article.image}"
-          class="news-img"
-          onerror="this.style.display='none'"
-        >
-
-        <div class="briefing-title">
-          ${article.source}
-        </div>
-
-        <h3 style="margin-top:10px;">
-          ${article.title}
-        </h3>
-
-        <p class="briefing-text">
-          ${article.body}
-        </p>
-
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          margin-top:15px;
-        ">
-
-          <span style="
-            color:${sentimentColor};
-            font-weight:700;
-          ">
-            ${article.sentiment}
-            (${article.sentimentScore})
-          </span>
-
-          <a
-            href="${article.url}"
-            target="_blank"
-            style="
-              color:#38bdf8;
-              text-decoration:none;
-              font-weight:700;
-            "
-          >
-            Read →
-          </a>
-
-        </div>
-
-      </div>
-
-      `;
-
-    });
-
-  }
-
-  catch(error){
-
-    document.getElementById(
-      "newsStatus"
-    ).textContent = "ERROR";
-
+  }catch(error){
     console.error(error);
 
-  }
+    document.getElementById("newsPulse").textContent = "Offline";
 
+    document.getElementById("breakingTitle").textContent =
+      "Zella could not reach the news engine.";
+
+    document.getElementById("breakingSummary").textContent =
+      "Check your backend /news endpoint and try again.";
+  }
 }
 
 loadNews();
-
-setInterval(
-  loadNews,
-  60000
-);
-
+setInterval(loadNews,60000);
 </script>
 
+</main>
 </body>
 </html>

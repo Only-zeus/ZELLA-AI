@@ -1,427 +1,655 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Cloud Sync V1</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Cloud V11 Ultra</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="pro-particles">
-  <span>☁️</span>
-  <span>SYNC</span>
-  <span>USER</span>
-  <span>DATA</span>
-  <span>🔐</span>
-  <span>ZELLA</span>
-</div>
-
 <style>
-.pro-particles{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:0;
+*{box-sizing:border-box}
+body{overflow-x:hidden}
+
+.cloud-bg{
+position:fixed;inset:0;z-index:0;pointer-events:none;
+background:
+radial-gradient(circle at 20% 15%,rgba(56,189,248,.25),transparent 30%),
+radial-gradient(circle at 80% 15%,rgba(37,99,235,.22),transparent 30%),
+radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+#020617;
 }
 
-.pro-particles span{
-  position:absolute;
-  top:-100px;
-  opacity:.10;
-  font-size:28px;
-  font-weight:900;
-  color:#38bdf8;
-  animation:syncRain 14s linear infinite;
+.cloud-grid{
+position:fixed;inset:0;z-index:0;pointer-events:none;
+background-image:
+linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
+background-size:40px 40px;
+animation:cloudGridMove 18s linear infinite;
 }
 
-.pro-particles span:nth-child(1){left:8%;}
-.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
-.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
-.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
-.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
-.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
-
-@keyframes syncRain{
-  from{transform:translateY(-140px) rotate(0deg);}
-  to{transform:translateY(120vh) rotate(360deg);}
+@keyframes cloudGridMove{
+from{background-position:0 0}
+to{background-position:0 400px}
 }
 
-.container,
-.navbar{
-  position:relative;
-  z-index:2;
+.cloud-particles{
+position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+}
+
+.cloud-particles span{
+position:absolute;width:6px;height:6px;border-radius:50%;
+background:#38bdf8;box-shadow:0 0 20px #38bdf8;
+animation:cloudFloat 12s linear infinite;
+}
+
+.cloud-particles span:nth-child(1){left:8%;animation-delay:0s}
+.cloud-particles span:nth-child(2){left:23%;animation-delay:2s}
+.cloud-particles span:nth-child(3){left:41%;animation-delay:4s}
+.cloud-particles span:nth-child(4){left:59%;animation-delay:1s}
+.cloud-particles span:nth-child(5){left:78%;animation-delay:3s}
+.cloud-particles span:nth-child(6){left:93%;animation-delay:5s}
+
+@keyframes cloudFloat{
+from{transform:translateY(110vh)}
+to{transform:translateY(-100px)}
+}
+
+.container,.navbar{position:relative;z-index:3}
+
+.cloud-hero{
+padding:24px;border-radius:34px;position:relative;overflow:hidden;
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+box-shadow:inset 0 0 30px rgba(56,189,248,.03),0 20px 60px rgba(0,0,0,.35);
+}
+
+.cloud-core-wrap{
+width:285px;height:285px;margin:auto;position:relative;
+}
+
+.cloud-ring{
+position:absolute;border-radius:50%;
+border:1px solid rgba(56,189,248,.35);
+animation:spin 12s linear infinite;
+}
+
+.cloud-ring.r1{inset:0}
+.cloud-ring.r2{inset:25px;animation-duration:18s}
+.cloud-ring.r3{inset:50px;animation-duration:25s}
+.cloud-ring.r4{inset:75px;animation-duration:32s}
+
+.cloud-ring::before{
+content:"";position:absolute;width:10px;height:10px;border-radius:50%;
+background:#38bdf8;left:50%;top:12px;box-shadow:0 0 20px #38bdf8;
+}
+
+@keyframes spin{
+from{transform:rotate(0)}
+to{transform:rotate(360deg)}
+}
+
+.cloud-core{
+position:absolute;inset:95px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 25%,#0f172a 65%);
+box-shadow:0 0 40px rgba(56,189,248,.9),0 0 100px rgba(56,189,248,.35);
+animation:pulseCloud 4s ease-in-out infinite;
+}
+
+@keyframes pulseCloud{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.12)}
+}
+
+.cloud-core svg{
+width:82px;height:82px;stroke:#020617;stroke-width:2;fill:none;
+}
+
+.cloud-card{
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+border-radius:28px;
+padding:18px;
+margin-top:16px;
+box-shadow:0 18px 48px rgba(0,0,0,.25);
+transition:.3s;
+}
+
+.cloud-card:hover{
+transform:translateY(-4px);
+border-color:rgba(56,189,248,.32);
+box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+
+.cloud-panel-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+margin-top:16px;
+}
+
+.cloud-panel{
+padding:18px;
+border-radius:24px;
+background:rgba(255,255,255,.035);
+border:1px solid rgba(255,255,255,.07);
+position:relative;
+overflow:hidden;
+}
+
+.cloud-panel::after{
+content:"";
+position:absolute;
+width:100px;
+height:100px;
+right:-40px;
+bottom:-40px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(56,189,248,.18),transparent 70%);
+}
+
+.cloud-title{
+font-size:16px;
+font-weight:950;
+color:#e5eefb;
+}
+
+.cloud-sub{
+font-size:12px;
+line-height:1.7;
+margin-top:8px;
+color:#94a3b8;
+}
+
+.cloud-pill{
+display:inline-flex;
+padding:8px 11px;
+border-radius:999px;
+font-size:11px;
+font-weight:950;
+margin-top:12px;
+background:rgba(56,189,248,.12);
+color:#38bdf8;
+}
+
+.cloud-bar{
+width:100%;
+height:12px;
+border-radius:999px;
+overflow:hidden;
+background:rgba(255,255,255,.08);
+margin-top:12px;
+}
+
+.cloud-fill{
+height:100%;
+width:0%;
+border-radius:999px;
+background:linear-gradient(90deg,#38bdf8,#22c55e);
+box-shadow:0 0 18px rgba(56,189,248,.45);
+transition:1s ease;
+}
+
+.cloud-input{
+width:100%;
+margin-top:12px;
+padding:15px;
+border-radius:18px;
+background:#0f172a;
+border:1px solid rgba(148,163,184,.12);
+color:#fff;
+outline:none;
+}
+
+.cloud-input:focus{
+border-color:#38bdf8;
+box-shadow:0 0 18px rgba(56,189,248,.18);
+}
+
+@media(max-width:430px){
+.cloud-panel-grid{grid-template-columns:1fr}
 }
 </style>
 
+<div class="cloud-bg"></div>
+<div class="cloud-grid"></div>
+
+<div class="cloud-particles">
+<span></span><span></span><span></span>
+<span></span><span></span><span></span>
+</div>
+
 <nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">☁️</div>
-  </div>
+<div class="nav-inner">
+<div class="logo">ZELLA</div>
+<div class="avatar-dot">CL</div>
+</div>
 </nav>
 
 <main class="container">
 
-<section class="command-card">
+<section class="cloud-hero">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA CLOUD SYNC</div>
-      <h1 class="command-title">Cloud<br>Sync.</h1>
-    </div>
+<div class="cloud-core-wrap">
+<div class="cloud-ring r1"></div>
+<div class="cloud-ring r2"></div>
+<div class="cloud-ring r3"></div>
+<div class="cloud-ring r4"></div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">FIRESTORE</span>
-    </div>
-  </div>
+<div class="cloud-core">
+<svg viewBox="0 0 24 24">
+<path d="M7 18H18C20 18 21 16.5 21 15C21 13.2 19.7 12 18 12C17.5 8.8 15 6 11.5 6C8.7 6 6.4 7.8 5.6 10.3C3.6 10.7 2 12.2 2 14.2C2 16.3 3.7 18 7 18Z"/>
+<path d="M12 10V16"/>
+<path d="M9 13L12 10L15 13"/>
+</svg>
+</div>
+</div>
 
-  <p class="briefing-text">
-    Sync portfolio, settings, trades, AutoTrader data and user profile to Firebase Firestore.
-  </p>
+<div class="eyebrow">ZELLA CLOUD V11 ULTRA</div>
+
+<h1 class="command-title">
+Cloud<br>
+Command.
+</h1>
+
+<p class="briefing-text">
+Real Firebase cloud sync for watchlist, journal, alerts, learning progress,
+portfolio data, settings, restore center and multi-device intelligence.
+</p>
+
+<div class="command-status-pill" id="cloudStatusPill">
+Firebase cloud initializing
+</div>
 
 </section>
 
 <section class="mini-grid">
 
-  <div class="mini-box">
-    <div class="mini-label">User</div>
-    <div class="mini-value blue" id="syncUser">Checking</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Cloud Status</div>
-    <div class="mini-value green" id="cloudStatus">Standby</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Synced Items</div>
-    <div class="mini-value orange" id="syncedItems">0</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Mode</div>
-    <div class="mini-value blue">Secure</div>
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">
-    CLOUD ACTIONS
-  </div>
-
-  <div class="hero-actions">
-    <button class="btn" onclick="syncToCloud()">
-      Sync To Cloud
-    </button>
-
-    <button class="btn secondary" onclick="loadFromCloud()">
-      Load From Cloud
-    </button>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    SYNC MODULES
-  </div>
-
-  <div id="syncModules">
-
-    <div class="rank-row">
-      <div class="rank-position">💰</div>
-      <div class="rank-asset">Portfolio</div>
-      <div class="rank-score">Ready</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">📒</div>
-      <div class="rank-asset">Trade Journal</div>
-      <div class="rank-score">Ready</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">⚙️</div>
-      <div class="rank-asset">Settings</div>
-      <div class="rank-score">Ready</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🤖</div>
-      <div class="rank-asset">AutoTrader</div>
-      <div class="rank-score">Ready</div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">
-    ZELLA CLOUD REVIEW
-  </div>
-
-  <h2 class="briefing-headline" id="syncHeadline">
-    Cloud Sync is standing by.
-  </h2>
-
-  <p class="briefing-text" id="syncSummary">
-    Sign in with Google, then sync your Zella data to Firestore.
-  </p>
-
-</section>
-
-</main>
-
-<div class="bottom-nav">
-  <a href="dashboard.html">Home</a>
-  <a href="scanner.html">Scanner</a>
-  <a href="copilot.html">Copilot</a>
-  <a href="market.html">Market</a>
-  <a href="more.html">More</a>
+<div class="mini-box cloud-card">
+<div class="mini-label">Cloud Status</div>
+<div class="mini-value green" id="cloudStatus">--</div>
 </div>
 
-<script type="module">
+<div class="mini-box cloud-card">
+<div class="mini-label">User</div>
+<div class="mini-value blue" id="cloudUser">Guest</div>
+</div>
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+<div class="mini-box cloud-card">
+<div class="mini-label">Last Backup</div>
+<div class="mini-value orange" id="lastBackup">--</div>
+</div>
+
+<div class="mini-box cloud-card">
+<div class="mini-label">Health</div>
+<div class="mini-value blue" id="cloudHealth">--</div>
+</div>
+
+</section>
+
+<section class="cloud-card">
+
+<div class="briefing-title">CLOUD SIGN IN</div>
+
+<div class="cloud-panel-grid">
+
+<div class="cloud-panel">
+<div class="cloud-title">Email</div>
+<div class="cloud-sub">Use the Firebase account connected to Zella.</div>
+<input class="cloud-input" id="emailInput" type="email" placeholder="Email address">
+</div>
+
+<div class="cloud-panel">
+<div class="cloud-title">Password</div>
+<div class="cloud-sub">Sign in or create a new Zella cloud account.</div>
+<input class="cloud-input" id="passwordInput" type="password" placeholder="Password">
+</div>
+
+</div>
+
+<div class="hero-actions">
+<button class="btn" onclick="cloudLogin()">Login</button>
+<button class="btn secondary" onclick="cloudSignup()">Create Account</button>
+</div>
+
+</section>
+
+<section class="cloud-card">
+
+<div class="briefing-title">SYNC MODULES</div>
+
+<div class="cloud-panel-grid">
+
+<div class="cloud-panel">
+<div class="cloud-title">Watchlist Sync</div>
+<div class="cloud-sub">Backs up saved assets and watchlist preferences.</div>
+<div class="cloud-bar"><div class="cloud-fill" id="watchlistFill"></div></div>
+<div class="cloud-pill" id="watchlistStatus">Waiting</div>
+</div>
+
+<div class="cloud-panel">
+<div class="cloud-title">Journal Vault</div>
+<div class="cloud-sub">Backs up trade logs, notes, emotions and performance history.</div>
+<div class="cloud-bar"><div class="cloud-fill" id="journalFill"></div></div>
+<div class="cloud-pill" id="journalStatus">Waiting</div>
+</div>
+
+<div class="cloud-panel">
+<div class="cloud-title">Learning Progress</div>
+<div class="cloud-sub">Backs up XP, level, course progress and academy state.</div>
+<div class="cloud-bar"><div class="cloud-fill" id="learningFill"></div></div>
+<div class="cloud-pill" id="learningStatus">Waiting</div>
+</div>
+
+<div class="cloud-panel">
+<div class="cloud-title">Alerts Backup</div>
+<div class="cloud-sub">Backs up smart alerts and notification settings.</div>
+<div class="cloud-bar"><div class="cloud-fill" id="alertsFill"></div></div>
+<div class="cloud-pill" id="alertsStatus">Waiting</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="cloud-card">
+
+<div class="briefing-title">CLOUD ACTION CENTER</div>
+
+<div class="cloud-panel-grid">
+
+<div class="cloud-panel">
+<div class="cloud-title">Backup To Firebase</div>
+<div class="cloud-sub">Save Zella data from this device into Firestore.</div>
+<div class="cloud-pill">Firestore Write</div>
+</div>
+
+<div class="cloud-panel">
+<div class="cloud-title">Restore From Firebase</div>
+<div class="cloud-sub">Pull your saved Zella cloud data back to this device.</div>
+<div class="cloud-pill">Firestore Read</div>
+</div>
+
+</div>
+
+<div class="hero-actions">
+<button class="btn" onclick="backupZellaCloud()">Backup Now</button>
+<button class="btn secondary" onclick="restoreZellaCloud()">Restore</button>
+</div>
+
+</section>
+
+<section class="cloud-card">
+
+<div class="briefing-title">ZELLA CLOUD BRIEFING</div>
+
+<h2 class="briefing-headline" id="cloudBriefTitle">
+Cloud engine waiting for sign in.
+</h2>
+
+<p class="briefing-text" id="cloudBriefText">
+Login with Firebase Auth to unlock real Firestore backup and restore.
+</p>
+
+</section>
+
+<nav class="zella-nav">
+
+<a href="dashboard.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
+<span>Home</span>
+</a>
+
+<a href="scanner.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
+<span>Scanner</span>
+</a>
+
+<a href="copilot.html" class="nav-item copilot-center">
+<div class="copilot-core">
+<svg viewBox="0 0 24 24" class="copilot-icon">
+<rect x="6" y="8" width="12" height="9" rx="2"/>
+<circle cx="9" cy="12" r="1"/>
+<circle cx="15" cy="12" r="1"/>
+<path d="M12 4V8"/>
+</svg>
+</div>
+<span>Copilot</span>
+</a>
+
+<a href="market.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
+<span>Market</span>
+</a>
+
+<a href="watchlist.html" class="nav-item">
+<svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
+<span>Watchlist</span>
+</a>
+
+<a href="more.html" class="nav-item active">
+<svg viewBox="0 0 24 24" class="nav-icon">
+<circle cx="12" cy="5" r="1.5"/>
+<circle cx="12" cy="12" r="1.5"/>
+<circle cx="12" cy="19" r="1.5"/>
+</svg>
+<span>More</span>
+</a>
+
+</nav>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
 import {
   getFirestore,
   doc,
   setDoc,
-  getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+import {
+  getDatabase,
+  ref,
+  set
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
-
   authDomain: "zella-424f2.firebaseapp.com",
-
   projectId: "zella-424f2",
-
   storageBucket: "zella-424f2.firebasestorage.app",
-
   messagingSenderId: "1008967672362",
-
-  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
-
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953",
+  databaseURL: "https://zella-424f2-default-rtdb.firebaseio.com"
 };
 
-const app =
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const realtimeDB = getDatabase(app);
 
-const db =
-  getFirestore(app);
+let currentUser = null;
 
-const user =
-  JSON.parse(
-    localStorage.getItem("zellaUser")
-  );
-
-if(user){
-
-  document.getElementById(
-    "syncUser"
-  ).textContent =
-    user.name;
-
+function setCloudMessage(title,text){
+  document.getElementById("cloudBriefTitle").textContent = title;
+  document.getElementById("cloudBriefText").textContent = text;
 }
 
-window.syncToCloud =
-async function(){
+function updateModuleStatus(state){
+  const width = state ? "100%" : "0%";
+  const text = state ? "Synced" : "Waiting";
 
-  if(!user){
+  ["watchlist","journal","learning","alerts"].forEach(key=>{
+    document.getElementById(key + "Fill").style.width = width;
+    document.getElementById(key + "Status").textContent = text;
+  });
+}
 
-    alert(
-      "Please sign in first."
-    );
+function collectLocalZellaData(){
+  return {
+    watchlist: JSON.parse(localStorage.getItem("zellaWatchlist") || "[]"),
+    journal: JSON.parse(localStorage.getItem("zellaJournalTrades") || "[]"),
+    alerts: JSON.parse(localStorage.getItem("zellaAlerts") || "[]"),
+    learningXP: Number(localStorage.getItem("zellaLearnXP") || 0),
+    portfolio: JSON.parse(localStorage.getItem("zellaPortfolio") || "{}"),
+    exchangeConnections: JSON.parse(localStorage.getItem("zellaExchangeConnections") || "[]"),
+    backupVersion: "Cloud V11 Ultra"
+  };
+}
 
+function restoreLocalZellaData(data){
+  localStorage.setItem("zellaWatchlist",JSON.stringify(data.watchlist || []));
+  localStorage.setItem("zellaJournalTrades",JSON.stringify(data.journal || []));
+  localStorage.setItem("zellaAlerts",JSON.stringify(data.alerts || []));
+  localStorage.setItem("zellaLearnXP",String(data.learningXP || 0));
+  localStorage.setItem("zellaPortfolio",JSON.stringify(data.portfolio || {}));
+  localStorage.setItem("zellaExchangeConnections",JSON.stringify(data.exchangeConnections || []));
+}
+
+window.cloudSignup = async function(){
+  const email = document.getElementById("emailInput").value.trim();
+  const password = document.getElementById("passwordInput").value.trim();
+
+  if(!email || !password){
+    setCloudMessage("Signup needs details.","Enter email and password to create a Zella cloud account.");
     return;
   }
 
   try{
-
-    const cloudData = {
-
-      user,
-
-      portfolio:
-        JSON.parse(
-          localStorage.getItem("zellaWalletV5")
-        ) || [],
-
-      settings:
-        JSON.parse(
-          localStorage.getItem("zellaSettingsV2")
-        ) || {},
-
-      positions:
-        JSON.parse(
-          localStorage.getItem("zellaOpenPositionsV2")
-        ) || [],
-
-      growth:
-        JSON.parse(
-          localStorage.getItem("zellaGrowthV5")
-        ) || [],
-
-      updated:
-        new Date().toISOString()
-
-    };
-
-    await setDoc(
-
-      doc(
-        db,
-        "users",
-        user.uid
-      ),
-
-      cloudData
-
-    );
-
-    document.getElementById(
-      "cloudStatus"
-    ).textContent =
-      "Synced";
-
-    document.getElementById(
-      "syncedItems"
-    ).textContent =
-      "5";
-
-    document.getElementById(
-      "syncHeadline"
-    ).textContent =
-      "Cloud sync successful";
-
-    document.getElementById(
-      "syncSummary"
-    ).textContent =
-      "Portfolio, settings, positions and profile uploaded to Firestore.";
-
+    await createUserWithEmailAndPassword(auth,email,password);
+    setCloudMessage("Cloud account created.","Firebase Auth account is now ready for real Zella sync.");
+  }catch(error){
+    setCloudMessage("Signup failed.",error.message);
   }
+}
 
-  catch(error){
+window.cloudLogin = async function(){
+  const email = document.getElementById("emailInput").value.trim();
+  const password = document.getElementById("passwordInput").value.trim();
 
-    console.error(error);
-
-    alert(
-      "Cloud sync failed."
-    );
-
-  }
-
-};
-
-window.loadFromCloud =
-async function(){
-
-  if(!user){
-
-    alert(
-      "Please sign in first."
-    );
-
+  if(!email || !password){
+    setCloudMessage("Login needs details.","Enter email and password to access Zella Cloud.");
     return;
   }
 
   try{
+    await signInWithEmailAndPassword(auth,email,password);
+    setCloudMessage("Cloud login successful.","Zella Cloud is now connected to your Firebase account.");
+  }catch(error){
+    setCloudMessage("Login failed.",error.message);
+  }
+}
 
-    const snapshot =
-      await getDoc(
+window.backupZellaCloud = async function(){
+  if(!currentUser){
+    setCloudMessage("Sign in required.","Login before backing up Zella data to Firebase.");
+    return;
+  }
 
-        doc(
-          db,
-          "users",
-          user.uid
-        )
+  try{
+    const payload = collectLocalZellaData();
 
-      );
+    await setDoc(doc(db,"users",currentUser.uid,"cloud","backup"),{
+      ...payload,
+      uid: currentUser.uid,
+      email: currentUser.email,
+      updatedAt: serverTimestamp()
+    });
 
-    if(!snapshot.exists()){
+    await set(ref(realtimeDB,"syncHealth/" + currentUser.uid),{
+      status:"online",
+      lastBackup:new Date().toISOString(),
+      health:100
+    });
 
-      alert(
-        "No cloud data found."
-      );
+    localStorage.setItem("zellaLastCloudBackup",new Date().toLocaleString());
 
+    document.getElementById("lastBackup").textContent =
+      localStorage.getItem("zellaLastCloudBackup");
+
+    document.getElementById("cloudHealth").textContent = "100%";
+
+    updateModuleStatus(true);
+
+    setCloudMessage(
+      "Backup complete.",
+      "Zella data has been saved to Firestore and sync health has been updated in Realtime Database."
+    );
+
+  }catch(error){
+    setCloudMessage("Backup failed.",error.message);
+  }
+}
+
+window.restoreZellaCloud = async function(){
+  if(!currentUser){
+    setCloudMessage("Sign in required.","Login before restoring Zella data from Firebase.");
+    return;
+  }
+
+  try{
+    const snap = await getDoc(doc(db,"users",currentUser.uid,"cloud","backup"));
+
+    if(!snap.exists()){
+      setCloudMessage("No cloud backup found.","Backup this device first before restoring.");
       return;
     }
 
-    const data =
-      snapshot.data();
+    const data = snap.data();
+    restoreLocalZellaData(data);
 
-    localStorage.setItem(
-      "zellaWalletV5",
-      JSON.stringify(
-        data.portfolio || []
-      )
+    updateModuleStatus(true);
+
+    setCloudMessage(
+      "Restore complete.",
+      "Your Zella cloud data has been restored to this device."
     );
 
-    localStorage.setItem(
-      "zellaSettingsV2",
-      JSON.stringify(
-        data.settings || {}
-      )
+  }catch(error){
+    setCloudMessage("Restore failed.",error.message);
+  }
+}
+
+onAuthStateChanged(auth,(user)=>{
+  currentUser = user;
+
+  if(user){
+    document.getElementById("cloudStatus").textContent = "Online";
+    document.getElementById("cloudUser").textContent = "User";
+    document.getElementById("cloudStatusPill").textContent = "Firebase cloud online";
+    document.getElementById("cloudHealth").textContent = "Ready";
+
+    setCloudMessage(
+      "Zella Cloud connected.",
+      `Signed in as ${user.email}. You can now backup and restore Zella data with Firebase.`
     );
 
-    localStorage.setItem(
-      "zellaOpenPositionsV2",
-      JSON.stringify(
-        data.positions || []
-      )
-    );
+  }else{
+    document.getElementById("cloudStatus").textContent = "Offline";
+    document.getElementById("cloudUser").textContent = "Guest";
+    document.getElementById("cloudStatusPill").textContent = "Firebase cloud waiting";
+    document.getElementById("cloudHealth").textContent = "--";
 
-    localStorage.setItem(
-      "zellaGrowthV5",
-      JSON.stringify(
-        data.growth || []
-      )
-    );
-
-    document.getElementById(
-      "cloudStatus"
-    ).textContent =
-      "Loaded";
-
-    document.getElementById(
-      "syncHeadline"
-    ).textContent =
-      "Cloud data restored";
-
-    document.getElementById(
-      "syncSummary"
-    ).textContent =
-      "Your Zella data was restored from Firestore.";
-
+    updateModuleStatus(false);
   }
 
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "Cloud load failed."
-    );
-
-  }
-
-};
-
+  document.getElementById("lastBackup").textContent =
+    localStorage.getItem("zellaLastCloudBackup") || "--";
+});
 </script>
 
+</main>
 </body>
 </html>

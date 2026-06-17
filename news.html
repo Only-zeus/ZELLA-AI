@@ -443,17 +443,28 @@ function renderNews(items){
   document.getElementById("newsPulse").textContent = "Active";
 
   list.innerHTML = items.map(item => `
-    <a class="news-card" href="${item.link || item.url || "#"}" target="_blank">
-      <div class="news-source">${item.source || "Crypto News"}</div>
-      <div class="news-title">${item.title || "Untitled headline"}</div>
-      <div class="news-summary">
-        ${item.summary || cleanText(item.description) || "Tap to read the full article."}
-      </div>
-      <div class="news-meta">
-        ${timeAgo(item.published || item.publishedAt)}
-      </div>
-    </a>
-  `).join("");
+<a class="news-card"
+   href="${item.url || item.link || '#'}"
+   target="_blank">
+
+  <div class="news-source">
+    ${item.source || 'Crypto News'}
+  </div>
+
+  <div class="news-title">
+    ${item.title || 'Headline'}
+  </div>
+
+  <div class="news-summary">
+    ${(item.body || item.summary || '').slice(0,180)}
+  </div>
+
+  <div class="news-meta">
+    ${item.published || item.publishedAt || 'Recent'}
+  </div>
+
+</a>
+`).join('');
 }
 
 async function loadNews(){
@@ -463,7 +474,7 @@ async function loadNews(){
     const res = await fetch(API_URL + "/news");
     const data = await res.json();
 
-    const items = data.items || [];
+    const items = data.news || data.items || [];
     renderNews(items);
 
   }catch(error){

@@ -9,7 +9,177 @@
 
 <body>
 
-<div class="zella-orb"></div>
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+.index-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(56,189,248,.18),transparent 30%),
+    radial-gradient(circle at 80% 20%,rgba(34,197,94,.12),transparent 28%),
+    radial-gradient(circle at 50% 90%,rgba(59,130,246,.18),transparent 32%);
+}
+
+.grid-glow{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,.06) 1px, transparent 1px);
+  background-size:42px 42px;
+  mask-image:linear-gradient(to bottom,black,transparent 85%);
+  animation:gridMove 18s linear infinite;
+}
+
+@keyframes gridMove{
+  from{background-position:0 0;}
+  to{background-position:0 420px;}
+}
+
+.zella-rain{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
+}
+
+.zella-rain span{
+  position:absolute;
+  top:-120px;
+  opacity:.11;
+  font-size:32px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:zellaRain 16s linear infinite;
+}
+
+.zella-rain span:nth-child(1){left:6%;}
+.zella-rain span:nth-child(2){left:18%;animation-delay:2s;}
+.zella-rain span:nth-child(3){left:34%;animation-delay:5s;}
+.zella-rain span:nth-child(4){left:50%;animation-delay:1s;}
+.zella-rain span:nth-child(5){left:68%;animation-delay:4s;}
+.zella-rain span:nth-child(6){left:84%;animation-delay:3s;}
+
+@keyframes zellaRain{
+  from{transform:translateY(-150px) rotate(0deg);}
+  to{transform:translateY(125vh) rotate(360deg);}
+}
+
+.ai-core-wrap{
+  width:240px;
+  height:240px;
+  margin:20px auto 30px;
+  position:relative;
+}
+
+.ai-core{
+  position:absolute;
+  inset:54px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,#e0f2fe 0%,#38bdf8 22%,#0f172a 64%,transparent 70%);
+  box-shadow:
+    0 0 40px rgba(56,189,248,.9),
+    0 0 90px rgba(56,189,248,.45);
+  animation:corePulse 4s ease-in-out infinite;
+}
+
+@keyframes corePulse{
+  0%,100%{transform:scale(1);filter:brightness(1);}
+  50%{transform:scale(1.12);filter:brightness(1.35);}
+}
+
+.orbit{
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(56,189,248,.45);
+  border-radius:50%;
+  animation:spin 9s linear infinite;
+}
+
+.orbit:nth-child(2){
+  inset:34px;
+  border-color:rgba(34,197,94,.35);
+  animation-duration:13s;
+  transform:rotate(40deg);
+}
+
+.orbit:nth-child(3){
+  inset:4px;
+  border-color:rgba(147,197,253,.30);
+  animation-duration:17s;
+  transform:rotate(-30deg);
+}
+
+.orbit::before{
+  content:"";
+  width:12px;
+  height:12px;
+  background:#38bdf8;
+  border-radius:50%;
+  position:absolute;
+  top:18px;
+  left:50%;
+  box-shadow:0 0 20px #38bdf8;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+.scan-line{
+  position:absolute;
+  left:0;
+  right:0;
+  height:2px;
+  top:50%;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 25px rgba(56,189,248,.8);
+  animation:scanMove 3s ease-in-out infinite;
+}
+
+@keyframes scanMove{
+  0%,100%{transform:translateY(-80px);opacity:.2;}
+  50%{transform:translateY(80px);opacity:1;}
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:3;
+}
+
+.launch-only{
+  width:100%;
+  justify-content:center;
+}
+
+.feature-glow{
+  transition:.3s ease;
+}
+
+.feature-glow:hover{
+  transform:translateY(-6px) scale(1.02);
+  border-color:rgba(56,189,248,.35);
+  box-shadow:0 0 35px rgba(56,189,248,.16);
+}
+</style>
+
+<div class="index-bg"></div>
+<div class="grid-glow"></div>
 
 <div class="zella-rain">
   <span>BTC</span>
@@ -20,74 +190,10 @@
   <span>ZELLA</span>
 </div>
 
-<style>
-.zella-orb{
-  position:fixed;
-  width:430px;
-  height:430px;
-  border-radius:50%;
-  right:-160px;
-  top:90px;
-  background:radial-gradient(circle,rgba(56,189,248,.35),transparent 70%);
-  filter:blur(22px);
-  animation:orbPulse 5s ease-in-out infinite;
-  z-index:0;
-}
-
-@keyframes orbPulse{
-  0%,100%{transform:scale(1);opacity:.75;}
-  50%{transform:scale(1.22);opacity:1;}
-}
-
-.zella-rain{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:0;
-}
-
-.zella-rain span{
-  position:absolute;
-  top:-120px;
-  opacity:.10;
-  font-size:32px;
-  font-weight:900;
-  color:#38bdf8;
-  animation:zellaRain 16s linear infinite;
-}
-
-.zella-rain span:nth-child(1){left:7%;}
-.zella-rain span:nth-child(2){left:22%;animation-delay:2s;}
-.zella-rain span:nth-child(3){left:38%;animation-delay:5s;}
-.zella-rain span:nth-child(4){left:55%;animation-delay:1s;}
-.zella-rain span:nth-child(5){left:72%;animation-delay:4s;}
-.zella-rain span:nth-child(6){left:88%;animation-delay:3s;}
-
-@keyframes zellaRain{
-  from{transform:translateY(-150px) rotate(0deg);}
-  to{transform:translateY(125vh) rotate(360deg);}
-}
-
-.container,
-.navbar{
-  position:relative;
-  z-index:2;
-}
-
-.home-link{
-  text-decoration:none;
-}
-</style>
-
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-
-    <div style="display:flex;gap:10px;">
-      <a href="account.html" class="btn">Launch Zella</a>
-<a href="account.html" class="btn secondary">Login</a>
-    </div>
+    <a href="account.html" class="btn">Launch Zella</a>
   </div>
 </nav>
 
@@ -95,59 +201,31 @@
 
 <section class="command-card">
 
-  <div class="live-row">
-
-    <div>
-      <div class="eyebrow">AI CRYPTO TRADING COPILOT</div>
-
-      <h1 class="command-title">
-        Trade smarter.<br>
-        Move faster.<br>
-        Stay guided.
-      </h1>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">LIVE AI</span>
-    </div>
-
+  <div class="ai-core-wrap">
+    <div class="orbit"></div>
+    <div class="orbit"></div>
+    <div class="orbit"></div>
+    <div class="ai-core"></div>
+    <div class="scan-line"></div>
   </div>
+
+  <div class="eyebrow">AI CRYPTO TRADING COPILOT</div>
+
+  <h1 class="command-title">
+    Trade smarter.<br>
+    Profit faster.
+  </h1>
 
   <p class="briefing-text">
-    Zella combines live market data, scanner intelligence,
-    real-time crypto news, AI conversation, watchlists, cloud sync,
-    and AutoTrader setup guidance into one beginner-friendly trading copilot.
+    Zella is an AI-powered trading copilot built to help traders understand
+    the market, scan live assets, track crypto news, manage risk and make
+    smarter decisions with confidence.
   </p>
 
-  <div class="hero-actions">
-    <a href="dashboard.html" class="btn">Launch Zella</a>
-    <a href="copilot.html" class="btn secondary">Ask Copilot</a>
-    <a href="scanner.html" class="btn secondary">Open Scanner</a>
-  </div>
-
-</section>
-
-<section class="mini-grid">
-
-  <div class="mini-box">
-    <div class="mini-label">Market Data</div>
-    <div class="mini-value green">Live</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">AI Copilot</div>
-    <div class="mini-value blue">Groq</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Scanner</div>
-    <div class="mini-value orange">V6</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Cloud</div>
-    <div class="mini-value green">Ready</div>
+  <div class="hero-actions launch-only">
+    <a href="account.html" class="btn">
+      🚀 Launch Zella
+    </a>
   </div>
 
 </section>
@@ -158,31 +236,31 @@
 
   <div class="ranking-list">
 
-    <div class="rank-row">
-      <div class="rank-position">⚡</div>
-      <div class="rank-asset">
-        Live Market Intelligence<br>
-        <small>Real-time prices, market conditions and multi-provider fallback.</small>
-      </div>
-      <div class="rank-score">Live</div>
-    </div>
-
-    <div class="rank-row">
+    <div class="rank-row feature-glow">
       <div class="rank-position">🤖</div>
       <div class="rank-asset">
         Interactive AI Copilot<br>
-        <small>Chat naturally, learn crypto and understand trade ideas.</small>
+        <small>Chat naturally, learn crypto and understand market opportunities.</small>
       </div>
       <div class="rank-score">AI</div>
     </div>
 
-    <div class="rank-row">
+    <div class="rank-row feature-glow">
       <div class="rank-position">📈</div>
       <div class="rank-asset">
-        Scanner Intelligence<br>
-        <small>Ranks assets using confidence, momentum, risk and opportunity.</small>
+        Live Market Scanner<br>
+        <small>Ranks assets using confidence, momentum, trend, risk and opportunity.</small>
       </div>
-      <div class="rank-score">V6</div>
+      <div class="rank-score">Live</div>
+    </div>
+
+    <div class="rank-row feature-glow">
+      <div class="rank-position">📰</div>
+      <div class="rank-asset">
+        News Intelligence<br>
+        <small>Tracks real crypto news and sentiment to improve market awareness.</small>
+      </div>
+      <div class="rank-score">RSS</div>
     </div>
 
   </div>
@@ -198,9 +276,9 @@
   </h2>
 
   <p class="briefing-text">
-    Zella’s mission is to help new and growing traders understand the market,
-    reduce confusion, avoid emotional decisions, and make more informed choices
-    through live data, AI explanation and structured risk-aware guidance.
+    Zella’s mission is to help traders reduce confusion, understand market
+    movements, manage risk, and make more informed decisions using live data
+    and AI-powered insight.
   </p>
 
 </section>
@@ -211,51 +289,24 @@
 
   <div class="ranking-list">
 
-    <div class="rank-row">
+    <div class="rank-row feature-glow">
       <div class="rank-position">1</div>
-      <div class="rank-asset">Live Market Data<br><small>Binance, Bybit, Coinbase, Kraken and CoinGecko fallback.</small></div>
-      <div class="rank-score">Source</div>
+      <div class="rank-asset">Live Market Data<br><small>Multiple providers power real-time asset intelligence.</small></div>
+      <div class="rank-score">Live</div>
     </div>
 
-    <div class="rank-row">
+    <div class="rank-row feature-glow">
       <div class="rank-position">2</div>
-      <div class="rank-asset">Scanner Engine<br><small>Scores confidence, momentum, trend, structure, risk and opportunity.</small></div>
-      <div class="rank-score">Rank</div>
+      <div class="rank-asset">Scanner Engine<br><small>Scores confidence, momentum, liquidity, trend and risk.</small></div>
+      <div class="rank-score">V6</div>
     </div>
 
-    <div class="rank-row">
+    <div class="rank-row feature-glow">
       <div class="rank-position">3</div>
-      <div class="rank-asset">News Sentiment<br><small>Tracks crypto news and sentiment signals.</small></div>
-      <div class="rank-score">News</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">4</div>
-      <div class="rank-asset">AutoTrader Setup<br><small>Generates entry zones, stop loss and targets for review.</small></div>
-      <div class="rank-score">Setup</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">5</div>
-      <div class="rank-asset">Zella Copilot<br><small>Explains market conditions like an interactive AI assistant.</small></div>
+      <div class="rank-asset">Zella Copilot<br><small>Explains the market like an interactive AI assistant.</small></div>
       <div class="rank-score">AI</div>
     </div>
 
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">ZELLA ECOSYSTEM</div>
-
-  <div class="hero-actions">
-    <a href="market.html" class="btn secondary">🌍 Market</a>
-    <a href="scanner.html" class="btn secondary">📈 Scanner</a>
-    <a href="copilot.html" class="btn secondary">🤖 Copilot</a>
-    <a href="news.html" class="btn secondary">📰 News</a>
-    <a href="watchlist.html" class="btn secondary">⭐ Watchlist</a>
-    <a href="more.html" class="btn secondary">☰ More</a>
   </div>
 
 </section>
@@ -266,28 +317,22 @@
 
   <div class="ranking-list">
 
-    <div class="rank-row">
+    <div class="rank-row feature-glow">
       <div class="rank-position">✅</div>
-      <div class="rank-asset">Phase 1 — Foundation<br><small>Backend V5, live market data, scanner, news and copilot.</small></div>
+      <div class="rank-asset">Foundation<br><small>Live backend, scanner, news engine, account system and copilot.</small></div>
       <div class="rank-score">Done</div>
     </div>
 
-    <div class="rank-row">
+    <div class="rank-row feature-glow">
       <div class="rank-position">🚧</div>
-      <div class="rank-asset">Phase 2 — Intelligence<br><small>News integration, stronger scanner logic and smarter trade setup engine.</small></div>
+      <div class="rank-asset">Intelligence<br><small>Smarter scanner, news sentiment integration and setup engine.</small></div>
       <div class="rank-score">Now</div>
     </div>
 
-    <div class="rank-row">
+    <div class="rank-row feature-glow">
       <div class="rank-position">🔜</div>
-      <div class="rank-asset">Phase 3 — Expansion<br><small>More assets, stronger watchlists, alerts and portfolio intelligence.</small></div>
+      <div class="rank-asset">Expansion<br><small>More assets, alerts, portfolio intelligence and mobile app.</small></div>
       <div class="rank-score">Next</div>
-    </div>
-
-    <div class="rank-row">
-      <div class="rank-position">🌍</div>
-      <div class="rank-asset">Phase 4 — Future Vision<br><small>Mobile app, advanced AI portfolio manager and multi-exchange intelligence.</small></div>
-      <div class="rank-score">Future</div>
     </div>
 
   </div>
@@ -296,49 +341,27 @@
 
 <section class="command-card">
 
-  <div class="card-label">READY TO TRADE SMARTER?</div>
+  <div class="card-label">READY TO START?</div>
 
   <h2 class="briefing-headline">
-    Start with Zella today.
+    Your AI trading copilot is waiting.
   </h2>
 
-  <div class="hero-actions">
-    <a href="dashboard.html" class="btn">Launch Zella</a>
-    <a href="copilot.html" class="btn secondary">Ask Copilot</a>
+  <div class="hero-actions launch-only">
+    <a href="account.html" class="btn">
+      🚀 Launch Zella
+    </a>
   </div>
 
 </section>
 
-<footer style="text-align:center;padding:30px 15px;color:#94a3b8;">
+<footer style="text-align:center;padding:35px 15px;color:#94a3b8;">
   <strong style="color:#38bdf8;">ZELLA AI</strong><br>
   Trade smarter. Profit faster.<br><br>
   © Zella AI
 </footer>
 
 </main>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
-  authDomain: "zella-424f2.firebaseapp.com",
-  projectId: "zella-424f2",
-  storageBucket: "zella-424f2.firebasestorage.app",
-  messagingSenderId: "1008967672362",
-  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-onAuthStateChanged(auth, user => {
-  if (!user) {
-    window.location.href = "account.html";
-  }
-});
-</script>
 
 </body>
 </html>

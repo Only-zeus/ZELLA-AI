@@ -1,64 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zella Analytics Center V1</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Analytics V11 Ultra</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="pro-particles">
-  <span>📊</span>
-  <span>PNL</span>
-  <span>WIN</span>
-  <span>AI</span>
-  <span>📈</span>
-  <span>DATA</span>
-</div>
-
 <style>
-.pro-particles{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:0;
+*{box-sizing:border-box}
+body{overflow-x:hidden}
+
+.analytics-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 10%,rgba(56,189,248,.25),transparent 30%),
+    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    #020617;
 }
 
-.pro-particles span{
+.analytics-grid-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:analyticsGrid 18s linear infinite;
+}
+
+@keyframes analyticsGrid{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+
+.analytics-particles{
+  position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+}
+
+.analytics-particles span{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:#38bdf8;box-shadow:0 0 18px #38bdf8;opacity:.42;
+  animation:analyticsFloat 12s linear infinite;
+}
+
+.analytics-particles span:nth-child(1){left:7%;animation-delay:0s}
+.analytics-particles span:nth-child(2){left:24%;animation-delay:2s}
+.analytics-particles span:nth-child(3){left:41%;animation-delay:5s}
+.analytics-particles span:nth-child(4){left:58%;animation-delay:1s}
+.analytics-particles span:nth-child(5){left:76%;animation-delay:4s}
+.analytics-particles span:nth-child(6){left:91%;animation-delay:3s}
+
+@keyframes analyticsFloat{
+  from{transform:translateY(110vh) scale(.6)}
+  to{transform:translateY(-140px) scale(1.4)}
+}
+
+.analytics-orbits{
+  position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;
+}
+
+.analytics-orbits::before,
+.analytics-orbits::after{
+  content:"";
   position:absolute;
-  top:-100px;
-  opacity:.10;
-  font-size:28px;
-  font-weight:900;
-  color:#38bdf8;
-  animation:analyticsRain 14s linear infinite;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.10);
+  box-shadow:0 0 70px rgba(56,189,248,.08);
+  animation:analyticsDrift 20s linear infinite;
 }
 
-.pro-particles span:nth-child(1){left:8%;}
-.pro-particles span:nth-child(2){left:22%;animation-delay:2s;}
-.pro-particles span:nth-child(3){left:38%;animation-delay:4s;}
-.pro-particles span:nth-child(4){left:55%;animation-delay:1s;}
-.pro-particles span:nth-child(5){left:72%;animation-delay:5s;}
-.pro-particles span:nth-child(6){left:90%;animation-delay:3s;}
-
-@keyframes analyticsRain{
-  from{
-    transform:translateY(-140px) rotate(0deg);
-  }
-  to{
-    transform:translateY(120vh) rotate(360deg);
-  }
+.analytics-orbits::before{
+  left:-180px;
+  top:120px;
 }
 
-.container,
-.navbar{
+.analytics-orbits::after{
+  right:-190px;
+  bottom:90px;
+  animation-duration:28s;
+}
+
+@keyframes analyticsDrift{
+  from{transform:rotate(0deg) scale(1)}
+  to{transform:rotate(360deg) scale(1.08)}
+}
+
+.container,.navbar{position:relative;z-index:3}
+
+.analytics-hero{
+  position:relative;overflow:hidden;padding:22px;border-radius:34px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:inset 0 0 34px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.30);
+}
+
+.analytics-hero::after{
+  content:"";position:absolute;width:170px;height:170px;right:-65px;bottom:-65px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
+}
+
+.analytics-core-wrap{
+  width:270px;height:270px;margin:8px auto 22px;position:relative;
+}
+
+.analytics-ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(56,189,248,.38);
+  animation:spin 12s linear infinite;
+}
+
+.analytics-ring.r1{inset:12px}
+.analytics-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s}
+.analytics-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s}
+.analytics-ring.r4{inset:66px;border-color:rgba(56,189,248,.18);animation-duration:28s}
+
+.analytics-ring::before{
+  content:"";width:11px;height:11px;border-radius:50%;
+  position:absolute;top:18px;left:50%;
+  background:#38bdf8;box-shadow:0 0 24px #38bdf8;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.analytics-core{
+  position:absolute;inset:70px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
+  box-shadow:0 0 44px rgba(56,189,248,.92),0 0 105px rgba(37,99,235,.46);
+  animation:analyticsPulse 4s ease-in-out infinite;
+}
+
+.analytics-core svg{
+  width:76px;height:76px;fill:none;stroke:#020617;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+
+@keyframes analyticsPulse{
+  0%,100%{transform:scale(1);filter:brightness(1)}
+  50%{transform:scale(1.13);filter:brightness(1.35)}
+}
+
+.analytics-sweep{
+  position:absolute;left:0;right:0;top:50%;height:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 26px rgba(56,189,248,.85);
+  animation:analyticsSweep 3s ease-in-out infinite;
+}
+
+@keyframes analyticsSweep{
+  0%,100%{transform:translateY(-84px);opacity:.2}
+  50%{transform:translateY(84px);opacity:1}
+}
+
+.analytics-card{
+  position:relative;overflow:hidden;padding:18px;border-radius:28px;
+  background:rgba(15,23,42,.84);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:inset 0 0 28px rgba(56,189,248,.035),0 18px 48px rgba(0,0,0,.26);
+  transition:.28s ease;
+}
+
+.analytics-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(56,189,248,.34);
+  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+
+.analytics-board{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:16px;
+}
+
+.analytics-panel{
+  padding:18px;
+  border-radius:26px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
   position:relative;
-  z-index:2;
+  overflow:hidden;
+}
+
+.analytics-panel::after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  right:-40px;
+  bottom:-40px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.18),transparent 70%);
+}
+
+.analytics-title{
+  color:#e5eefb;
+  font-weight:950;
+  font-size:15px;
+}
+
+.analytics-sub{
+  color:#94a3b8;
+  font-size:12px;
+  line-height:1.7;
+  margin-top:8px;
+}
+
+.analytics-value{
+  font-size:28px;
+  font-weight:950;
+  color:#38bdf8;
+  margin-top:12px;
+}
+
+.analytics-bar{
+  width:100%;
+  height:12px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+  margin-top:12px;
+}
+
+.analytics-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#38bdf8,#22c55e);
+  box-shadow:0 0 18px rgba(56,189,248,.45);
+  transition:1s ease;
+}
+
+.analytics-stream{
+  display:grid;
+  gap:12px;
+  margin-top:16px;
+}
+
+.stream-row{
+  padding:15px;
+  border-radius:22px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.stream-row strong{color:#e5eefb}
+.stream-row small{color:#94a3b8}
+
+@media(max-width:430px){
+  .analytics-board{grid-template-columns:1fr}
 }
 </style>
+
+<div class="analytics-bg"></div>
+<div class="analytics-grid-bg"></div>
+<div class="analytics-orbits"></div>
+
+<div class="analytics-particles">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+</div>
 
 <nav class="navbar">
   <div class="nav-inner">
@@ -69,73 +283,101 @@
 
 <main class="container">
 
-<section class="command-card">
+<section class="analytics-hero">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA ANALYTICS CENTER</div>
-      <h1 class="command-title">Performance<br>Intelligence.</h1>
+  <div class="analytics-core-wrap">
+    <div class="analytics-ring r1"></div>
+    <div class="analytics-ring r2"></div>
+    <div class="analytics-ring r3"></div>
+    <div class="analytics-ring r4"></div>
+
+    <div class="analytics-core">
+      <svg viewBox="0 0 24 24">
+        <path d="M5 19V11"/>
+        <path d="M12 19V5"/>
+        <path d="M19 19V8"/>
+        <path d="M4 19H20"/>
+        <path d="M4 8L9 13L13 10L20 16"/>
+      </svg>
     </div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">ANALYTICS</span>
-    </div>
+    <div class="analytics-sweep"></div>
   </div>
 
+  <div class="eyebrow">ZELLA ANALYTICS V11 ULTRA</div>
+
+  <h1 class="command-title">
+    Intelligence<br>
+    Analytics.
+  </h1>
+
   <p class="briefing-text">
-    Analyze wallet value, trade performance, win rate,
-    scanner strength and overall Zella activity in one place.
+    Analyze scanner strength, market behavior, portfolio exposure,
+    opportunity quality, risk pulse, confidence patterns and Zella performance intelligence.
   </p>
+
+  <div class="command-status-pill">
+    Analytics engine online
+  </div>
 
 </section>
 
 <section class="mini-grid">
 
-  <div class="mini-box">
-    <div class="mini-label">Portfolio Value</div>
-    <div class="mini-value green" id="portfolioValue">$0</div>
+  <div class="mini-box analytics-card">
+    <div class="mini-label">Analytics Score</div>
+    <div class="mini-value green" id="analyticsScore">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Trade Win Rate</div>
-    <div class="mini-value blue" id="winRate">0%</div>
+  <div class="mini-box analytics-card">
+    <div class="mini-label">Top Signal</div>
+    <div class="mini-value blue" id="topSignal">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Scanner Leader</div>
-    <div class="mini-value orange" id="scannerLeader">--</div>
+  <div class="mini-box analytics-card">
+    <div class="mini-label">Market Strength</div>
+    <div class="mini-value orange" id="marketStrength">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Zella Score</div>
-    <div class="mini-value green" id="zellaScore">--</div>
+  <div class="mini-box analytics-card">
+    <div class="mini-label">Risk Index</div>
+    <div class="mini-value blue" id="riskIndex">--</div>
   </div>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    PERFORMANCE SNAPSHOT
-  </div>
+  <div class="briefing-title">ANALYTICS COMMAND GRID</div>
 
-  <div id="performanceList">
+  <div class="analytics-board">
 
-    <div class="rank-row">
+    <div class="analytics-panel">
+      <div class="analytics-title">Scanner Confidence</div>
+      <div class="analytics-sub">Average confidence from live scanner assets.</div>
+      <div class="analytics-value" id="confidenceMetric">--</div>
+      <div class="analytics-bar"><div class="analytics-fill" id="confidenceFill"></div></div>
+    </div>
 
-      <div class="rank-position">
-        📊
-      </div>
+    <div class="analytics-panel">
+      <div class="analytics-title">Risk Control</div>
+      <div class="analytics-sub">How controlled the current risk environment appears.</div>
+      <div class="analytics-value" id="riskMetric">--</div>
+      <div class="analytics-bar"><div class="analytics-fill" id="riskFill"></div></div>
+    </div>
 
-      <div class="rank-asset">
-        Loading analytics...
-      </div>
+    <div class="analytics-panel">
+      <div class="analytics-title">Opportunity Quality</div>
+      <div class="analytics-sub">Strength of the top opportunity compared to the market.</div>
+      <div class="analytics-value" id="opportunityMetric">--</div>
+      <div class="analytics-bar"><div class="analytics-fill" id="opportunityFill"></div></div>
+    </div>
 
-      <div class="rank-score">
-        --
-      </div>
-
+    <div class="analytics-panel">
+      <div class="analytics-title">Portfolio Health</div>
+      <div class="analytics-sub">Future-ready health score connected to portfolio intelligence.</div>
+      <div class="analytics-value" id="portfolioMetric">--</div>
+      <div class="analytics-bar"><div class="analytics-fill" id="portfolioFill"></div></div>
     </div>
 
   </div>
@@ -144,34 +386,16 @@
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    PORTFOLIO GROWTH
-  </div>
+  <div class="briefing-title">LIVE ANALYTICS STREAM</div>
 
-  <div
-    id="analyticsChart"
-    style="
-      height:180px;
-      display:flex;
-      align-items:end;
-      gap:8px;
-      margin-top:15px;
-    ">
+  <div class="analytics-stream" id="analyticsStream">
 
-    <div class="rank-row">
-
-      <div class="rank-position">
-        📈
+    <div class="stream-row">
+      <div>
+        <strong>Loading Analytics Engine</strong><br>
+        <small>Connecting to scanner intelligence...</small>
       </div>
-
-      <div class="rank-asset">
-        Growth chart loading...
-      </div>
-
-      <div class="rank-score">
-        --
-      </div>
-
+      <div class="command-status-pill">LIVE</div>
     </div>
 
   </div>
@@ -180,342 +404,282 @@
 
 <section class="briefing-card">
 
-  <div class="briefing-title">
-    ZELLA AI ANALYTICS REVIEW
-  </div>
+  <div class="briefing-title">ZELLA ANALYTICS COPILOT</div>
 
-  <h2
-    class="briefing-headline"
-    id="analyticsHeadline">
-
-    Reading your activity...
-
+  <h2 class="briefing-headline" id="analyticsTitle">
+    Loading analytics intelligence...
   </h2>
 
-  <p
-    class="briefing-text"
-    id="analyticsSummary">
-
-    Zella is analyzing portfolio performance,
-    scanner rankings and trading activity.
-
+  <p class="briefing-text" id="analyticsText">
+    Zella is analyzing scanner, market, portfolio and opportunity data.
   </p>
+
+  <div class="hero-actions">
+    <button class="btn" onclick="speakAnalytics()">
+      Voice Briefing
+    </button>
+
+    <a href="copilot.html" class="btn secondary">
+      Ask Zella
+    </a>
+  </div>
 
 </section>
 
-</main>
+<section class="briefing-card">
 
-<div class="bottom-nav">
+  <div class="briefing-title">FORECAST & INTELLIGENCE CENTER</div>
 
-  <a href="dashboard.html">
-    Home
+  <div class="analytics-board">
+
+    <div class="analytics-panel">
+      <div class="analytics-title">AI Forecast</div>
+      <div class="analytics-sub">
+        Expected market environment based on confidence and risk behavior.
+      </div>
+
+      <div class="analytics-value" id="forecastValue">
+        --
+      </div>
+    </div>
+
+    <div class="analytics-panel">
+      <div class="analytics-title">Market Dominance</div>
+      <div class="analytics-sub">
+        Relative strength of the leading scanner asset.
+      </div>
+
+      <div class="analytics-value" id="dominanceValue">
+        --
+      </div>
+    </div>
+
+    <div class="analytics-panel">
+      <div class="analytics-title">Wealth Analytics</div>
+      <div class="analytics-sub">
+        Portfolio growth readiness and health estimation.
+      </div>
+
+      <div class="analytics-value" id="wealthValue">
+        --
+      </div>
+    </div>
+
+    <div class="analytics-panel">
+      <div class="analytics-title">Execution Readiness</div>
+      <div class="analytics-sub">
+        Future connection between Trade Prep and AutoTrader.
+      </div>
+
+      <div class="analytics-value" id="executionValue">
+        --
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<nav class="zella-nav">
+
+  <a href="dashboard.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/>
+    </svg>
+    <span>Home</span>
   </a>
 
-  <a href="scanner.html">
-    Scanner
+  <a href="scanner.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M5 19V11M12 19V5M19 19V8"/>
+    </svg>
+    <span>Scanner</span>
   </a>
 
-  <a href="copilot.html">
-    Copilot
+  <a href="copilot.html" class="nav-item copilot-center">
+    <div class="copilot-core">
+      <svg viewBox="0 0 24 24" class="copilot-icon">
+        <rect x="6" y="8" width="12" height="9" rx="2"/>
+        <circle cx="9" cy="12" r="1"/>
+        <circle cx="15" cy="12" r="1"/>
+        <path d="M12 4V8"/>
+      </svg>
+    </div>
+    <span>Copilot</span>
   </a>
 
-  <a href="market.html">
-    Market
+  <a href="market.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M4 16L9 11L13 14L20 7"/>
+    </svg>
+    <span>Market</span>
   </a>
 
-  <a href="journal.html">
-    Wallet
+  <a href="watchlist.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M6 3H18V21L12 17L6 21V3Z"/>
+    </svg>
+    <span>Watchlist</span>
   </a>
 
-</div>
+  <a href="analytics.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M5 19V11"/>
+      <path d="M12 19V5"/>
+      <path d="M19 19V8"/>
+    </svg>
+    <span>Analytics</span>
+  </a>
+
+</nav>
 
 <script>
-
-const API_URL =
-  "https://zella-backend.onrender.com";
+const API_URL = "https://zella-backend.onrender.com";
 
 async function loadAnalytics(){
 
   try{
 
-    const response =
-      await fetch(API_URL + "/scanner");
+    const res = await fetch(API_URL + "/scanner");
+    const data = await res.json();
 
-    const data =
-      await response.json();
+    const items = data.items || [];
 
-    const rankings =
-      data.items || [];
+    if(!items.length) return;
 
-    const wallet =
-      JSON.parse(
-        localStorage.getItem("zellaWalletV5")
-      ) || [];
+    const avgConfidence =
+      items.reduce((a,b)=>a + Number(b.confidence || 0),0) / items.length;
 
-    const paperTrades =
-      JSON.parse(
-        localStorage.getItem("zellaPaperTrades")
-      ) || [];
+    const avgRisk =
+      items.reduce((a,b)=>a + Number(b.riskScore || 0),0) / items.length;
 
-    const growthHistory =
-      JSON.parse(
-        localStorage.getItem("zellaGrowthV5")
-      ) || [];
+    const top =
+      [...items].sort((a,b)=>b.confidence - a.confidence)[0];
 
-    let portfolioValue = 0;
+    const analyticsScore =
+      Math.round(avgConfidence - (avgRisk * 0.25));
 
-    wallet.forEach(item=>{
+    document.getElementById("analyticsScore").textContent =
+      analyticsScore + "%";
 
-      const asset =
-        rankings.find(
-          x =>
-          String(x.asset).toUpperCase() ===
-          String(item.symbol).toUpperCase()
-        );
+    document.getElementById("topSignal").textContent =
+      top.signal || "--";
 
-      if(asset){
+    document.getElementById("marketStrength").textContent =
+      Math.round(avgConfidence) + "%";
 
-        portfolioValue +=
-          Number(item.amount) *
-          Number(asset.price);
+    document.getElementById("riskIndex").textContent =
+      Math.round(avgRisk) + "%";
 
-      }
+    document.getElementById("confidenceMetric").textContent =
+      Math.round(avgConfidence) + "%";
 
-    });
+    document.getElementById("riskMetric").textContent =
+      Math.round(100 - avgRisk) + "%";
 
-    const wins =
-      paperTrades.filter(
-        trade => Number(trade.pnl) > 0
-      ).length;
+    document.getElementById("opportunityMetric").textContent =
+      top.confidence + "%";
 
-    const totalTrades =
-      paperTrades.length;
+    document.getElementById("portfolioMetric").textContent =
+      Math.round(avgConfidence - avgRisk * .3 + 30) + "%";
 
-    const winRate =
-      totalTrades
-      ? Math.round(
-          (wins / totalTrades) * 100
-        )
-      : 0;
+    document.getElementById("confidenceFill").style.width =
+      avgConfidence + "%";
 
-    const topAsset =
-      rankings.length
-      ? rankings[0].asset
-      : "--";
+    document.getElementById("riskFill").style.width =
+      (100 - avgRisk) + "%";
 
-    const zellaScore =
+    document.getElementById("opportunityFill").style.width =
+      top.confidence + "%";
 
-      Math.min(
+    document.getElementById("portfolioFill").style.width =
+      Math.max(0,Math.min(100,
+      avgConfidence - avgRisk * .3 + 30)) + "%";
 
-        100,
+    document.getElementById("forecastValue").textContent =
+      avgConfidence > 70 ? "Bullish" : "Neutral";
 
-        Math.round(
+    document.getElementById("dominanceValue").textContent =
+      top.asset;
 
-          (winRate * 0.4) +
+    document.getElementById("wealthValue").textContent =
+      Math.round(avgConfidence) + "%";
 
-          (wallet.length * 8) +
+    document.getElementById("executionValue").textContent =
+      analyticsScore + "%";
 
-          (growthHistory.length * 3)
+    document.getElementById("analyticsTitle").textContent =
+      `${top.asset} currently leads the intelligence engine`;
 
-        )
+    document.getElementById("analyticsText").textContent =
+      `${top.asset} shows the strongest scanner confidence. Average market confidence is ${Math.round(avgConfidence)}% while risk conditions remain around ${Math.round(avgRisk)}%. Analytics score currently stands at ${analyticsScore}%.`;
 
-      );
-
-    document.getElementById(
-      "portfolioValue"
-    ).textContent =
-      "$" +
-      portfolioValue.toLocaleString();
-
-    document.getElementById(
-      "winRate"
-    ).textContent =
-      winRate + "%";
-
-    document.getElementById(
-      "scannerLeader"
-    ).textContent =
-      topAsset;
-
-    document.getElementById(
-      "zellaScore"
-    ).textContent =
-      zellaScore;
-
-    document.getElementById(
-      "performanceList"
-    ).innerHTML = `
-
-      <div class="rank-row">
-
-        <div class="rank-position">
-          💰
+    document.getElementById("analyticsStream").innerHTML = `
+      <div class="stream-row">
+        <div>
+          <strong>Top Opportunity</strong><br>
+          <small>${top.asset} • ${top.signal}</small>
         </div>
-
-        <div class="rank-asset">
-          Portfolio Holdings
-        </div>
-
-        <div class="rank-score">
-          ${wallet.length}
-        </div>
-
+        <div>${top.confidence}%</div>
       </div>
 
-      <div class="rank-row">
-
-        <div class="rank-position">
-          📈
+      <div class="stream-row">
+        <div>
+          <strong>Confidence Engine</strong><br>
+          <small>Average scanner confidence</small>
         </div>
-
-        <div class="rank-asset">
-          Paper Trades
-        </div>
-
-        <div class="rank-score">
-          ${totalTrades}
-        </div>
-
+        <div>${Math.round(avgConfidence)}%</div>
       </div>
 
-      <div class="rank-row">
-
-        <div class="rank-position">
-          🏆
+      <div class="stream-row">
+        <div>
+          <strong>Risk Monitor</strong><br>
+          <small>Average market risk profile</small>
         </div>
-
-        <div class="rank-asset">
-          Win Rate
-        </div>
-
-        <div class="rank-score">
-          ${winRate}%
-        </div>
-
+        <div>${Math.round(avgRisk)}%</div>
       </div>
 
-      <div class="rank-row">
-
-        <div class="rank-position">
-          🤖
+      <div class="stream-row">
+        <div>
+          <strong>Forecast Status</strong><br>
+          <small>AI market projection</small>
         </div>
-
-        <div class="rank-asset">
-          Scanner Leader
-        </div>
-
-        <div class="rank-score">
-          ${topAsset}
-        </div>
-
+        <div>${avgConfidence > 70 ? "Bullish" : "Neutral"}</div>
       </div>
-
     `;
 
-    const maxValue = Math.max(
-      ...growthHistory.map(x=>x.value),
-      1
-    );
-
-    document.getElementById(
-      "analyticsChart"
-    ).innerHTML =
-
-      growthHistory.length
-
-      ?
-
-      growthHistory.map(item=>{
-
-        const height =
-
-          Math.max(
-
-            12,
-
-            (item.value / maxValue) * 160
-
-          );
-
-        return `
-
-          <div
-            style="
-              flex:1;
-              height:${height}px;
-              border-radius:12px 12px 4px 4px;
-              background:linear-gradient(
-                180deg,
-                #38bdf8,
-                #2563eb
-              );
-              box-shadow:
-                0 0 18px rgba(56,189,248,.35);
-            ">
-          </div>
-
-        `;
-
-      }).join("")
-
-      :
-
-      `
-
-      <div class="rank-row">
-
-        <div class="rank-position">
-          📊
-        </div>
-
-        <div class="rank-asset">
-          No growth data yet
-        </div>
-
-        <div class="rank-score">
-          --
-        </div>
-
-      </div>
-
-      `;
-
-    document.getElementById(
-      "analyticsHeadline"
-    ).textContent =
-
-      `Zella Score ${zellaScore}/100`;
-
-    document.getElementById(
-      "analyticsSummary"
-    ).textContent =
-
-      `Portfolio value is $${portfolioValue.toLocaleString()}. Win rate is ${winRate}%. Scanner leader is ${topAsset}. Zella Analytics indicates overall performance strength of ${zellaScore}/100.`;
-
-  }
-
-  catch(error){
-
+  }catch(error){
     console.error(error);
+  }
+}
 
-    document.getElementById(
-      "analyticsHeadline"
-    ).textContent =
+function speakAnalytics(){
 
-      "Analytics unavailable";
+  const text =
+    document.getElementById("analyticsTitle").textContent +
+    ". " +
+    document.getElementById("analyticsText").textContent;
 
+  if(!window.speechSynthesis){
+    alert("Voice briefing not supported.");
+    return;
   }
 
+  speechSynthesis.cancel();
+
+  const utterance =
+    new SpeechSynthesisUtterance(text);
+
+  utterance.rate = 1;
+  utterance.pitch = 1.05;
+
+  speechSynthesis.speak(utterance);
 }
 
 loadAnalytics();
-
-setInterval(
-  loadAnalytics,
-  30000
-);
-
+setInterval(loadAnalytics,30000);
 </script>
 
+</main>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Copilot V8 Ultra</title>
+<title>Zella Copilot V9 Quantum</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,19 +16,19 @@ body{
   overflow-x:hidden;
 }
 
-.ultra-bg{
+.quantum-bg{
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
   background:
-    radial-gradient(circle at 18% 10%,rgba(56,189,248,.24),transparent 30%),
-    radial-gradient(circle at 82% 18%,rgba(37,99,235,.20),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    radial-gradient(circle at 18% 10%,rgba(56,189,248,.26),transparent 30%),
+    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.13),transparent 34%),
     #020617;
 }
 
-.ultra-grid{
+.quantum-grid{
   position:fixed;
   inset:0;
   z-index:0;
@@ -37,15 +37,15 @@ body{
     linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
     linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
   background-size:42px 42px;
-  animation:gridFlow 18s linear infinite;
+  animation:quantumGrid 18s linear infinite;
 }
 
-@keyframes gridFlow{
-  from{background-position:0 0}
-  to{background-position:0 420px}
+@keyframes quantumGrid{
+  from{background-position:0 0;}
+  to{background-position:0 420px;}
 }
 
-.ultra-rain{
+.quantum-particles{
   position:fixed;
   inset:0;
   overflow:hidden;
@@ -53,26 +53,27 @@ body{
   z-index:1;
 }
 
-.ultra-rain span{
+.quantum-particles span{
   position:absolute;
-  top:-120px;
-  color:#38bdf8;
-  opacity:.10;
-  font-size:30px;
-  font-weight:950;
-  animation:ultraRain 16s linear infinite;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
+  opacity:.45;
+  animation:particleFloat 12s linear infinite;
 }
 
-.ultra-rain span:nth-child(1){left:6%}
-.ultra-rain span:nth-child(2){left:20%;animation-delay:2s}
-.ultra-rain span:nth-child(3){left:37%;animation-delay:4s}
-.ultra-rain span:nth-child(4){left:54%;animation-delay:1s}
-.ultra-rain span:nth-child(5){left:72%;animation-delay:5s}
-.ultra-rain span:nth-child(6){left:90%;animation-delay:3s}
+.quantum-particles span:nth-child(1){left:8%;animation-delay:0s;}
+.quantum-particles span:nth-child(2){left:22%;animation-delay:2s;}
+.quantum-particles span:nth-child(3){left:38%;animation-delay:5s;}
+.quantum-particles span:nth-child(4){left:55%;animation-delay:1s;}
+.quantum-particles span:nth-child(5){left:74%;animation-delay:4s;}
+.quantum-particles span:nth-child(6){left:90%;animation-delay:3s;}
 
-@keyframes ultraRain{
-  from{transform:translateY(-140px) rotate(0deg)}
-  to{transform:translateY(125vh) rotate(360deg)}
+@keyframes particleFloat{
+  from{transform:translateY(110vh) scale(.6);}
+  to{transform:translateY(-140px) scale(1.4);}
 }
 
 .container,.navbar{
@@ -80,83 +81,84 @@ body{
   z-index:3;
 }
 
-.ai-avatar-stage{
+.quantum-chamber{
   position:relative;
-  width:280px;
-  height:300px;
-  margin:10px auto 20px;
+  width:310px;
+  height:340px;
+  margin:8px auto 20px;
 }
 
-.avatar-ring{
+.holo-ring{
   position:absolute;
   border-radius:50%;
   border:1px solid rgba(56,189,248,.35);
   animation:spin 12s linear infinite;
 }
 
-.avatar-ring.r1{inset:14px}
-.avatar-ring.r2{inset:36px;border-color:rgba(34,197,94,.28);animation-duration:16s}
-.avatar-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:22s}
+.holo-ring.r1{inset:10px;}
+.holo-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s;}
+.holo-ring.r3{inset:-4px;border-color:rgba(147,197,253,.22);animation-duration:23s;}
+.holo-ring.r4{inset:62px;border-color:rgba(56,189,248,.20);animation-duration:28s;}
 
-.avatar-ring::before{
+.holo-ring::before{
   content:"";
   width:11px;
   height:11px;
   border-radius:50%;
-  background:#38bdf8;
   position:absolute;
-  top:18px;
+  top:20px;
   left:50%;
-  box-shadow:0 0 22px #38bdf8;
+  background:#38bdf8;
+  box-shadow:0 0 24px #38bdf8;
 }
 
 @keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
 }
 
-.zella-avatar{
+.zella-hologram{
   position:absolute;
-  inset:58px 42px 18px;
-  border-radius:120px 120px 42px 42px;
+  inset:58px 38px 8px;
+  border-radius:140px 140px 48px 48px;
   background:
-    radial-gradient(circle at 50% 22%,rgba(224,242,254,.98),rgba(56,189,248,.55) 22%,transparent 38%),
-    linear-gradient(180deg,rgba(56,189,248,.55),rgba(15,23,42,.96));
-  border:1px solid rgba(56,189,248,.30);
+    radial-gradient(circle at 50% 20%,rgba(224,242,254,.98),rgba(56,189,248,.60) 22%,transparent 40%),
+    linear-gradient(180deg,rgba(56,189,248,.52),rgba(15,23,42,.96));
+  border:1px solid rgba(56,189,248,.32);
   box-shadow:
-    0 0 55px rgba(56,189,248,.55),
-    inset 0 0 35px rgba(56,189,248,.16);
-  animation:avatarBreath 4s ease-in-out infinite;
+    0 0 60px rgba(56,189,248,.62),
+    inset 0 0 38px rgba(56,189,248,.18);
+  animation:hologramBreath 4s ease-in-out infinite;
   overflow:hidden;
 }
 
-@keyframes avatarBreath{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.045)}
+@keyframes hologramBreath{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.045);}
 }
 
-.avatar-face{
+.holo-face{
   position:absolute;
   top:48px;
   left:50%;
   transform:translateX(-50%);
-  width:130px;
-  height:95px;
+  width:140px;
+  height:100px;
   border-radius:50%;
   background:radial-gradient(circle,#0f172a 0%,#020617 72%);
-  box-shadow:inset 0 0 35px rgba(56,189,248,.45);
+  box-shadow:inset 0 0 38px rgba(56,189,248,.48);
 }
 
-.avatar-eyes{
+.holo-eyes{
   position:absolute;
-  top:36px;
+  top:38px;
   left:50%;
   transform:translateX(-50%);
   display:flex;
-  gap:32px;
+  gap:36px;
 }
 
-.avatar-eyes span{
+.holo-eyes span{
   width:16px;
   height:16px;
   border-radius:50%;
@@ -166,73 +168,76 @@ body{
 }
 
 @keyframes blink{
-  0%,92%,100%{height:16px}
-  96%{height:2px}
+  0%,92%,100%{height:16px;}
+  96%{height:2px;}
 }
 
-.avatar-core{
+.holo-core{
   position:absolute;
-  bottom:34px;
+  bottom:36px;
   left:50%;
   transform:translateX(-50%);
-  width:58px;
-  height:58px;
+  width:62px;
+  height:62px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   color:#e0f2fe;
-  font-size:32px;
+  font-size:34px;
   font-weight:950;
   background:radial-gradient(circle,#38bdf8,#0f172a 68%);
-  box-shadow:0 0 38px rgba(56,189,248,.80);
-  animation:coreGlow 2.8s ease-in-out infinite;
+  box-shadow:0 0 42px rgba(56,189,248,.86);
+  animation:holoCore 2.8s ease-in-out infinite;
 }
 
-@keyframes coreGlow{
-  50%{box-shadow:0 0 65px rgba(56,189,248,1);transform:translateX(-50%) scale(1.08)}
+@keyframes holoCore{
+  50%{
+    box-shadow:0 0 72px rgba(56,189,248,1);
+    transform:translateX(-50%) scale(1.08);
+  }
 }
 
-.avatar-scan{
+.holo-scan{
   position:absolute;
   left:0;
   right:0;
-  top:45%;
+  top:46%;
   height:2px;
   background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-  box-shadow:0 0 28px rgba(56,189,248,.9);
-  animation:avatarScan 3s ease-in-out infinite;
+  box-shadow:0 0 30px rgba(56,189,248,.90);
+  animation:holoScan 3s ease-in-out infinite;
 }
 
-@keyframes avatarScan{
-  0%,100%{transform:translateY(-70px);opacity:.18}
-  50%{transform:translateY(88px);opacity:1}
+@keyframes holoScan{
+  0%,100%{transform:translateY(-75px);opacity:.18;}
+  50%{transform:translateY(95px);opacity:1;}
 }
 
-.ultra-card{
+.quantum-card{
   position:relative;
   overflow:hidden;
   padding:22px;
-  border-radius:32px;
-  background:rgba(15,23,42,.84);
+  border-radius:34px;
+  background:rgba(15,23,42,.86);
   border:1px solid rgba(148,163,184,.14);
   box-shadow:
-    inset 0 0 32px rgba(56,189,248,.035),
-    0 22px 60px rgba(0,0,0,.28);
+    inset 0 0 34px rgba(56,189,248,.035),
+    0 22px 65px rgba(0,0,0,.30);
 }
 
-.ultra-card::after{
+.quantum-card::after{
   content:"";
   position:absolute;
-  width:120px;
-  height:120px;
-  right:-45px;
-  bottom:-45px;
+  width:140px;
+  height:140px;
+  right:-55px;
+  bottom:-55px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.24),transparent 70%);
+  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
 }
 
-.ultra-badge{
+.quantum-badge{
   display:inline-flex;
   align-items:center;
   gap:8px;
@@ -244,7 +249,7 @@ body{
   font-weight:950;
 }
 
-.ultra-dot{
+.quantum-dot{
   width:9px;
   height:9px;
   border-radius:50%;
@@ -252,45 +257,17 @@ body{
   box-shadow:0 0 18px #22c55e;
 }
 
-.chat-panel{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  margin-top:18px;
-}
-
-.chat-bubble{
-  max-width:90%;
-  padding:16px 18px;
-  border-radius:24px;
-  line-height:1.65;
-  font-size:15px;
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.user-bubble{
-  align-self:flex-end;
-  background:linear-gradient(135deg,#0284c7,#2563eb);
-  color:#fff;
-}
-
-.zella-bubble{
-  align-self:flex-start;
-  background:rgba(15,23,42,.90);
-  color:#e5eefb;
-}
-
-.ultra-input{
+.quantum-input{
   display:flex;
   gap:10px;
   margin-top:16px;
   padding:10px;
   border-radius:999px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(56,189,248,.16);
+  background:rgba(15,23,42,.90);
+  border:1px solid rgba(56,189,248,.18);
 }
 
-.ultra-input input{
+.quantum-input input{
   flex:1;
   border:none;
   outline:none;
@@ -300,7 +277,7 @@ body{
   padding:0 12px;
 }
 
-.ultra-input button{
+.quantum-input button{
   border:none;
   border-radius:999px;
   padding:14px 18px;
@@ -309,75 +286,107 @@ body{
   color:#020617;
 }
 
-.quick-grid{
+.quantum-chat{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:18px;
+}
+
+.chat-bubble{
+  max-width:92%;
+  padding:16px 18px;
+  border-radius:24px;
+  line-height:1.65;
+  font-size:15px;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.user-bubble{
+  align-self:flex-end;
+  color:white;
+  background:linear-gradient(135deg,#0284c7,#2563eb);
+}
+
+.zella-bubble{
+  align-self:flex-start;
+  color:#e5eefb;
+  background:rgba(15,23,42,.92);
+}
+
+.quantum-actions{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:12px;
   margin-top:16px;
 }
 
-.quick-card{
-  padding:14px;
+.quantum-action{
+  padding:15px;
   border-radius:22px;
   border:1px solid rgba(148,163,184,.12);
   background:rgba(255,255,255,.045);
   color:#e5eefb;
   font-weight:900;
   cursor:pointer;
+  transition:.25s ease;
+}
+
+.quantum-action:hover{
+  transform:translateY(-4px);
+  border-color:rgba(56,189,248,.34);
+  box-shadow:0 0 30px rgba(56,189,248,.14);
 }
 
 @media(max-width:430px){
-  .quick-grid{grid-template-columns:1fr}
+  .quantum-actions{grid-template-columns:1fr;}
 }
 </style>
 
-<div class="ultra-bg"></div>
-<div class="ultra-grid"></div>
+<div class="quantum-bg"></div>
+<div class="quantum-grid"></div>
 
-<div class="ultra-rain">
-  <span>BTC</span>
-  <span>ETH</span>
-  <span>AI</span>
-  <span>SCAN</span>
-  <span>ZELLA</span>
-  <span>ULTRA</span>
+<div class="quantum-particles">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
 </div>
 
 <nav class="navbar">
   <div class="nav-inner">
     <div class="logo">ZELLA</div>
-    <div class="avatar-dot">V8</div>
+    <div class="avatar-dot">V9</div>
   </div>
 </nav>
 
 <main class="container">
 
-<section class="ultra-card">
+<section class="quantum-card">
 
-  <div class="ultra-badge">
-    <span class="ultra-dot"></span>
-    Zella Copilot V8 Ultra Online
+  <div class="quantum-badge">
+    <span class="quantum-dot"></span>
+    Zella Copilot V9 Quantum Online
   </div>
 
-  <div class="ai-avatar-stage">
-    <div class="avatar-ring r1"></div>
-    <div class="avatar-ring r2"></div>
-    <div class="avatar-ring r3"></div>
+  <div class="quantum-chamber">
+    <div class="holo-ring r1"></div>
+    <div class="holo-ring r2"></div>
+    <div class="holo-ring r3"></div>
+    <div class="holo-ring r4"></div>
 
-    <div class="zella-avatar">
-      <div class="avatar-face">
-        <div class="avatar-eyes">
+    <div class="zella-hologram">
+      <div class="holo-face">
+        <div class="holo-eyes">
           <span></span>
           <span></span>
         </div>
       </div>
 
-      <div class="avatar-core">Z</div>
-      <div class="avatar-scan"></div>
+      <div class="holo-core">Z</div>
+      <div class="holo-scan"></div>
     </div>
   </div>
 
-  <div class="eyebrow">THE BRAIN OF ZELLA</div>
+  <div class="eyebrow">THE QUANTUM BRAIN OF ZELLA</div>
 
   <h1 class="command-title">
     Ask Zella<br>
@@ -385,33 +394,33 @@ body{
   </h1>
 
   <p class="briefing-text">
-    Talk to your AI trading copilot. Analyze markets, understand signals,
-    explain crypto concepts, review risk, and prepare smarter trading decisions.
+    A premium AI command system for trading intelligence, education,
+    market analysis, risk review, strategy thinking and live opportunity scanning.
   </p>
 
 </section>
 
 <section class="briefing-card">
 
-  <div class="briefing-title">ULTRA CHAT</div>
+  <div class="briefing-title">QUANTUM CHAT</div>
 
-  <div class="chat-panel" id="chatBox">
+  <div class="quantum-chat" id="chatBox">
     <div class="chat-bubble zella-bubble">
-      Hey, I’m Zella. I can chat naturally, explain crypto, analyze live scanner data,
-      review risk, and help you understand trade setups before execution.
+      Hey, I’m Zella Quantum. Ask me naturally, analyze markets,
+      review scanner intelligence, explain risk, or prepare smarter trading decisions.
     </div>
   </div>
 
-  <div class="ultra-input">
-    <input id="userMessage" placeholder="Ask Zella anything..." onkeydown="handleEnter(event)">
+  <div class="quantum-input">
+    <input id="userMessage" placeholder="Talk to Zella Quantum..." onkeydown="handleEnter(event)">
     <button onclick="sendMessage()">Send</button>
   </div>
 
-  <div class="quick-grid">
-    <div class="quick-card" onclick="quickAsk('Analyze BTC with live market context')">Analyze BTC</div>
-    <div class="quick-card" onclick="quickAsk('What is the best opportunity right now?')">Best Opportunity</div>
-    <div class="quick-card" onclick="quickAsk('Explain market risk like I am a beginner')">Explain Risk</div>
-    <div class="quick-card" onclick="quickAsk('Summarize the current market mood')">Market Mood</div>
+  <div class="quantum-actions">
+    <div class="quantum-action" onclick="quickAsk('Analyze BTC with live market context')">Analyze BTC</div>
+    <div class="quantum-action" onclick="quickAsk('What is the best opportunity right now?')">Best Opportunity</div>
+    <div class="quantum-action" onclick="quickAsk('Explain market risk like I am a beginner')">Explain Risk</div>
+    <div class="quantum-action" onclick="quickAsk('Summarize the current market mood')">Market Mood</div>
   </div>
 
 </section>
@@ -419,8 +428,8 @@ body{
 <section class="mini-grid">
 
   <div class="mini-box">
-    <div class="mini-label">AI Mode</div>
-    <div class="mini-value blue">Ultra</div>
+    <div class="mini-label">AI State</div>
+    <div class="mini-value blue" id="aiState">Idle</div>
   </div>
 
   <div class="mini-box">
@@ -447,7 +456,7 @@ body{
   <div id="marketFeed" class="ranking-list">
     <div class="rank-row">
       <div class="rank-position">--</div>
-      <div class="rank-asset">Loading live intelligence...</div>
+      <div class="rank-asset">Loading quantum intelligence...</div>
       <div class="rank-score">--</div>
     </div>
   </div>
@@ -501,13 +510,10 @@ body{
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";
-
 let scannerItems = [];
 
 function handleEnter(event){
-  if(event.key === "Enter"){
-    sendMessage();
-  }
+  if(event.key === "Enter") sendMessage();
 }
 
 function quickAsk(text){
@@ -517,31 +523,34 @@ function quickAsk(text){
 
 function addBubble(role,text){
   const chatBox = document.getElementById("chatBox");
-
   const bubble = document.createElement("div");
+
   bubble.className =
     role === "user"
       ? "chat-bubble user-bubble"
       : "chat-bubble zella-bubble";
 
   bubble.innerHTML = text.replace(/\n/g,"<br>");
-
   chatBox.appendChild(bubble);
   bubble.scrollIntoView({behavior:"smooth"});
 }
 
-function thinkingBubble(){
-  addBubble(
-    "zella",
-    "Zella Ultra is thinking...<br>Scanning market intelligence...<br>Preparing response..."
-  );
-}
-
 function removeLastBubble(){
   const chatBox = document.getElementById("chatBox");
-  if(chatBox.lastChild){
-    chatBox.lastChild.remove();
-  }
+  if(chatBox.lastChild) chatBox.lastChild.remove();
+}
+
+function setAIState(state){
+  document.getElementById("aiState").textContent = state;
+}
+
+function thinkingBubble(){
+  setAIState("Thinking");
+
+  addBubble(
+    "zella",
+    "Zella Quantum is thinking...<br>Scanning market intelligence...<br>Checking opportunity radar...<br>Preparing premium response..."
+  );
 }
 
 function decideMood(items){
@@ -612,15 +621,13 @@ async function sendMessage(){
   try{
     const response = await fetch(API_URL + "/copilot",{
       method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
+      headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
         message,
         userId:localStorage.getItem("zellaUserId") || "guest",
         context:{
           page:"copilot.html",
-          mode:"v8-ultra",
+          mode:"v9-quantum",
           scanner:scannerItems.slice(0,5)
         }
       })
@@ -629,6 +636,7 @@ async function sendMessage(){
     const data = await response.json();
 
     removeLastBubble();
+    setAIState("Online");
 
     addBubble(
       "zella",
@@ -639,10 +647,11 @@ async function sendMessage(){
     console.error(error);
 
     removeLastBubble();
+    setAIState("Connection Error");
 
     addBubble(
       "zella",
-      "Connection error. Zella Ultra could not reach the backend."
+      "Connection error. Zella Quantum could not reach the backend."
     );
   }
 }

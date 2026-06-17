@@ -404,7 +404,7 @@ window.loginWithGoogle = async function(){
     setLoading("Login successful. Opening dashboard...");
 
     setTimeout(() => {
-      window.location.href = "dashboard.html";
+      window.location.href = "splash.html";
     }, 800);
 
   }catch(error){
@@ -487,7 +487,7 @@ window.loginWithEmail = async function(){
 
     setTimeout(() => {
       window.location.href = "splash.html";
-    }, 800);
+    }, 5000);
 
   }catch(error){
     showMessage(error.message);
@@ -513,7 +513,7 @@ window.resetPassword = async function(){
 
 onAuthStateChanged(auth, user => {
   if(user && user.emailVerified){
-    window.location.href = "dashboard.html";
+    window.location.href = "splash.html";
   }
 });
 

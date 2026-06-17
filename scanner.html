@@ -3,11 +3,227 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Scanner V6</title>
+<title>Zella Scanner V11 Ultra</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+<style>
+*{box-sizing:border-box}
+body{overflow-x:hidden}
+
+.scan-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 10%,rgba(56,189,248,.25),transparent 30%),
+    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    #020617;
+}
+
+.scan-grid-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:scanGridMove 18s linear infinite;
+}
+
+@keyframes scanGridMove{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+
+.scan-particles{
+  position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+}
+
+.scan-particles span{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:#38bdf8;box-shadow:0 0 18px #38bdf8;opacity:.42;
+  animation:scanFloat 12s linear infinite;
+}
+
+.scan-particles span:nth-child(1){left:7%;animation-delay:0s}
+.scan-particles span:nth-child(2){left:24%;animation-delay:2s}
+.scan-particles span:nth-child(3){left:41%;animation-delay:5s}
+.scan-particles span:nth-child(4){left:58%;animation-delay:1s}
+.scan-particles span:nth-child(5){left:76%;animation-delay:4s}
+.scan-particles span:nth-child(6){left:91%;animation-delay:3s}
+
+@keyframes scanFloat{
+  from{transform:translateY(110vh) scale(.6)}
+  to{transform:translateY(-140px) scale(1.4)}
+}
+
+.container,.navbar{position:relative;z-index:3}
+
+.scanner-hero{
+  position:relative;overflow:hidden;padding:22px;border-radius:34px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:inset 0 0 34px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.30);
+}
+
+.scanner-hero::after{
+  content:"";position:absolute;width:160px;height:160px;right:-60px;bottom:-60px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
+}
+
+.scanner-core-wrap{
+  width:230px;height:230px;margin:8px auto 22px;position:relative;
+}
+
+.scanner-ring{
+  position:absolute;border-radius:50%;
+  border:1px solid rgba(56,189,248,.38);
+  animation:spin 12s linear infinite;
+}
+
+.scanner-ring.r1{inset:12px}
+.scanner-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s}
+.scanner-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s}
+.scanner-ring.r4{inset:58px;border-color:rgba(56,189,248,.18);animation-duration:28s}
+
+.scanner-ring::before{
+  content:"";width:11px;height:11px;border-radius:50%;
+  position:absolute;top:18px;left:50%;
+  background:#38bdf8;box-shadow:0 0 24px #38bdf8;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.scanner-core{
+  position:absolute;inset:58px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
+  box-shadow:0 0 42px rgba(56,189,248,.90),0 0 92px rgba(37,99,235,.44);
+  animation:scannerPulse 4s ease-in-out infinite;
+}
+
+.scanner-core svg{
+  width:58px;height:58px;fill:none;stroke:#020617;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+
+@keyframes scannerPulse{
+  0%,100%{transform:scale(1);filter:brightness(1)}
+  50%{transform:scale(1.12);filter:brightness(1.35)}
+}
+
+.scanner-sweep{
+  position:absolute;left:0;right:0;top:50%;height:2px;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 26px rgba(56,189,248,.85);
+  animation:scannerSweep 3s ease-in-out infinite;
+}
+
+@keyframes scannerSweep{
+  0%,100%{transform:translateY(-72px);opacity:.2}
+  50%{transform:translateY(72px);opacity:1}
+}
+
+.scanner-card{
+  position:relative;overflow:hidden;padding:18px;border-radius:28px;
+  background:rgba(15,23,42,.84);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:inset 0 0 28px rgba(56,189,248,.035),0 18px 48px rgba(0,0,0,.26);
+  transition:.28s ease;
+}
+
+.scanner-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(56,189,248,.34);
+  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+
+.scanner-card::after{
+  content:"";position:absolute;width:110px;height:110px;right:-42px;bottom:-42px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.22),transparent 70%);
+}
+
+.scanner-podium{
+  display:grid;grid-template-columns:1fr;gap:14px;margin-top:18px;
+}
+
+.asset-row{
+  position:relative;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+  padding:16px;border-radius:26px;
+  background:rgba(15,23,42,.86);
+  border:1px solid rgba(148,163,184,.14);
+  overflow:hidden;
+}
+
+.asset-rank{
+  width:44px;height:44px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:950;color:#020617;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  box-shadow:0 0 24px rgba(56,189,248,.35);
+}
+
+.asset-name{
+  font-size:20px;font-weight:950;color:#e5eefb;
+}
+
+.asset-meta{
+  color:#94a3b8;font-size:12px;line-height:1.6;margin-top:3px;
+}
+
+.asset-score{
+  font-size:24px;font-weight:950;color:#22c55e;
+}
+
+.signal-pill{
+  display:inline-flex;padding:7px 10px;border-radius:999px;
+  font-size:11px;font-weight:950;margin-top:7px;
+  background:rgba(56,189,248,.12);color:#38bdf8;
+}
+
+.bar-wrap{
+  width:100%;height:10px;border-radius:999px;overflow:hidden;
+  background:rgba(255,255,255,.08);margin-top:10px;
+}
+
+.bar-fill{
+  height:100%;width:0%;border-radius:999px;
+  background:linear-gradient(90deg,#38bdf8,#22c55e);
+  box-shadow:0 0 18px rgba(56,189,248,.45);
+  transition:1s ease;
+}
+
+.heatmap-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px;
+}
+
+.heat-tile{
+  padding:16px;border-radius:24px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.heat-asset{font-size:22px;font-weight:950;color:#e5eefb}
+.heat-signal{font-size:12px;color:#94a3b8;margin-top:5px}
+
+@media(max-width:430px){
+  .heatmap-grid{grid-template-columns:1fr}
+}
+</style>
+
+<div class="scan-bg"></div>
+<div class="scan-grid-bg"></div>
+
+<div class="scan-particles">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+</div>
 
 <nav class="navbar">
   <div class="nav-inner">
@@ -18,47 +234,64 @@
 
 <main class="container">
 
-<section class="command-card">
+<section class="scanner-hero">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">LIVE MARKET SCANNER V6</div>
-      <h1 class="command-title">Scanner<br>Intelligence.</h1>
+  <div class="scanner-core-wrap">
+    <div class="scanner-ring r1"></div>
+    <div class="scanner-ring r2"></div>
+    <div class="scanner-ring r3"></div>
+    <div class="scanner-ring r4"></div>
+
+    <div class="scanner-core">
+      <svg viewBox="0 0 24 24">
+        <path d="M5 19V11"/>
+        <path d="M12 19V5"/>
+        <path d="M19 19V8"/>
+        <path d="M4 19H20"/>
+      </svg>
     </div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label" id="scannerStatus">LIVE</span>
-    </div>
+    <div class="scanner-sweep"></div>
   </div>
 
+  <div class="eyebrow">ZELLA SCANNER V11 ULTRA</div>
+
+  <h1 class="command-title">
+    Market<br>
+    Intelligence.
+  </h1>
+
   <p class="briefing-text">
-    Zella ranks assets using live price, 24h change, momentum,
-    trend, structure, opportunity, liquidity, volatility, risk and news scores.
+    Zella ranks live crypto assets using confidence, momentum, trend,
+    liquidity, volatility, risk and opportunity intelligence.
   </p>
+
+  <div class="command-status-pill">
+    Live scanner online
+  </div>
 
 </section>
 
 <section class="mini-grid">
 
-  <div class="mini-box">
-    <div class="mini-label">Selected Asset</div>
-    <div class="mini-value blue" id="assetView">--</div>
+  <div class="mini-box scanner-card">
+    <div class="mini-label">Market Mood</div>
+    <div class="mini-value green" id="marketMood">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Live Price</div>
-    <div class="mini-value green" id="priceView">--</div>
+  <div class="mini-box scanner-card">
+    <div class="mini-label">Top Asset</div>
+    <div class="mini-value blue" id="topAsset">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">24h Change</div>
-    <div class="mini-value orange" id="changeView">--</div>
+  <div class="mini-box scanner-card">
+    <div class="mini-label">Confidence</div>
+    <div class="mini-value orange" id="topConfidence">--</div>
   </div>
 
-  <div class="mini-box">
-    <div class="mini-label">Signal</div>
-    <div class="mini-value blue" id="signalView">--</div>
+  <div class="mini-box scanner-card">
+    <div class="mini-label">Risk Pulse</div>
+    <div class="mini-value blue" id="riskPulse">--</div>
   </div>
 
 </section>
@@ -67,146 +300,77 @@
 
   <div class="briefing-title">TOP QUANT VERDICT</div>
 
-  <div class="live-row">
-    <div>
-      <h2 class="briefing-headline" id="topAssetHeadline">
-        Scanning...
-      </h2>
+  <h2 class="briefing-headline" id="topVerdict">
+    Scanning live market...
+  </h2>
 
-      <p class="briefing-text" id="topAssetSummary">
-        Loading live scanner data.
-      </p>
-    </div>
-
-    <div style="
-      width:120px;
-      height:120px;
-      border-radius:50%;
-      border:14px solid rgba(56,189,248,.18);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:28px;
-      color:#38bdf8;
-    " id="confidenceRing">
-      --
-    </div>
-  </div>
-
-</section>
-
-<section class="mini-grid">
-
-  <div class="mini-box">
-    <div class="mini-label">Confidence</div>
-    <div class="mini-value green" id="confidenceView">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Momentum</div>
-    <div class="mini-value green" id="momentumView">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Trend Score</div>
-    <div class="mini-value blue" id="trendScoreView">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Structure</div>
-    <div class="mini-value blue" id="structureView">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Opportunity</div>
-    <div class="mini-value green" id="opportunityView">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Liquidity</div>
-    <div class="mini-value orange" id="liquidityView">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Volatility</div>
-    <div class="mini-value orange" id="volatilityView">--</div>
-  </div>
-
-  <div class="mini-box">
-    <div class="mini-label">Risk</div>
-    <div class="mini-value blue" id="riskView">--</div>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">LIVE QUANT RANKING</div>
-
-  <div id="rankingArea">
-    <div class="rank-row">
-      <div class="rank-position">--</div>
-      <div class="rank-asset">Loading scanner...</div>
-      <div class="rank-score">--</div>
-    </div>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">DATA DETAILS</div>
-
-  <p class="briefing-text" id="dataDetails">
-    Waiting for live source.
+  <p class="briefing-text" id="verdictText">
+    Zella is connecting to the scanner engine.
   </p>
 
+  <div class="hero-actions">
+    <button class="btn" onclick="loadScanner()">Refresh Scan</button>
+    <a href="copilot.html" class="btn secondary">Ask Zella</a>
+  </div>
+
 </section>
 
-</main>
+<section class="briefing-card">
+
+  <div class="briefing-title">OPPORTUNITY LEADERBOARD</div>
+
+  <div class="scanner-podium" id="scannerList">
+    <div class="asset-row">
+      <div class="asset-rank">--</div>
+      <div>
+        <div class="asset-name">Loading assets...</div>
+        <div class="asset-meta">Zella is scanning live market data.</div>
+      </div>
+      <div class="asset-score">--</div>
+    </div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">SIGNAL HEATMAP</div>
+
+  <div class="heatmap-grid" id="heatmapGrid"></div>
+
+</section>
 
 <nav class="zella-nav">
 
   <a href="dashboard.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
     <span>Home</span>
   </a>
 
-  <a href="scanner.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M5 19V11M12 19V5M19 19V8"/>
-    </svg>
+  <a href="scanner.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
     <span>Scanner</span>
   </a>
 
   <a href="copilot.html" class="nav-item copilot-center">
     <div class="copilot-core">
-
       <svg viewBox="0 0 24 24" class="copilot-icon">
         <rect x="6" y="8" width="12" height="9" rx="2"/>
         <circle cx="9" cy="12" r="1"/>
         <circle cx="15" cy="12" r="1"/>
         <path d="M12 4V8"/>
       </svg>
-
     </div>
     <span>Copilot</span>
   </a>
 
   <a href="market.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M4 16L9 11L13 14L20 7"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
     <span>Market</span>
   </a>
 
   <a href="watchlist.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M6 3H18V21L12 17L6 21V3Z"/>
-    </svg>
+    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
     <span>Watchlist</span>
   </a>
 
@@ -224,67 +388,65 @@
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 
-let scannerItems = [];
-
-function money(value){
+function formatMoney(value){
   const num = Number(value || 0);
   return "$" + num.toLocaleString(undefined,{
     maximumFractionDigits: num < 10 ? 4 : 2
   });
 }
 
-function percent(value){
-  const num = Number(value);
-  return Number.isFinite(num) ? num.toFixed(2) + "%" : "--";
+function decideMood(items){
+  if(!items.length) return "--";
+
+  const avg =
+    items.reduce((sum,item)=>sum + Number(item.confidence || 0),0) / items.length;
+
+  if(avg >= 70) return "Bullish";
+  if(avg >= 55) return "Neutral";
+  return "Risk Off";
 }
 
-function score(value){
-  return Number.isFinite(Number(value)) ? value + "%" : "--";
-}
+function renderLeaderboard(items){
+  const list = document.getElementById("scannerList");
 
-function updateSelected(asset){
-  document.getElementById("assetView").textContent = asset.asset;
-  document.getElementById("priceView").textContent = money(asset.price);
-  document.getElementById("changeView").textContent = percent(asset.change24h);
-  document.getElementById("signalView").textContent = asset.signal;
+  list.innerHTML = items.map((asset,index)=>`
+    <div class="asset-row">
+      <div class="asset-rank">#${index + 1}</div>
 
-  document.getElementById("confidenceView").textContent = score(asset.confidence);
-  document.getElementById("momentumView").textContent = score(asset.momentumScore);
-  document.getElementById("trendScoreView").textContent = score(asset.trendScore);
-  document.getElementById("structureView").textContent = score(asset.structureScore);
-  document.getElementById("opportunityView").textContent = score(asset.opportunityScore);
-  document.getElementById("liquidityView").textContent = score(asset.liquidityScore);
-  document.getElementById("volatilityView").textContent = score(asset.volatilityScore);
-  document.getElementById("riskView").textContent = score(asset.riskScore);
+      <div>
+        <div class="asset-name">${asset.asset}</div>
 
-  document.getElementById("confidenceRing").textContent = score(asset.confidence);
+        <div class="asset-meta">
+          ${formatMoney(asset.price)} • ${asset.trend} • ${asset.source}<br>
+          Momentum ${asset.momentumScore}% • Liquidity ${asset.liquidityScore}% • Risk ${asset.riskScore}%
+        </div>
 
-  document.getElementById("topAssetHeadline").textContent =
-    `${asset.asset} • ${asset.signal}`;
+        <div class="signal-pill">${asset.signal}</div>
 
-  document.getElementById("topAssetSummary").textContent =
-    `${asset.asset} is ${asset.trend}. Confidence ${asset.confidence}%, momentum ${asset.momentumScore}%, opportunity ${asset.opportunityScore}%, risk ${asset.riskScore}%.`;
-
-  document.getElementById("dataDetails").textContent =
-    `Source: ${asset.source} • Engine: ${asset.engine} • Updated: ${new Date(asset.updatedAt).toLocaleString()}`;
-}
-
-function renderRanking(items){
-  const area = document.getElementById("rankingArea");
-
-  area.innerHTML = items.map((asset,index)=>`
-    <div class="rank-row" onclick="updateSelected(scannerItems[${index}])">
-      <div class="rank-position">#${index + 1}</div>
-
-      <div class="rank-asset">
-        ${asset.asset}<br>
-        <small>
-          ${asset.signal} • Risk ${asset.riskScore}% • News ${asset.newsScore}%
-        </small>
+        <div class="bar-wrap">
+          <div class="bar-fill" style="width:${asset.confidence}%"></div>
+        </div>
       </div>
 
-      <div class="rank-score">
-        ${asset.confidence}%
+      <div class="asset-score">${asset.confidence}%</div>
+    </div>
+  `).join("");
+}
+
+function renderHeatmap(items){
+  const grid = document.getElementById("heatmapGrid");
+
+  grid.innerHTML = items.map(asset=>`
+    <div class="heat-tile">
+      <div class="heat-asset">${asset.asset}</div>
+      <div class="heat-signal">${asset.signal}</div>
+
+      <div class="bar-wrap">
+        <div class="bar-fill" style="width:${asset.opportunityScore}%"></div>
+      </div>
+
+      <div class="asset-meta">
+        Opportunity ${asset.opportunityScore}% • Risk ${asset.riskScore}%
       </div>
     </div>
   `).join("");
@@ -292,30 +454,57 @@ function renderRanking(items){
 
 async function loadScanner(){
   try{
-    document.getElementById("scannerStatus").textContent = "LOADING";
-
     const res = await fetch(API_URL + "/scanner");
     const data = await res.json();
 
-    scannerItems = data.items || [];
+    const items = data.items || [];
 
-    if(scannerItems.length){
-      updateSelected(scannerItems[0]);
-      renderRanking(scannerItems);
-      document.getElementById("scannerStatus").textContent = "LIVE";
-    }else{
-      document.getElementById("scannerStatus").textContent = "EMPTY";
+    if(!items.length){
+      document.getElementById("topVerdict").textContent =
+        "No scanner data available.";
+
+      document.getElementById("verdictText").textContent =
+        "Check backend connection and live market providers.";
+
+      return;
     }
+
+    const top = items[0];
+
+    const riskiest =
+      [...items].sort((a,b)=>b.riskScore - a.riskScore)[0];
+
+    const mood = decideMood(items);
+
+    document.getElementById("marketMood").textContent = mood;
+    document.getElementById("topAsset").textContent = top.asset;
+    document.getElementById("topConfidence").textContent = top.confidence + "%";
+    document.getElementById("riskPulse").textContent = riskiest.asset;
+
+    document.getElementById("topVerdict").textContent =
+      `${top.asset} leads Zella’s scanner with ${top.confidence}% confidence`;
+
+    document.getElementById("verdictText").textContent =
+      `${top.asset} currently shows ${top.signal}, ${top.trend} trend, ${top.momentumScore}% momentum and ${top.riskScore}% risk. Scanner is for intelligence only; trade setup belongs in Trade Prep / AutoTrade.`;
+
+    renderLeaderboard(items);
+    renderHeatmap(items);
 
   }catch(error){
     console.error(error);
-    document.getElementById("scannerStatus").textContent = "ERROR";
+
+    document.getElementById("topVerdict").textContent =
+      "Zella scanner could not connect.";
+
+    document.getElementById("verdictText").textContent =
+      "Check Render backend and /scanner endpoint.";
   }
 }
 
 loadScanner();
-setInterval(loadScanner, 30000);
+setInterval(loadScanner,30000);
 </script>
 
+</main>
 </body>
 </html>

@@ -1,7 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1 id="status">Testing Firebase...</h1>
+
 <script type="module">
 import { auth, db, realtimeDB } from "./firebase.js";
 
-console.log("Auth:", auth);
-console.log("Firestore:", db);
-console.log("RealtimeDB:", realtimeDB);
+document.getElementById("status").innerText =
+"✅ Firebase Loaded Successfully";
 </script>
+
+</body>
+</html>

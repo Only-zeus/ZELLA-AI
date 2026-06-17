@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Security Center</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<style>
+.security-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(56,189,248,.20),transparent 30%),
+    radial-gradient(circle at 80% 25%,rgba(34,197,94,.13),transparent 28%),
+    radial-gradient(circle at 50% 95%,rgba(37,99,235,.20),transparent 34%);
+}
+
+.security-grid{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,.06) 1px, transparent 1px);
+  background-size:42px 42px;
+  animation:securityGrid 18s linear infinite;
+}
+
+@keyframes securityGrid{
+  from{background-position:0 0;}
+  to{background-position:0 420px;}
+}
+
+.security-rain{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
+}
+
+.security-rain span{
+  position:absolute;
+  top:-120px;
+  opacity:.10;
+  font-size:30px;
+  font-weight:900;
+  color:#38bdf8;
+  animation:securityRain 16s linear infinite;
+}
+
+.security-rain span:nth-child(1){left:7%;}
+.security-rain span:nth-child(2){left:22%;animation-delay:2s;}
+.security-rain span:nth-child(3){left:39%;animation-delay:4s;}
+.security-rain span:nth-child(4){left:56%;animation-delay:1s;}
+.security-rain span:nth-child(5){left:73%;animation-delay:5s;}
+.security-rain span:nth-child(6){left:90%;animation-delay:3s;}
+
+@keyframes securityRain{
+  from{transform:translateY(-140px) rotate(0deg);}
+  to{transform:translateY(125vh) rotate(360deg);}
+}
+
+.container,
+.navbar{
+  position:relative;
+  z-index:3;
+}
+
+.security-core-wrap{
+  width:220px;
+  height:220px;
+  margin:10px auto 25px;
+  position:relative;
+}
+
+.security-shield{
+  position:absolute;
+  inset:62px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:34px;
+  background:
+    radial-gradient(circle at 35% 20%,rgba(255,255,255,.34),transparent 30%),
+    linear-gradient(135deg,#38bdf8,#2563eb);
+  box-shadow:
+    0 0 42px rgba(56,189,248,.65),
+    0 20px 70px rgba(37,99,235,.40);
+  animation:shieldPulse 4s ease-in-out infinite;
+}
+
+.security-shield svg{
+  width:58px;
+  height:58px;
+  fill:none;
+  stroke:#020617;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+@keyframes shieldPulse{
+  0%,100%{transform:scale(1) rotate(0deg);}
+  50%{transform:scale(1.08) rotate(2deg);}
+}
+
+.security-ring{
+  position:absolute;
+  inset:20px;
+  border:1px solid rgba(56,189,248,.35);
+  border-radius:50%;
+  animation:spin 11s linear infinite;
+}
+
+.security-ring:nth-child(2){
+  inset:38px;
+  border-color:rgba(34,197,94,.30);
+  animation-duration:15s;
+}
+
+.security-ring:nth-child(3){
+  inset:4px;
+  border-color:rgba(147,197,253,.22);
+  animation-duration:19s;
+}
+
+.security-ring::before{
+  content:"";
+  width:11px;
+  height:11px;
+  background:#22c55e;
+  border-radius:50%;
+  position:absolute;
+  top:18px;
+  left:50%;
+  box-shadow:0 0 20px #22c55e;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+.security-scan{
+  position:absolute;
+  left:0;
+  right:0;
+  height:2px;
+  top:50%;
+  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+  box-shadow:0 0 25px rgba(56,189,248,.8);
+  animation:scanMove 3s ease-in-out infinite;
+}
+
+@keyframes scanMove{
+  0%,100%{transform:translateY(-72px);opacity:.2;}
+  50%{transform:translateY(72px);opacity:1;}
+}
+
+.security-score{
+  width:138px;
+  height:138px;
+  border-radius:50%;
+  margin:20px auto 8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle,rgba(15,23,42,.95) 58%,transparent 60%),
+    conic-gradient(#38bdf8 0deg,#22c55e 280deg,rgba(148,163,184,.18) 280deg);
+  box-shadow:0 0 45px rgba(56,189,248,.25);
+}
+
+.security-score span{
+  font-size:28px;
+  font-weight:950;
+  color:#e5eefb;
+}
+
+.security-list{
+  display:grid;
+  gap:14px;
+  margin-top:18px;
+}
+
+.security-row{
+  padding:16px;
+  border-radius:24px;
+  background:rgba(15,23,42,.82);
+  border:1px solid rgba(148,163,184,.14);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+}
+
+.security-row strong{
+  color:#e5eefb;
+}
+
+.security-row small{
+  color:#94a3b8;
+}
+
+.status-pill{
+  padding:8px 11px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.status-good{
+  background:rgba(34,197,94,.14);
+  color:#22c55e;
+}
+
+.status-warn{
+  background:rgba(245,158,11,.14);
+  color:#f59e0b;
+}
+
+.status-off{
+  background:rgba(248,113,113,.14);
+  color:#fb7185;
+}
+</style>
+
+<div class="security-bg"></div>
+<div class="security-grid"></div>
+
+<div class="security-rain">
+  <span>SECURE</span>
+  <span>VERIFY</span>
+  <span>2FA</span>
+  <span>ZELLA</span>
+  <span>SESSION</span>
+  <span>SHIELD</span>
+</div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">SE</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<section class="command-card">
+
+  <div class="security-core-wrap">
+    <div class="security-ring"></div>
+    <div class="security-ring"></div>
+    <div class="security-ring"></div>
+
+    <div class="security-shield">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3L19 6V11C19 16 16 19 12 21C8 19 5 16 5 11V6Z"/>
+        <path d="M9 12L11 14L15 10"/>
+      </svg>
+    </div>
+
+    <div class="security-scan"></div>
+  </div>
+
+  <div class="eyebrow">ZELLA SECURITY CENTER</div>
+
+  <h1 class="command-title">
+    Account<br>
+    Protection.
+  </h1>
+
+  <p class="briefing-text">
+    Monitor verification, sessions, devices, login activity,
+    password recovery and two-factor security from one premium control center.
+  </p>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">SECURITY SCORE</div>
+
+  <div class="security-score">
+    <span id="securityScore">--</span>
+  </div>
+
+  <p class="briefing-text" id="securitySummary" style="text-align:center;">
+    Checking account protection...
+  </p>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">ACCOUNT STATUS</div>
+
+  <div class="security-list">
+
+    <div class="security-row">
+      <div>
+        <strong>Email Verification</strong><br>
+        <small id="emailStatusText">Checking...</small>
+      </div>
+      <span class="status-pill status-warn" id="emailStatusPill">CHECK</span>
+    </div>
+
+    <div class="security-row">
+      <div>
+        <strong>Current Session</strong><br>
+        <small id="sessionText">Active browser session</small>
+      </div>
+      <span class="status-pill status-good">ACTIVE</span>
+    </div>
+
+    <div class="security-row">
+      <div>
+        <strong>Two-Factor Authentication</strong><br>
+        <small>Authenticator app support coming next.</small>
+      </div>
+      <span class="status-pill status-warn">READY</span>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">SECURITY ACTIONS</div>
+
+  <div class="hero-actions">
+    <button class="btn" onclick="resendVerification()">Resend Verification</button>
+    <button class="btn secondary" onclick="resetPassword()">Reset Password</button>
+    <button class="btn secondary" onclick="logoutCurrent()">Logout</button>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">DEVICE / SESSION LIST</div>
+
+  <div class="security-list">
+
+    <div class="security-row">
+      <div>
+        <strong id="deviceName">Current Device</strong><br>
+        <small id="deviceDetails">Detecting browser...</small>
+      </div>
+      <span class="status-pill status-good">NOW</span>
+    </div>
+
+    <div class="security-row">
+      <div>
+        <strong>Other Sessions</strong><br>
+        <small>Advanced multi-device tracking will connect to backend later.</small>
+      </div>
+      <span class="status-pill status-warn">V2</span>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">LOGIN ACTIVITY</div>
+
+  <div class="security-list" id="loginActivity">
+    <div class="security-row">
+      <div>
+        <strong>Current Login</strong><br>
+        <small id="loginTime">Loading...</small>
+      </div>
+      <span class="status-pill status-good">SAFE</span>
+    </div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">TWO-FACTOR AUTHENTICATION</div>
+
+  <p class="briefing-text">
+    Zella will support authenticator-app based 2FA for stronger account protection.
+  </p>
+
+  <div class="security-list">
+    <div class="security-row">
+      <div>
+        <strong>Authenticator App</strong><br>
+        <small>Google Authenticator, Microsoft Authenticator, Authy.</small>
+      </div>
+      <span class="status-pill status-warn">COMING</span>
+    </div>
+  </div>
+
+</section>
+
+<nav class="zella-nav">
+
+  <a href="dashboard.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/>
+    </svg>
+    <span>Home</span>
+  </a>
+
+  <a href="scanner.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M5 19V11M12 19V5M19 19V8"/>
+    </svg>
+    <span>Scanner</span>
+  </a>
+
+  <a href="copilot.html" class="nav-item copilot-center">
+    <div class="copilot-core">
+      <svg viewBox="0 0 24 24" class="copilot-icon">
+        <rect x="6" y="8" width="12" height="9" rx="2"/>
+        <circle cx="9" cy="12" r="1"/>
+        <circle cx="15" cy="12" r="1"/>
+        <path d="M12 4V8"/>
+      </svg>
+    </div>
+    <span>Copilot</span>
+  </a>
+
+  <a href="market.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M4 16L9 11L13 14L20 7"/>
+    </svg>
+    <span>Market</span>
+  </a>
+
+  <a href="watchlist.html" class="nav-item">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <path d="M6 3H18V21L12 17L6 21V3Z"/>
+    </svg>
+    <span>Watchlist</span>
+  </a>
+
+  <a href="more.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" class="nav-icon">
+      <circle cx="12" cy="5" r="1.5"/>
+      <circle cx="12" cy="12" r="1.5"/>
+      <circle cx="12" cy="19" r="1.5"/>
+    </svg>
+    <span>More</span>
+  </a>
+
+</nav>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+
+import {
+  getAuth,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+  authDomain: "zella-424f2.firebaseapp.com",
+  projectId: "zella-424f2",
+  storageBucket: "zella-424f2.firebasestorage.app",
+  messagingSenderId: "1008967672362",
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const user = auth.currentUser;
+
+function updateSecurityUI(){
+
+  const scoreElement =
+    document.getElementById("securityScore");
+
+  const summary =
+    document.getElementById("securitySummary");
+
+  const emailStatusText =
+    document.getElementById("emailStatusText");
+
+  const emailStatusPill =
+    document.getElementById("emailStatusPill");
+
+  let score = 65;
+
+  if(user?.emailVerified){
+
+    score += 25;
+
+    emailStatusText.textContent =
+      "Email verified and protected";
+
+    emailStatusPill.textContent =
+      "VERIFIED";
+
+    emailStatusPill.className =
+      "status-pill status-good";
+
+  }else{
+
+    emailStatusText.textContent =
+      "Verification required";
+
+    emailStatusPill.textContent =
+      "PENDING";
+
+    emailStatusPill.className =
+      "status-pill status-warn";
+  }
+
+  scoreElement.textContent = score;
+
+  summary.textContent =
+    score >= 90
+      ? "Excellent account protection"
+      : "Additional security recommended";
+}
+
+window.resendVerification = async function(){
+
+  try{
+
+    if(!user){
+      alert("No active user found.");
+      return;
+    }
+
+    await sendEmailVerification(user);
+
+    alert(
+      "Verification email sent successfully."
+    );
+
+  }catch(error){
+
+    alert(error.message);
+  }
+};
+
+window.resetPassword = async function(){
+
+  try{
+
+    if(!user){
+      alert("No active user found.");
+      return;
+    }
+
+    await sendPasswordResetEmail(
+      auth,
+      user.email
+    );
+
+    alert(
+      "Password reset email sent."
+    );
+
+  }catch(error){
+
+    alert(error.message);
+  }
+};
+
+window.logoutCurrent = async function(){
+
+  try{
+
+    await signOut(auth);
+
+    localStorage.clear();
+    sessionStorage.clear();
+
+    window.location.href = "index.html";
+
+  }catch(error){
+
+    alert(error.message);
+  }
+};
+
+document.getElementById(
+  "deviceName"
+).textContent = navigator.platform;
+
+document.getElementById(
+  "deviceDetails"
+).textContent =
+  navigator.userAgent.substring(0,70);
+
+document.getElementById(
+  "loginTime"
+).textContent =
+  new Date().toLocaleString();
+
+updateSecurityUI();
+
+</script>
+
+</main>
+
+</body>
+</html>

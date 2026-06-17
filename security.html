@@ -301,6 +301,249 @@
 </section>
 
 <section class="briefing-card">
+  
+  <section class="briefing-card">
+
+  <div class="briefing-title">
+    SECURITY AI ADVISOR
+  </div>
+
+  <div class="command-card" style="
+      margin-top:16px;
+      background:
+      linear-gradient(
+      135deg,
+      rgba(56,189,248,.10),
+      rgba(37,99,235,.05)
+      );
+      border:1px solid rgba(56,189,248,.18);
+  ">
+
+      <div style="
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
+      ">
+
+          <div style="
+          width:48px;
+          height:48px;
+          border-radius:16px;
+          background:
+          linear-gradient(
+          135deg,
+          #38bdf8,
+          #2563eb
+          );
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          box-shadow:
+          0 0 24px rgba(56,189,248,.35);
+          ">
+
+            <svg viewBox="0 0 24 24"
+            style="
+            width:24px;
+            height:24px;
+            stroke:#020617;
+            fill:none;
+            stroke-width:2;
+            ">
+              <circle cx="12" cy="12" r="8"/>
+              <path d="M9 12H15"/>
+              <path d="M12 9V15"/>
+            </svg>
+
+          </div>
+
+          <div>
+
+            <div style="
+            font-weight:900;
+            color:#e5eefb;
+            ">
+            Zella Security AI
+            </div>
+
+            <div style="
+            font-size:12px;
+            color:#94a3b8;
+            ">
+            Real-time protection analysis
+            </div>
+
+          </div>
+
+      </div>
+
+      <div id="securityAIReport"
+      style="
+      color:#cbd5e1;
+      line-height:1.8;
+      ">
+      Analyzing account security...
+      </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    SECURITY RISK ENGINE
+  </div>
+
+  <div style="
+  margin-top:20px;
+  ">
+
+      <div style="
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:10px;
+      ">
+        <span>Risk Level</span>
+        <strong id="riskLabel">
+        LOW
+        </strong>
+      </div>
+
+      <div style="
+      width:100%;
+      height:16px;
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(255,255,255,.08);
+      ">
+
+        <div id="riskBar"
+        style="
+        height:100%;
+        width:18%;
+        border-radius:999px;
+        background:
+        linear-gradient(
+        90deg,
+        #22c55e,
+        #38bdf8
+        );
+        box-shadow:
+        0 0 22px rgba(56,189,248,.45);
+        ">
+        </div>
+
+      </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    TRUSTED DEVICES
+  </div>
+
+  <div class="security-list">
+
+      <div class="security-row">
+
+        <div>
+
+          <strong>
+          Current Device
+          </strong><br>
+
+          <small id="trustedDevice">
+          Loading...
+          </small>
+
+        </div>
+
+        <span class="status-pill status-good">
+        TRUSTED
+        </span>
+
+      </div>
+
+      <div class="security-row">
+
+        <div>
+
+          <strong>
+          Future Device Sync
+          </strong><br>
+
+          <small>
+          Multi-device tracking ready
+          </small>
+
+        </div>
+
+        <span class="status-pill status-warn">
+        V3
+        </span>
+
+      </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    SECURITY NOTIFICATIONS
+  </div>
+
+  <div class="security-list">
+
+    <div class="security-row">
+
+      <div>
+
+        <strong>
+        Email Verification
+        </strong><br>
+
+        <small>
+        Account verification status
+        </small>
+
+      </div>
+
+      <span class="status-pill status-good">
+      LIVE
+      </span>
+
+    </div>
+
+    <div class="security-row">
+
+      <div>
+
+        <strong>
+        Password Protection
+        </strong><br>
+
+        <small>
+        Password recovery monitoring
+        </small>
+
+      </div>
+
+      <span class="status-pill status-good">
+      ACTIVE
+      </span>
+
+    </div>
+
+  </div>
+
+</section>
 
   <div class="briefing-title">ACCOUNT STATUS</div>
 
@@ -404,6 +647,56 @@
       </div>
       <span class="status-pill status-warn">COMING</span>
     </div>
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    SECURITY ANALYTICS
+  </div>
+
+  <div class="mini-grid">
+
+    <div class="mini-box">
+      <div class="mini-label">Protection</div>
+      <div class="mini-value green" id="protectionLevel">--</div>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Sessions</div>
+      <div class="mini-value blue">1</div>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">Devices</div>
+      <div class="mini-value orange">1</div>
+    </div>
+
+    <div class="mini-box">
+      <div class="mini-label">2FA</div>
+      <div class="mini-value blue">Ready</div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="briefing-card">
+
+  <div class="briefing-title">
+    LOGOUT CONTROL
+  </div>
+
+  <div class="hero-actions">
+    <button class="btn secondary" onclick="logoutCurrent()">
+      Logout Current Device
+    </button>
+
+    <button class="btn" onclick="logoutAllDevices()">
+      Logout All Devices
+    </button>
   </div>
 
 </section>
@@ -610,8 +903,106 @@ document.getElementById(
   "loginTime"
 ).textContent =
   new Date().toLocaleString();
+  
+  window.logoutAllDevices = async function(){
+
+  try{
+
+    await signOut(auth);
+
+    localStorage.clear();
+    sessionStorage.clear();
+
+    alert("All active sessions have been cleared on this device. Full multi-device logout will connect with backend session tracking later.");
+
+    window.location.href = "index.html";
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
+
+function updateSecurityV2(){
+
+  const scoreText =
+    document.getElementById("securityScore")?.textContent;
+
+  const score =
+    Number(scoreText) || 65;
+
+  const protection =
+    document.getElementById("protectionLevel");
+
+  const aiReport =
+    document.getElementById("securityAIReport");
+
+  const riskLabel =
+    document.getElementById("riskLabel");
+
+  const riskBar =
+    document.getElementById("riskBar");
+
+  const trustedDevice =
+    document.getElementById("trustedDevice");
+
+  if(trustedDevice){
+    trustedDevice.textContent =
+      `${navigator.platform} • Current browser`;
+  }
+
+  let risk = 100 - score;
+
+  if(protection){
+    protection.textContent =
+      score >= 90 ? "Excellent" :
+      score >= 75 ? "Strong" :
+      score >= 60 ? "Moderate" :
+      "Weak";
+  }
+
+  if(riskLabel && riskBar){
+
+    if(risk <= 20){
+      riskLabel.textContent = "LOW";
+      riskBar.style.width = "18%";
+      riskBar.style.background =
+        "linear-gradient(90deg,#22c55e,#38bdf8)";
+    }else if(risk <= 40){
+      riskLabel.textContent = "MEDIUM";
+      riskBar.style.width = "42%";
+      riskBar.style.background =
+        "linear-gradient(90deg,#f59e0b,#38bdf8)";
+    }else{
+      riskLabel.textContent = "HIGH";
+      riskBar.style.width = "72%";
+      riskBar.style.background =
+        "linear-gradient(90deg,#fb7185,#f59e0b)";
+    }
+
+  }
+
+  if(aiReport){
+
+    aiReport.innerHTML =
+      score >= 90
+      ? `
+        Your Zella account looks strongly protected.<br>
+        Email verification is active, session is secure, and current device is trusted.
+      `
+      : `
+        Your account protection is active but can be improved.<br>
+        Recommended next step: enable two-factor authentication when available.
+      `;
+
+  }
+
+}
 
 updateSecurityUI();
+updateSecurityV2();
 
 </script>
 

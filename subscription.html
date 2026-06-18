@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zella Subscription System V1</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+min-height:100vh;
+overflow-x:hidden;
+padding-bottom:120px;
+}
+
+.background{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 20%,rgba(56,189,248,.25),transparent 30%),
+radial-gradient(circle at 80% 10%,rgba(59,130,246,.20),transparent 30%),
+#020617;
+z-index:-1;
+}
+
+.container{
+width:92%;
+max-width:550px;
+margin:auto;
+padding:20px;
+}
+
+.hero{
+padding:35px;
+border-radius:35px;
+background:rgba(15,23,42,.85);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.08);
+text-align:center;
+margin-top:20px;
+}
+
+.badge{
+display:inline-block;
+padding:10px 20px;
+border-radius:999px;
+background:rgba(56,189,248,.12);
+color:#38bdf8;
+font-weight:900;
+letter-spacing:2px;
+}
+
+.hero h1{
+margin-top:20px;
+font-size:42px;
+font-weight:900;
+}
+
+.hero p{
+margin-top:15px;
+color:#94a3b8;
+line-height:1.8;
+}
+
+.membership-card{
+margin-top:25px;
+padding:25px;
+border-radius:28px;
+background:rgba(15,23,42,.85);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.membership-title{
+font-size:14px;
+letter-spacing:4px;
+color:#38bdf8;
+font-weight:900;
+}
+
+.membership-status{
+font-size:40px;
+font-weight:900;
+margin-top:12px;
+}
+
+.free{
+color:#94a3b8;
+}
+
+.pro{
+color:#38bdf8;
+}
+
+.premium{
+color:#fbbf24;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-top:20px;
+}
+
+.stat-card{
+padding:20px;
+border-radius:24px;
+background:rgba(15,23,42,.85);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.stat-label{
+font-size:13px;
+color:#94a3b8;
+}
+
+.stat-value{
+font-size:28px;
+font-weight:900;
+margin-top:10px;
+}
+
+.upgrade-section{
+margin-top:25px;
+padding:25px;
+border-radius:28px;
+background:rgba(15,23,42,.85);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.section-title{
+font-size:14px;
+letter-spacing:5px;
+color:#38bdf8;
+font-weight:900;
+margin-bottom:20px;
+}
+
+.plan{
+padding:18px;
+border-radius:20px;
+margin-bottom:15px;
+background:#0f172a;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.plan h3{
+margin-bottom:10px;
+}
+
+.price{
+font-size:28px;
+font-weight:900;
+margin-top:10px;
+}
+
+.btn{
+width:100%;
+padding:15px;
+border:none;
+border-radius:15px;
+margin-top:15px;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
+}
+
+.btn-pro{
+background:#2563eb;
+color:white;
+}
+
+.btn-premium{
+background:#fbbf24;
+color:black;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+<div class="hero">
+
+<div class="badge">
+SUBSCRIPTION SYSTEM V1
+</div>
+
+<h1>
+Zella Membership Center
+</h1>
+
+<p>
+Manage your Free, Pro and Premium plans.
+Unlock advanced AI trading tools,
+premium signals and cloud intelligence.
+</p>
+
+</div>
+
+<div class="membership-card">
+
+<div class="membership-title">
+CURRENT PLAN
+</div>
+
+<div class="membership-status premium">
+PREMIUM
+</div>
+
+<p style="margin-top:10px;color:#94a3b8;">
+Premium membership active
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="stat-card">
+<div class="stat-label">
+Signals Used
+</div>
+<div class="stat-value">
+248
+</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">
+AI Accuracy
+</div>
+<div class="stat-value">
+91%
+</div>
+</div>
+
+</div>
+
+<div class="upgrade-section">
+
+<div class="section-title">
+AVAILABLE PLANS
+</div>
+
+<div class="plan">
+
+<h3>
+Free Plan
+</h3>
+
+<p style="color:#94a3b8;line-height:1.7;">
+Basic access to Zella dashboard, limited AI requests,
+basic market view and starter portfolio tracking.
+</p>
+
+<div class="price free">
+$0/month
+</div>
+
+<button class="btn" onclick="setPlan('FREE')">
+Use Free Plan
+</button>
+
+</div>
+
+<div class="plan">
+
+<h3>
+Pro Plan
+</h3>
+
+<p style="color:#94a3b8;line-height:1.7;">
+Unlock advanced scanner, more AI requests,
+portfolio health score, unlimited alerts and cloud sync.
+</p>
+
+<div class="price pro">
+$19/month
+</div>
+
+<button class="btn btn-pro" onclick="setPlan('PRO')">
+Upgrade To Pro
+</button>
+
+</div>
+
+<div class="plan">
+
+<h3>
+Premium Plan
+</h3>
+
+<p style="color:#94a3b8;line-height:1.7;">
+Unlock premium signals, AI trade opportunities,
+voice copilot, advanced analytics and VIP intelligence.
+</p>
+
+<div class="price premium">
+$49/month
+</div>
+
+<button class="btn btn-premium" onclick="setPlan('PREMIUM')">
+Upgrade To Premium
+</button>
+
+</div>
+
+</div>
+
+<div class="upgrade-section">
+
+<div class="section-title">
+PREMIUM ACCESS CONTROL
+</div>
+
+<div class="plan">
+<h3>
+Feature Lock System
+</h3>
+
+<p style="color:#94a3b8;line-height:1.7;">
+Zella will use your Firebase membership status to unlock
+Pro and Premium features across dashboard, scanner,
+copilot, analytics, alerts and auto trading.
+</p>
+
+<p id="accessText" style="margin-top:15px;color:#38bdf8;font-weight:900;">
+Checking access...
+</p>
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+  authDomain: "zella-424f2.firebaseapp.com",
+  projectId: "zella-424f2",
+  storageBucket: "zella-424f2.firebasestorage.app",
+  messagingSenderId: "1008967672362",
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+let currentUser = null;
+
+window.setPlan = async function(plan){
+
+  if(!currentUser){
+    alert("Please login before selecting a plan.");
+    return;
+  }
+
+  await setDoc(doc(db,"users",currentUser.uid,"subscription","status"),{
+    uid:currentUser.uid,
+    email:currentUser.email,
+    plan:plan,
+    status:"ACTIVE",
+    updatedAt:serverTimestamp()
+  });
+
+  localStorage.setItem("zellaMembership",plan);
+
+  document.querySelector(".membership-status").innerText = plan;
+  document.querySelector(".membership-status").className =
+    "membership-status " + plan.toLowerCase();
+
+  updateAccess(plan);
+
+  alert("Zella plan updated to " + plan);
+
+};
+
+function updateAccess(plan){
+
+  const accessText = document.getElementById("accessText");
+
+  if(plan === "FREE"){
+    accessText.innerText =
+      "Free Access: Basic dashboard, limited AI and starter features.";
+  }
+
+  if(plan === "PRO"){
+    accessText.innerText =
+      "Pro Access: Advanced scanner, unlimited alerts and cloud sync unlocked.";
+  }
+
+  if(plan === "PREMIUM"){
+    accessText.innerText =
+      "Premium Access: Premium signals, voice copilot and VIP intelligence unlocked.";
+  }
+
+}
+
+async function loadSubscription(user){
+
+  const snap = await getDoc(
+    doc(db,"users",user.uid,"subscription","status")
+  );
+
+  if(snap.exists()){
+
+    const data = snap.data();
+
+    const plan = data.plan || "FREE";
+
+    document.querySelector(".membership-status").innerText = plan;
+
+    document.querySelector(".membership-status").className =
+      "membership-status " + plan.toLowerCase();
+
+    localStorage.setItem("zellaMembership",plan);
+
+    updateAccess(plan);
+
+  }else{
+
+    document.querySelector(".membership-status").innerText = "FREE";
+
+    document.querySelector(".membership-status").className =
+      "membership-status free";
+
+    localStorage.setItem("zellaMembership","FREE");
+
+    updateAccess("FREE");
+
+  }
+
+}
+
+onAuthStateChanged(auth,(user)=>{
+
+  currentUser = user;
+
+  if(user){
+    loadSubscription(user);
+  }else{
+    document.getElementById("accessText").innerText =
+      "No active user. Login required.";
+  }
+
+});
+
+</script>
+
+<script type="module" src="auth-guard.js"></script>
+
+</body>
+</html>

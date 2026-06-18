@@ -3,117 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella More Hub V7</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body>
+<title>Zella More Hub V12 Ultra</title>
 
 <style>
-.more-bg{
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#020617;
+  color:white;
+  min-height:100vh;
+  overflow-x:hidden;
+  padding-bottom:120px;
+}
+
+.bg{
   position:fixed;
   inset:0;
-  z-index:0;
-  pointer-events:none;
+  z-index:-2;
   background:
-    radial-gradient(circle at 20% 10%,rgba(56,189,248,.20),transparent 30%),
-    radial-gradient(circle at 80% 25%,rgba(34,197,94,.12),transparent 28%),
-    radial-gradient(circle at 50% 95%,rgba(37,99,235,.18),transparent 34%);
+  radial-gradient(circle at 18% 10%,rgba(56,189,248,.22),transparent 30%),
+  radial-gradient(circle at 82% 12%,rgba(59,130,246,.18),transparent 30%),
+  radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
+  #020617;
 }
 
-.more-grid-bg{
+.grid-bg{
   position:fixed;
   inset:0;
-  z-index:0;
-  pointer-events:none;
+  z-index:-1;
   background-image:
-    linear-gradient(rgba(56,189,248,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56,189,248,.06) 1px, transparent 1px);
+  linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
   background-size:42px 42px;
-  animation:moreGridMove 18s linear infinite;
+  animation:gridMove 18s linear infinite;
 }
 
-@keyframes moreGridMove{
-  from{background-position:0 0;}
-  to{background-position:0 420px;}
+@keyframes gridMove{
+  from{background-position:0 0}
+  to{background-position:0 420px}
 }
 
-.container,
-.navbar{
+.container{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:20px;
+}
+
+.hero{
+  margin-top:20px;
+  padding:28px;
+  border-radius:34px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.15);
+  box-shadow:0 22px 65px rgba(0,0,0,.35);
+  text-align:center;
+}
+
+.ai-core{
+  width:155px;
+  height:155px;
+  margin:0 auto 22px;
+  border-radius:50%;
   position:relative;
-  z-index:2;
+  background:radial-gradient(circle,#e0f2fe,#38bdf8 42%,#2563eb 70%);
+  box-shadow:0 0 55px rgba(56,189,248,.85);
+  animation:pulse 2.4s infinite;
 }
 
-.more-hub-grid{
+.ai-core::before{
+  content:"";
+  position:absolute;
+  inset:-22px;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.35);
+  animation:spin 10s linear infinite;
+}
+
+.ai-core::after{
+  content:"";
+  position:absolute;
+  inset:-42px;
+  border-radius:50%;
+  border:1px solid rgba(34,197,94,.22);
+  animation:spin 18s linear infinite reverse;
+}
+
+@keyframes pulse{
+  50%{
+    transform:scale(1.08);
+    filter:brightness(1.25);
+  }
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.badge{
+  display:inline-block;
+  padding:10px 18px;
+  border-radius:999px;
+  color:#38bdf8;
+  background:rgba(56,189,248,.12);
+  font-weight:900;
+  letter-spacing:2px;
+  font-size:12px;
+}
+
+h1{
+  margin-top:18px;
+  font-size:42px;
+  line-height:1.1;
+}
+
+.hero p{
+  margin-top:15px;
+  color:#94a3b8;
+  line-height:1.8;
+}
+
+.search{
+  width:100%;
+  padding:15px;
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.15);
+  background:#0f172a;
+  color:white;
+  outline:none;
+  margin-top:22px;
+  font-size:15px;
+}
+
+.search:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 18px rgba(56,189,248,.18);
+}
+
+.section-title{
+  margin-top:24px;
+  margin-bottom:15px;
+  font-size:13px;
+  letter-spacing:5px;
+  color:#38bdf8;
+  font-weight:950;
+}
+
+.card-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:16px;
-  margin-top:20px;
+  gap:14px;
 }
 
-.more-card{
-  position:relative;
-  min-height:138px;
+.hub-card{
   padding:18px;
-  border-radius:28px;
-  text-decoration:none;
-  color:#e5eefb;
-  overflow:hidden;
-  background:rgba(15,23,42,.84);
+  border-radius:24px;
+  background:rgba(15,23,42,.88);
   border:1px solid rgba(148,163,184,.14);
-  box-shadow:
-    inset 0 0 26px rgba(56,189,248,.035),
-    0 20px 45px rgba(0,0,0,.25);
-  transition:.28s ease;
+  cursor:pointer;
+  transition:.3s ease;
+  position:relative;
+  overflow:hidden;
 }
 
-.more-card:hover{
-  transform:translateY(-6px) scale(1.02);
-  border-color:rgba(56,189,248,.42);
-  box-shadow:
-    0 0 36px rgba(56,189,248,.18),
-    0 20px 55px rgba(0,0,0,.38);
+.hub-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(56,189,248,.38);
+  box-shadow:0 0 30px rgba(56,189,248,.18);
 }
 
-.more-card:active{
-  transform:scale(.97);
-}
-
-.more-icon-wrap{
-  width:54px;
-  height:54px;
-  border-radius:20px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,rgba(56,189,248,.18),rgba(37,99,235,.10));
-  border:1px solid rgba(56,189,248,.22);
-  margin-bottom:15px;
-}
-
-.more-svg{
-  width:30px;
-  height:30px;
-  fill:none;
-  stroke:#38bdf8;
-  stroke-width:2.2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-.more-title{
-  font-size:16px;
-  font-weight:900;
-  margin-bottom:6px;
-}
-
-.more-sub{
-  font-size:12px;
-  color:#94a3b8;
-  line-height:1.4;
-}
-
-.more-card::after{
+.hub-card::after{
   content:"";
   position:absolute;
   width:90px;
@@ -121,260 +186,424 @@
   right:-35px;
   bottom:-35px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.22),transparent 70%);
+  background:radial-gradient(circle,rgba(56,189,248,.16),transparent 70%);
 }
 
-.logout-card{
-  cursor:pointer;
-  border-color:rgba(248,113,113,.25);
+.icon-box{
+  width:44px;
+  height:44px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(56,189,248,.12);
+  border:1px solid rgba(56,189,248,.18);
+  box-shadow:0 0 18px rgba(56,189,248,.18);
 }
 
-.logout-card .more-svg{
-  stroke:#fb7185;
+.icon-box svg{
+  width:24px;
+  height:24px;
+  stroke:#38bdf8;
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-.logout-card .more-icon-wrap{
-  background:linear-gradient(135deg,rgba(248,113,113,.18),rgba(127,29,29,.08));
-  border-color:rgba(248,113,113,.22);
+.hub-title{
+  margin-top:14px;
+  font-size:16px;
+  font-weight:950;
+}
+
+.hub-sub{
+  margin-top:7px;
+  color:#94a3b8;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.premium-glow{
+  border-color:rgba(251,191,36,.35);
+  box-shadow:0 0 26px rgba(251,191,36,.18);
+}
+
+.premium-glow .icon-box{
+  background:rgba(251,191,36,.12);
+  border-color:rgba(251,191,36,.24);
+}
+
+.premium-glow .icon-box svg{
+  stroke:#fbbf24;
 }
 
 @media(max-width:430px){
-  .more-hub-grid{
-    grid-template-columns:1fr;
-  }
+  h1{font-size:36px}
 }
 </style>
+</head>
 
-<div class="more-bg"></div>
-<div class="more-grid-bg"></div>
+<body>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">MO</div>
-  </div>
-</nav>
+<div class="bg"></div>
+<div class="grid-bg"></div>
 
-<main class="container">
+<div class="container">
 
-<section class="command-card">
+<section class="hero">
 
-  <div class="live-row">
-    <div>
-      <div class="eyebrow">ZELLA CONTROL HUB</div>
-      <h1 class="command-title">More<br>Intelligence.</h1>
-    </div>
+  <div class="ai-core"></div>
 
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="live-dot"></div>
-      <span class="live-label">SECURE</span>
-    </div>
+  <div class="badge">
+    MORE HUB V12 ULTRA
   </div>
 
-  <p class="briefing-text">
-    Access Zella’s advanced tools, account controls, intelligence modules,
-    trading utilities, cloud systems and security center.
+  <h1>
+    Zella Module<br>
+    Command.
+  </h1>
+
+  <p>
+    Access every Zella engine, premium system, AI tool,
+    trading module, cloud center and platform setting from one hub.
   </p>
 
-</section>
-
-<section class="more-hub-grid">
-
-  <a href="autotrader.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M4 17L9 12L13 15L20 7"/><path d="M20 7V13"/><path d="M20 7H14"/></svg>
-    </div>
-    <div class="more-title">AutoTrader</div>
-    <div class="more-sub">Automated trade execution control.</div>
-  </a>
-
-  <a href="autotrade.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M6 4H18V20H6Z"/><path d="M9 8H15"/><path d="M9 12H15"/><path d="M9 16H13"/></svg>
-    </div>
-    <div class="more-title">Trade Prep</div>
-    <div class="more-sub">Prepare and validate trade setups.</div>
-  </a>
-
-  <a href="portfolio.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M4 8H20V19H4Z"/><path d="M8 8V5H16V8"/><path d="M4 12H20"/></svg>
-    </div>
-    <div class="more-title">Portfolio</div>
-    <div class="more-sub">Track holdings and exposure.</div>
-  </a>
-
-  <a href="journal.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M6 3H18V21H6Z"/><path d="M9 7H15"/><path d="M9 11H15"/><path d="M9 15H13"/></svg>
-    </div>
-    <div class="more-title">Journal</div>
-    <div class="more-sub">Record trades and lessons.</div>
-  </a>
-
-  <a href="calculator.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7H16"/><path d="M8 11H9"/><path d="M12 11H13"/><path d="M16 11H17"/><path d="M8 15H9"/><path d="M12 15H13"/><path d="M16 15H17"/></svg>
-    </div>
-    <div class="more-title">Calculator</div>
-    <div class="more-sub">Risk, fees and position sizing.</div>
-  </a>
-
-  <a href="learn.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M4 6.5C6 5.5 8 5 12 7V20C8 18 6 18.5 4 19.5Z"/><path d="M20 6.5C18 5.5 16 5 12 7V20C16 18 18 18.5 20 19.5Z"/></svg>
-    </div>
-    <div class="more-title">Learn</div>
-    <div class="more-sub">Beginner-friendly crypto lessons.</div>
-  </a>
-
-  <a href="alert.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M18 8A6 6 0 0 0 6 8C6 15 3 16 3 16H21S18 15 18 8Z"/><path d="M10 20H14"/></svg>
-    </div>
-    <div class="more-title">Alerts</div>
-    <div class="more-sub">Price, news and scanner alerts.</div>
-  </a>
-
-  <a href="news.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M4 5H18V19H4Z"/><path d="M18 8H21V18C21 18.6 20.6 19 20 19H18"/><path d="M7 9H15"/><path d="M7 13H15"/><path d="M7 16H12"/></svg>
-    </div>
-    <div class="more-title">News Engine</div>
-    <div class="more-sub">Live crypto news intelligence.</div>
-  </a>
-
-  <a href="analytics.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M5 19V11"/><path d="M12 19V5"/><path d="M19 19V8"/></svg>
-    </div>
-    <div class="more-title">Analytics</div>
-    <div class="more-sub">Advanced market breakdowns.</div>
-  </a>
-
-  <a href="exchange.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M7 7H20L17 4"/><path d="M17 17H4L7 20"/><path d="M20 7L14 13"/><path d="M4 17L10 11"/></svg>
-    </div>
-    <div class="more-title">Exchange</div>
-    <div class="more-sub">Connect exchange accounts later.</div>
-  </a>
-
-  <a href="cloud.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M7 18H18A4 4 0 0 0 18 10A6 6 0 0 0 6.5 12A3 3 0 0 0 7 18Z"/></svg>
-    </div>
-    <div class="more-title">Cloud Sync</div>
-    <div class="more-sub">Sync watchlists and setups.</div>
-  </a>
-
-  <a href="security.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M12 3L19 6V11C19 16 16 19 12 21C8 19 5 16 5 11V6Z"/><path d="M9 12L11 14L15 10"/></svg>
-    </div>
-    <div class="more-title">Security</div>
-    <div class="more-sub">Account protection and verification.</div>
-  </a>
-
-  <a href="setup.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><circle cx="12" cy="12" r="3"/><path d="M19 12A7 7 0 0 0 18.8 10.4L21 8.7L19 5.3L16.4 6.4A7 7 0 0 0 14.9 5.5L14.5 3H9.5L9.1 5.5A7 7 0 0 0 7.6 6.4L5 5.3L3 8.7L5.2 10.4A7 7 0 0 0 5 12A7 7 0 0 0 5.2 13.6L3 15.3L5 18.7L7.6 17.6A7 7 0 0 0 9.1 18.5L9.5 21H14.5L14.9 18.5A7 7 0 0 0 16.4 17.6L19 18.7L21 15.3L18.8 13.6A7 7 0 0 0 19 12Z"/></svg>
-    </div>
-    <div class="more-title">Settings</div>
-    <div class="more-sub">Customize Zella preferences.</div>
-  </a>
-
-  <a href="pro.html" class="more-card">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M12 3L15 9L21 10L16.5 14.5L17.5 21L12 18L6.5 21L7.5 14.5L3 10L9 9Z"/></svg>
-    </div>
-    <div class="more-title">Zella Pro</div>
-    <div class="more-sub">Premium intelligence tools.</div>
-  </a>
-
-  <div class="more-card logout-card" onclick="logoutUser()">
-    <div class="more-icon-wrap">
-      <svg viewBox="0 0 24 24" class="more-svg"><path d="M10 4H5V20H10"/><path d="M14 8L18 12L14 16"/><path d="M18 12H9"/></svg>
-    </div>
-    <div class="more-title">Logout</div>
-    <div class="more-sub">Exit Zella securely.</div>
-  </div>
+  <input
+    class="search"
+    id="searchInput"
+    placeholder="Search Zella modules..."
+    onkeyup="filterCards()"
+  >
 
 </section>
 
-<nav class="zella-nav">
+<div class="section-title">
+  CORE MODULES
+</div>
 
-  <a href="dashboard.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
-    <span>Home</span>
-  </a>
+<div class="card-grid" id="cardGrid">
 
-  <a href="scanner.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
-    <span>Scanner</span>
-  </a>
-
-  <a href="copilot.html" class="nav-item copilot-center">
-    <div class="copilot-core">
-      <svg viewBox="0 0 24 24" class="copilot-icon">
-        <rect x="6" y="8" width="12" height="9" rx="2"/>
-        <circle cx="9" cy="12" r="1"/>
-        <circle cx="15" cy="12" r="1"/>
-        <path d="M12 4V8"/>
+  <div class="hub-card" data-title="learn education academy" onclick="go('learn.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20V22H6.5A2.5 2.5 0 0 1 4 19.5V4.5Z"/>
       </svg>
     </div>
-    <span>Copilot</span>
-  </a>
+    <div class="hub-title">Learn</div>
+    <div class="hub-sub">Trading education and academy.</div>
+  </div>
 
-  <a href="market.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
-    <span>Market</span>
-  </a>
+  <div class="hub-card" data-title="journal trade logs diary" onclick="go('journal.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 4H20V20H4Z"/>
+        <path d="M8 8H16"/>
+        <path d="M8 12H16"/>
+        <path d="M8 16H13"/>
+      </svg>
+    </div>
+    <div class="hub-title">Journal</div>
+    <div class="hub-sub">Trade logs and AI reviews.</div>
+  </div>
 
-  <a href="watchlist.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
-    <span>Watchlist</span>
-  </a>
+  <div class="hub-card" data-title="calculator risk position profit" onclick="go('calculator.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <rect x="5" y="3" width="14" height="18" rx="2"/>
+        <path d="M8 7H16"/>
+        <path d="M8 11H8.01"/>
+        <path d="M12 11H12.01"/>
+        <path d="M16 11H16.01"/>
+        <path d="M8 15H8.01"/>
+        <path d="M12 15H12.01"/>
+        <path d="M16 15H16.01"/>
+      </svg>
+    </div>
+    <div class="hub-title">Calculator</div>
+    <div class="hub-sub">Risk and position tools.</div>
+  </div>
 
-  <a href="more.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <circle cx="12" cy="5" r="1.5"/>
-      <circle cx="12" cy="12" r="1.5"/>
-      <circle cx="12" cy="19" r="1.5"/>
-    </svg>
-    <span>More</span>
-  </a>
+  <div class="hub-card" data-title="alerts notifications price signal" onclick="go('alerts.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M18 8A6 6 0 0 0 6 8C6 15 3 17 3 17H21S18 15 18 8Z"/>
+        <path d="M10 21H14"/>
+      </svg>
+    </div>
+    <div class="hub-title">Alerts</div>
+    <div class="hub-sub">Price and signal alerts.</div>
+  </div>
 
-</nav>
+  <div class="hub-card" data-title="analytics performance charts" onclick="go('analytics.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 19V5"/>
+        <path d="M4 19H20"/>
+        <path d="M8 16V11"/>
+        <path d="M12 16V7"/>
+        <path d="M16 16V9"/>
+      </svg>
+    </div>
+    <div class="hub-title">Analytics</div>
+    <div class="hub-sub">Performance insights.</div>
+  </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  <div class="hub-card" data-title="setup settings account firebase" onclick="go('setup.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 15A3 3 0 1 0 12 9A3 3 0 0 0 12 15Z"/>
+        <path d="M19.4 15A1.8 1.8 0 0 0 20 17L20.2 17.2A2 2 0 0 1 17.2 20L17 19.8A1.8 1.8 0 0 0 15 19.4"/>
+        <path d="M9 19.4A1.8 1.8 0 0 0 7 19.8L6.8 20A2 2 0 0 1 4 17.2L4.2 17A1.8 1.8 0 0 0 4.6 15"/>
+      </svg>
+    </div>
+    <div class="hub-title">Setup</div>
+    <div class="hub-sub">Account and app settings.</div>
+  </div>
+  
+    <div class="hub-card" data-title="cloud sync backup" onclick="go('cloud.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M18 10A5 5 0 0 0 8.3 8"/>
+        <path d="M7 18H18A4 4 0 0 0 18 10"/>
+        <path d="M7 18A4 4 0 1 1 7 10"/>
+      </svg>
+    </div>
+    <div class="hub-title">Cloud</div>
+    <div class="hub-sub">Cloud sync and backups.</div>
+  </div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
-  authDomain: "zella-424f2.firebaseapp.com",
-  projectId: "zella-424f2",
-  storageBucket: "zella-424f2.firebasestorage.app",
-  messagingSenderId: "1008967672362",
-  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
-};
+  <div class="hub-card" data-title="portfolio wallet holdings" onclick="go('wallet.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="7" width="18" height="12" rx="2"/>
+        <path d="M16 12H21"/>
+      </svg>
+    </div>
+    <div class="hub-title">Portfolio</div>
+    <div class="hub-sub">Track holdings and PnL.</div>
+  </div>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+  <div class="hub-card" data-title="autotrader auto trading" onclick="go('autotrader.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 12H20"/>
+        <path d="M14 6L20 12L14 18"/>
+      </svg>
+    </div>
+    <div class="hub-title">AutoTrader</div>
+    <div class="hub-sub">Automated trading center.</div>
+  </div>
 
-window.logoutUser = async function(){
-  try{
-    await signOut(auth);
-    localStorage.clear();
-    sessionStorage.clear();
-    window.location.href = "index.html";
-  }catch(error){
-    alert("Logout failed.");
-  }
-};
+  <div class="hub-card" data-title="notifications system messages" onclick="go('notifications.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M21 15A2 2 0 0 1 19 17H7L3 21V5A2 2 0 0 1 5 3H19A2 2 0 0 1 21 5Z"/>
+      </svg>
+    </div>
+    <div class="hub-title">Notifications</div>
+    <div class="hub-sub">System alerts and updates.</div>
+  </div>
+
+  <div class="hub-card" data-title="pro membership" onclick="go('pro.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2L15 8L22 9L17 14L18 22L12 18L6 22L7 14L2 9L9 8Z"/>
+      </svg>
+    </div>
+    <div class="hub-title">Pro</div>
+    <div class="hub-sub">Professional tools.</div>
+  </div>
+
+  <div class="hub-card" data-title="news market updates" onclick="go('market.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 4H20V20H4Z"/>
+        <path d="M8 8H16"/>
+        <path d="M8 12H16"/>
+      </svg>
+    </div>
+    <div class="hub-title">News</div>
+    <div class="hub-sub">Market news and events.</div>
+  </div>
+
+  <div class="hub-card" data-title="security protection" onclick="go('account.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3L20 7V12C20 17 16.5 20.5 12 22C7.5 20.5 4 17 4 12V7Z"/>
+      </svg>
+    </div>
+    <div class="hub-title">Security</div>
+    <div class="hub-sub">Account protection center.</div>
+  </div>
+
+  <div class="hub-card premium-glow" data-title="premium vip" onclick="go('premium.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M5 18L3 8L8 12L12 5L16 12L21 8L19 18Z"/>
+      </svg>
+    </div>
+    <div class="hub-title">Premium</div>
+    <div class="hub-sub">VIP command center.</div>
+  </div>
+
+  <div class="hub-card premium-glow" data-title="subscription membership" onclick="go('subscription.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="M3 10H21"/>
+      </svg>
+    </div>
+    <div class="hub-title">Subscription</div>
+    <div class="hub-sub">Manage plans.</div>
+  </div>
+
+  <div class="hub-card premium-glow" data-title="ai signal engine signals" onclick="go('ai-signal-engine.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2V22"/>
+        <path d="M5 12H19"/>
+        <circle cx="12" cy="12" r="4"/>
+      </svg>
+    </div>
+    <div class="hub-title">AI Signals</div>
+    <div class="hub-sub">Signal intelligence.</div>
+  </div>
+
+  <div class="hub-card premium-glow" data-title="exchange api exchanges" onclick="go('exchange-api.html')">
+    <div class="icon-box">
+      <svg viewBox="0 0 24 24">
+        <path d="M8 7H21"/>
+        <path d="M3 7H4"/>
+        <path d="M20 17H21"/>
+        <path d="M3 17H16"/>
+      </svg>
+    </div>
+    <div class="hub-title">Exchange APIs</div>
+    <div class="hub-sub">Connect exchanges.</div>
+  </div>
+
+</div>
+
+</div>
+
+<style>
+
+.bottom-nav{
+position:fixed;
+left:50%;
+transform:translateX(-50%);
+bottom:18px;
+width:92%;
+max-width:560px;
+height:82px;
+border-radius:30px;
+z-index:999;
+display:flex;
+align-items:center;
+justify-content:space-around;
+background:rgba(15,23,42,.92);
+backdrop-filter:blur(18px);
+border:1px solid rgba(148,163,184,.12);
+box-shadow:
+0 18px 55px rgba(0,0,0,.45);
+}
+
+.nav-item{
+text-align:center;
+color:#94a3b8;
+font-size:12px;
+font-weight:800;
+}
+
+.nav-item.active{
+color:#38bdf8;
+}
+
+.copilot-btn{
+width:72px;
+height:72px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+background:linear-gradient(
+135deg,
+#38bdf8,
+#2563eb,
+#8b5cf6);
+color:white;
+box-shadow:
+0 0 40px rgba(56,189,248,.8);
+}
+
+</style>
+
+<div class="bottom-nav">
+
+<div class="nav-item" onclick="go('dashboard.html')">
+Home
+</div>
+
+<div class="nav-item" onclick="go('market.html')">
+Market
+</div>
+
+<div class="copilot-btn" onclick="go('copilot.html')">
+AI
+</div>
+
+<div class="nav-item active">
+More
+</div>
+
+<div class="nav-item" onclick="go('wallet.html')">
+Wallet
+</div>
+
+</div>
+
+<script>
+
+function go(page){
+  window.location.href = page;
+}
+
+function filterCards(){
+
+  const value =
+  document.getElementById("searchInput")
+  .value
+  .toLowerCase();
+
+  const cards =
+  document.querySelectorAll(".hub-card");
+
+  cards.forEach(card=>{
+
+    const text =
+    card.dataset.title.toLowerCase();
+
+    if(text.includes(value)){
+      card.style.display="block";
+    }else{
+      card.style.display="none";
+    }
+
+  });
+
+}
+
+console.log(
+"Zella More Hub V12 Ultra Loaded"
+);
+
 </script>
 
-</main>
+<script src="premium-guard.js"></script>
+<script type="module" src="auth-guard.js"></script>
+
 </body>
 </html>

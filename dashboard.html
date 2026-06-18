@@ -1,558 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zella Dashboard V12 Ultimate</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            overflow-x: hidden;
-            color: #e5eefb;
-            background: #020617;
-            padding-bottom: 110px;
-        }
-
-        .dashboard-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background: 
-                radial-gradient(circle at 18% 12%, rgba(56,189,248,.22), transparent 32%),
-                radial-gradient(circle at 82% 18%, rgba(37,99,235,.24), transparent 34%),
-                radial-gradient(circle at 50% 95%, rgba(34,197,94,.10), transparent 36%),
-                #020617;
-        }
-
-        .dashboard-grid {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-image: 
-                linear-gradient(rgba(56,189,248,.055) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56,189,248,.055) 1px, transparent 1px);
-            background-size: 42px 42px;
-            animation: gridMove 25s linear infinite;
-        }
-
-        @keyframes gridMove {
-            from { background-position: 0 0; }
-            to { background-position: 0 420px; }
-        }
-
-        .dashboard-particles {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .dashboard-particles span {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #38bdf8;
-            box-shadow: 0 0 20px #38bdf8;
-            opacity: 0.55;
-            animation: particleFloat 12s linear infinite;
-        }
-
-        .dashboard-particles span:nth-child(1) { left: 7%; animation-delay: 0s; }
-        .dashboard-particles span:nth-child(2) { left: 21%; animation-delay: 2s; }
-        .dashboard-particles span:nth-child(3) { left: 43%; animation-delay: 4s; }
-        .dashboard-particles span:nth-child(4) { left: 61%; animation-delay: 1s; }
-        .dashboard-particles span:nth-child(5) { left: 79%; animation-delay: 3s; }
-        .dashboard-particles span:nth-child(6) { left: 94%; animation-delay: 5s; }
-
-        @keyframes particleFloat {
-            from { transform: translateY(110vh); }
-            to { transform: translateY(-120px); }
-        }
-
-        .navbar, .container { position: relative; z-index: 3; }
-
-        .navbar { padding: 18px 18px 8px; }
-
-        .nav-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 950;
-            letter-spacing: 2px;
-            background: linear-gradient(90deg, #38bdf8, #2563eb, #8b5cf6);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        .avatar-dot {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #38bdf8, #2563eb, #8b5cf6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 950;
-            box-shadow: 0 0 30px rgba(56,189,248,.5);
-        }
-
-        .container {
-            width: 92%;
-            max-width: 520px;
-            margin: 0 auto;
-        }
-
-        /* === Enhanced AI Core (More Human-like) === */
-        .ai-core {
-            width: 190px;
-            height: 190px;
-            margin: 15px auto 20px;
-            position: relative;
-        }
-
-        .ai-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid rgba(56,189,248,.45);
-            animation: spin 12s linear infinite;
-        }
-
-        .ai-ring.r1 { inset: 0; }
-        .ai-ring.r2 { inset: 22px; animation-duration: 18s; border-color: rgba(34,197,94,.35); }
-        .ai-ring.r3 { inset: 44px; animation-duration: 26s; border-color: rgba(147,197,253,.3); }
-
-        .ai-face {
-            position: absolute;
-            left: 50%;
-            top: 45px;
-            transform: translateX(-50%);
-            width: 108px;
-            height: 82px;
-            border-radius: 40px;
-            background: linear-gradient(180deg, #0f172a, #020617);
-            border: 2.5px solid rgba(56,189,248,.55);
-            box-shadow: 0 0 40px rgba(56,189,248,.6), inset 0 0 30px rgba(56,189,248,.2);
-            overflow: hidden;
-        }
-
-        .ai-face::before,
-        .ai-face::after {
-            content: "";
-            position: absolute;
-            top: 32px;
-            width: 16px;
-            height: 18px;
-            border-radius: 50%;
-            background: #67e8f9;
-            box-shadow: 0 0 22px #67e8f9;
-            animation: blink 3.5s infinite;
-        }
-
-        .ai-face::before { left: 26px; }
-        .ai-face::after { right: 26px; }
-
-        @keyframes blink {
-            0%, 90%, 100% { transform: scaleY(1); }
-            93% { transform: scaleY(0.15); }
-        }
-
-        .ai-orb {
-            position: absolute;
-            left: 50%;
-            bottom: 32px;
-            transform: translateX(-50%);
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #e0f2fe, #38bdf8 40%, #2563eb 75%);
-            box-shadow: 0 0 45px rgba(56,189,248,.95), 0 0 70px rgba(103,232,249,.6);
-            animation: pulse 2.2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            50% { 
-                transform: translateX(-50%) scale(1.18); 
-                filter: brightness(1.4); 
-            }
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .hero {
-            margin-top: 12px;
-            padding: 22px;
-            border-radius: 34px;
-            position: relative;
-            overflow: hidden;
-            background: rgba(15,23,42,.9);
-            border: 1px solid rgba(148,163,184,.18);
-            box-shadow: inset 0 0 35px rgba(56,189,248,.04), 0 22px 65px rgba(0,0,0,.4);
-        }
-
-        .eyebrow {
-            color: #38bdf8;
-            letter-spacing: 5px;
-            font-size: 12px;
-            font-weight: 950;
-        }
-
-        .hero-title {
-            margin-top: 10px;
-            font-size: 42px;
-            line-height: 1.05;
-            font-weight: 950;
-            color: #e5eefb;
-        }
-
-        .hero-text {
-            margin-top: 14px;
-            color: #94a3b8;
-            font-size: 14.5px;
-            line-height: 1.75;
-        }
-
-        .hero-status {
-            margin-top: 18px;
-            display: inline-flex;
-            padding: 10px 14px;
-            border-radius: 999px;
-            color: #22c55e;
-            background: rgba(34,197,94,.12);
-            font-size: 12px;
-            font-weight: 950;
-        }
-
-        .metric-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-            margin-top: 18px;
-        }
-
-        .metric-card, .dashboard-card {
-            background: rgba(15,23,42,.9);
-            border: 1px solid rgba(148,163,184,.14);
-            border-radius: 26px;
-            padding: 18px;
-            box-shadow: 0 18px 48px rgba(0,0,0,.3);
-            transition: all 0.4s ease;
-        }
-
-        .metric-card:hover, .dashboard-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(56,189,248,.4);
-            box-shadow: 0 0 40px rgba(56,189,248,.2), 0 25px 60px rgba(0,0,0,.4);
-        }
-
-        .metric-label { color: #94a3b8; font-size: 12.5px; font-weight: 800; }
-        .metric-value { margin-top: 8px; font-size: 24px; font-weight: 950; }
-        .metric-change { margin-top: 6px; font-size: 12.5px; font-weight: 900; }
-
-        .section-title {
-            color: #38bdf8;
-            letter-spacing: 4px;
-            font-size: 12px;
-            font-weight: 950;
-            margin-bottom: 12px;
-        }
-
-        .chart-box {
-            height: 160px;
-            margin-top: 16px;
-            border-radius: 22px;
-            background: linear-gradient(180deg, rgba(56,189,248,.06), transparent),
-                        rgba(255,255,255,.025);
-            border: 1px solid rgba(255,255,255,.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .coin-row, .signal-row, .news-row {
-            margin-top: 12px;
-            padding: 14px;
-            border-radius: 20px;
-            background: rgba(255,255,255,.035);
-            border: 1px solid rgba(255,255,255,.07);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .coin-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #38bdf8, #2563eb, #8b5cf6);
-            font-weight: 950;
-            font-size: 11px;
-        }
-
-        .green { color: #22c55e !important; }
-        .red { color: #ef4444 !important; }
-        .orange { color: #f59e0b !important; }
-        .blue { color: #38bdf8 !important; }
-
-        .gauge {
-            width: 145px;
-            height: 145px;
-            border-radius: 50%;
-            margin: 18px auto 4px;
-            background: conic-gradient(#22c55e 0deg 245deg, rgba(255,255,255,.08) 245deg 360deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 40px rgba(34,197,94,.2);
-        }
-
-        .quick-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .quick-btn {
-            padding: 15px;
-            border-radius: 18px;
-            text-decoration: none;
-            text-align: center;
-            color: #e5eefb;
-            background: rgba(56,189,248,.08);
-            border: 1px solid rgba(56,189,248,.18);
-            font-size: 13px;
-            font-weight: 900;
-        }
-
-        /* Bottom Navigation */
-        .zella-nav {
-            position: fixed;
-            left: 18px;
-            right: 18px;
-            bottom: 18px;
-            z-index: 20;
-            height: 78px;
-            border-radius: 28px;
-            background: rgba(15,23,42,.95);
-            border: 1px solid rgba(148,163,184,.2);
-            backdrop-filter: blur(20px);
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            box-shadow: 0 14px 40px rgba(0,0,0,.45), 0 0 40px rgba(56,189,248,.15);
-        }
-
-        .nav-item {
-            text-decoration: none;
-            color: #94a3b8;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            font-size: 11px;
-            font-weight: 800;
-        }
-
-        .nav-item.active { color: #38bdf8; }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2.2;
-        }
-
-        .copilot-core {
-            width: 58px;
-            height: 58px;
-            margin-top: -32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #67e8f9, #2563eb, #8b5cf6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 40px rgba(56,189,248,.7);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Dashboard V12 Ultimate</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="dashboard-bg"></div>
-    <div class="dashboard-grid"></div>
 
-    <div class="dashboard-particles">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
+  overflow-x:hidden;
+  padding-bottom:110px;
+}
+
+.dashboard-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(56,189,248,.25),transparent 30%),
+    radial-gradient(circle at 85% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    #020617;
+}
+
+.dashboard-grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.055) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:gridMove 18s linear infinite;
+}
+
+@keyframes gridMove{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+
+.dashboard-particles{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.dashboard-particles span{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 20px #38bdf8;
+  opacity:.55;
+  animation:floatUp 12s linear infinite;
+}
+
+.dashboard-particles span:nth-child(1){left:8%;animation-delay:0s}
+.dashboard-particles span:nth-child(2){left:22%;animation-delay:2s}
+.dashboard-particles span:nth-child(3){left:41%;animation-delay:4s}
+.dashboard-particles span:nth-child(4){left:61%;animation-delay:1s}
+.dashboard-particles span:nth-child(5){left:80%;animation-delay:3s}
+.dashboard-particles span:nth-child(6){left:94%;animation-delay:5s}
+
+@keyframes floatUp{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-120px)}
+}
+
+.navbar{
+  position:relative;
+  z-index:3;
+  padding:20px;
+}
+
+.nav-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:950;
+  letter-spacing:3px;
+  background:linear-gradient(90deg,#38bdf8,#2563eb,#8b5cf6);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.avatar-dot{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#8b5cf6);
+  box-shadow:0 0 28px rgba(56,189,248,.45);
+}
+
+.container{
+  position:relative;
+  z-index:3;
+  width:92%;
+  max-width:520px;
+  margin:auto;
+}
+
+.dashboard-hero{
+  padding:24px;
+  border-radius:34px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.35),inset 0 0 35px rgba(56,189,248,.035);
+  overflow:hidden;
+  position:relative;
+}
+
+.ai-core-wrap{
+  width:260px;
+  height:260px;
+  margin:auto;
+  position:relative;
+}
+
+.ai-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.35);
+  animation:spin 12s linear infinite;
+}
+
+.ai-ring.r1{inset:0}
+.ai-ring.r2{inset:28px;animation-duration:18s;border-color:rgba(34,197,94,.28)}
+.ai-ring.r3{inset:56px;animation-duration:25s;border-color:rgba(147,197,253,.22)}
+
+.ai-ring::before{
+  content:"";
+  position:absolute;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  left:50%;
+  top:12px;
+  background:#38bdf8;
+  box-shadow:0 0 22px #38bdf8;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.ai-face{
+  position:absolute;
+  width:118px;
+  height:92px;
+  border-radius:44px;
+  left:50%;
+  top:62px;
+  transform:translateX(-50%);
+  background:linear-gradient(180deg,#0f172a,#020617);
+  border:2px solid rgba(56,189,248,.48);
+  box-shadow:0 0 36px rgba(56,189,248,.55),inset 0 0 28px rgba(56,189,248,.12);
+}
+
+.ai-face::before,
+.ai-face::after{
+  content:"";
+  position:absolute;
+  top:36px;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 20px #38bdf8;
+  animation:blink 3.2s infinite;
+}
+
+.ai-face::before{left:30px}
+.ai-face::after{right:30px}
+
+@keyframes blink{
+  0%,92%,100%{transform:scaleY(1)}
+  95%{transform:scaleY(.15)}
+}
+
+.ai-orb{
+  position:absolute;
+  left:50%;
+  bottom:58px;
+  transform:translateX(-50%);
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:radial-gradient(circle,#e0f2fe,#38bdf8 45%,#2563eb 70%);
+  box-shadow:0 0 44px rgba(56,189,248,.9);
+  animation:orbPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes orbPulse{
+  50%{transform:translateX(-50%) scale(1.15);filter:brightness(1.35)}
+}
+
+.eyebrow{
+  margin-top:18px;
+  color:#38bdf8;
+  font-size:13px;
+  letter-spacing:7px;
+  font-weight:950;
+}
+
+.command-title{
+  font-size:50px;
+  line-height:1.05;
+  margin-top:18px;
+  color:#e5eefb;
+}
+
+.briefing-text{
+  margin-top:18px;
+  color:#94a3b8;
+  font-size:16px;
+  line-height:1.8;
+}
+
+.command-status-pill{
+  display:inline-flex;
+  margin-top:22px;
+  padding:12px 20px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#4ade80;
+  font-weight:900;
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+
+.dash-card{
+  padding:18px;
+  border-radius:26px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 18px 48px rgba(0,0,0,.25);
+  transition:.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.dash-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(56,189,248,.32);
+  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+}
+
+.dash-card::after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  right:-42px;
+  bottom:-42px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.16),transparent 70%);
+}
+
+.card-label{
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:800;
+}
+
+.card-value{
+  margin-top:14px;
+  font-size:31px;
+  font-weight:950;
+  color:#e5eefb;
+}
+
+.card-sub{
+  margin-top:10px;
+  color:#4ade80;
+  font-size:14px;
+  font-weight:900;
+}
+
+.blue{color:#38bdf8}
+.green{color:#4ade80}
+.orange{color:#f59e0b}
+
+.section-card{
+  margin-top:18px;
+  padding:20px;
+  border-radius:30px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 18px 48px rgba(0,0,0,.25);
+}
+
+.section-title{
+  font-size:14px;
+  letter-spacing:6px;
+  color:#38bdf8;
+  font-weight:950;
+  margin-bottom:16px;
+}
+
+.market-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 0;
+  border-bottom:1px solid rgba(148,163,184,.1);
+}
+
+.market-row:last-child{
+  border-bottom:none;
+}
+
+.coin-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.coin-icon{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  box-shadow:0 0 18px rgba(56,189,248,.32);
+}
+
+.coin-name strong{
+  display:block;
+  color:#e5eefb;
+}
+
+.coin-name small{
+  color:#94a3b8;
+}
+
+.coin-price{
+  text-align:right;
+}
+
+.coin-price strong{
+  display:block;
+  color:#e5eefb;
+}
+
+.coin-price small{
+  color:#4ade80;
+  font-weight:900;
+}
+
+</style>
+
+<div class="dashboard-bg"></div>
+<div class="dashboard-grid-bg"></div>
+
+<div class="dashboard-particles">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">Z</div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <section class="dashboard-hero">
+
+    <div class="ai-core-wrap">
+
+      <div class="ai-ring r1"></div>
+      <div class="ai-ring r2"></div>
+      <div class="ai-ring r3"></div>
+
+      <div class="ai-face"></div>
+
+      <div class="ai-orb"></div>
+
     </div>
 
-    <nav class="navbar">
-        <div class="nav-inner">
-            <div class="logo">ZELLA</div>
-            <div class="avatar-dot" id="avatarDot">AI</div>
+    <div class="eyebrow">
+      DASHBOARD V12 ULTIMATE
+    </div>
+
+    <h1 class="command-title">
+      Zella AI<br>
+      Command.
+    </h1>
+
+    <p class="briefing-text">
+      Zella is loading your market command center,
+      portfolio overview, AI trade opportunities,
+      premium signals and cloud intelligence.
+    </p>
+
+    <div class="command-status-pill">
+      Cloud Status • Online
+    </div>
+
+  </section>
+
+  <div class="dashboard-grid">
+
+    <div class="dash-card">
+      <div class="card-label">
+        Portfolio Value
+      </div>
+
+      <div class="card-value">
+        $24,750
+      </div>
+
+      <div class="card-sub">
+        +6.21% Today
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <div class="card-label">
+        Daily P/L
+      </div>
+
+      <div class="card-value green">
+        +$1,250
+      </div>
+
+      <div class="card-sub">
+        AI Confidence High
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <div class="card-label">
+        Fear & Greed
+      </div>
+
+      <div class="card-value orange">
+        72
+      </div>
+
+      <div class="card-sub">
+        Greed
+      </div>
+    </div>
+
+    <div class="dash-card">
+      <div class="card-label">
+        Zella Score
+      </div>
+
+      <div class="card-value blue">
+        87
+      </div>
+
+      <div class="card-sub">
+        Excellent
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-card">
+
+    <div class="section-title">
+      MARKET STATUS
+    </div>
+
+    <div class="market-row">
+
+      <div class="coin-left">
+        <div class="coin-icon">₿</div>
+
+        <div class="coin-name">
+          <strong>Bitcoin</strong>
+          <small>BTC</small>
         </div>
-    </nav>
+      </div>
 
-    <main class="container">
-        <section class="hero">
-            <div class="ai-core">
-                <div class="ai-ring r1"></div>
-                <div class="ai-ring r2"></div>
-                <div class="ai-ring r3"></div>
-                <div class="ai-face"></div>
-                <div class="ai-orb"></div>
-            </div>
+      <div class="coin-price">
+        <strong>$107,000</strong>
+        <small>+2.1%</small>
+      </div>
 
-            <div class="eyebrow">DASHBOARD V12 ULTIMATE</div>
-            <h1 class="hero-title">Zella AI<br>Command.</h1>
-            
-            <p class="hero-text" id="dailyBriefing">
-                Zella is loading your market command center, portfolio overview, AI trade opportunities and cloud intelligence.
-            </p>
+    </div>
 
-            <div class="hero-status" id="dashboardStatus">Dashboard online</div>
-        </section>
+    <div class="market-row">
 
-        <section class="metric-grid">
-            <div class="metric-card">
-                <div class="metric-label">Portfolio Value</div>
-                <div class="metric-value" id="portfolioValue">$24,750.25</div>
-                <div class="metric-change">+6.21% today</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Daily P/L</div>
-                <div class="metric-value green" id="dailyProfit">+$1,250.75</div>
-                <div class="metric-change">AI confidence high</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Market Cap</div>
-                <div class="metric-value" id="marketCap">$2.52T</div>
-                <div class="metric-change">+3.45%</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Zella Score</div>
-                <div class="metric-value blue" id="zellaScore">87</div>
-                <div class="metric-change">Excellent</div>
-            </div>
-        </section>
+      <div class="coin-left">
+        <div class="coin-icon">Ξ</div>
 
-        <section class="dashboard-card">
-            <div class="section-title">PORTFOLIO PERFORMANCE</div>
-            <div class="chart-box">
-                <div class="chart-line"></div>
-                <div class="chart-stroke"></div>
-            </div>
-        </section>
+        <div class="coin-name">
+          <strong>Ethereum</strong>
+          <small>ETH</small>
+        </div>
+      </div>
 
-        <section class="dashboard-card">
-            <div class="section-title">AI MARKET STATUS</div>
-            <div class="gauge">
-                <div class="gauge-inner">
-                    <div class="gauge-number" id="fearGreed">72</div>
-                    <small class="green">Greed</small>
-                </div>
-            </div>
-            <p class="hero-text">
-                Bullish momentum is building across major assets. BTC and SOL are showing stronger short-term momentum while ETH remains neutral.
-            </p>
-        </section>
+      <div class="coin-price">
+        <strong>$6,200</strong>
+        <small>+1.6%</small>
+      </div>
 
-        <!-- Top Movers -->
-        <section class="dashboard-card">
-            <div class="section-title">TOP MOVERS</div>
-            <div class="coin-row">
-                <div class="coin-left">
-                    <div class="coin-icon">BTC</div>
-                    <div>
-                        <div class="coin-name">BTC/USDT</div>
-                        <small>Bitcoin</small>
-                    </div>
-                </div>
-                <div>
-                    <strong>$67,892</strong><br>
-                    <small class="green">+3.41%</small>
-                </div>
-            </div>
-            <!-- Add ETH and SOL similarly if needed -->
-        </section>
+    </div>
 
-        <!-- Signals & News sections can be expanded similarly -->
+    <div class="market-row">
 
-        <section class="dashboard-card">
-            <div class="section-title">QUICK ACTIONS</div>
-            <div class="quick-grid">
-                <a class="quick-btn" href="copilot.html">Ask Copilot</a>
-                <a class="quick-btn" href="scanner.html">Open Scanner</a>
-                <a class="quick-btn" href="portfolio.html">Portfolio</a>
-                <a class="quick-btn" href="market.html">Market</a>
-            </div>
-        </section>
-    </main>
+      <div class="coin-left">
+        <div class="coin-icon">S</div>
 
-    <!-- Bottom Navigation -->
-    <nav class="zella-nav">
-        <a href="dashboard.html" class="nav-item active">
-            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
-            <span>Home</span>
-        </a>
-        <a href="scanner.html" class="nav-item">
-            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
-            <span>Scanner</span>
-        </a>
-        <a href="copilot.html" class="nav-item">
-            <div class="copilot-core">
-                <svg viewBox="0 0 24 24" class="nav-icon" style="stroke:#020617; width:28px; height:28px;">
-                    <rect x="6" y="8" width="12" height="9" rx="2"/>
-                    <circle cx="9" cy="12" r="1"/>
-                    <circle cx="15" cy="12" r="1"/>
-                    <path d="M12 4V8"/>
-                </svg>
-            </div>
-            <span>Copilot</span>
-        </a>
-        <a href="market.html" class="nav-item">
-            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
-            <span>Market</span>
-        </a>
-        <a href="watchlist.html" class="nav-item">
-            <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
-            <span>Watchlist</span>
-        </a>
-    </nav>
+        <div class="coin-name">
+          <strong>Solana</strong>
+          <small>SOL</small>
+        </div>
+      </div>
 
-    <script>
-        // Your existing Firebase script here...
-        function animateNumbers() {
-            const score = document.getElementById("zellaScore");
-            let value = 0;
-            const timer = setInterval(() => {
-                value++;
-                if (score) score.textContent = value;
-                if (value >= 87) clearInterval(timer);
-            }, 25);
-        }
-        animateNumbers();
-    </script>
+      <div class="coin-price">
+        <strong>$340</strong>
+        <small>+4.7%</small>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="section-card">
+
+    <div class="section-title">
+      AI SIGNALS
+    </div>
+
+    <div class="market-row">
+      <strong>BTC</strong>
+      <small class="green">
+        BUY SIGNAL
+      </small>
+    </div>
+
+    <div class="market-row">
+      <strong>ETH</strong>
+      <small class="green">
+        STRONG BUY
+      </small>
+    </div>
+
+    <div class="market-row">
+      <strong>SOL</strong>
+      <small class="orange">
+        WATCH
+      </small>
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:18px;
+  width:92%;
+  max-width:520px;
+  height:82px;
+  border-radius:30px;
+  z-index:999;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  background:rgba(15,23,42,.92);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(148,163,184,.12);
+  box-shadow:
+  0 18px 55px rgba(0,0,0,.45),
+  inset 0 0 24px rgba(56,189,248,.04);
+}
+
+.nav-item{
+  text-align:center;
+  color:#94a3b8;
+  font-size:12px;
+  font-weight:800;
+}
+
+.nav-item i{
+  display:block;
+  font-size:22px;
+  margin-bottom:6px;
+}
+
+.copilot-btn{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  background:linear-gradient(
+  135deg,
+  #38bdf8,
+  #2563eb,
+  #8b5cf6);
+  color:white;
+  box-shadow:
+  0 0 40px rgba(56,189,248,.8);
+  animation:pulseAI 2s infinite;
+}
+
+@keyframes pulseAI{
+  50%{
+    transform:scale(1.1);
+  }
+}
+
+.active{
+  color:#38bdf8;
+}
+
+</style>
+
+<div class="bottom-nav">
+
+  <div class="nav-item active">
+    <i>⌂</i>
+    Home
+  </div>
+
+  <div class="nav-item">
+    <i>⌕</i>
+    Scanner
+  </div>
+
+  <div class="copilot-btn">
+    🤖
+  </div>
+
+  <div class="nav-item">
+    <i>📈</i>
+    Market
+  </div>
+
+  <div class="nav-item">
+    <i>☰</i>
+    More
+  </div>
+
+</div>
+
+<script>
+
+console.log("Zella Dashboard V12 Ultimate Loaded");
+
+</script>
+
+<script type="module" src="auth-guard.js"></script>
+
 </body>
 </html>

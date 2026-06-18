@@ -483,6 +483,28 @@ h1{
     <div class="hub-title">Exchange APIs</div>
     <div class="hub-sub">Connect exchanges.</div>
   </div>
+  
+  <div class="hub-card"
+data-title="logout sign out account"
+onclick="logoutUser()">
+
+  <div class="icon-box">
+    <svg viewBox="0 0 24 24">
+      <path d="M9 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H9"/>
+      <path d="M16 17L21 12L16 7"/>
+      <path d="M21 12H9"/>
+    </svg>
+  </div>
+
+  <div class="hub-title">
+    Logout
+  </div>
+
+  <div class="hub-sub">
+    Sign out of Zella.
+  </div>
+
+</div>
 
 </div>
 
@@ -566,6 +588,27 @@ Wallet
 </div>
 
 <script>
+
+import {
+  getAuth,
+  signOut
+}
+from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+async function logoutUser(){
+
+  const auth = getAuth();
+
+  await signOut(auth);
+
+  localStorage.removeItem(
+    "zellaMembership"
+  );
+
+  window.location.href =
+    "index.html";
+
+}
 
 function go(page){
   window.location.href = page;

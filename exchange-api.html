@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zella Exchange APIs V11 Ultra</title>
+<link rel="stylesheet" href="style.css">
+</head>
+ 
+<body>
+ 
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+ 
+body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
+  overflow-x:hidden;
+  padding-bottom:110px;
+}
+ 
+.exchange-bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 12%,rgba(56,189,248,.25),transparent 30%),
+    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 32%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    #020617;
+}
+ 
+.exchange-grid{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(56,189,248,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.055) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:gridMove 18s linear infinite;
+}
+ 
+@keyframes gridMove{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+ 
+.exchange-particles{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  overflow:hidden;
+  pointer-events:none;
+}
+ 
+.exchange-particles span{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 20px #38bdf8;
+  opacity:.55;
+  animation:particleUp 12s linear infinite;
+}
+ 
+.exchange-particles span:nth-child(1){left:8%;animation-delay:0s}
+.exchange-particles span:nth-child(2){left:22%;animation-delay:2s}
+.exchange-particles span:nth-child(3){left:41%;animation-delay:4s}
+.exchange-particles span:nth-child(4){left:61%;animation-delay:1s}
+.exchange-particles span:nth-child(5){left:80%;animation-delay:3s}
+.exchange-particles span:nth-child(6){left:94%;animation-delay:5s}
+ 
+@keyframes particleUp{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-120px)}
+}
+ 
+.navbar{
+  position:relative;
+  z-index:3;
+  padding:20px;
+}
+ 
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+ 
+.logo{
+  font-size:24px;
+  font-weight:950;
+  letter-spacing:3px;
+  background:linear-gradient(90deg,#38bdf8,#2563eb,#8b5cf6);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+ 
+.avatar-dot{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#8b5cf6);
+  box-shadow:0 0 28px rgba(56,189,248,.45);
+}
+ 
+.container{
+  position:relative;
+  z-index:3;
+  width:92%;
+  max-width:560px;
+  margin:auto;
+}
+ 
+.exchange-hero{
+  padding:24px;
+  border-radius:34px;
+  text-align:center;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.35), inset 0 0 35px rgba(56,189,248,.035);
+  overflow:hidden;
+  position:relative;
+}
+ 
+.exchange-core-wrap{
+  width:260px;
+  height:260px;
+  margin:auto;
+  position:relative;
+}
+ 
+.exchange-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.35);
+  animation:spin 12s linear infinite;
+}
+ 
+.exchange-ring.r1{inset:0}
+.exchange-ring.r2{inset:28px;animation-duration:18s;border-color:rgba(34,197,94,.28)}
+.exchange-ring.r3{inset:56px;animation-duration:25s;border-color:rgba(147,197,253,.22)}
+ 
+.exchange-ring::before{
+  content:"";
+  position:absolute;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  left:50%;
+  top:12px;
+  background:#38bdf8;
+  box-shadow:0 0 22px #38bdf8;
+}
+ 
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+ 
+.exchange-core{
+  position:absolute;
+  inset:88px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 35%,#0f172a 70%);
+  box-shadow:0 0 44px rgba(56,189,248,.9),0 0 105px rgba(56,189,248,.35);
+  animation:corePulse 3s ease-in-out infinite;
+}
+ 
+@keyframes corePulse{
+  50%{transform:scale(1.12);filter:brightness(1.35)}
+}
+ 
+.exchange-core svg{
+  width:82px;
+  height:82px;
+  stroke:#020617;
+  stroke-width:2;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+ 
+.eyebrow{
+  margin-top:18px;
+  color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
+  font-weight:950;
+}
+ 
+.command-title{
+  font-size:46px;
+  line-height:1.05;
+  margin-top:18px;
+  color:#e5eefb;
+}
+ 
+.briefing-text{
+  margin-top:18px;
+  color:#94a3b8;
+  font-size:15px;
+  line-height:1.8;
+}
+ 
+.status-pill{
+  display:inline-flex;
+  margin-top:22px;
+  padding:12px 20px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#4ade80;
+  font-weight:900;
+}
+ 
+.grid-two{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+ 
+.card{
+  padding:18px;
+  border-radius:26px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 18px 48px rgba(0,0,0,.25);
+  position:relative;
+  overflow:hidden;
+}
+ 
+.card::after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  right:-42px;
+  bottom:-42px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.16),transparent 70%);
+}
+ 
+.card-label{
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:800;
+}
+ 
+.card-value{
+  margin-top:14px;
+  font-size:30px;
+  font-weight:950;
+  color:#e5eefb;
+}
+ 
+.green{color:#4ade80}
+.blue{color:#38bdf8}
+.orange{color:#f59e0b}
+.red{color:#ef4444}
+ 
+.section{
+  margin-top:18px;
+  padding:20px;
+  border-radius:30px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 18px 48px rgba(0,0,0,.25);
+}
+ 
+.section-title{
+  font-size:13px;
+  letter-spacing:5px;
+  color:#38bdf8;
+  font-weight:950;
+  margin-bottom:16px;
+}
+ 
+.exchange-list{
+  display:grid;
+  gap:14px;
+}
+ 
+.exchange-row{
+  padding:16px;
+  border-radius:22px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+ 
+.exchange-row strong{
+  color:#e5eefb;
+}
+ 
+.exchange-row small{
+  color:#94a3b8;
+}
+ 
+.badge{
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(56,189,248,.12);
+  color:#38bdf8;
+  font-weight:900;
+  font-size:12px;
+}
+ 
+.form-grid{
+  display:grid;
+  gap:14px;
+}
+ 
+input,select{
+  width:100%;
+  padding:15px;
+  border-radius:18px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.14);
+  color:white;
+  outline:none;
+}
+ 
+input:focus,select:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 18px rgba(56,189,248,.16);
+}
+ 
+.actions{
+  display:flex;
+  gap:12px;
+  margin-top:16px;
+}
+ 
+button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  font-weight:950;
+  cursor:pointer;
+}
+ 
+.primary{
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  color:white;
+}
+ 
+.secondary{
+  background:#0f172a;
+  color:#cbd5e1;
+  border:1px solid rgba(148,163,184,.15);
+}
+ 
+.security-note{
+  margin-top:14px;
+  padding:14px;
+  border-radius:18px;
+  background:rgba(245,158,11,.10);
+  color:#fbbf24;
+  line-height:1.7;
+  font-size:13px;
+}
+ 
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:16px;
+  transform:translateX(-50%);
+  width:92%;
+  max-width:560px;
+  height:80px;
+  border-radius:30px;
+  background:rgba(15,23,42,.94);
+  border:1px solid rgba(148,163,184,.14);
+  backdrop-filter:blur(18px);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:50;
+}
+ 
+.nav-item{
+  color:#94a3b8;
+  text-align:center;
+  font-size:12px;
+  font-weight:800;
+}
+ 
+.nav-item.active{
+  color:#38bdf8;
+}
+ 
+@media(max-width:430px){
+  .command-title{font-size:38px}
+}
+</style>
+ 
+<div class="exchange-bg"></div>
+<div class="exchange-grid"></div>
+ 
+<div class="exchange-particles">
+  <span></span><span></span><span></span>
+  <span></span><span></span><span></span>
+</div>
+ 
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">ZELLA</div>
+    <div class="avatar-dot">EX</div>
+  </div>
+</nav>
+ 
+<main class="container">
+ 
+<section class="exchange-hero">
+  <div class="exchange-core-wrap">
+    <div class="exchange-ring r1"></div>
+    <div class="exchange-ring r2"></div>
+    <div class="exchange-ring r3"></div>
+ 
+    <div class="exchange-core">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 7H20"/>
+        <path d="M7 4L4 7L7 10"/>
+        <path d="M20 17H4"/>
+        <path d="M17 14L20 17L17 20"/>
+        <path d="M8 12H16"/>
+      </svg>
+    </div>
+  </div>
+ 
+  <div class="eyebrow">EXCHANGE APIs V11 ULTRA</div>
+ 
+  <h1 class="command-title">
+    Exchange<br>
+    Command.
+  </h1>
+ 
+  <p class="briefing-text">
+    Connect Binance, Bybit, OKX, Coinbase and Kraken through a secure backend vault.
+    Import balances, holdings, positions and prepare Zella for automated execution.
+  </p>
+ 
+  <div class="status-pill" id="mainStatus">
+    Secure backend required
+  </div>
+</section>
+ 
+<section class="grid-two">
+  <div class="card">
+    <div class="card-label">Connected Exchanges</div>
+    <div class="card-value blue" id="connectedCount">0</div>
+  </div>
+ 
+  <div class="card">
+    <div class="card-label">Portfolio Value</div>
+    <div class="card-value green" id="portfolioValue">--</div>
+  </div>
+ 
+  <div class="card">
+    <div class="card-label">Open Positions</div>
+    <div class="card-value orange" id="openPositions">--</div>
+  </div>
+ 
+  <div class="card">
+    <div class="card-label">API Health</div>
+    <div class="card-value green" id="apiHealth">Ready</div>
+  </div>
+</section>
+ 
+<section class="section">
+  <div class="section-title">CONNECT EXCHANGE</div>
+ 
+  <div class="form-grid">
+    <select id="exchangeName">
+      <option>Binance</option>
+      <option>Bybit</option>
+      <option>OKX</option>
+      <option>Coinbase</option>
+      <option>Kraken</option>
+    </select>
+ 
+    <input id="apiKey" placeholder="API Key">
+ 
+    <input id="apiSecret" placeholder="API Secret" type="password">
+ 
+    <select id="permissionMode">
+      <option>Read Only</option>
+      <option>Read + Trade</option>
+    </select>
+  </div>
+ 
+  <div class="security-note">
+    Never place real exchange secret keys in frontend code or GitHub.
+    This page sends keys to your Render backend, where they must be encrypted before storage.
+    Withdraw permission should always stay OFF.
+  </div>
+ 
+  <div class="actions">
+    <button class="primary" onclick="connectExchange()">Connect</button>
+    <button class="secondary" onclick="syncPortfolio()">Sync</button>
+  </div>
+</section>
+ 
+<section class="section">
+  <div class="section-title">CONNECTED EXCHANGES</div>
+  <div class="exchange-list" id="exchangeList"></div>
+</section>
+ 
+<section class="section">
+  <div class="section-title">PORTFOLIO IMPORT</div>
+  <div class="exchange-list" id="portfolioList">
+    <div class="exchange-row">
+      <div>
+        <strong>No portfolio synced yet</strong><br>
+        <small>Connect an exchange and tap Sync.</small>
+      </div>
+      <div class="badge">WAITING</div>
+    </div>
+  </div>
+</section>
+ 
+</main>
+ 
+<div class="bottom-nav">
+  <div class="nav-item" onclick="location.href='dashboard.html'">Home</div>
+  <div class="nav-item active">Exchange</div>
+  <div class="nav-item" onclick="location.href='portfolio.html'">Portfolio</div>
+  <div class="nav-item" onclick="location.href='ai-signal-engine.html'">Signals</div>
+  <div class="nav-item" onclick="location.href='more.html'">More</div>
+</div>
+ 
+<script>
+const API_URL = "https://zella-backend.onrender.com";
+ 
+function getLocalConnections(){
+  return JSON.parse(localStorage.getItem("zellaExchangeConnections") || "[]");
+}
+ 
+function saveLocalConnections(data){
+  localStorage.setItem("zellaExchangeConnections", JSON.stringify(data));
+}
+ 
+function renderConnections(){
+  const connections = getLocalConnections();
+  const list = document.getElementById("exchangeList");
+ 
+  document.getElementById("connectedCount").textContent = connections.length;
+ 
+  if(!connections.length){
+    list.innerHTML = `
+      <div class="exchange-row">
+        <div>
+          <strong>No exchange connected</strong><br>
+          <small>Use the connection form above.</small>
+        </div>
+        <div class="badge">READY</div>
+      </div>
+    `;
+    return;
+  }
+ 
+  list.innerHTML = connections.map(item=>`
+    <div class="exchange-row">
+      <div>
+        <strong>${item.exchange}</strong><br>
+        <small>${item.permission} • ${item.status}</small>
+      </div>
+      <div class="badge">${item.health}%</div>
+    </div>
+  `).join("");
+}
+ 
+async function connectExchange(){
+  const exchange = document.getElementById("exchangeName").value;
+  const apiKey = document.getElementById("apiKey").value.trim();
+  const apiSecret = document.getElementById("apiSecret").value.trim();
+  const permission = document.getElementById("permissionMode").value;
+ 
+  if(!apiKey || !apiSecret){
+    alert("API key and secret are required.");
+    return;
+  }
+ 
+  try{
+    const response = await fetch(API_URL + "/exchange/connect",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({exchange,apiKey,apiSecret,permission})
+    });
+ 
+    const data = await response.json();
+ 
+    if(!data.success){
+      throw new Error(data.message || "Connection failed");
+    }
+ 
+    let connections = getLocalConnections();
+    connections = connections.filter(item=>item.exchange !== exchange);
+    connections.unshift({
+      exchange,
+      permission,
+      status:"Connected",
+      health:100,
+      connectedAt:new Date().toLocaleString()
+    });
+ 
+    saveLocalConnections(connections);
+ 
+    document.getElementById("apiKey").value = "";
+    document.getElementById("apiSecret").value = "";
+    document.getElementById("mainStatus").textContent = exchange + " connected";
+ 
+    renderConnections();
+ 
+  }catch(error){
+    alert(error.message);
+  }
+}
+ 
+async function syncPortfolio(){
+  try{
+    const response = await fetch(API_URL + "/exchange/portfolio");
+    const data = await response.json();
+ 
+    if(!data.success){
+      throw new Error(data.message || "Portfolio sync failed");
+    }
+ 
+    document.getElementById("portfolioValue").textContent = data.totalValue || "$0";
+    document.getElementById("openPositions").textContent = data.openPositions || 0;
+    document.getElementById("apiHealth").textContent = "Online";
+ 
+    document.getElementById("portfolioList").innerHTML = data.holdings.map(item=>`
+      <div class="exchange-row">
+        <div>
+          <strong>${item.asset}</strong><br>
+          <small>${item.amount} • ${item.exchange}</small>
+        </div>
+        <div class="badge">${item.value}</div>
+      </div>
+    `).join("");
+ 
+    localStorage.setItem("zellaPortfolio", JSON.stringify(data));
+ 
+  }catch(error){
+    alert(error.message);
+  }
+}
+ 
+renderConnections();
+</script>
+ 
+<script src="premium-guard.js"></script>
+<script type="module" src="auth-guard.js"></script>
+ 
+</body>
+</html>

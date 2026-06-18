@@ -648,5 +648,32 @@ console.log(
 <script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
 
+<script>
+function go(page){
+  window.location.href = page;
+}
+
+function filterCards(){
+  const input = document.getElementById("searchInput");
+
+  if(!input){
+    return;
+  }
+
+  const value = input.value.toLowerCase();
+  const cards = document.querySelectorAll(".hub-card");
+
+  cards.forEach(card => {
+    const text = card.dataset.title || "";
+
+    if(text.toLowerCase().includes(value)){
+      card.style.display = "block";
+    }else{
+      card.style.display = "none";
+    }
+  });
+}
+</script>
+
 </body>
 </html>

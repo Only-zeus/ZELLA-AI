@@ -3,581 +3,651 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Market V11 Ultra</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body>
+<title>Zella Market V11 Ultra</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
-*{box-sizing:border-box}
-body{overflow-x:hidden}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-.market-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
+  overflow-x:hidden;
+  padding-bottom:130px;
+}
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
   background:
-    radial-gradient(circle at 18% 10%,rgba(56,189,248,.25),transparent 30%),
-    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
     #020617;
 }
 
-.market-grid-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+.grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
   background-image:
-    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+    linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
   background-size:42px 42px;
-  animation:marketGrid 18s linear infinite;
+  animation:gridMove 18s linear infinite;
 }
 
-@keyframes marketGrid{
+@keyframes gridMove{
   from{background-position:0 0}
   to{background-position:0 420px}
 }
 
-.market-particles{
-  position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+.container{
+  width:92%;
+  max-width:560px;
+  margin:auto;
 }
 
-.market-particles span{
-  position:absolute;width:6px;height:6px;border-radius:50%;
-  background:#38bdf8;box-shadow:0 0 18px #38bdf8;opacity:.42;
-  animation:marketFloat 12s linear infinite;
+.topbar{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
-.market-particles span:nth-child(1){left:7%;animation-delay:0s}
-.market-particles span:nth-child(2){left:24%;animation-delay:2s}
-.market-particles span:nth-child(3){left:41%;animation-delay:5s}
-.market-particles span:nth-child(4){left:58%;animation-delay:1s}
-.market-particles span:nth-child(5){left:76%;animation-delay:4s}
-.market-particles span:nth-child(6){left:91%;animation-delay:3s}
-
-@keyframes marketFloat{
-  from{transform:translateY(110vh) scale(.6)}
-  to{transform:translateY(-140px) scale(1.4)}
+.brand h2{
+  font-size:34px;
+  letter-spacing:10px;
+  font-weight:950;
 }
 
-.container,.navbar{position:relative;z-index:3}
-
-.market-hero{
-  position:relative;overflow:hidden;padding:22px;border-radius:34px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:inset 0 0 34px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.30);
+.brand span{
+  color:#38bdf8;
+  letter-spacing:5px;
+  font-weight:950;
+  font-size:14px;
 }
 
-.market-hero::after{
-  content:"";position:absolute;width:160px;height:160px;right:-60px;bottom:-60px;
+.user-badge{
+  width:54px;
+  height:54px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  box-shadow:0 0 30px rgba(56,189,248,.5);
 }
 
-.market-core-wrap{
-  width:235px;height:235px;margin:8px auto 22px;position:relative;
+.hero{
+  padding:28px;
+  border-radius:34px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.38);
 }
 
-.market-ring{
-  position:absolute;border-radius:50%;
-  border:1px solid rgba(56,189,248,.38);
-  animation:spin 12s linear infinite;
+.orbit{
+  width:245px;
+  height:245px;
+  margin:0 auto 24px;
+  position:relative;
 }
 
-.market-ring.r1{inset:12px}
-.market-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s}
-.market-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s}
-.market-ring.r4{inset:58px;border-color:rgba(56,189,248,.18);animation-duration:28s}
+.ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
+}
 
-.market-ring::before{
-  content:"";width:11px;height:11px;border-radius:50%;
-  position:absolute;top:18px;left:50%;
-  background:#38bdf8;box-shadow:0 0 24px #38bdf8;
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
+
+.ring::before{
+  content:"";
+  position:absolute;
+  top:12px;
+  left:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
 }
 
 @keyframes spin{
-  from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
 
-.market-core{
-  position:absolute;inset:58px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
-  box-shadow:0 0 42px rgba(56,189,248,.90),0 0 92px rgba(37,99,235,.44);
-  animation:marketPulse 4s ease-in-out infinite;
+.core{
+  position:absolute;
+  inset:82px;
+  border-radius:50%;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:
+    0 0 45px rgba(56,189,248,.85),
+    inset 0 0 28px rgba(2,6,23,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.market-core svg{
-  width:62px;height:62px;fill:none;stroke:#020617;stroke-width:2.2;
-  stroke-linecap:round;stroke-linejoin:round;
+.core svg{
+  width:58px;
+  height:58px;
+  stroke:#020617;
+  fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-@keyframes marketPulse{
-  0%,100%{transform:scale(1);filter:brightness(1)}
-  50%{transform:scale(1.12);filter:brightness(1.35)}
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
+  font-weight:950;
 }
 
-.market-sweep{
-  position:absolute;left:0;right:0;top:50%;height:2px;
-  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-  box-shadow:0 0 26px rgba(56,189,248,.85);
-  animation:marketSweep 3s ease-in-out infinite;
+.hero h1{
+  margin-top:20px;
+  font-size:48px;
+  line-height:1.05;
 }
 
-@keyframes marketSweep{
-  0%,100%{transform:translateY(-72px);opacity:.2}
-  50%{transform:translateY(72px);opacity:1}
-}
-
-.market-card{
-  position:relative;overflow:hidden;padding:18px;border-radius:28px;
-  background:rgba(15,23,42,.84);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:inset 0 0 28px rgba(56,189,248,.035),0 18px 48px rgba(0,0,0,.26);
-  transition:.28s ease;
-}
-
-.market-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(56,189,248,.34);
-  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
-}
-
-.chart-frame{
-  height:520px;
-  border-radius:28px;
-  overflow:hidden;
-  border:1px solid rgba(56,189,248,.18);
-  background:#020617;
-  box-shadow:0 0 42px rgba(56,189,248,.12);
-}
-
-.asset-tabs{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-  margin:16px 0;
-}
-
-.asset-tab{
-  border:none;
-  padding:13px 8px;
-  border-radius:18px;
-  background:rgba(15,23,42,.86);
+.hero p{
+  margin-top:18px;
   color:#94a3b8;
+  font-size:16px;
+  line-height:1.8;
+}
+
+.status{
+  margin-top:18px;
+  display:inline-flex;
+  padding:11px 17px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#4ade80;
   font-weight:950;
-  border:1px solid rgba(148,163,184,.14);
 }
 
-.asset-tab.active{
-  color:#020617;
-  background:linear-gradient(135deg,#38bdf8,#2563eb);
-  box-shadow:0 0 25px rgba(56,189,248,.34);
-}
-
-.market-tile{
-  padding:18px;
-  border-radius:26px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
-}
-
-.market-symbol{
-  font-size:22px;
-  font-weight:950;
-  color:#e5eefb;
-}
-
-.market-price{
-  font-size:20px;
-  font-weight:950;
-  color:#38bdf8;
-  margin-top:8px;
-}
-
-.market-meta{
-  color:#94a3b8;
-  font-size:12px;
-  line-height:1.7;
-  margin-top:8px;
-}
-
-.market-board{
+.stats{
+  margin-top:18px;
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:1fr 1fr;
   gap:14px;
-  margin-top:16px;
+}
+
+.card{
+  padding:20px;
+  border-radius:26px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 18px 48px rgba(0,0,0,.25);
+}
+
+.label{
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:850;
+}
+
+.value{
+  margin-top:12px;
+  font-size:30px;
+  font-weight:950;
+}
+
+.sub{
+  margin-top:9px;
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.blue{color:#38bdf8}
+.green{color:#4ade80}
+.orange{color:#f59e0b}
+.red{color:#ef4444}
+
+.section{
+  margin-top:18px;
+  padding:22px;
+  border-radius:30px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 18px 48px rgba(0,0,0,.25);
+}
+
+.section-title{
+  color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
+  font-weight:950;
+  margin-bottom:18px;
+}
+
+.market-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 0;
+  border-bottom:1px solid rgba(148,163,184,.1);
+}
+
+.market-row:last-child{
+  border-bottom:none;
+}
+
+.coin-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.coin-logo{
+  width:42px;
+  height:42px;
+  border-radius:16px;
+  background:rgba(56,189,248,.12);
+  border:1px solid rgba(56,189,248,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.coin-logo svg{
+  width:24px;
+  height:24px;
+  stroke:#38bdf8;
+  fill:none;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.coin-info strong{
+  display:block;
+}
+
+.coin-info small{
+  color:#94a3b8;
+}
+
+.coin-price{
+  text-align:right;
+}
+
+.coin-price strong{
+  display:block;
+}
+
+.coin-price small{
+  font-weight:900;
+}
+
+.news-card{
+  margin-bottom:14px;
+  border-radius:22px;
+  overflow:hidden;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
+}
+
+.news-card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  display:block;
+}
+
+.news-body{
+  padding:15px;
+}
+
+.news-body strong{
+  display:block;
+  line-height:1.5;
+}
+
+.news-body small{
+  display:block;
+  margin-top:8px;
+  color:#94a3b8;
 }
 
 @media(max-width:430px){
-  .asset-tabs{grid-template-columns:repeat(3,1fr)}
-  .market-board{grid-template-columns:1fr}
-  .chart-frame{height:430px}
+  .hero h1{font-size:42px}
+  .brand h2{font-size:30px}
 }
 </style>
+</head>
 
-<div class="market-bg"></div>
-<div class="market-grid-bg"></div>
+<body>
 
-<div class="market-particles">
-  <span></span><span></span><span></span>
-  <span></span><span></span><span></span>
-</div>
+<div class="bg"></div>
+<div class="grid-bg"></div>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">MK</div>
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>MARKET</span>
   </div>
-</nav>
+
+  <div class="user-badge">
+    Z
+  </div>
+</header>
 
 <main class="container">
 
-<section class="market-hero">
+<section class="hero">
 
-  <div class="market-core-wrap">
-    <div class="market-ring r1"></div>
-    <div class="market-ring r2"></div>
-    <div class="market-ring r3"></div>
-    <div class="market-ring r4"></div>
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
 
-    <div class="market-core">
+    <div class="core">
       <svg viewBox="0 0 24 24">
-        <path d="M4 16L9 11L13 14L20 7"/>
-        <path d="M20 7V13"/>
-        <path d="M20 7H14"/>
-        <path d="M4 20H20"/>
+        <path d="M4 18V6"/>
+        <path d="M8 18V10"/>
+        <path d="M12 18V4"/>
+        <path d="M16 18V8"/>
+        <path d="M20 18V12"/>
       </svg>
     </div>
-
-    <div class="market-sweep"></div>
   </div>
 
-  <div class="eyebrow">ZELLA MARKET V11 ULTRA</div>
+  <div class="eyebrow">
+    ZELLA MARKET V11 ULTRA
+  </div>
 
-  <h1 class="command-title">
-    Market<br>
-    Terminal.
+  <h1>
+    Live Market<br>
+    Intelligence.
   </h1>
 
-  <p class="briefing-text">
-    Live crypto intelligence, TradingView advanced charts, indicators,
-    scanner confidence, market pulse, risk radar and AI-powered market context.
+  <p>
+    Track live prices, source status, market direction,
+    volume movement and crypto news with real market data only.
   </p>
 
-  <div class="command-status-pill">
-    TradingView terminal active
+  <div class="status" id="marketStatus">
+    Market Engine • Connecting
   </div>
 
 </section>
 
-<section class="mini-grid">
+<div class="stats">
 
-  <div class="mini-box market-card">
-    <div class="mini-label">Market Mood</div>
-    <div class="mini-value green" id="marketMood">--</div>
+  <div class="card">
+    <div class="label">Market Bias</div>
+    <div class="value green" id="marketBias">--</div>
+    <div class="sub">Based on live 24h movement</div>
   </div>
 
-  <div class="mini-box market-card">
-    <div class="mini-label">Top Asset</div>
-    <div class="mini-value blue" id="topAsset">--</div>
+  <div class="card">
+    <div class="label">Data Source</div>
+    <div class="value blue" id="marketSource">--</div>
+    <div class="sub">5-source fallback engine</div>
   </div>
 
-  <div class="mini-box market-card">
-    <div class="mini-label">Confidence</div>
-    <div class="mini-value orange" id="confidence">--</div>
+  <div class="card">
+    <div class="label">Top Gainer</div>
+    <div class="value orange" id="topGainer">--</div>
+    <div class="sub" id="topGainerSub">Waiting for market</div>
   </div>
 
-  <div class="mini-box market-card">
-    <div class="mini-label">Risk Pulse</div>
-    <div class="mini-value blue" id="riskPulse">--</div>
+  <div class="card">
+    <div class="label">Tracked Assets</div>
+    <div class="value blue" id="trackedAssets">--</div>
+    <div class="sub">BTC ETH SOL BNB XRP</div>
   </div>
 
+</div>
+
+<section class="section">
+  <div class="section-title">LIVE ASSETS</div>
+
+  <div id="marketList">
+    <p class="sub">Loading live market assets...</p>
+  </div>
 </section>
 
-<section class="briefing-card">
+<section class="section">
+  <div class="section-title">NEWS INTELLIGENCE</div>
 
-  <div class="briefing-title">TRADING TERMINAL</div>
-
-  <div class="asset-tabs">
-    <button class="asset-tab active" onclick="switchAsset('BTCUSDT',this)">BTC</button>
-    <button class="asset-tab" onclick="switchAsset('ETHUSDT',this)">ETH</button>
-    <button class="asset-tab" onclick="switchAsset('SOLUSDT',this)">SOL</button>
-    <button class="asset-tab" onclick="switchAsset('BNBUSDT',this)">BNB</button>
-    <button class="asset-tab" onclick="switchAsset('XRPUSDT',this)">XRP</button>
+  <div id="newsList">
+    <p class="sub">Loading live news with images...</p>
   </div>
-
-  <div class="chart-frame">
-    <div id="tradingview_chart" style="height:100%;width:100%;"></div>
-  </div>
-
 </section>
 
-<section class="briefing-card">
+</main>
 
-  <div class="briefing-title">ZELLA AI CHART INSIGHT</div>
+<nav class="bottom-dock">
 
-  <h2 class="briefing-headline" id="chartInsightTitle">
-    Loading market intelligence...
-  </h2>
-
-  <p class="briefing-text" id="chartInsightText">
-    Zella is reading scanner context and market structure.
-  </p>
-
-  <div class="hero-actions">
-    <button class="btn" onclick="speakBriefing()">Voice Briefing</button>
-    <a href="copilot.html" class="btn secondary">Ask Zella</a>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">LIVE ASSET BOARD</div>
-
-  <div class="market-board" id="marketBoard">
-    <div class="market-tile">
-      <div class="market-symbol">Loading...</div>
-      <div class="market-price">--</div>
-      <div class="market-meta">Connecting to live scanner.</div>
-    </div>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">MARKET NEWS PULSE</div>
-
-  <h2 class="briefing-headline" id="newsHeadline">
-    Loading latest crypto headline...
-  </h2>
-
-  <p class="briefing-text" id="newsSource">
-    Zella is scanning the news engine.
-  </p>
-
-</section>
-
-<nav class="zella-nav">
-
-  <a href="dashboard.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
-    <span>Home</span>
-  </a>
-
-  <a href="scanner.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
-    <span>Scanner</span>
-  </a>
-
-  <a href="copilot.html" class="nav-item copilot-center">
-    <div class="copilot-core">
-      <svg viewBox="0 0 24 24" class="copilot-icon">
-        <rect x="6" y="8" width="12" height="9" rx="2"/>
-        <circle cx="9" cy="12" r="1"/>
-        <circle cx="15" cy="12" r="1"/>
-        <path d="M12 4V8"/>
-      </svg>
-    </div>
-    <span>Copilot</span>
-  </a>
-
-  <a href="market.html" class="nav-item active">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
-    <span>Market</span>
-  </a>
-
-  <a href="watchlist.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
-    <span>Watchlist</span>
-  </a>
-
-  <a href="more.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <circle cx="12" cy="5" r="1.5"/>
-      <circle cx="12" cy="12" r="1.5"/>
-      <circle cx="12" cy="19" r="1.5"/>
+  <div class="dock-item" onclick="go('dashboard.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11L12 4L21 11"/>
+      <path d="M5 10V21H19V10"/>
+      <path d="M9 21V14H15V21"/>
     </svg>
-    <span>More</span>
-  </a>
+  </div>
+
+  <div class="dock-item" onclick="go('scanner.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 19V5"/>
+      <path d="M4 19H20"/>
+      <path d="M8 16L11 12L14 14L19 7"/>
+      <circle cx="19" cy="7" r="2"/>
+    </svg>
+  </div>
+
+  <div class="ai-dock" onclick="go('copilot.html')">
+    <svg viewBox="0 0 24 24">
+      <rect x="5" y="7" width="14" height="11" rx="4"/>
+      <path d="M9 11H9.01"/>
+      <path d="M15 11H15.01"/>
+      <path d="M12 3V7"/>
+      <path d="M8 18L6 21"/>
+      <path d="M16 18L18 21"/>
+    </svg>
+  </div>
+
+  <div class="dock-item active" onclick="go('market.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18V6"/>
+      <path d="M8 18V10"/>
+      <path d="M12 18V4"/>
+      <path d="M16 18V8"/>
+      <path d="M20 18V12"/>
+    </svg>
+  </div>
+
+  <div class="dock-item" onclick="go('more.html')">
+    <svg viewBox="0 0 24 24">
+      <circle cx="5" cy="12" r="1.6"/>
+      <circle cx="12" cy="12" r="1.6"/>
+      <circle cx="19" cy="12" r="1.6"/>
+    </svg>
+  </div>
 
 </nav>
 
-<script src="https://s3.tradingview.com/tv.js"></script>
-
 <script>
 const API_URL = "https://zella-backend.onrender.com";
-let selectedSymbol = "BTCUSDT";
-let latestScanner = [];
+
+function go(page){
+  window.location.href = page;
+}
 
 function formatMoney(value){
-  const num = Number(value || 0);
-  return "$" + num.toLocaleString(undefined,{
-    maximumFractionDigits: num < 10 ? 4 : 2
-  });
-}
+  const number = Number(value || 0);
 
-function decideMood(items){
-  if(!items.length) return "--";
-  const avg = items.reduce((sum,item)=>sum + Number(item.confidence || 0),0) / items.length;
-  if(avg >= 70) return "Bullish";
-  if(avg >= 55) return "Neutral";
-  return "Risk Off";
-}
-
-function renderTradingView(symbol){
-  document.getElementById("tradingview_chart").innerHTML = "";
-
-  new TradingView.widget({
-    autosize: true,
-    symbol: "BINANCE:" + symbol,
-    interval: "60",
-    timezone: "Etc/UTC",
-    theme: "dark",
-    style: "1",
-    locale: "en",
-    enable_publishing: false,
-    allow_symbol_change: false,
-    hide_side_toolbar: false,
-    withdateranges: true,
-    details: true,
-    hotlist: false,
-    calendar: false,
-    studies: [
-      "RSI@tv-basicstudies",
-      "MACD@tv-basicstudies",
-      "Volume@tv-basicstudies",
-      "EMA@tv-basicstudies"
-    ],
-    container_id: "tradingview_chart"
-  });
-}
-
-function switchAsset(symbol,btn){
-  selectedSymbol = symbol;
-
-  document.querySelectorAll(".asset-tab").forEach(tab=>{
-    tab.classList.remove("active");
-  });
-
-  btn.classList.add("active");
-
-  renderTradingView(symbol);
-  updateInsight();
-}
-
-function renderMarketBoard(items){
-  const board = document.getElementById("marketBoard");
-
-  board.innerHTML = items.map(asset=>`
-    <div class="market-tile">
-      <div class="market-symbol">${asset.asset}</div>
-      <div class="market-price">${formatMoney(asset.price)}</div>
-      <div class="market-meta">
-        ${asset.signal} • ${asset.trend}<br>
-        Confidence ${asset.confidence}% • Risk ${asset.riskScore}%<br>
-        Source: ${asset.source}
-      </div>
-    </div>
-  `).join("");
-}
-
-function updateInsight(){
-  const assetCode = selectedSymbol.replace("USDT","");
-  const asset = latestScanner.find(item=>item.asset === assetCode);
-
-  if(!asset){
-    document.getElementById("chartInsightTitle").textContent =
-      `${assetCode} chart loaded`;
-
-    document.getElementById("chartInsightText").textContent =
-      "Zella is waiting for scanner context.";
-    return;
+  if(number >= 1000){
+    return "$" + number.toLocaleString(undefined,{
+      maximumFractionDigits:2
+    });
   }
 
-  document.getElementById("chartInsightTitle").textContent =
-    `${asset.asset} chart intelligence`;
+  return "$" + number.toFixed(4);
+}
 
-  document.getElementById("chartInsightText").textContent =
-    `${asset.asset} is currently ${asset.trend} with ${asset.confidence}% scanner confidence, ${asset.momentumScore}% momentum and ${asset.riskScore}% risk. Signal: ${asset.signal}.`;
+function assetIcon(){
+  return `
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="8"/>
+      <path d="M8 12H16"/>
+      <path d="M12 8V16"/>
+    </svg>
+  `;
 }
 
 async function loadMarket(){
   try{
-    const res = await fetch(API_URL + "/scanner");
-    const data = await res.json();
+    const response = await fetch(API_URL + "/api/market/live");
+    const data = await response.json();
 
-    const items = data.items || [];
-    latestScanner = items;
+    if(!data.success || !Array.isArray(data.assets)){
+      throw new Error(data.message || "Live market unavailable");
+    }
 
-    if(!items.length) return;
+    document.getElementById("marketStatus").textContent =
+      "Market Engine • Live";
 
-    const top = items[0];
-    const riskiest = [...items].sort((a,b)=>b.riskScore - a.riskScore)[0];
+    document.getElementById("marketSource").textContent =
+      data.source || "Live";
 
-    document.getElementById("marketMood").textContent = decideMood(items);
-    document.getElementById("topAsset").textContent = top.asset;
-    document.getElementById("confidence").textContent = top.confidence + "%";
-    document.getElementById("riskPulse").textContent = riskiest.asset;
+    document.getElementById("trackedAssets").textContent =
+      data.assets.length;
 
-    renderMarketBoard(items);
-    updateInsight();
+    const bullishCount =
+      data.assets.filter(asset => Number(asset.change24h) >= 0).length;
+
+    document.getElementById("marketBias").textContent =
+      bullishCount >= 3 ? "Bullish" : "Bearish";
+
+    const top =
+      data.assets.slice().sort((a,b)=>{
+        return Number(b.change24h || 0) - Number(a.change24h || 0);
+      })[0];
+
+    document.getElementById("topGainer").textContent =
+      top.symbol;
+
+    document.getElementById("topGainerSub").textContent =
+      `${Number(top.change24h).toFixed(2)}% today`;
+
+    const list = document.getElementById("marketList");
+    list.innerHTML = "";
+
+    data.assets.forEach(asset=>{
+      const change = Number(asset.change24h || 0);
+      const changeClass = change >= 0 ? "green" : "red";
+      const sign = change >= 0 ? "+" : "";
+
+      list.innerHTML += `
+        <div class="market-row">
+          <div class="coin-left">
+            <div class="coin-logo">
+              ${asset.image ? `<img src="${asset.image}" style="width:28px;height:28px;border-radius:50%;">` : assetIcon()}
+            </div>
+
+            <div class="coin-info">
+              <strong>${asset.name}</strong>
+              <small>${asset.symbol} • ${asset.source}</small>
+            </div>
+          </div>
+
+          <div class="coin-price">
+            <strong>${formatMoney(asset.price)}</strong>
+            <small class="${changeClass}">${sign}${change.toFixed(2)}%</small>
+          </div>
+        </div>
+      `;
+    });
 
   }catch(error){
-    console.error(error);
+    document.getElementById("marketStatus").textContent =
+      "Market Engine • Unavailable";
+
+    document.getElementById("marketList").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
   }
 }
 
-async function loadNewsPulse(){
+async function loadNews(){
   try{
-    const res = await fetch(API_URL + "/news");
-    const data = await res.json();
+    const response = await fetch(API_URL + "/api/news/live");
+    const data = await response.json();
 
-    const items = data.news || data.items || [];
-    const first = items[0];
+    if(!data.success || !Array.isArray(data.articles)){
+      throw new Error(data.message || "Live news unavailable");
+    }
 
-    if(!first) return;
+    const list = document.getElementById("newsList");
+    list.innerHTML = "";
 
-    document.getElementById("newsHeadline").textContent =
-      first.title || "Latest market headline";
+    data.articles.slice(0,4).forEach(article=>{
+      if(!article.image){
+        return;
+      }
 
-    document.getElementById("newsSource").textContent =
-      first.source || "Crypto News";
+      list.innerHTML += `
+        <div class="news-card" onclick="window.open('${article.url}','_blank')">
+          <img src="${article.image}" alt="">
+          <div class="news-body">
+            <strong>${article.title}</strong>
+            <small>${article.source || "News"} • ${article.publishedAt || ""}</small>
+          </div>
+        </div>
+      `;
+    });
+
+    if(!list.innerHTML.trim()){
+      list.innerHTML =
+        `<p class="sub red">No image-based news available right now.</p>`;
+    }
 
   }catch(error){
-    console.error(error);
+    document.getElementById("newsList").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
   }
 }
 
-function speakBriefing(){
-  const text =
-    document.getElementById("chartInsightTitle").textContent + ". " +
-    document.getElementById("chartInsightText").textContent;
+function boot(){
+  loadMarket();
+  loadNews();
 
-  if(!window.speechSynthesis){
-    alert("Voice briefing is not supported on this browser.");
-    return;
-  }
-
-  speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate = 1;
-  utterance.pitch = 1.05;
-  speechSynthesis.speak(utterance);
+  setInterval(loadMarket,30000);
+  setInterval(loadNews,90000);
 }
 
-renderTradingView(selectedSymbol);
-loadMarket();
-loadNewsPulse();
-
-setInterval(loadMarket,30000);
-setInterval(loadNewsPulse,60000);
+boot();
 </script>
 
-</main>
+<script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
+
 </body>
 </html>

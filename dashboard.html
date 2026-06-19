@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zella Dashboard V12 Ultimate LIVE</title>
+<title>Zella Dashboard V11 Ultra</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
 *{
@@ -15,11 +17,11 @@
 }
 
 body{
+  min-height:100vh;
   background:#020617;
   color:white;
-  min-height:100vh;
   overflow-x:hidden;
-  padding-bottom:120px;
+  padding-bottom:130px;
 }
 
 .bg{
@@ -28,8 +30,8 @@ body{
   z-index:-3;
   background:
     radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
-    radial-gradient(circle at 86% 12%,rgba(37,99,235,.22),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.11),transparent 35%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
     #020617;
 }
 
@@ -49,242 +51,168 @@ body{
   to{background-position:0 420px}
 }
 
-.particles{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-.particles span{
-  position:absolute;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#38bdf8;
-  box-shadow:0 0 20px #38bdf8;
-  opacity:.55;
-  animation:floatUp 12s linear infinite;
-}
-
-.particles span:nth-child(1){left:8%;animation-delay:0s}
-.particles span:nth-child(2){left:22%;animation-delay:2s}
-.particles span:nth-child(3){left:41%;animation-delay:4s}
-.particles span:nth-child(4){left:61%;animation-delay:1s}
-.particles span:nth-child(5){left:80%;animation-delay:3s}
-.particles span:nth-child(6){left:94%;animation-delay:5s}
-
-@keyframes floatUp{
-  from{transform:translateY(110vh)}
-  to{transform:translateY(-120px)}
-}
-
-.topbar{
-  width:92%;
-  max-width:560px;
-  margin:0 auto;
-  padding:20px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo{
-  font-size:24px;
-  font-weight:950;
-  letter-spacing:3px;
-  background:linear-gradient(90deg,#38bdf8,#2563eb,#8b5cf6);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.avatar{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:950;
-  background:linear-gradient(135deg,#38bdf8,#2563eb,#8b5cf6);
-  box-shadow:0 0 28px rgba(56,189,248,.45);
-}
-
 .container{
   width:92%;
   max-width:560px;
   margin:auto;
 }
 
+.topbar{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand h2{
+  font-size:34px;
+  letter-spacing:10px;
+  font-weight:950;
+}
+
+.brand span{
+  color:#38bdf8;
+  letter-spacing:5px;
+  font-weight:950;
+  font-size:14px;
+}
+
+.user-badge{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  box-shadow:0 0 30px rgba(56,189,248,.5);
+}
+
 .hero{
-  padding:26px;
+  padding:28px;
   border-radius:34px;
   background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.15);
-  box-shadow:0 22px 65px rgba(0,0,0,.35),inset 0 0 35px rgba(56,189,248,.035);
-  overflow:hidden;
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.38);
+}
+
+.orbit{
+  width:245px;
+  height:245px;
+  margin:0 auto 24px;
   position:relative;
 }
 
-.ai-core-wrap{
-  width:240px;
-  height:240px;
-  margin:0 auto 8px;
-  position:relative;
-}
-
-.ai-ring{
+.ring{
   position:absolute;
   border-radius:50%;
-  border:1px solid rgba(56,189,248,.35);
-  animation:spin 12s linear infinite;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
 }
 
-.ai-ring.r1{inset:0}
-.ai-ring.r2{inset:28px;animation-duration:18s;border-color:rgba(34,197,94,.28)}
-.ai-ring.r3{inset:56px;animation-duration:25s;border-color:rgba(147,197,253,.22)}
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
 
-.ai-ring::before{
+.ring::before{
   content:"";
   position:absolute;
+  top:12px;
+  left:50%;
   width:10px;
   height:10px;
   border-radius:50%;
-  left:50%;
-  top:12px;
   background:#38bdf8;
-  box-shadow:0 0 22px #38bdf8;
+  box-shadow:0 0 18px #38bdf8;
 }
 
 @keyframes spin{
   to{transform:rotate(360deg)}
 }
 
-.ai-face{
+.core{
   position:absolute;
-  width:112px;
-  height:88px;
-  border-radius:42px;
-  left:50%;
-  top:58px;
-  transform:translateX(-50%);
-  background:linear-gradient(180deg,#0f172a,#020617);
-  border:2px solid rgba(56,189,248,.48);
-  box-shadow:0 0 36px rgba(56,189,248,.55),inset 0 0 28px rgba(56,189,248,.12);
-}
-
-.ai-face::before,
-.ai-face::after{
-  content:"";
-  position:absolute;
-  top:34px;
-  width:15px;
-  height:15px;
+  inset:82px;
   border-radius:50%;
-  background:#38bdf8;
-  box-shadow:0 0 20px #38bdf8;
-  animation:blink 3.2s infinite;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:
+    0 0 45px rgba(56,189,248,.85),
+    inset 0 0 28px rgba(2,6,23,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.ai-face::before{left:30px}
-.ai-face::after{right:30px}
-
-@keyframes blink{
-  0%,92%,100%{transform:scaleY(1)}
-  95%{transform:scaleY(.15)}
+.core svg{
+  width:58px;
+  height:58px;
+  stroke:#020617;
+  fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-.ai-orb{
-  position:absolute;
-  left:50%;
-  bottom:54px;
-  transform:translateX(-50%);
-  width:68px;
-  height:68px;
-  border-radius:50%;
-  background:radial-gradient(circle,#e0f2fe,#38bdf8 45%,#2563eb 70%);
-  box-shadow:0 0 44px rgba(56,189,248,.9);
-  animation:orbPulse 2.4s ease-in-out infinite;
-}
-
-@keyframes orbPulse{
-  50%{transform:translateX(-50%) scale(1.15);filter:brightness(1.35)}
-}
-
-.badge{
-  display:inline-flex;
-  margin-top:10px;
-  padding:10px 16px;
-  border-radius:999px;
-  color:#38bdf8;
-  background:rgba(56,189,248,.12);
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
   font-weight:950;
-  letter-spacing:2px;
-  font-size:12px;
 }
 
-h1{
-  margin-top:18px;
-  font-size:46px;
+.hero h1{
+  margin-top:20px;
+  font-size:48px;
   line-height:1.05;
 }
 
 .hero p{
-  margin-top:16px;
+  margin-top:18px;
   color:#94a3b8;
+  font-size:16px;
   line-height:1.8;
-  font-size:15px;
 }
 
-.status-pill{
+.status{
   margin-top:18px;
   display:inline-flex;
-  padding:11px 16px;
+  padding:11px 17px;
   border-radius:999px;
   background:rgba(34,197,94,.12);
   color:#4ade80;
   font-weight:950;
-  font-size:13px;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
+.stats{
   margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
 }
 
 .card{
-  padding:18px;
+  padding:20px;
   border-radius:26px;
   background:rgba(15,23,42,.88);
   border:1px solid rgba(148,163,184,.14);
   box-shadow:0 18px 48px rgba(0,0,0,.25);
-  position:relative;
-  overflow:hidden;
-}
-
-.card::after{
-  content:"";
-  position:absolute;
-  width:100px;
-  height:100px;
-  right:-42px;
-  bottom:-42px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.16),transparent 70%);
 }
 
 .label{
   color:#94a3b8;
   font-size:13px;
-  font-weight:800;
+  font-weight:850;
 }
 
 .value{
   margin-top:12px;
-  font-size:29px;
+  font-size:30px;
   font-weight:950;
 }
 
@@ -292,17 +220,17 @@ h1{
   margin-top:9px;
   color:#94a3b8;
   font-size:13px;
-  font-weight:800;
+  line-height:1.5;
 }
 
-.green{color:#4ade80}
 .blue{color:#38bdf8}
+.green{color:#4ade80}
 .orange{color:#f59e0b}
 .red{color:#ef4444}
 
 .section{
   margin-top:18px;
-  padding:20px;
+  padding:22px;
   border-radius:30px;
   background:rgba(15,23,42,.88);
   border:1px solid rgba(148,163,184,.14);
@@ -310,14 +238,14 @@ h1{
 }
 
 .section-title{
-  font-size:13px;
-  letter-spacing:5px;
   color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
   font-weight:950;
-  margin-bottom:16px;
+  margin-bottom:18px;
 }
 
-.market-row{
+.row{
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -325,152 +253,98 @@ h1{
   border-bottom:1px solid rgba(148,163,184,.1);
 }
 
-.market-row:last-child{
+.row:last-child{
   border-bottom:none;
 }
 
-.coin-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.coin-icon{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:950;
-  background:linear-gradient(135deg,#38bdf8,#2563eb);
-  box-shadow:0 0 18px rgba(56,189,248,.32);
-}
-
-.coin-name strong{
+.row-left strong{
   display:block;
-  color:#e5eefb;
 }
 
-.coin-name small{
+.row-left small{
   color:#94a3b8;
 }
 
-.coin-price{
+.row-right{
   text-align:right;
 }
 
-.coin-price strong{
+.row-right strong{
   display:block;
-  color:#e5eefb;
 }
 
-.coin-price small{
-  font-weight:950;
+.row-right small{
+  color:#94a3b8;
 }
 
-.signal-card{
-  padding:16px;
+.news-card{
+  margin-bottom:14px;
   border-radius:22px;
+  overflow:hidden;
   background:#0f172a;
   border:1px solid rgba(148,163,184,.12);
-  margin-bottom:12px;
 }
 
-.signal-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.news-card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  display:block;
 }
 
-.signal-tag{
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:950;
+.news-body{
+  padding:15px;
 }
 
-.buy{
-  background:rgba(34,197,94,.15);
-  color:#4ade80;
+.news-body strong{
+  display:block;
+  line-height:1.5;
 }
 
-.sell{
-  background:rgba(239,68,68,.15);
-  color:#ef4444;
-}
-
-.watch{
-  background:rgba(245,158,11,.15);
-  color:#f59e0b;
-}
-
-.confidence-bar{
-  height:10px;
-  background:rgba(255,255,255,.08);
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:14px;
-}
-
-.confidence-fill{
-  height:100%;
-  background:linear-gradient(90deg,#38bdf8,#22c55e);
-  border-radius:999px;
-}
-
-.bottom-nav{
-  position:fixed;
-  left:50%;
-  bottom:16px;
-  transform:translateX(-50%);
-  width:92%;
-  max-width:560px;
-  height:82px;
-  border-radius:30px;
-  z-index:999;
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-  background:rgba(15,23,42,.94);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(148,163,184,.12);
-  box-shadow:0 18px 55px rgba(0,0,0,.45);
-}
-
-.nav-item{
-  text-align:center;
+.news-body small{
+  display:block;
+  margin-top:8px;
   color:#94a3b8;
-  font-size:12px;
-  font-weight:800;
+}
+
+.action-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.action-card{
+  padding:18px;
+  border-radius:24px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
   cursor:pointer;
 }
 
-.nav-item.active{
-  color:#38bdf8;
+.action-card svg{
+  width:30px;
+  height:30px;
+  stroke:#38bdf8;
+  fill:none;
+  stroke-width:2.3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-.copilot-btn{
-  width:72px;
-  height:72px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:23px;
-  background:linear-gradient(135deg,#38bdf8,#2563eb,#8b5cf6);
-  color:white;
-  box-shadow:0 0 40px rgba(56,189,248,.8);
-  animation:pulseAI 2s infinite;
-  cursor:pointer;
+.action-card strong{
+  display:block;
+  margin-top:12px;
 }
 
-@keyframes pulseAI{
-  50%{transform:scale(1.08)}
+.action-card small{
+  display:block;
+  margin-top:7px;
+  color:#94a3b8;
 }
 
 @media(max-width:430px){
-  h1{font-size:39px}
+  .hero h1{font-size:42px}
+  .brand h2{font-size:30px}
 }
 </style>
 </head>
@@ -480,133 +354,209 @@ h1{
 <div class="bg"></div>
 <div class="grid-bg"></div>
 
-<div class="particles">
-  <span></span><span></span><span></span>
-  <span></span><span></span><span></span>
-</div>
-
 <header class="topbar">
-  <div class="logo">ZELLA</div>
-  <div class="avatar" id="userAvatar">Z</div>
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>DASHBOARD</span>
+  </div>
+
+  <div class="user-badge" id="userBadge">
+    Z
+  </div>
 </header>
 
 <main class="container">
 
 <section class="hero">
 
-  <div class="ai-core-wrap">
-    <div class="ai-ring r1"></div>
-    <div class="ai-ring r2"></div>
-    <div class="ai-ring r3"></div>
-    <div class="ai-face"></div>
-    <div class="ai-orb"></div>
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
+
+    <div class="core">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 19V5"/>
+        <path d="M4 19H20"/>
+        <path d="M8 16L11 12L14 14L20 7"/>
+      </svg>
+    </div>
   </div>
 
-  <div class="badge">
-    DASHBOARD V12 ULTIMATE LIVE
+  <div class="eyebrow">
+    ZELLA V11 ULTRA
   </div>
 
-  <h1>
-    Zella AI<br>
-    Command.
+  <h1 id="greetingTitle">
+    Good Day,<br>
+    Trader.
   </h1>
 
-  <p id="heroBrief">
-    Connecting live backend, market engine, signal intelligence,
-    portfolio sync and premium membership status.
+  <p>
+    Your live AI command center for market intelligence,
+    portfolio sync, premium signals, news and trading opportunities.
   </p>
 
-  <div class="status-pill" id="backendStatus">
-    Backend • Checking
+  <div class="status" id="cloudStatus">
+    Cloud Sync • Checking
   </div>
 
 </section>
 
-<div class="grid">
+<div class="stats">
 
   <div class="card">
     <div class="label">Portfolio Value</div>
-    <div class="value blue" id="portfolioValue">$0</div>
-    <div class="sub" id="portfolioSub">Waiting for sync</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Daily P/L</div>
-    <div class="value green" id="dailyPL">+$0</div>
-    <div class="sub">Live portfolio engine</div>
+    <div class="value blue" id="portfolioValue">--</div>
+    <div class="sub" id="portfolioSub">Waiting for exchange sync</div>
   </div>
 
   <div class="card">
     <div class="label">Membership</div>
-    <div class="value orange" id="membership">FREE</div>
+    <div class="value orange" id="membershipValue">--</div>
     <div class="sub" id="membershipSub">Checking plan</div>
   </div>
 
   <div class="card">
-    <div class="label">AI Signals</div>
-    <div class="value blue" id="signalCount">0</div>
-    <div class="sub">Live signal engine</div>
+    <div class="label">Market Bias</div>
+    <div class="value green" id="marketBias">--</div>
+    <div class="sub">Based on live signals</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Top Signal</div>
+    <div class="value blue" id="topSignal">--</div>
+    <div class="sub" id="topSignalSub">Live scanner source</div>
   </div>
 
 </div>
 
 <section class="section">
-  <div class="section-title">LIVE MARKET</div>
+  <div class="section-title">TOP QUANT VERDICT</div>
+
+  <div id="topVerdict">
+    <p class="sub">Loading live verdict...</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">LIVE MARKET STATUS</div>
+
   <div id="marketList">
-    <p class="sub">Loading live market data...</p>
+    <p class="sub">Loading live market...</p>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-title">LIVE AI SIGNALS</div>
-  <div id="signalList">
-    <p class="sub">Loading AI signals...</p>
+  <div class="section-title">NEWS INTELLIGENCE</div>
+
+  <div id="newsList">
+    <p class="sub">Loading live news...</p>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-title">SYSTEM STATUS</div>
+  <div class="section-title">QUICK ACTIONS</div>
 
-  <div class="market-row">
-    <div class="coin-name">
-      <strong>Backend</strong>
-      <small>Zella server</small>
-    </div>
-    <div class="coin-price">
-      <strong id="serverState">Checking</strong>
-    </div>
-  </div>
+  <div class="action-grid">
 
-  <div class="market-row">
-    <div class="coin-name">
-      <strong>Signal Engine</strong>
-      <small>AI trading signals</small>
+    <div class="action-card" onclick="go('scanner.html')">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 19V5"/>
+        <path d="M4 19H20"/>
+        <path d="M8 16L11 12L14 14L19 7"/>
+      </svg>
+      <strong>Scanner</strong>
+      <small>Find live opportunities.</small>
     </div>
-    <div class="coin-price">
-      <strong id="signalState">Checking</strong>
-    </div>
-  </div>
 
-  <div class="market-row">
-    <div class="coin-name">
-      <strong>Exchange APIs</strong>
-      <small>Connection layer</small>
+    <div class="action-card" onclick="go('copilot.html')">
+      <svg viewBox="0 0 24 24">
+        <rect x="5" y="7" width="14" height="11" rx="4"/>
+        <path d="M9 11H9.01"/>
+        <path d="M15 11H15.01"/>
+        <path d="M12 3V7"/>
+      </svg>
+      <strong>Copilot</strong>
+      <small>Ask Zella anything.</small>
     </div>
-    <div class="coin-price">
-      <strong id="exchangeState">Checking</strong>
+
+    <div class="action-card" onclick="go('market.html')">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 18V6"/>
+        <path d="M8 18V10"/>
+        <path d="M12 18V4"/>
+        <path d="M16 18V8"/>
+        <path d="M20 18V12"/>
+      </svg>
+      <strong>Market</strong>
+      <small>Live market data.</small>
     </div>
+
+    <div class="action-card" onclick="go('wallet.html')">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="7" width="18" height="12" rx="2"/>
+        <path d="M16 12H21"/>
+      </svg>
+      <strong>Wallet</strong>
+      <small>Portfolio and holdings.</small>
+    </div>
+
   </div>
 </section>
 
 </main>
 
-<div class="bottom-nav">
-  <div class="nav-item active" onclick="go('dashboard.html')">Home</div>
-  <div class="nav-item" onclick="go('scanner.html')">Scanner</div>
-  <div class="copilot-btn" onclick="go('copilot.html')">AI</div>
-  <div class="nav-item" onclick="go('market.html')">Market</div>
-  <div class="nav-item" onclick="go('more.html')">More</div>
-</div>
+<nav class="bottom-dock">
+
+  <div class="dock-item active" onclick="go('dashboard.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11L12 4L21 11"/>
+      <path d="M5 10V21H19V10"/>
+      <path d="M9 21V14H15V21"/>
+    </svg>
+  </div>
+
+  <div class="dock-item" onclick="go('scanner.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 19V5"/>
+      <path d="M4 19H20"/>
+      <path d="M8 16L11 12L14 14L19 7"/>
+      <circle cx="19" cy="7" r="2"/>
+    </svg>
+  </div>
+
+  <div class="ai-dock" onclick="go('copilot.html')">
+    <svg viewBox="0 0 24 24">
+      <rect x="5" y="7" width="14" height="11" rx="4"/>
+      <path d="M9 11H9.01"/>
+      <path d="M15 11H15.01"/>
+      <path d="M12 3V7"/>
+      <path d="M8 18L6 21"/>
+      <path d="M16 18L18 21"/>
+    </svg>
+  </div>
+
+  <div class="dock-item" onclick="go('market.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18V6"/>
+      <path d="M8 18V10"/>
+      <path d="M12 18V4"/>
+      <path d="M16 18V8"/>
+      <path d="M20 18V12"/>
+    </svg>
+  </div>
+
+  <div class="dock-item" onclick="go('more.html')">
+    <svg viewBox="0 0 24 24">
+      <circle cx="5" cy="12" r="1.6"/>
+      <circle cx="12" cy="12" r="1.6"/>
+      <circle cx="19" cy="12" r="1.6"/>
+    </svg>
+  </div>
+
+</nav>
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";
@@ -617,63 +567,58 @@ function go(page){
 
 function formatMoney(value){
   const number = Number(value || 0);
-  return "$" + number.toLocaleString();
-}
 
-function signalClass(signal){
-  if(String(signal).includes("BUY")) return "buy";
-  if(String(signal).includes("SELL")) return "sell";
-  return "watch";
-}
-
-async function loadSystemStatus(){
-  try{
-    const res = await fetch(API_URL + "/api/system/status");
-    const data = await res.json();
-
-    if(data.success){
-      document.getElementById("backendStatus").textContent = "Backend • Online";
-      document.getElementById("serverState").textContent = "Online";
-      document.getElementById("serverState").className = "green";
-
-      document.getElementById("signalState").textContent = data.modules.signals;
-      document.getElementById("signalState").className = "green";
-
-      document.getElementById("exchangeState").textContent = data.modules.exchange;
-      document.getElementById("exchangeState").className = "green";
-    }
-  }catch(error){
-    document.getElementById("backendStatus").textContent = "Backend • Offline";
-    document.getElementById("serverState").textContent = "Offline";
-    document.getElementById("serverState").className = "red";
+  if(number >= 1000){
+    return "$" + number.toLocaleString(undefined,{
+      maximumFractionDigits:2
+    });
   }
+
+  return "$" + number.toFixed(4);
+}
+
+function setGreeting(){
+  const hour = new Date().getHours();
+  let greeting = "Good Day";
+
+  if(hour < 12){
+    greeting = "Good Morning";
+  }else if(hour < 17){
+    greeting = "Good Afternoon";
+  }else{
+    greeting = "Good Evening";
+  }
+
+  document.getElementById("greetingTitle").innerHTML =
+    greeting + ",<br>Trader.";
 }
 
 async function loadMarket(){
   try{
-    const res = await fetch(API_URL + "/api/market/live");
-    const data = await res.json();
+    const response = await fetch(API_URL + "/api/market/live");
+    const data = await response.json();
 
-    const box = document.getElementById("marketList");
-    box.innerHTML = "";
+    if(!data.success || !Array.isArray(data.assets)){
+      throw new Error(data.message || "Market unavailable");
+    }
+
+    const list = document.getElementById("marketList");
+    list.innerHTML = "";
 
     data.assets.forEach(asset=>{
-      const changeClass = asset.change24h >= 0 ? "green" : "red";
-      const sign = asset.change24h >= 0 ? "+" : "";
+      const changeClass = Number(asset.change24h) >= 0 ? "green" : "red";
+      const sign = Number(asset.change24h) >= 0 ? "+" : "";
 
-      box.innerHTML += `
-        <div class="market-row">
-          <div class="coin-left">
-            <div class="coin-icon">${asset.symbol[0]}</div>
-            <div class="coin-name">
-              <strong>${asset.name}</strong>
-              <small>${asset.symbol}</small>
-            </div>
+      list.innerHTML += `
+        <div class="row">
+          <div class="row-left">
+            <strong>${asset.name}</strong>
+            <small>${asset.symbol} • ${asset.source}</small>
           </div>
 
-          <div class="coin-price">
+          <div class="row-right">
             <strong>${formatMoney(asset.price)}</strong>
-            <small class="${changeClass}">${sign}${asset.change24h}%</small>
+            <small class="${changeClass}">${sign}${Number(asset.change24h).toFixed(2)}%</small>
           </div>
         </div>
       `;
@@ -681,94 +626,158 @@ async function loadMarket(){
 
   }catch(error){
     document.getElementById("marketList").innerHTML =
-      "<p class='sub red'>Market engine unavailable.</p>";
+      `<p class="sub red">${error.message}</p>`;
   }
 }
 
 async function loadSignals(){
   try{
-    const res = await fetch(API_URL + "/api/signals/live");
-    const data = await res.json();
+    const response = await fetch(API_URL + "/api/signals/live");
+    const data = await response.json();
 
-    const box = document.getElementById("signalList");
-    box.innerHTML = "";
+    if(!data.success || !Array.isArray(data.signals)){
+      throw new Error(data.message || "Signals unavailable");
+    }
 
-    document.getElementById("signalCount").textContent = data.signals.length;
+    const signals = data.signals.sort((a,b)=>{
+      return Number(b.confidence || 0) - Number(a.confidence || 0);
+    });
 
-    data.signals.slice(0,4).forEach(signal=>{
-      box.innerHTML += `
-        <div class="signal-card">
-          <div class="signal-top">
-            <div>
-              <strong>${signal.symbol}</strong>
-              <p class="sub">${signal.name} • ${signal.risk} Risk</p>
-            </div>
+    const top = signals[0];
 
-            <div class="signal-tag ${signalClass(signal.signal)}">
-              ${signal.signal}
-            </div>
+    document.getElementById("marketBias").textContent =
+      String(top.signal).includes("BUY")
+        ? "Bullish"
+        : String(top.signal).includes("SELL")
+          ? "Bearish"
+          : "Neutral";
+
+    document.getElementById("topSignal").textContent =
+      top.symbol;
+
+    document.getElementById("topSignalSub").textContent =
+      `${top.signal} • ${top.confidence}%`;
+
+    document.getElementById("topVerdict").innerHTML = `
+      <div class="row">
+        <div class="row-left">
+          <strong>${top.symbol} ${top.signal}</strong>
+          <small>${top.name} • ${top.source}</small>
+        </div>
+
+        <div class="row-right">
+          <strong class="blue">${top.confidence}%</strong>
+          <small>${top.risk} Risk</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-left">
+          <strong>Entry Zone</strong>
+          <small>${formatMoney(top.entryZone.low)} - ${formatMoney(top.entryZone.high)}</small>
+        </div>
+
+        <div class="row-right">
+          <strong>SL</strong>
+          <small>${formatMoney(top.stopLoss)}</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row-left">
+          <strong>Take Profit</strong>
+          <small>TP1 ${formatMoney(top.takeProfit1)} • TP2 ${formatMoney(top.takeProfit2)}</small>
+        </div>
+
+        <div class="row-right">
+          <strong class="green">Live</strong>
+          <small>Signal Engine</small>
+        </div>
+      </div>
+    `;
+
+  }catch(error){
+    document.getElementById("topVerdict").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
+  }
+}
+
+async function loadNews(){
+  try{
+    const response = await fetch(API_URL + "/api/news/live");
+    const data = await response.json();
+
+    if(!data.success || !Array.isArray(data.articles)){
+      throw new Error(data.message || "News unavailable");
+    }
+
+    const list = document.getElementById("newsList");
+    list.innerHTML = "";
+
+    data.articles.slice(0,3).forEach(article=>{
+      if(!article.image){
+        return;
+      }
+
+      list.innerHTML += `
+        <div class="news-card" onclick="window.open('${article.url}','_blank')">
+          <img src="${article.image}" alt="">
+          <div class="news-body">
+            <strong>${article.title}</strong>
+            <small>${article.source || "News"} • ${article.publishedAt || ""}</small>
           </div>
-
-          <div class="confidence-bar">
-            <div class="confidence-fill" style="width:${signal.confidence}%"></div>
-          </div>
-
-          <p class="sub">Confidence: ${signal.confidence}% • Entry: ${formatMoney(signal.entry)}</p>
         </div>
       `;
     });
 
+    if(!list.innerHTML.trim()){
+      list.innerHTML =
+        `<p class="sub red">No image-based news available right now.</p>`;
+    }
+
   }catch(error){
-    document.getElementById("signalList").innerHTML =
-      "<p class='sub red'>AI Signal Engine unavailable.</p>";
+    document.getElementById("newsList").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
   }
+}
+
+async function loadSubscription(){
+  const localPlan = localStorage.getItem("zellaMembership") || "FREE";
+
+  document.getElementById("membershipValue").textContent = localPlan;
+  document.getElementById("membershipSub").textContent =
+    localPlan === "FREE" ? "Basic access" : "Premium systems active";
 }
 
 async function loadPortfolio(){
   try{
-    const saved = localStorage.getItem("zellaPortfolioValue");
-
-    if(saved){
-      document.getElementById("portfolioValue").textContent =
-        formatMoney(saved);
-
-      document.getElementById("portfolioSub").textContent =
-        "Loaded from local portfolio";
-    }else{
-      document.getElementById("portfolioValue").textContent =
-        "$24,750";
-
-      document.getElementById("portfolioSub").textContent =
-        "Demo value until exchange sync";
-    }
-
-    document.getElementById("dailyPL").textContent = "+$1,250";
+    document.getElementById("portfolioValue").textContent = "--";
+    document.getElementById("portfolioSub").textContent =
+      "Connect exchange for live value";
   }catch(error){}
 }
 
-function loadMembership(){
-  const plan = localStorage.getItem("zellaMembership") || "FREE";
+function boot(){
+  setGreeting();
 
-  document.getElementById("membership").textContent = plan;
-  document.getElementById("membershipSub").textContent =
-    plan === "FREE" ? "Basic access" : "Premium systems active";
-}
+  document.getElementById("cloudStatus").textContent =
+    "Cloud Sync • Online";
 
-function bootDashboard(){
-  loadSystemStatus();
+  loadPortfolio();
+  loadSubscription();
   loadMarket();
   loadSignals();
-  loadPortfolio();
-  loadMembership();
+  loadNews();
 
-  setInterval(loadMarket, 30000);
-  setInterval(loadSignals, 45000);
-  setInterval(loadSystemStatus, 60000);
+  setInterval(loadMarket,30000);
+  setInterval(loadSignals,30000);
+  setInterval(loadNews,90000);
 }
 
-bootDashboard();
+boot();
 </script>
 
+<script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
 
 </body>

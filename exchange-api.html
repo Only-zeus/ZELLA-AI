@@ -6,6 +6,8 @@
 
 <title>Zella Exchange APIs V11 Ultra</title>
 
+<link rel="stylesheet" href="style.css">
+
 <style>
 *{
   margin:0;
@@ -15,28 +17,28 @@
 }
 
 body{
+  min-height:100vh;
   background:#020617;
   color:white;
-  min-height:100vh;
   overflow-x:hidden;
-  padding-bottom:110px;
+  padding-bottom:130px;
 }
 
 .bg{
   position:fixed;
   inset:0;
-  z-index:-2;
+  z-index:-3;
   background:
-    radial-gradient(circle at 20% 10%,rgba(56,189,248,.22),transparent 30%),
-    radial-gradient(circle at 85% 15%,rgba(59,130,246,.18),transparent 30%),
+    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
     radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
     #020617;
 }
 
-.grid{
+.grid-bg{
   position:fixed;
   inset:0;
-  z-index:-1;
+  z-index:-2;
   background-image:
     linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
     linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
@@ -53,255 +55,298 @@ body{
   width:92%;
   max-width:560px;
   margin:auto;
-  padding:20px;
+}
+
+.topbar{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand h2{
+  font-size:34px;
+  letter-spacing:10px;
+  font-weight:950;
+}
+
+.brand span{
+  color:#38bdf8;
+  letter-spacing:5px;
+  font-weight:950;
+  font-size:14px;
+}
+
+.user-badge{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  box-shadow:0 0 30px rgba(56,189,248,.5);
+}
+
+.hero,.section,.card{
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.38);
 }
 
 .hero{
-  margin-top:20px;
   padding:28px;
   border-radius:34px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.15);
-  box-shadow:0 22px 65px rgba(0,0,0,.35);
-  text-align:center;
 }
 
-.orb{
-  width:150px;
-  height:150px;
+.orbit{
+  width:245px;
+  height:245px;
+  margin:0 auto 24px;
+  position:relative;
+}
+
+.ring{
+  position:absolute;
   border-radius:50%;
-  margin:0 auto 20px;
-  background:radial-gradient(circle,#e0f2fe,#38bdf8 42%,#2563eb 70%);
-  box-shadow:0 0 55px rgba(56,189,248,.85);
-  animation:pulse 2s infinite;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
 }
 
-@keyframes pulse{
-  50%{
-    transform:scale(1.1);
-    filter:brightness(1.3);
-  }
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
+
+.ring::before{
+  content:"";
+  position:absolute;
+  top:12px;
+  left:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
 }
 
-.badge{
-  display:inline-block;
-  padding:10px 18px;
-  border-radius:999px;
-  color:#38bdf8;
-  background:rgba(56,189,248,.12);
-  font-weight:900;
-  letter-spacing:2px;
-  font-size:12px;
+@keyframes spin{
+  to{transform:rotate(360deg)}
 }
 
-h1{
-  margin-top:18px;
-  font-size:40px;
-  line-height:1.1;
+.core{
+  position:absolute;
+  inset:82px;
+  border-radius:50%;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.core svg{
+  width:58px;
+  height:58px;
+  stroke:#020617;
+  fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
+  font-weight:950;
+}
+
+.hero h1{
+  margin-top:20px;
+  font-size:48px;
+  line-height:1.05;
 }
 
 .hero p{
-  margin-top:15px;
+  margin-top:18px;
   color:#94a3b8;
+  font-size:16px;
   line-height:1.8;
 }
 
+.status{
+  margin-top:18px;
+  display:inline-flex;
+  padding:11px 17px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#4ade80;
+  font-weight:950;
+}
+
 .stats{
+  margin-top:18px;
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:1fr 1fr;
   gap:14px;
-  margin-top:20px;
 }
 
 .card{
-  padding:18px;
-  border-radius:24px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
+  padding:20px;
+  border-radius:26px;
 }
 
 .label{
   color:#94a3b8;
   font-size:13px;
-  font-weight:800;
+  font-weight:850;
 }
 
 .value{
-  margin-top:10px;
-  font-size:28px;
+  margin-top:12px;
+  font-size:30px;
   font-weight:950;
 }
 
-.green{color:#4ade80}
+.sub{
+  margin-top:9px;
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
+}
+
 .blue{color:#38bdf8}
+.green{color:#4ade80}
 .orange{color:#f59e0b}
 .red{color:#ef4444}
 
 .section{
-  margin-top:20px;
-  padding:20px;
+  margin-top:18px;
+  padding:22px;
   border-radius:30px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
 }
 
 .section-title{
-  font-size:13px;
-  letter-spacing:5px;
   color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
   font-weight:950;
   margin-bottom:18px;
 }
 
-.exchange-card{
-  padding:18px;
-  border-radius:22px;
+.field{
   margin-bottom:14px;
-  background:#0f172a;
-  border:1px solid rgba(148,163,184,.12);
 }
 
-.exchange-top{
+.field label{
+  display:block;
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:850;
+  margin-bottom:8px;
+}
+
+.field input,.field select{
+  width:100%;
+  padding:15px;
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.15);
+  background:#020617;
+  color:white;
+  outline:none;
+}
+
+.field input:focus,.field select:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 18px rgba(56,189,248,.16);
+}
+
+.btn-row{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.exchange-name{
-  font-size:22px;
-  font-weight:950;
-}
-
-.status-pill{
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:950;
-}
-
-.connected{
-  background:rgba(34,197,94,.15);
-  color:#4ade80;
-}
-
-.pending{
-  background:rgba(245,158,11,.15);
-  color:#f59e0b;
-}
-
-.offline{
-  background:rgba(239,68,68,.15);
-  color:#ef4444;
-}
-
-.exchange-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
   gap:12px;
   margin-top:16px;
 }
 
-.exchange-box{
-  padding:12px;
-  border-radius:16px;
-  background:rgba(255,255,255,.035);
-}
-
-.exchange-box small{
-  color:#94a3b8;
-}
-
-.exchange-box strong{
-  display:block;
-  margin-top:6px;
-}
-
-.input{
-  width:100%;
-  padding:14px;
-  border-radius:16px;
-  border:1px solid rgba(148,163,184,.15);
-  background:#0f172a;
-  color:white;
-  outline:none;
-  margin-bottom:12px;
-}
-
-.input:focus{
-  border-color:#38bdf8;
-  box-shadow:0 0 18px rgba(56,189,248,.18);
-}
-
-.actions{
-  display:flex;
-  gap:12px;
-  margin-top:18px;
-}
-
-button{
+.btn{
   flex:1;
-  padding:14px;
+  padding:15px;
   border:none;
-  border-radius:16px;
+  border-radius:18px;
   font-weight:950;
   cursor:pointer;
 }
 
 .primary{
   background:linear-gradient(135deg,#38bdf8,#2563eb);
-  color:white;
+  color:#020617;
 }
 
 .secondary{
   background:#0f172a;
-  color:#cbd5e1;
-  border:1px solid rgba(148,163,184,.15);
+  color:#e5eefb;
+  border:1px solid rgba(148,163,184,.14);
 }
 
 .warning{
   margin-top:14px;
+  padding:14px;
+  border-radius:18px;
+  background:rgba(245,158,11,.10);
   color:#fbbf24;
-  line-height:1.7;
   font-size:13px;
+  line-height:1.7;
 }
 
-.notice{
-  color:#94a3b8;
-  line-height:1.7;
-  font-size:13px;
+.exchange-card{
+  padding:18px;
+  border-radius:24px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
+  margin-bottom:14px;
 }
 
-.bottom-nav{
-  position:fixed;
-  left:50%;
-  bottom:16px;
-  transform:translateX(-50%);
-  width:92%;
-  max-width:560px;
-  height:80px;
-  border-radius:30px;
-  background:rgba(15,23,42,.94);
-  border:1px solid rgba(148,163,184,.14);
-  backdrop-filter:blur(18px);
+.exchange-top{
   display:flex;
-  justify-content:space-around;
+  justify-content:space-between;
   align-items:center;
-  z-index:50;
+  gap:12px;
 }
 
-.nav-item{
+.exchange-name strong{
+  display:block;
+  font-size:20px;
+}
+
+.exchange-name small{
   color:#94a3b8;
-  text-align:center;
-  font-size:12px;
-  font-weight:800;
 }
 
-.nav-item.active{
-  color:#38bdf8;
+.pill{
+  padding:9px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:950;
+}
+
+.live{
+  color:#4ade80;
+  background:rgba(34,197,94,.12);
+}
+
+.locked{
+  color:#f59e0b;
+  background:rgba(245,158,11,.12);
 }
 
 @media(max-width:430px){
-  h1{font-size:34px}
+  .hero h1{font-size:42px}
+  .brand h2{font-size:30px}
 }
 </style>
 </head>
@@ -309,230 +354,182 @@ button{
 <body>
 
 <div class="bg"></div>
-<div class="grid"></div>
+<div class="grid-bg"></div>
 
-<div class="container">
-
-<section class="hero">
-
-  <div class="orb"></div>
-
-  <div class="badge">
-    EXCHANGE APIs V11 ULTRA
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>EXCHANGE</span>
   </div>
 
+  <div class="user-badge">Z</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
+
+    <div class="core">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 7H17"/>
+        <path d="M7 12H17"/>
+        <path d="M7 17H17"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="eyebrow">EXCHANGE APIs V11 ULTRA</div>
+
   <h1>
-    Zella Exchange<br>
-    Connection Hub.
+    Connect<br>
+    Exchange.
   </h1>
 
   <p>
-    Connect exchanges, sync balances, monitor positions,
-    validate API permissions and prepare Zella for auto trading.
+    Connect Binance, Bybit, OKX, KuCoin or Coinbase using secure API keys.
+    Zella encrypts keys on the backend and syncs real portfolio balances.
   </p>
 
+  <div class="status" id="exchangeStatus">
+    Exchange Engine • Checking
+  </div>
 </section>
 
 <div class="stats">
-
   <div class="card">
     <div class="label">Connected</div>
-    <div class="value green" id="connectedCount">0</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Portfolio Sync</div>
-    <div class="value blue" id="syncStatus">Ready</div>
-  </div>
-
-  <div class="card">
-    <div class="label">API Health</div>
-    <div class="value green" id="apiHealth">Safe</div>
+    <div class="value blue" id="connectedCount">--</div>
+    <div class="sub">Live exchange links</div>
   </div>
 
   <div class="card">
     <div class="label">Trade Access</div>
-    <div class="value orange" id="tradeAccess">Locked</div>
+    <div class="value orange" id="tradeAccess">--</div>
+    <div class="sub">Based on permissions</div>
   </div>
 
+  <div class="card">
+    <div class="label">Portfolio Sync</div>
+    <div class="value green" id="syncState">--</div>
+    <div class="sub">Real balance sync</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Security</div>
+    <div class="value green">Locked</div>
+    <div class="sub">Withdrawals disabled</div>
+  </div>
 </div>
 
 <section class="section">
+  <div class="section-title">CONNECT NEW EXCHANGE</div>
 
-  <div class="section-title">
-    CONNECT EXCHANGE
+  <div class="field">
+    <label>Exchange</label>
+    <select id="exchange">
+      <option value="binance">Binance</option>
+      <option value="bybit">Bybit</option>
+      <option value="okx">OKX</option>
+      <option value="kucoin">KuCoin</option>
+      <option value="coinbase">Coinbase</option>
+    </select>
   </div>
 
-  <select class="input" id="exchangeSelect">
-    <option>Binance</option>
-    <option>Bybit</option>
-    <option>OKX</option>
-    <option>KuCoin</option>
-    <option>Coinbase</option>
-    <option>Kraken</option>
-    <option>Gate.io</option>
-  </select>
-
-  <input class="input" id="apiKey" placeholder="API Key">
-
-  <input class="input" id="apiSecret" placeholder="API Secret" type="password">
-
-  <select class="input" id="permissionSelect">
-    <option>Read Only</option>
-    <option>Read + Trade</option>
-  </select>
-
-  <div class="actions">
-    <button class="primary" onclick="connectExchange()">Connect</button>
-    <button class="secondary" onclick="clearForm()">Clear</button>
+  <div class="field">
+    <label>API Key</label>
+    <input id="apiKey" placeholder="Paste API key">
   </div>
 
-  <p class="warning">
-    Never enable withdrawal permission on exchange API keys.
-    Zella only needs read and trade permissions.
-  </p>
+  <div class="field">
+    <label>Secret Key</label>
+    <input id="apiSecret" type="password" placeholder="Paste secret key">
+  </div>
 
+  <div class="field">
+    <label>Permission</label>
+    <select id="permission">
+      <option value="Read Only">Read Only</option>
+      <option value="Read + Trade">Read + Trade</option>
+    </select>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn primary" onclick="connectExchange()">Connect</button>
+    <button class="btn secondary" onclick="clearForm()">Clear</button>
+  </div>
+
+  <div class="warning">
+    Never enable withdrawal permission on any exchange API key. Zella only needs read access and optional trade access.
+  </div>
 </section>
 
 <section class="section">
+  <div class="section-title">CONNECTED EXCHANGES</div>
 
-  <div class="section-title">
-    CONNECTED EXCHANGES
+  <div id="exchangeList">
+    <p class="sub">Loading connected exchanges...</p>
   </div>
-
-  <div id="exchangeList"></div>
-
 </section>
 
-<section class="section">
+</main>
 
-  <div class="section-title">
-    EXCHANGE ENGINE LOGIC
+<nav class="bottom-dock">
+
+  <div class="dock-item" onclick="go('dashboard.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11L12 4L21 11"/>
+      <path d="M5 10V21H19V10"/>
+      <path d="M9 21V14H15V21"/>
+    </svg>
   </div>
 
-  <p class="notice">
-    This is the frontend foundation for Exchange APIs V11 Ultra.
-    Real exchange API calls and encrypted API key storage must run through
-    a secure backend server, not directly from GitHub Pages.
-  </p>
+  <div class="dock-item" onclick="go('scanner.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 19V5"/>
+      <path d="M4 19H20"/>
+      <path d="M8 16L11 12L14 14L19 7"/>
+    </svg>
+  </div>
 
-</section>
+  <div class="ai-dock" onclick="go('copilot.html')">
+    <svg viewBox="0 0 24 24">
+      <rect x="5" y="7" width="14" height="11" rx="4"/>
+      <path d="M9 11H9.01"/>
+      <path d="M15 11H15.01"/>
+      <path d="M12 3V7"/>
+    </svg>
+  </div>
 
-</div>
+  <div class="dock-item" onclick="go('market.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18V6"/>
+      <path d="M8 18V10"/>
+      <path d="M12 18V4"/>
+      <path d="M16 18V8"/>
+      <path d="M20 18V12"/>
+    </svg>
+  </div>
 
-<div class="bottom-nav">
-  <div class="nav-item" onclick="location.href='dashboard.html'">Home</div>
-  <div class="nav-item" onclick="location.href='ai-signal-engine.html'">Signals</div>
-  <div class="nav-item active">Exchange</div>
-  <div class="nav-item" onclick="location.href='portfolio.html'">Portfolio</div>
-  <div class="nav-item" onclick="location.href='more.html'">More</div>
-</div>
+  <div class="dock-item active" onclick="go('more.html')">
+    <svg viewBox="0 0 24 24">
+      <circle cx="5" cy="12" r="1.6"/>
+      <circle cx="12" cy="12" r="1.6"/>
+      <circle cx="19" cy="12" r="1.6"/>
+    </svg>
+  </div>
+
+</nav>
 
 <script>
-let exchanges =
-JSON.parse(localStorage.getItem("zellaConnectedExchanges") || "[]");
+const API_URL = "https://zella-backend.onrender.com";
 
-function maskKey(key){
-  if(!key || key.length < 8){
-    return "Hidden";
-  }
-
-  return key.slice(0,4) + "••••" + key.slice(-4);
-}
-
-function renderExchanges(){
-  const list = document.getElementById("exchangeList");
-
-  list.innerHTML = "";
-
-  if(exchanges.length === 0){
-    list.innerHTML =
-      "<p class='notice'>No exchanges connected yet.</p>";
-  }
-
-  exchanges.forEach((item,index)=>{
-    list.innerHTML += `
-      <div class="exchange-card">
-        <div class="exchange-top">
-          <div>
-            <div class="exchange-name">${item.name}</div>
-            <small style="color:#94a3b8;">Key: ${maskKey(item.apiKey)}</small>
-          </div>
-
-          <div class="status-pill connected">
-            CONNECTED
-          </div>
-        </div>
-
-        <div class="exchange-grid">
-          <div class="exchange-box">
-            <small>Permission</small>
-            <strong>${item.permission}</strong>
-          </div>
-
-          <div class="exchange-box">
-            <small>Last Sync</small>
-            <strong>${item.lastSync}</strong>
-          </div>
-
-          <div class="exchange-box">
-            <small>Portfolio</small>
-            <strong>$24,750</strong>
-          </div>
-
-          <div class="exchange-box">
-            <small>API Health</small>
-            <strong class="green">Safe</strong>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button class="secondary" onclick="syncExchange(${index})">Sync</button>
-          <button class="secondary" onclick="removeExchange(${index})">Remove</button>
-        </div>
-      </div>
-    `;
-  });
-
-  document.getElementById("connectedCount").innerText =
-    exchanges.length;
-
-  document.getElementById("tradeAccess").innerText =
-    exchanges.some(ex=>ex.permission === "Read + Trade")
-      ? "Ready"
-      : "Locked";
-}
-
-function connectExchange(){
-  const name = document.getElementById("exchangeSelect").value;
-  const apiKey = document.getElementById("apiKey").value.trim();
-  const apiSecret = document.getElementById("apiSecret").value.trim();
-  const permission = document.getElementById("permissionSelect").value;
-
-  if(!apiKey || !apiSecret){
-    alert("Enter API key and secret.");
-    return;
-  }
-
-  const newExchange = {
-    name,
-    apiKey,
-    permission,
-    status:"CONNECTED",
-    lastSync:new Date().toLocaleString()
-  };
-
-  exchanges.push(newExchange);
-
-  localStorage.setItem(
-    "zellaConnectedExchanges",
-    JSON.stringify(exchanges)
-  );
-
-  clearForm();
-  renderExchanges();
-
-  alert(name + " connected in demo mode.");
+function go(page){
+  window.location.href = page;
 }
 
 function clearForm(){
@@ -540,37 +537,183 @@ function clearForm(){
   document.getElementById("apiSecret").value = "";
 }
 
-function syncExchange(index){
-  exchanges[index].lastSync = new Date().toLocaleString();
+async function getToken(){
+  if(window.zellaGetToken){
+    return await window.zellaGetToken();
+  }
 
-  localStorage.setItem(
-    "zellaConnectedExchanges",
-    JSON.stringify(exchanges)
-  );
+  const saved =
+    localStorage.getItem("zellaFirebaseToken") ||
+    localStorage.getItem("zellaToken");
 
-  document.getElementById("syncStatus").innerText = "Synced";
+  if(saved){
+    return saved;
+  }
 
-  renderExchanges();
-
-  alert(exchanges[index].name + " synced.");
+  throw new Error("Login session token not found. Please login again.");
 }
 
-function removeExchange(index){
-  if(!confirm("Remove this exchange connection?")){
+async function apiFetch(path,options = {}){
+  const token = await getToken();
+
+  const response = await fetch(API_URL + path,{
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer " + token,
+      ...(options.headers || {})
+    }
+  });
+
+  const data = await response.json();
+
+  if(!data.success){
+    throw new Error(data.message || data.error || "Request failed.");
+  }
+
+  return data;
+}
+
+function renderExchanges(exchanges){
+  const list = document.getElementById("exchangeList");
+  list.innerHTML = "";
+
+  document.getElementById("connectedCount").textContent =
+    exchanges.length;
+
+  document.getElementById("tradeAccess").textContent =
+    exchanges.some(item => String(item.permission).includes("Trade"))
+      ? "Ready"
+      : "Locked";
+
+  document.getElementById("syncState").textContent =
+    exchanges.length ? "Ready" : "--";
+
+  if(!exchanges.length){
+    list.innerHTML =
+      `<p class="sub">No exchange connected yet.</p>`;
     return;
   }
 
-  exchanges.splice(index,1);
+  exchanges.forEach(item=>{
+    list.innerHTML += `
+      <div class="exchange-card">
+        <div class="exchange-top">
+          <div class="exchange-name">
+            <strong>${String(item.exchange).toUpperCase()}</strong>
+            <small>${item.permission || "Read Only"} • Last sync ${item.lastSync || "Not synced"}</small>
+          </div>
 
-  localStorage.setItem(
-    "zellaConnectedExchanges",
-    JSON.stringify(exchanges)
-  );
+          <div class="pill live">
+            ${item.status || "CONNECTED"}
+          </div>
+        </div>
 
-  renderExchanges();
+        <div class="btn-row">
+          <button class="btn secondary" onclick="syncExchange('${item.exchange}')">Sync</button>
+          <button class="btn secondary" onclick="deleteExchange('${item.exchange}')">Remove</button>
+        </div>
+      </div>
+    `;
+  });
 }
 
-renderExchanges();
+async function loadExchanges(){
+  try{
+    document.getElementById("exchangeStatus").textContent =
+      "Exchange Engine • Live";
+
+    const data = await apiFetch("/api/exchange/list");
+
+    renderExchanges(data.exchanges || []);
+
+  }catch(error){
+    document.getElementById("exchangeStatus").textContent =
+      "Exchange Engine • Unavailable";
+
+    document.getElementById("exchangeList").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
+  }
+}
+
+async function connectExchange(){
+  try{
+    const exchange = document.getElementById("exchange").value;
+    const apiKey = document.getElementById("apiKey").value.trim();
+    const apiSecret = document.getElementById("apiSecret").value.trim();
+    const permission = document.getElementById("permission").value;
+
+    if(!apiKey || !apiSecret){
+      alert("Enter API key and secret key.");
+      return;
+    }
+
+    document.getElementById("exchangeStatus").textContent =
+      "Exchange Engine • Validating";
+
+    await apiFetch("/api/exchange/connect",{
+      method:"POST",
+      body:JSON.stringify({
+        exchange,
+        apiKey,
+        apiSecret,
+        permission
+      })
+    });
+
+    clearForm();
+    await loadExchanges();
+
+    alert("Exchange connected successfully.");
+
+  }catch(error){
+    alert(error.message);
+    document.getElementById("exchangeStatus").textContent =
+      "Exchange Engine • Error";
+  }
+}
+
+async function syncExchange(exchange){
+  try{
+    document.getElementById("exchangeStatus").textContent =
+      "Exchange Engine • Syncing";
+
+    await apiFetch("/api/exchange/sync",{
+      method:"POST",
+      body:JSON.stringify({ exchange })
+    });
+
+    await loadExchanges();
+
+    alert("Exchange synced successfully.");
+
+  }catch(error){
+    alert(error.message);
+  }
+}
+
+async function deleteExchange(exchange){
+  try{
+    const confirmDelete =
+      confirm("Remove this exchange connection?");
+
+    if(!confirmDelete){
+      return;
+    }
+
+    await apiFetch("/api/exchange/delete",{
+      method:"DELETE",
+      body:JSON.stringify({ exchange })
+    });
+
+    await loadExchanges();
+
+  }catch(error){
+    alert(error.message);
+  }
+}
+
+loadExchanges();
 </script>
 
 <script src="premium-guard.js"></script>

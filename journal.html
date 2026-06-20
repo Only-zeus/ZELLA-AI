@@ -3,557 +3,708 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Journal V11 Ultra</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body>
+<title>Zella Journal V11 Ultra</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
-*{box-sizing:border-box}
-body{overflow-x:hidden}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 
-.journal-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
+  overflow-x:hidden;
+  padding-bottom:130px;
+}
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
   background:
-    radial-gradient(circle at 18% 10%,rgba(56,189,248,.25),transparent 30%),
-    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
     #020617;
 }
 
-.journal-grid-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+.grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
   background-image:
-    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+    linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
   background-size:42px 42px;
-  animation:journalGrid 18s linear infinite;
+  animation:gridMove 18s linear infinite;
 }
 
-@keyframes journalGrid{
+@keyframes gridMove{
   from{background-position:0 0}
   to{background-position:0 420px}
 }
 
-.journal-particles{
-  position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+.container{width:92%;max-width:560px;margin:auto}
+
+.topbar{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
-.journal-particles span{
-  position:absolute;width:6px;height:6px;border-radius:50%;
-  background:#38bdf8;box-shadow:0 0 18px #38bdf8;opacity:.42;
-  animation:journalFloat 12s linear infinite;
-}
+.brand h2{font-size:34px;letter-spacing:10px;font-weight:950}
+.brand span{color:#38bdf8;letter-spacing:5px;font-weight:950;font-size:14px}
 
-.journal-particles span:nth-child(1){left:7%;animation-delay:0s}
-.journal-particles span:nth-child(2){left:24%;animation-delay:2s}
-.journal-particles span:nth-child(3){left:41%;animation-delay:5s}
-.journal-particles span:nth-child(4){left:58%;animation-delay:1s}
-.journal-particles span:nth-child(5){left:76%;animation-delay:4s}
-.journal-particles span:nth-child(6){left:91%;animation-delay:3s}
-
-@keyframes journalFloat{
-  from{transform:translateY(110vh) scale(.6)}
-  to{transform:translateY(-140px) scale(1.4)}
-}
-
-.container,.navbar{position:relative;z-index:3}
-
-.journal-hero{
-  position:relative;overflow:hidden;padding:22px;border-radius:34px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:inset 0 0 34px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.30);
-}
-
-.journal-hero::after{
-  content:"";position:absolute;width:170px;height:170px;right:-65px;bottom:-65px;
+.user-badge{
+  width:54px;
+  height:54px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  box-shadow:0 0 30px rgba(56,189,248,.5);
 }
 
-.journal-core-wrap{
-  width:260px;height:260px;margin:8px auto 22px;position:relative;
-}
-
-.journal-ring{
-  position:absolute;border-radius:50%;
-  border:1px solid rgba(56,189,248,.38);
-  animation:spin 12s linear infinite;
-}
-
-.journal-ring.r1{inset:12px}
-.journal-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s}
-.journal-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s}
-.journal-ring.r4{inset:64px;border-color:rgba(56,189,248,.18);animation-duration:28s}
-
-.journal-ring::before{
-  content:"";width:11px;height:11px;border-radius:50%;
-  position:absolute;top:18px;left:50%;
-  background:#38bdf8;box-shadow:0 0 24px #38bdf8;
-}
-
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
-.journal-core{
-  position:absolute;inset:68px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
-  box-shadow:0 0 44px rgba(56,189,248,.92),0 0 105px rgba(37,99,235,.46);
-  animation:journalPulse 4s ease-in-out infinite;
-}
-
-.journal-core svg{
-  width:72px;height:72px;fill:none;stroke:#020617;stroke-width:2.2;
-  stroke-linecap:round;stroke-linejoin:round;
-}
-
-@keyframes journalPulse{
-  0%,100%{transform:scale(1);filter:brightness(1)}
-  50%{transform:scale(1.13);filter:brightness(1.35)}
-}
-
-.journal-sweep{
-  position:absolute;left:0;right:0;top:50%;height:2px;
-  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-  box-shadow:0 0 26px rgba(56,189,248,.85);
-  animation:journalSweep 3s ease-in-out infinite;
-}
-
-@keyframes journalSweep{
-  0%,100%{transform:translateY(-82px);opacity:.2}
-  50%{transform:translateY(82px);opacity:1}
-}
-
-.journal-card{
-  position:relative;overflow:hidden;padding:18px;border-radius:28px;
-  background:rgba(15,23,42,.84);
+.hero,.section,.card{
+  background:rgba(15,23,42,.88);
   border:1px solid rgba(148,163,184,.14);
-  box-shadow:inset 0 0 28px rgba(56,189,248,.035),0 18px 48px rgba(0,0,0,.26);
-  transition:.28s ease;
+  box-shadow:0 22px 65px rgba(0,0,0,.38);
 }
 
-.journal-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(56,189,248,.34);
-  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
+.hero{
+  padding:28px;
+  border-radius:34px;
 }
 
-.journal-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px;
+.orbit{
+  width:245px;
+  height:245px;
+  margin:0 auto 24px;
+  position:relative;
 }
 
-.journal-panel{
-  padding:18px;border-radius:26px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
+.ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
 }
 
-.journal-title{
-  font-size:15px;font-weight:950;color:#e5eefb;
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
+
+.ring::before{
+  content:"";
+  position:absolute;
+  top:12px;
+  left:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
 }
 
-.journal-sub{
-  color:#94a3b8;font-size:12px;line-height:1.7;margin-top:8px;
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.core{
+  position:absolute;
+  inset:82px;
+  border-radius:50%;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.journal-input,.journal-select,.journal-textarea{
+.core svg{
+  width:58px;
+  height:58px;
+  stroke:#020617;
+  fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
+  font-weight:950;
+}
+
+.hero h1{
+  margin-top:20px;
+  font-size:48px;
+  line-height:1.05;
+}
+
+.hero p{
+  margin-top:18px;
+  color:#94a3b8;
+  font-size:16px;
+  line-height:1.8;
+}
+
+.status{
+  margin-top:18px;
+  display:inline-flex;
+  padding:11px 17px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#4ade80;
+  font-weight:950;
+}
+
+.stats{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.card{
+  padding:20px;
+  border-radius:26px;
+}
+
+.label{color:#94a3b8;font-size:13px;font-weight:850}
+.value{margin-top:12px;font-size:30px;font-weight:950}
+.sub{margin-top:9px;color:#94a3b8;font-size:13px;line-height:1.5}
+
+.blue{color:#38bdf8}
+.green{color:#4ade80}
+.orange{color:#f59e0b}
+.red{color:#ef4444}
+
+.section{
+  margin-top:18px;
+  padding:22px;
+  border-radius:30px;
+}
+
+.section-title{
+  color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
+  font-weight:950;
+  margin-bottom:18px;
+}
+
+.field{margin-bottom:14px}
+
+.field label{
+  display:block;
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:850;
+  margin-bottom:8px;
+}
+
+.field input,.field select,.field textarea{
   width:100%;
-  margin-top:10px;
   padding:15px;
   border-radius:18px;
-  border:1px solid rgba(148,163,184,.14);
-  background:rgba(2,6,23,.55);
-  color:#e5eefb;
+  border:1px solid rgba(148,163,184,.15);
+  background:#020617;
+  color:white;
   outline:none;
 }
 
-.journal-textarea{
-  min-height:110px;
+.field textarea{
+  min-height:120px;
   resize:vertical;
+  line-height:1.6;
 }
 
-.journal-input:focus,
-.journal-select:focus,
-.journal-textarea:focus{
-  border-color:rgba(56,189,248,.45);
-  box-shadow:0 0 22px rgba(56,189,248,.12);
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 18px rgba(56,189,248,.16);
 }
 
-.emotion-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin-top:12px;
+.btn-row{
+  display:flex;
+  gap:12px;
+  margin-top:16px;
 }
 
-.emotion-btn{
+.btn{
+  flex:1;
+  padding:15px;
   border:none;
-  padding:13px 10px;
   border-radius:18px;
-  background:rgba(15,23,42,.86);
-  color:#94a3b8;
   font-weight:950;
-  border:1px solid rgba(148,163,184,.14);
+  cursor:pointer;
 }
 
-.emotion-btn.active{
-  color:#020617;
-  background:linear-gradient(135deg,#38bdf8,#2563eb);
-  box-shadow:0 0 25px rgba(56,189,248,.34);
+.primary{background:linear-gradient(135deg,#38bdf8,#2563eb);color:#020617}
+.secondary{background:#0f172a;color:#e5eefb;border:1px solid rgba(148,163,184,.14)}
+.danger{background:rgba(239,68,68,.14);color:#ef4444;border:1px solid rgba(239,68,68,.25)}
+
+.journal-card{
+  padding:18px;
+  border-radius:24px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
+  margin-bottom:14px;
 }
 
-.trade-entry{
-  padding:18px;border-radius:26px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
+.journal-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.journal-title strong{
+  display:block;
+  font-size:20px;
+}
+
+.journal-title small{
+  color:#94a3b8;
+}
+
+.journal-body{
   margin-top:12px;
+  color:#cbd5e1;
+  line-height:1.7;
+  font-size:14px;
 }
 
-.trade-entry strong{color:#e5eefb}
-.trade-entry small{color:#94a3b8;line-height:1.7}
+.pill{
+  padding:9px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:950;
+}
+
+.win{color:#4ade80;background:rgba(34,197,94,.12)}
+.loss{color:#ef4444;background:rgba(239,68,68,.12)}
+.open{color:#f59e0b;background:rgba(245,158,11,.12)}
 
 @media(max-width:430px){
-  .journal-grid{grid-template-columns:1fr}
-  .emotion-grid{grid-template-columns:1fr}
+  .hero h1{font-size:42px}
+  .brand h2{font-size:30px}
 }
 </style>
+</head>
 
-<div class="journal-bg"></div>
-<div class="journal-grid-bg"></div>
+<body>
 
-<div class="journal-particles">
-  <span></span><span></span><span></span>
-  <span></span><span></span><span></span>
-</div>
+<div class="bg"></div>
+<div class="grid-bg"></div>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">JR</div>
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>JOURNAL</span>
   </div>
-</nav>
+
+  <div class="user-badge">Z</div>
+</header>
 
 <main class="container">
 
-<section class="journal-hero">
+<section class="hero">
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
 
-  <div class="journal-core-wrap">
-    <div class="journal-ring r1"></div>
-    <div class="journal-ring r2"></div>
-    <div class="journal-ring r3"></div>
-    <div class="journal-ring r4"></div>
-
-    <div class="journal-core">
+    <div class="core">
       <svg viewBox="0 0 24 24">
-        <path d="M6 3H18V21H6Z"/>
-        <path d="M9 7H15"/>
-        <path d="M9 11H15"/>
-        <path d="M9 15H12"/>
-        <path d="M15 17L19 13"/>
+        <path d="M4 4H20V20H4Z"/>
+        <path d="M8 8H16"/>
+        <path d="M8 12H16"/>
+        <path d="M8 16H13"/>
       </svg>
     </div>
-
-    <div class="journal-sweep"></div>
   </div>
 
-  <div class="eyebrow">ZELLA JOURNAL V11 ULTRA</div>
+  <div class="eyebrow">TRADE JOURNAL V11 ULTRA</div>
 
-  <h1 class="command-title">
-    Trading<br>
-    Memory.
+  <h1>
+    Trade<br>
+    Journal.
   </h1>
 
-  <p class="briefing-text">
-    Log trades, track behavior, record emotions, review mistakes,
-    calculate performance and let Zella turn experience into intelligence.
+  <p>
+    Record trades, track decisions, review outcomes and sync your trading
+    lessons to Zella cloud.
   </p>
 
-  <div class="command-status-pill">
-    Journal intelligence online
+  <div class="status" id="journalStatus">
+    Journal Engine • Checking
   </div>
-
 </section>
 
-<section class="mini-grid">
-
-  <div class="mini-box journal-card">
-    <div class="mini-label">Total Trades</div>
-    <div class="mini-value green" id="totalTrades">0</div>
+<div class="stats">
+  <div class="card">
+    <div class="label">Total Entries</div>
+    <div class="value blue" id="totalEntries">--</div>
+    <div class="sub">Cloud journal logs</div>
   </div>
 
-  <div class="mini-box journal-card">
-    <div class="mini-label">Win Rate</div>
-    <div class="mini-value blue" id="winRate">--</div>
+  <div class="card">
+    <div class="label">Wins</div>
+    <div class="value green" id="winsCount">--</div>
+    <div class="sub">Marked as winning trades</div>
   </div>
 
-  <div class="mini-box journal-card">
-    <div class="mini-label">Net PnL</div>
-    <div class="mini-value orange" id="netPnl">--</div>
+  <div class="card">
+    <div class="label">Losses</div>
+    <div class="value red" id="lossesCount">--</div>
+    <div class="sub">Marked as losing trades</div>
   </div>
 
-  <div class="mini-box journal-card">
-    <div class="mini-label">Discipline</div>
-    <div class="mini-value blue" id="disciplineScore">--</div>
+  <div class="card">
+    <div class="label">Cloud Sync</div>
+    <div class="value green">Live</div>
+    <div class="sub">Firestore backup</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-title">NEW JOURNAL ENTRY</div>
+
+  <div class="field">
+    <label>Asset</label>
+    <input id="asset" placeholder="Example: BTC">
   </div>
 
+  <div class="field">
+    <label>Trade Side</label>
+    <select id="side">
+      <option value="BUY">BUY</option>
+      <option value="SELL">SELL</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Result</label>
+    <select id="result">
+      <option value="OPEN">OPEN</option>
+      <option value="WIN">WIN</option>
+      <option value="LOSS">LOSS</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Profit / Loss</label>
+    <input id="pnl" type="number" placeholder="Example: 25 or -10">
+  </div>
+
+  <div class="field">
+    <label>Notes</label>
+    <textarea id="notes" placeholder="What happened? Why did you take the trade? What did you learn?"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn primary" onclick="saveJournalEntry()">Save Entry</button>
+    <button class="btn secondary" onclick="clearForm()">Clear</button>
+  </div>
 </section>
 
-<section class="briefing-card">
+<section class="section">
+  <div class="section-title">JOURNAL HISTORY</div>
 
-  <div class="briefing-title">NEW TRADE ENTRY</div>
-
-  <div class="journal-grid">
-
-    <div class="journal-panel">
-      <div class="journal-title">Asset</div>
-      <div class="journal-sub">Choose traded asset.</div>
-      <select class="journal-select" id="assetInput">
-        <option>BTC</option>
-        <option>ETH</option>
-        <option>SOL</option>
-        <option>BNB</option>
-        <option>XRP</option>
-      </select>
-    </div>
-
-    <div class="journal-panel">
-      <div class="journal-title">Trade Result</div>
-      <div class="journal-sub">Record outcome.</div>
-      <select class="journal-select" id="resultInput">
-        <option>Win</option>
-        <option>Loss</option>
-        <option>Breakeven</option>
-      </select>
-    </div>
-
-    <div class="journal-panel">
-      <div class="journal-title">PnL</div>
-      <div class="journal-sub">Enter profit or loss amount.</div>
-      <input class="journal-input" id="pnlInput" type="number" placeholder="Example: 25">
-    </div>
-
-    <div class="journal-panel">
-      <div class="journal-title">Setup Quality</div>
-      <div class="journal-sub">Rate the setup.</div>
-      <select class="journal-select" id="qualityInput">
-        <option>Excellent</option>
-        <option>Good</option>
-        <option>Average</option>
-        <option>Poor</option>
-      </select>
-    </div>
-
+  <div id="journalList">
+    <p class="sub">Loading journal entries...</p>
   </div>
-
 </section>
 
-<section class="briefing-card">
+</main>
 
-  <div class="briefing-title">TRADER PSYCHOLOGY</div>
+<nav class="bottom-dock">
 
-  <div class="emotion-grid">
-    <button class="emotion-btn active" onclick="setEmotion('Calm',this)">Calm</button>
-    <button class="emotion-btn" onclick="setEmotion('Greedy',this)">Greedy</button>
-    <button class="emotion-btn" onclick="setEmotion('Fearful',this)">Fearful</button>
-  </div>
-
-  <textarea class="journal-textarea" id="noteInput" placeholder="What happened in this trade? What did you learn?"></textarea>
-
-  <div class="hero-actions">
-    <button class="btn" onclick="saveTrade()">Save Trade</button>
-    <button class="btn secondary" onclick="clearJournal()">Clear Journal</button>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">ZELLA JOURNAL REVIEW</div>
-
-  <h2 class="briefing-headline" id="journalReviewTitle">
-    No trades logged yet.
-  </h2>
-
-  <p class="briefing-text" id="journalReviewText">
-    Save your first trade to unlock journal intelligence.
-  </p>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">TRADE MEMORY LOG</div>
-
-  <div id="tradeLog">
-    <div class="trade-entry">
-      <strong>Journal Empty</strong><br>
-      <small>Your saved trades will appear here.</small>
-    </div>
-  </div>
-
-</section>
-
-<nav class="zella-nav">
-
-  <a href="dashboard.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
-    <span>Home</span>
-  </a>
-
-  <a href="scanner.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
-    <span>Scanner</span>
-  </a>
-
-  <a href="copilot.html" class="nav-item copilot-center">
-    <div class="copilot-core">
-      <svg viewBox="0 0 24 24" class="copilot-icon">
-        <rect x="6" y="8" width="12" height="9" rx="2"/>
-        <circle cx="9" cy="12" r="1"/>
-        <circle cx="15" cy="12" r="1"/>
-        <path d="M12 4V8"/>
-      </svg>
-    </div>
-    <span>Copilot</span>
-  </a>
-
-  <a href="market.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
-    <span>Market</span>
-  </a>
-
-  <a href="watchlist.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
-    <span>Watchlist</span>
-  </a>
-
-  <a href="more.html" class="nav-item active">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <circle cx="12" cy="5" r="1.5"/>
-      <circle cx="12" cy="12" r="1.5"/>
-      <circle cx="12" cy="19" r="1.5"/>
+  <div class="dock-item" onclick="go('dashboard.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11L12 4L21 11"/>
+      <path d="M5 10V21H19V10"/>
+      <path d="M9 21V14H15V21"/>
     </svg>
-    <span>More</span>
-  </a>
+  </div>
+
+  <div class="dock-item" onclick="go('scanner.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 19V5"/>
+      <path d="M4 19H20"/>
+      <path d="M8 16L11 12L14 14L19 7"/>
+    </svg>
+  </div>
+
+  <div class="ai-dock" onclick="go('copilot.html')">
+    <svg viewBox="0 0 24 24">
+      <rect x="5" y="7" width="14" height="11" rx="4"/>
+      <path d="M9 11H9.01"/>
+      <path d="M15 11H15.01"/>
+      <path d="M12 3V7"/>
+    </svg>
+  </div>
+
+  <div class="dock-item" onclick="go('market.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18V6"/>
+      <path d="M8 18V10"/>
+      <path d="M12 18V4"/>
+      <path d="M16 18V8"/>
+      <path d="M20 18V12"/>
+    </svg>
+  </div>
+
+  <div class="dock-item active" onclick="go('more.html')">
+    <svg viewBox="0 0 24 24">
+      <circle cx="5" cy="12" r="1.6"/>
+      <circle cx="12" cy="12" r="1.6"/>
+      <circle cx="19" cy="12" r="1.6"/>
+    </svg>
+  </div>
 
 </nav>
 
 <script>
-let selectedEmotion = "Calm";
+const API_URL = "https://zella-backend.onrender.com";
 
-function getTrades(){
-  return JSON.parse(localStorage.getItem("zellaJournalTrades")) || [];
+function go(page){
+  window.location.href = page;
 }
 
-function setTrades(trades){
-  localStorage.setItem("zellaJournalTrades",JSON.stringify(trades));
+async function getToken(){
+  if(window.zellaGetToken){
+    return await window.zellaGetToken();
+  }
+
+  const saved =
+    localStorage.getItem("zellaFirebaseToken") ||
+    localStorage.getItem("zellaToken");
+
+  if(saved){
+    return saved;
+  }
+
+  throw new Error("Login session token not found. Please login again.");
 }
 
-function setEmotion(emotion,btn){
-  selectedEmotion = emotion;
+async function apiFetch(path,options = {}){
+  const token = await getToken();
 
-  document.querySelectorAll(".emotion-btn").forEach(button=>{
-    button.classList.remove("active");
+  const response = await fetch(API_URL + path,{
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer " + token,
+      ...(options.headers || {})
+    }
   });
 
-  btn.classList.add("active");
+  const data = await response.json();
+
+  if(!data.success){
+    throw new Error(data.message || data.error || "Request failed.");
+  }
+
+  return data;
 }
 
-function saveTrade(){
-  const trade = {
-    asset:document.getElementById("assetInput").value,
-    result:document.getElementById("resultInput").value,
-    pnl:Number(document.getElementById("pnlInput").value || 0),
-    quality:document.getElementById("qualityInput").value,
-    emotion:selectedEmotion,
-    note:document.getElementById("noteInput").value.trim(),
-    date:new Date().toLocaleString()
-  };
-
-  const trades = getTrades();
-  trades.unshift(trade);
-  setTrades(trades);
-
-  document.getElementById("pnlInput").value = "";
-  document.getElementById("noteInput").value = "";
-
-  renderJournal();
+function getLocalEntries(){
+  try{
+    return JSON.parse(localStorage.getItem("zellaJournalEntries") || "[]");
+  }catch(error){
+    return [];
+  }
 }
 
-function clearJournal(){
-  localStorage.removeItem("zellaJournalTrades");
-  renderJournal();
+function saveLocalEntries(entries){
+  localStorage.setItem("zellaJournalEntries",JSON.stringify(entries));
 }
 
-function renderJournal(){
-  const trades = getTrades();
+function resultClass(result){
+  const value = String(result || "").toUpperCase();
 
-  const total = trades.length;
-  const wins = trades.filter(t=>t.result === "Win").length;
-  const losses = trades.filter(t=>t.result === "Loss").length;
-  const pnl = trades.reduce((sum,t)=>sum + Number(t.pnl || 0),0);
+  if(value === "WIN"){
+    return "win";
+  }
 
-  const winRate = total ? Math.round((wins / total) * 100) : 0;
+  if(value === "LOSS"){
+    return "loss";
+  }
 
-  const discipline =
-    total
-      ? Math.max(0,Math.min(100,Math.round(
-          80 - losses * 4 + wins * 2
-        )))
-      : 0;
+  return "open";
+}
 
-  document.getElementById("totalTrades").textContent = total;
-  document.getElementById("winRate").textContent = total ? winRate + "%" : "--";
-  document.getElementById("netPnl").textContent = "$" + pnl.toFixed(2);
-  document.getElementById("disciplineScore").textContent = total ? discipline + "%" : "--";
+function clearForm(){
+  document.getElementById("asset").value = "";
+  document.getElementById("side").value = "BUY";
+  document.getElementById("result").value = "OPEN";
+  document.getElementById("pnl").value = "";
+  document.getElementById("notes").value = "";
+}
 
-  if(!total){
-    document.getElementById("journalReviewTitle").textContent =
-      "No trades logged yet.";
+function renderJournal(entries){
+  const list = document.getElementById("journalList");
+  list.innerHTML = "";
 
-    document.getElementById("journalReviewText").textContent =
-      "Save your first trade to unlock journal intelligence.";
+  document.getElementById("totalEntries").textContent =
+    entries.length;
 
-    document.getElementById("tradeLog").innerHTML = `
-      <div class="trade-entry">
-        <strong>Journal Empty</strong><br>
-        <small>Your saved trades will appear here.</small>
-      </div>
-    `;
+  document.getElementById("winsCount").textContent =
+    entries.filter(x => x.result === "WIN").length;
 
+  document.getElementById("lossesCount").textContent =
+    entries.filter(x => x.result === "LOSS").length;
+
+  if(!entries.length){
+    list.innerHTML =
+      `<p class="sub">No journal entries yet.</p>`;
     return;
   }
 
-  document.getElementById("journalReviewTitle").textContent =
-    `Journal intelligence: ${winRate}% win rate`;
+  entries
+    .slice()
+    .reverse()
+    .forEach(entry=>{
+      list.innerHTML += `
+        <div class="journal-card">
+          <div class="journal-top">
+            <div class="journal-title">
+              <strong>${entry.asset} ${entry.side}</strong>
+              <small>${entry.createdAt}</small>
+            </div>
 
-  document.getElementById("journalReviewText").textContent =
-    `You have logged ${total} trades with total PnL of $${pnl.toFixed(2)}. Zella detects your current discipline score at ${discipline}%. Keep tracking emotions and setup quality to improve decision-making.`;
+            <div class="pill ${resultClass(entry.result)}">
+              ${entry.result}
+            </div>
+          </div>
 
-  document.getElementById("tradeLog").innerHTML =
-    trades.map(t=>`
-      <div class="trade-entry">
-        <strong>${t.asset} • ${t.result} • $${Number(t.pnl).toFixed(2)}</strong><br>
-        <small>
-          Quality: ${t.quality}<br>
-          Emotion: ${t.emotion}<br>
-          Note: ${t.note || "No note added."}<br>
-          ${t.date}
-        </small>
-      </div>
-    `).join("");
+          <div class="journal-body">
+            <strong>P/L:</strong> ${entry.pnl || 0}
+            <br>
+            ${entry.notes || "No notes added."}
+          </div>
+        </div>
+      `;
+    });
 }
 
-renderJournal();
+async function cloudSyncJournal(entries){
+  try{
+    await apiFetch("/api/cloud/sync",{
+      method:"POST",
+      body:JSON.stringify({
+        module:"journal",
+        data:{
+          entries,
+          updatedAt:new Date().toISOString()
+        }
+      })
+    });
+
+    document.getElementById("journalStatus").textContent =
+      "Journal Engine • Cloud Synced";
+
+  }catch(error){
+    document.getElementById("journalStatus").textContent =
+      "Journal Engine • Local Saved";
+  }
+}
+
+async function loadJournal(){
+  try{
+    document.getElementById("journalStatus").textContent =
+      "Journal Engine • Loading";
+
+    let entries = getLocalEntries();
+
+    try{
+      const cloud = await apiFetch("/api/cloud/sync/journal");
+
+      if(
+        cloud.data &&
+        cloud.data.data &&
+        Array.isArray(cloud.data.data.entries)
+      ){
+        entries = cloud.data.data.entries;
+        saveLocalEntries(entries);
+      }
+    }catch(error){}
+
+    renderJournal(entries);
+
+    document.getElementById("journalStatus").textContent =
+      "Journal Engine • Ready";
+
+  }catch(error){
+    document.getElementById("journalStatus").textContent =
+      "Journal Engine • Unavailable";
+
+    document.getElementById("journalList").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
+  }
+}
+
+async function saveJournalEntry(){
+  const asset =
+    document.getElementById("asset").value.trim().toUpperCase();
+
+  const side =
+    document.getElementById("side").value;
+
+  const result =
+    document.getElementById("result").value;
+
+  const pnl =
+    document.getElementById("pnl").value;
+
+  const notes =
+    document.getElementById("notes").value.trim();
+
+  if(!asset){
+    alert("Enter asset.");
+    return;
+  }
+
+  const entry = {
+    id:Date.now(),
+    asset,
+    side,
+    result,
+    pnl,
+    notes,
+    createdAt:new Date().toLocaleString()
+  };
+
+  const entries = getLocalEntries();
+  entries.push(entry);
+
+  saveLocalEntries(entries);
+  renderJournal(entries);
+  clearForm();
+
+  await cloudSyncJournal(entries);
+
+  alert("Journal entry saved.");
+}
+
+loadJournal();
 </script>
 
-</main>
 <script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
+
 </body>
 </html>

@@ -3,497 +3,828 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella AutoTrader V11 Ultra</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body>
+<title>Zella Auto Trader V11 Ultra</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
-*{box-sizing:border-box}
-body{overflow-x:hidden}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-.auto-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
+  overflow-x:hidden;
+  padding-bottom:130px;
+}
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
   background:
-    radial-gradient(circle at 18% 10%,rgba(56,189,248,.25),transparent 30%),
-    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
     #020617;
 }
 
-.auto-grid-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+.grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
   background-image:
-    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+    linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
   background-size:42px 42px;
-  animation:autoGrid 18s linear infinite;
+  animation:gridMove 18s linear infinite;
 }
 
-@keyframes autoGrid{
+@keyframes gridMove{
   from{background-position:0 0}
   to{background-position:0 420px}
 }
 
-.auto-particles{
-  position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+.container{
+  width:92%;
+  max-width:560px;
+  margin:auto;
 }
 
-.auto-particles span{
-  position:absolute;width:6px;height:6px;border-radius:50%;
-  background:#38bdf8;box-shadow:0 0 18px #38bdf8;opacity:.42;
-  animation:autoFloat 12s linear infinite;
+.topbar{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
-.auto-particles span:nth-child(1){left:7%;animation-delay:0s}
-.auto-particles span:nth-child(2){left:24%;animation-delay:2s}
-.auto-particles span:nth-child(3){left:41%;animation-delay:5s}
-.auto-particles span:nth-child(4){left:58%;animation-delay:1s}
-.auto-particles span:nth-child(5){left:76%;animation-delay:4s}
-.auto-particles span:nth-child(6){left:91%;animation-delay:3s}
-
-@keyframes autoFloat{
-  from{transform:translateY(110vh) scale(.6)}
-  to{transform:translateY(-140px) scale(1.4)}
+.brand h2{
+  font-size:34px;
+  letter-spacing:10px;
+  font-weight:950;
 }
 
-.container,.navbar{position:relative;z-index:3}
-
-.auto-hero{
-  position:relative;overflow:hidden;padding:22px;border-radius:34px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:inset 0 0 34px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.30);
+.brand span{
+  color:#38bdf8;
+  letter-spacing:5px;
+  font-weight:950;
+  font-size:14px;
 }
 
-.auto-hero::after{
-  content:"";position:absolute;width:160px;height:160px;right:-60px;bottom:-60px;
+.user-badge{
+  width:54px;
+  height:54px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  box-shadow:0 0 30px rgba(56,189,248,.5);
 }
 
-.auto-core-wrap{
-  width:245px;height:245px;margin:8px auto 22px;position:relative;
+.hero,.section,.card{
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.38);
 }
 
-.auto-ring{
-  position:absolute;border-radius:50%;
-  border:1px solid rgba(56,189,248,.38);
-  animation:spin 12s linear infinite;
+.hero{
+  padding:28px;
+  border-radius:34px;
 }
 
-.auto-ring.r1{inset:12px}
-.auto-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s}
-.auto-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s}
-.auto-ring.r4{inset:60px;border-color:rgba(56,189,248,.18);animation-duration:28s}
+.orbit{
+  width:245px;
+  height:245px;
+  margin:0 auto 24px;
+  position:relative;
+}
 
-.auto-ring::before{
-  content:"";width:11px;height:11px;border-radius:50%;
-  position:absolute;top:18px;left:50%;
-  background:#38bdf8;box-shadow:0 0 24px #38bdf8;
+.ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
+}
+
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
+
+.ring::before{
+  content:"";
+  position:absolute;
+  top:12px;
+  left:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
 }
 
 @keyframes spin{
-  from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
 
-.auto-core{
-  position:absolute;inset:62px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
-  box-shadow:0 0 42px rgba(56,189,248,.90),0 0 92px rgba(37,99,235,.44);
-  animation:autoPulse 4s ease-in-out infinite;
+.core{
+  position:absolute;
+  inset:82px;
+  border-radius:50%;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.auto-core svg{
-  width:66px;height:66px;fill:none;stroke:#020617;stroke-width:2.2;
-  stroke-linecap:round;stroke-linejoin:round;
+.core svg{
+  width:58px;
+  height:58px;
+  stroke:#020617;
+  fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-@keyframes autoPulse{
-  0%,100%{transform:scale(1);filter:brightness(1)}
-  50%{transform:scale(1.12);filter:brightness(1.35)}
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
+  font-weight:950;
 }
 
-.auto-sweep{
-  position:absolute;left:0;right:0;top:50%;height:2px;
-  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-  box-shadow:0 0 26px rgba(56,189,248,.85);
-  animation:autoSweep 3s ease-in-out infinite;
+.hero h1{
+  margin-top:20px;
+  font-size:48px;
+  line-height:1.05;
 }
 
-@keyframes autoSweep{
-  0%,100%{transform:translateY(-76px);opacity:.2}
-  50%{transform:translateY(76px);opacity:1}
+.hero p{
+  margin-top:18px;
+  color:#94a3b8;
+  font-size:16px;
+  line-height:1.8;
 }
 
-.auto-card{
-  position:relative;overflow:hidden;padding:18px;border-radius:28px;
-  background:rgba(15,23,42,.84);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:inset 0 0 28px rgba(56,189,248,.035),0 18px 48px rgba(0,0,0,.26);
-  transition:.28s ease;
+.status{
+  margin-top:18px;
+  display:inline-flex;
+  padding:11px 17px;
+  border-radius:999px;
+  background:rgba(245,158,11,.12);
+  color:#fbbf24;
+  font-weight:950;
 }
 
-.auto-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(56,189,248,.34);
-  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
-}
-
-.execution-grid{
+.stats{
+  margin-top:18px;
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:1fr 1fr;
   gap:14px;
-  margin-top:16px;
 }
 
-.execution-panel{
-  padding:18px;
+.card{
+  padding:20px;
   border-radius:26px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
 }
 
-.execution-title{
-  font-size:15px;
-  font-weight:950;
-  color:#e5eefb;
-}
-
-.execution-sub{
+.label{
   color:#94a3b8;
-  font-size:12px;
-  line-height:1.7;
-  margin-top:8px;
+  font-size:13px;
+  font-weight:850;
 }
 
-.control-bar{
-  width:100%;
-  height:12px;
-  border-radius:999px;
-  overflow:hidden;
-  background:rgba(255,255,255,.08);
+.value{
   margin-top:12px;
+  font-size:30px;
+  font-weight:950;
 }
 
-.control-fill{
-  height:100%;
-  width:0%;
-  border-radius:999px;
-  background:linear-gradient(90deg,#38bdf8,#22c55e);
-  box-shadow:0 0 18px rgba(56,189,248,.45);
-  transition:1s ease;
+.sub{
+  margin-top:9px;
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
 }
 
-.mode-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+.blue{color:#38bdf8}
+.green{color:#4ade80}
+.orange{color:#f59e0b}
+.red{color:#ef4444}
+
+.section{
+  margin-top:18px;
+  padding:22px;
+  border-radius:30px;
+}
+
+.section-title{
+  color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
+  font-weight:950;
+  margin-bottom:18px;
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+.field label{
+  display:block;
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:850;
+  margin-bottom:8px;
+}
+
+.field input,.field select{
+  width:100%;
+  padding:15px;
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.15);
+  background:#020617;
+  color:white;
+  outline:none;
+}
+
+.field input:focus,.field select:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 18px rgba(56,189,248,.16);
+}
+
+.btn-row{
+  display:flex;
+  gap:12px;
   margin-top:16px;
 }
 
-.mode-btn{
+.btn{
+  flex:1;
+  padding:15px;
   border:none;
-  padding:14px 10px;
   border-radius:18px;
-  background:rgba(15,23,42,.86);
-  color:#94a3b8;
   font-weight:950;
+  cursor:pointer;
+}
+
+.primary{
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  color:#020617;
+}
+
+.secondary{
+  background:#0f172a;
+  color:#e5eefb;
   border:1px solid rgba(148,163,184,.14);
 }
 
-.mode-btn.active{
-  color:#020617;
-  background:linear-gradient(135deg,#38bdf8,#2563eb);
-  box-shadow:0 0 25px rgba(56,189,248,.34);
+.danger{
+  background:rgba(239,68,68,.14);
+  color:#ef4444;
+  border:1px solid rgba(239,68,68,.25);
 }
 
-.kill-switch{
-  margin-top:16px;
-  width:100%;
-  border:none;
+.warning-box{
+  padding:15px;
+  border-radius:20px;
+  background:rgba(245,158,11,.10);
+  border:1px solid rgba(245,158,11,.20);
+  color:#fbbf24;
+  line-height:1.7;
+  font-size:13px;
+}
+
+.signal-card{
   padding:18px;
+  border-radius:24px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
+  margin-bottom:14px;
+}
+
+.signal-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.signal-title strong{
+  display:block;
+  font-size:20px;
+}
+
+.signal-title small{
+  color:#94a3b8;
+}
+
+.pill{
+  padding:9px 12px;
   border-radius:999px;
+  font-size:12px;
   font-weight:950;
-  color:#fff;
-  background:linear-gradient(135deg,#fb7185,#991b1b);
-  box-shadow:0 0 30px rgba(248,113,113,.25);
+}
+
+.ready{
+  color:#4ade80;
+  background:rgba(34,197,94,.12);
+}
+
+.locked{
+  color:#f59e0b;
+  background:rgba(245,158,11,.12);
 }
 
 @media(max-width:430px){
-  .execution-grid{grid-template-columns:1fr}
-  .mode-grid{grid-template-columns:1fr}
+  .hero h1{font-size:42px}
+  .brand h2{font-size:30px}
 }
 </style>
+</head>
 
-<div class="auto-bg"></div>
-<div class="auto-grid-bg"></div>
+<body>
 
-<div class="auto-particles">
-  <span></span><span></span><span></span>
-  <span></span><span></span><span></span>
-</div>
+<div class="bg"></div>
+<div class="grid-bg"></div>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">EX</div>
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>AUTO</span>
   </div>
-</nav>
+
+  <div class="user-badge">Z</div>
+</header>
 
 <main class="container">
 
-<section class="auto-hero">
+<section class="hero">
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
 
-  <div class="auto-core-wrap">
-    <div class="auto-ring r1"></div>
-    <div class="auto-ring r2"></div>
-    <div class="auto-ring r3"></div>
-    <div class="auto-ring r4"></div>
-
-    <div class="auto-core">
+    <div class="core">
       <svg viewBox="0 0 24 24">
-        <path d="M4 17L9 12L13 15L20 7"/>
-        <path d="M20 7V13"/>
-        <path d="M20 7H14"/>
-        <path d="M12 3V6"/>
-        <path d="M12 18V21"/>
-        <path d="M3 12H6"/>
-        <path d="M18 12H21"/>
+        <path d="M4 12H20"/>
+        <path d="M14 6L20 12L14 18"/>
       </svg>
     </div>
-
-    <div class="auto-sweep"></div>
   </div>
 
-  <div class="eyebrow">ZELLA AUTOTRADER V11 ULTRA</div>
+  <div class="eyebrow">AUTO TRADER V11 ULTRA</div>
 
-  <h1 class="command-title">
-    Execution<br>
-    Control.
+  <h1>
+    Trade<br>
+    Engine.
   </h1>
 
-  <p class="briefing-text">
-    AutoTrader is Zella’s protected execution layer. It controls automation,
-    exchange readiness, risk permission, strategy mode and emergency safety.
+  <p>
+    Configure Zella auto trading, risk controls, exchange connection,
+    signal execution and live order previews.
   </p>
 
-  <div class="command-status-pill">
-    Execution engine locked
+  <div class="status" id="autoStatus">
+    Auto Trader • Checking
   </div>
-
 </section>
 
-<section class="mini-grid">
-
-  <div class="mini-box auto-card">
-    <div class="mini-label">Execution</div>
-    <div class="mini-value blue" id="executionState">Locked</div>
+<div class="stats">
+  <div class="card">
+    <div class="label">Auto Trading</div>
+    <div class="value orange" id="autoState">OFF</div>
+    <div class="sub">User controlled</div>
   </div>
 
-  <div class="mini-box auto-card">
-    <div class="mini-label">Readiness</div>
-    <div class="mini-value green" id="readinessScore">--</div>
+  <div class="card">
+    <div class="label">Exchange</div>
+    <div class="value blue" id="exchangeState">--</div>
+    <div class="sub">Connected account</div>
   </div>
 
-  <div class="mini-box auto-card">
-    <div class="mini-label">Exchange</div>
-    <div class="mini-value orange" id="exchangeState">Offline</div>
+  <div class="card">
+    <div class="label">Max Risk</div>
+    <div class="value green" id="riskValue">--</div>
+    <div class="sub">Per trade</div>
   </div>
 
-  <div class="mini-box auto-card">
-    <div class="mini-label">Risk Mode</div>
-    <div class="mini-value blue" id="riskMode">Strict</div>
+  <div class="card">
+    <div class="label">Premium</div>
+    <div class="value orange" id="premiumState">--</div>
+    <div class="sub">Required for execution</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-title">AUTO TRADING SETTINGS</div>
+
+  <div class="field">
+    <label>Auto Trading Mode</label>
+    <select id="enabled">
+      <option value="false">Disabled</option>
+      <option value="true">Enabled</option>
+    </select>
   </div>
 
+  <div class="field">
+    <label>Exchange</label>
+    <select id="exchange">
+      <option value="">Select connected exchange</option>
+      <option value="binance">Binance</option>
+      <option value="bybit">Bybit</option>
+      <option value="okx">OKX</option>
+      <option value="kucoin">KuCoin</option>
+      <option value="coinbase">Coinbase</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>Max Trade Risk %</label>
+    <input id="maxTradeRisk" type="number" placeholder="Example: 1" value="1">
+  </div>
+
+  <div class="field">
+    <label>Max Daily Loss $</label>
+    <input id="maxDailyLoss" type="number" placeholder="Example: 50" value="0">
+  </div>
+
+  <div class="field">
+    <label>Allowed Assets</label>
+    <input id="allowedAssets" placeholder="BTC,ETH,SOL,BNB,XRP" value="BTC,ETH,SOL,BNB,XRP">
+  </div>
+
+  <div class="btn-row">
+    <button class="btn primary" onclick="saveSettings()">Save Settings</button>
+    <button class="btn secondary" onclick="loadSettings()">Reload</button>
+  </div>
 </section>
 
-<section class="briefing-card">
+<section class="section">
+  <div class="section-title">TRADE PREVIEW</div>
 
-  <div class="briefing-title">EXECUTION MODES</div>
-
-  <div class="mode-grid">
-    <button class="mode-btn active" onclick="setMode('Paper',this)">Paper</button>
-    <button class="mode-btn" onclick="setMode('Semi-Auto',this)">Semi-Auto</button>
-    <button class="mode-btn" onclick="setMode('Full Auto',this)">Full Auto</button>
+  <div class="field">
+    <label>Symbol</label>
+    <select id="tradeSymbol">
+      <option value="BTC">BTC</option>
+      <option value="ETH">ETH</option>
+      <option value="SOL">SOL</option>
+      <option value="BNB">BNB</option>
+      <option value="XRP">XRP</option>
+    </select>
   </div>
 
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">EXECUTION SAFETY CENTER</div>
-
-  <div class="execution-grid">
-
-    <div class="execution-panel">
-      <div class="execution-title">Risk Permission</div>
-      <div class="execution-sub">Maximum risk allowed per automated trade.</div>
-      <div class="control-bar">
-        <div class="control-fill" style="width:25%;"></div>
-      </div>
-    </div>
-
-    <div class="execution-panel">
-      <div class="execution-title">Position Sizing</div>
-      <div class="execution-sub">Auto position sizing is locked until exchange setup is complete.</div>
-      <div class="control-bar">
-        <div class="control-fill" style="width:40%;"></div>
-      </div>
-    </div>
-
-    <div class="execution-panel">
-      <div class="execution-title">Stop-Loss Control</div>
-      <div class="execution-sub">Stop-loss protection required before real execution.</div>
-      <div class="control-bar">
-        <div class="control-fill" style="width:72%;"></div>
-      </div>
-    </div>
-
-    <div class="execution-panel">
-      <div class="execution-title">Take-Profit Logic</div>
-      <div class="execution-sub">Profit rules will connect to Trade Prep validation.</div>
-      <div class="control-bar">
-        <div class="control-fill" style="width:58%;"></div>
-      </div>
-    </div>
-
+  <div class="field">
+    <label>Side</label>
+    <select id="tradeSide">
+      <option value="BUY">BUY</option>
+      <option value="SELL">SELL</option>
+    </select>
   </div>
 
-  <button class="kill-switch" onclick="emergencyStop()">
-    Emergency Stop
-  </button>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">AUTOTRADER BRIEFING</div>
-
-  <h2 class="briefing-headline" id="autoTitle">
-    Execution engine is protected.
-  </h2>
-
-  <p class="briefing-text" id="autoText">
-    AutoTrader is currently locked for safety. Connect exchange access,
-    complete risk settings, and validate trade preparation before enabling automation.
-  </p>
-
-  <div class="hero-actions">
-    <a href="autotrade.html" class="btn">Open Trade Prep</a>
-    <a href="exchange.html" class="btn secondary">Connect Exchange</a>
+  <div class="field">
+    <label>Amount</label>
+    <input id="tradeAmount" type="number" placeholder="Example: 0.01">
   </div>
 
+  <div class="btn-row">
+    <button class="btn primary" onclick="previewTrade()">Preview</button>
+    <button class="btn danger" onclick="executeTrade()">Execute</button>
+  </div>
+
+  <div class="warning-box">
+    Trade execution can place real exchange orders when connected with trade permission. Use small sizes and verify everything before executing.
+  </div>
 </section>
 
-<nav class="zella-nav">
+<section class="section">
+  <div class="section-title">LIVE SIGNAL INPUT</div>
 
-  <a href="dashboard.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
-    <span>Home</span>
-  </a>
+  <div id="signalBox">
+    <p class="sub">Loading top live signal...</p>
+  </div>
+</section>
 
-  <a href="scanner.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
-    <span>Scanner</span>
-  </a>
+</main>
 
-  <a href="copilot.html" class="nav-item copilot-center">
-    <div class="copilot-core">
-      <svg viewBox="0 0 24 24" class="copilot-icon">
-        <rect x="6" y="8" width="12" height="9" rx="2"/>
-        <circle cx="9" cy="12" r="1"/>
-        <circle cx="15" cy="12" r="1"/>
-        <path d="M12 4V8"/>
-      </svg>
-    </div>
-    <span>Copilot</span>
-  </a>
+<nav class="bottom-dock">
 
-  <a href="market.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
-    <span>Market</span>
-  </a>
-
-  <a href="watchlist.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
-    <span>Watchlist</span>
-  </a>
-
-  <a href="more.html" class="nav-item active">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <circle cx="12" cy="5" r="1.5"/>
-      <circle cx="12" cy="12" r="1.5"/>
-      <circle cx="12" cy="19" r="1.5"/>
+  <div class="dock-item" onclick="go('dashboard.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11L12 4L21 11"/>
+      <path d="M5 10V21H19V10"/>
+      <path d="M9 21V14H15V21"/>
     </svg>
-    <span>More</span>
-  </a>
+  </div>
+
+  <div class="dock-item" onclick="go('scanner.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 19V5"/>
+      <path d="M4 19H20"/>
+      <path d="M8 16L11 12L14 14L19 7"/>
+    </svg>
+  </div>
+
+  <div class="ai-dock" onclick="go('copilot.html')">
+    <svg viewBox="0 0 24 24">
+      <rect x="5" y="7" width="14" height="11" rx="4"/>
+      <path d="M9 11H9.01"/>
+      <path d="M15 11H15.01"/>
+      <path d="M12 3V7"/>
+    </svg>
+  </div>
+
+  <div class="dock-item" onclick="go('market.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18V6"/>
+      <path d="M8 18V10"/>
+      <path d="M12 18V4"/>
+      <path d="M16 18V8"/>
+      <path d="M20 18V12"/>
+    </svg>
+  </div>
+
+  <div class="dock-item active" onclick="go('more.html')">
+    <svg viewBox="0 0 24 24">
+      <circle cx="5" cy="12" r="1.6"/>
+      <circle cx="12" cy="12" r="1.6"/>
+      <circle cx="19" cy="12" r="1.6"/>
+    </svg>
+  </div>
 
 </nav>
 
 <script>
-let currentMode = "Paper";
+const API_URL = "https://zella-backend.onrender.com";
 
-function setMode(mode,btn){
-  currentMode = mode;
+function go(page){
+  window.location.href = page;
+}
 
-  document.querySelectorAll(".mode-btn").forEach(button=>{
-    button.classList.remove("active");
+async function getToken(){
+  if(window.zellaGetToken){
+    return await window.zellaGetToken();
+  }
+
+  const saved =
+    localStorage.getItem("zellaFirebaseToken") ||
+    localStorage.getItem("zellaToken");
+
+  if(saved){
+    return saved;
+  }
+
+  throw new Error("Login session token not found. Please login again.");
+}
+
+async function apiFetch(path,options = {}){
+  const token = await getToken();
+
+  const response = await fetch(API_URL + path,{
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer " + token,
+      ...(options.headers || {})
+    }
   });
 
-  btn.classList.add("active");
+  const data = await response.json();
 
-  document.getElementById("executionState").textContent =
-    mode === "Paper" ? "Locked" : "Protected";
+  if(!data.success){
+    throw new Error(data.message || data.error || "Request failed.");
+  }
 
-  document.getElementById("autoTitle").textContent =
-    `${mode} mode selected`;
-
-  document.getElementById("autoText").textContent =
-    mode === "Paper"
-      ? "Paper mode lets Zella simulate automation safely without real execution."
-      : `${mode} requires exchange connection, risk settings and Trade Prep validation before real execution.`;
+  return data;
 }
 
-function emergencyStop(){
-  currentMode = "Paper";
+async function publicFetch(path){
+  const response = await fetch(API_URL + path);
+  const data = await response.json();
 
-  document.getElementById("executionState").textContent = "Stopped";
-  document.getElementById("readinessScore").textContent = "0%";
-  document.getElementById("autoTitle").textContent = "Emergency stop activated.";
-  document.getElementById("autoText").textContent =
-    "All automation has been stopped locally. Future versions will also send this command to the execution backend.";
+  if(!data.success){
+    throw new Error(data.message || data.error || "Request failed.");
+  }
 
-  document.querySelectorAll(".mode-btn").forEach(button=>{
-    button.classList.remove("active");
-  });
-
-  document.querySelector(".mode-btn").classList.add("active");
+  return data;
 }
 
-function calculateReadiness(){
-  const exchangeConnected = false;
-  const riskConfigured = true;
-  const tradePrepReady = false;
-  const safetyLock = true;
+async function loadSettings(){
+  try{
+    document.getElementById("autoStatus").textContent =
+      "Auto Trader • Loading";
 
-  let score = 0;
+    const data = await apiFetch("/api/autotrade/settings");
 
-  if(exchangeConnected) score += 35;
-  if(riskConfigured) score += 25;
-  if(tradePrepReady) score += 25;
-  if(safetyLock) score += 15;
+    const settings = data.settings;
 
-  document.getElementById("readinessScore").textContent = score + "%";
+    if(!settings){
+      document.getElementById("autoStatus").textContent =
+        "Auto Trader • Not Configured";
+      return;
+    }
+
+    document.getElementById("enabled").value =
+      String(Boolean(settings.enabled));
+
+    document.getElementById("exchange").value =
+      settings.exchange || "";
+
+    document.getElementById("maxTradeRisk").value =
+      settings.maxTradeRisk || 1;
+
+    document.getElementById("maxDailyLoss").value =
+      settings.maxDailyLoss || 0;
+
+    document.getElementById("allowedAssets").value =
+      Array.isArray(settings.allowedAssets)
+        ? settings.allowedAssets.join(",")
+        : "BTC,ETH,SOL,BNB,XRP";
+
+    document.getElementById("autoState").textContent =
+      settings.enabled ? "ON" : "OFF";
+
+    document.getElementById("exchangeState").textContent =
+      settings.exchange ? settings.exchange.toUpperCase() : "--";
+
+    document.getElementById("riskValue").textContent =
+      `${settings.maxTradeRisk || 1}%`;
+
+    document.getElementById("premiumState").textContent =
+      "Active";
+
+    document.getElementById("autoStatus").textContent =
+      "Auto Trader • Ready";
+
+  }catch(error){
+    document.getElementById("autoStatus").textContent =
+      "Auto Trader • Unavailable";
+
+    alert(error.message);
+  }
 }
 
-calculateReadiness();
+async function saveSettings(){
+  try{
+    const enabled =
+      document.getElementById("enabled").value === "true";
+
+    const exchange =
+      document.getElementById("exchange").value;
+
+    const maxTradeRisk =
+      Number(document.getElementById("maxTradeRisk").value || 1);
+
+    const maxDailyLoss =
+      Number(document.getElementById("maxDailyLoss").value || 0);
+
+    const allowedAssets =
+      document.getElementById("allowedAssets")
+      .value
+      .split(",")
+      .map(x => x.trim().toUpperCase())
+      .filter(Boolean);
+
+    await apiFetch("/api/autotrade/settings",{
+      method:"POST",
+      body:JSON.stringify({
+        enabled,
+        exchange,
+        maxTradeRisk,
+        maxDailyLoss,
+        allowedAssets
+      })
+    });
+
+    await loadSettings();
+
+    alert("Auto trading settings saved.");
+
+  }catch(error){
+    alert(error.message);
+  }
+}
+
+async function loadTopSignal(){
+  try{
+    const data = await publicFetch("/api/signals/live");
+
+    const signals =
+      data.signals
+      .slice()
+      .sort((a,b)=> Number(b.confidence || 0) - Number(a.confidence || 0));
+
+    const top = signals[0];
+
+    document.getElementById("signalBox").innerHTML = `
+      <div class="signal-card">
+        <div class="signal-top">
+          <div class="signal-title">
+            <strong>${top.symbol} ${top.signal}</strong>
+            <small>${top.name} • ${top.confidence}% confidence • ${top.risk} Risk</small>
+          </div>
+
+          <div class="pill ready">
+            LIVE
+          </div>
+        </div>
+      </div>
+    `;
+
+  }catch(error){
+    document.getElementById("signalBox").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
+  }
+}
+
+async function previewTrade(){
+  try{
+    const symbol = document.getElementById("tradeSymbol").value;
+    const side = document.getElementById("tradeSide").value;
+    const amount = document.getElementById("tradeAmount").value;
+
+    if(!amount){
+      alert("Enter trade amount.");
+      return;
+    }
+
+    const data = await apiFetch("/api/trade/preview",{
+      method:"POST",
+      body:JSON.stringify({
+        symbol,
+        side,
+        amount
+      })
+    });
+
+    alert(
+      "Preview generated. Estimated value: " +
+      data.preview.estimatedValue
+    );
+
+  }catch(error){
+    alert(error.message);
+  }
+}
+
+async function executeTrade(){
+  try{
+    const confirmed =
+      confirm("This can place a real exchange order. Continue?");
+
+    if(!confirmed){
+      return;
+    }
+
+    const exchange = document.getElementById("exchange").value;
+    const symbol = document.getElementById("tradeSymbol").value;
+    const side = document.getElementById("tradeSide").value;
+    const amount = document.getElementById("tradeAmount").value;
+
+    if(!exchange || !amount){
+      alert("Select exchange and enter amount.");
+      return;
+    }
+
+    const data = await apiFetch("/api/trade/execute",{
+      method:"POST",
+      body:JSON.stringify({
+        exchange,
+        symbol,
+        side,
+        amount
+      })
+    });
+
+    alert(data.message || "Trade executed.");
+
+  }catch(error){
+    alert(error.message);
+  }
+}
+
+loadSettings();
+loadTopSignal();
+setInterval(loadTopSignal,30000);
 </script>
 
-</main>
+<script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
+
 </body>
 </html>

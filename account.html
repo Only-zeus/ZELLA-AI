@@ -3,521 +3,696 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Account V7</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body>
+<title>Zella Account V11 Ultra</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
 *{
+  margin:0;
+  padding:0;
   box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
 
 body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
   overflow-x:hidden;
+  padding-bottom:130px;
 }
 
-.auth-bg{
+.bg{
   position:fixed;
   inset:0;
-  z-index:0;
-  pointer-events:none;
+  z-index:-3;
   background:
-    radial-gradient(circle at 20% 10%,rgba(56,189,248,.20),transparent 30%),
-    radial-gradient(circle at 80% 20%,rgba(34,197,94,.14),transparent 28%),
-    radial-gradient(circle at 50% 90%,rgba(59,130,246,.18),transparent 32%);
+    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
+    #020617;
 }
 
-.auth-grid{
+.grid-bg{
   position:fixed;
   inset:0;
-  z-index:0;
-  pointer-events:none;
+  z-index:-2;
   background-image:
-    linear-gradient(rgba(56,189,248,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56,189,248,.06) 1px, transparent 1px);
+    linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
   background-size:42px 42px;
   animation:gridMove 18s linear infinite;
 }
 
 @keyframes gridMove{
-  from{background-position:0 0;}
-  to{background-position:0 420px;}
+  from{background-position:0 0}
+  to{background-position:0 420px}
 }
 
-.auth-rain{
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:1;
+.container{
+  width:92%;
+  max-width:560px;
+  margin:auto;
 }
 
-.auth-rain span{
-  position:absolute;
-  top:-120px;
-  opacity:.10;
-  font-size:32px;
-  font-weight:900;
+.topbar{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand h2{
+  font-size:34px;
+  letter-spacing:10px;
+  font-weight:950;
+}
+
+.brand span{
   color:#38bdf8;
-  animation:authRain 16s linear infinite;
+  letter-spacing:5px;
+  font-weight:950;
+  font-size:14px;
 }
 
-.auth-rain span:nth-child(1){left:8%;}
-.auth-rain span:nth-child(2){left:24%;animation-delay:2s;}
-.auth-rain span:nth-child(3){left:41%;animation-delay:4s;}
-.auth-rain span:nth-child(4){left:58%;animation-delay:1s;}
-.auth-rain span:nth-child(5){left:75%;animation-delay:5s;}
-.auth-rain span:nth-child(6){left:90%;animation-delay:3s;}
-
-@keyframes authRain{
-  from{transform:translateY(-140px) rotate(0deg);}
-  to{transform:translateY(125vh) rotate(360deg);}
-}
-
-.container,
-.navbar{
-  position:relative;
-  z-index:3;
-}
-
-.auth-core-wrap{
-  width:190px;
-  height:190px;
-  margin:10px auto 25px;
-  position:relative;
-}
-
-.auth-core{
-  position:absolute;
-  inset:45px;
+.user-badge{
+  width:54px;
+  height:54px;
   border-radius:50%;
-  background:
-    radial-gradient(circle,#e0f2fe 0%,#38bdf8 25%,#0f172a 62%,transparent 72%);
-  box-shadow:
-    0 0 35px rgba(56,189,248,.9),
-    0 0 80px rgba(56,189,248,.45);
-  animation:corePulse 4s ease-in-out infinite;
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  box-shadow:0 0 30px rgba(56,189,248,.5);
 }
 
-@keyframes corePulse{
-  0%,100%{transform:scale(1);filter:brightness(1);}
-  50%{transform:scale(1.12);filter:brightness(1.35);}
+.hero,.section,.card{
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.38);
 }
 
-.auth-orbit{
+.hero{
+  padding:28px;
+  border-radius:34px;
+}
+
+.orbit{
+  width:245px;
+  height:245px;
+  margin:0 auto 24px;
+  position:relative;
+}
+
+.ring{
   position:absolute;
-  inset:14px;
-  border:1px solid rgba(56,189,248,.45);
   border-radius:50%;
-  animation:spin 9s linear infinite;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
 }
 
-.auth-orbit:nth-child(2){
-  inset:28px;
-  border-color:rgba(34,197,94,.35);
-  animation-duration:13s;
-}
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
 
-.auth-orbit:nth-child(3){
-  inset:2px;
-  border-color:rgba(147,197,253,.30);
-  animation-duration:17s;
-}
-
-.auth-orbit::before{
+.ring::before{
   content:"";
+  position:absolute;
+  top:12px;
+  left:50%;
   width:10px;
   height:10px;
-  background:#38bdf8;
   border-radius:50%;
-  position:absolute;
-  top:15px;
-  left:50%;
-  box-shadow:0 0 20px #38bdf8;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
 }
 
 @keyframes spin{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
+  to{transform:rotate(360deg)}
 }
 
-.auth-scan{
+.core{
   position:absolute;
-  left:0;
-  right:0;
-  height:2px;
-  top:50%;
-  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-  box-shadow:0 0 25px rgba(56,189,248,.8);
-  animation:scanMove 3s ease-in-out infinite;
+  inset:82px;
+  border-radius:50%;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-@keyframes scanMove{
-  0%,100%{transform:translateY(-65px);opacity:.2;}
-  50%{transform:translateY(65px);opacity:1;}
+.core svg{
+  width:58px;
+  height:58px;
+  stroke:#020617;
+  fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-.auth-input{
-  width:100%;
-  padding:18px;
-  border-radius:22px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(15,23,42,.88);
-  color:#fff;
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
+  font-weight:950;
+}
+
+.hero h1{
+  margin-top:20px;
+  font-size:48px;
+  line-height:1.05;
+}
+
+.hero p{
+  margin-top:18px;
+  color:#94a3b8;
   font-size:16px;
+  line-height:1.8;
+}
+
+.status{
+  margin-top:18px;
+  display:inline-flex;
+  padding:11px 17px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#4ade80;
+  font-weight:950;
+}
+
+.stats{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.card{
+  padding:20px;
+  border-radius:26px;
+}
+
+.label{
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:850;
+}
+
+.value{
   margin-top:12px;
+  font-size:28px;
+  font-weight:950;
+  word-break:break-word;
+}
+
+.sub{
+  margin-top:9px;
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.blue{color:#38bdf8}
+.green{color:#4ade80}
+.orange{color:#f59e0b}
+.red{color:#ef4444}
+
+.section{
+  margin-top:18px;
+  padding:22px;
+  border-radius:30px;
+}
+
+.section-title{
+  color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
+  font-weight:950;
+  margin-bottom:18px;
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+.field label{
+  display:block;
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:850;
+  margin-bottom:8px;
+}
+
+.field input,.field select{
+  width:100%;
+  padding:15px;
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.15);
+  background:#020617;
+  color:white;
   outline:none;
 }
 
-.auth-input:focus{
-  border-color:rgba(56,189,248,.55);
-  box-shadow:0 0 25px rgba(56,189,248,.16);
+.field input:focus,.field select:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 18px rgba(56,189,248,.16);
 }
 
-.auth-switch{
-  color:#38bdf8;
-  font-weight:900;
-  cursor:pointer;
+.btn-row{
+  display:flex;
+  gap:12px;
+  margin-top:16px;
 }
 
-.google-btn{
-  width:100%;
-  padding:18px;
+.btn{
+  flex:1;
+  padding:15px;
   border:none;
-  border-radius:999px;
-  background:rgba(255,255,255,.95);
-  color:#0f172a;
-  font-weight:900;
-  font-size:16px;
+  border-radius:18px;
+  font-weight:950;
   cursor:pointer;
-  transition:.25s ease;
 }
 
-.google-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 0 30px rgba(255,255,255,.18);
+.primary{
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  color:#020617;
 }
 
-.form-fade{
-  animation:fadeUp .45s ease;
+.secondary{
+  background:#0f172a;
+  color:#e5eefb;
+  border:1px solid rgba(148,163,184,.14);
 }
 
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(18px);}
-  to{opacity:1;transform:translateY(0);}
+.danger{
+  background:rgba(239,68,68,.14);
+  color:#ef4444;
+  border:1px solid rgba(239,68,68,.25);
 }
 
-.auth-message{
-  text-align:center;
-  color:#38bdf8;
-  margin-top:18px;
-  line-height:1.6;
-}
-
-.security-pill{
-  display:inline-flex;
+.security-row{
+  display:flex;
+  justify-content:space-between;
   align-items:center;
-  gap:8px;
-  padding:10px 14px;
+  padding:15px 0;
+  border-bottom:1px solid rgba(148,163,184,.1);
+}
+
+.security-row:last-child{
+  border-bottom:none;
+}
+
+.security-left strong{
+  display:block;
+}
+
+.security-left small{
+  color:#94a3b8;
+}
+
+.security-tag{
+  padding:9px 12px;
   border-radius:999px;
   background:rgba(34,197,94,.12);
-  color:#22c55e;
-  font-weight:900;
-  font-size:13px;
-  margin-top:14px;
+  color:#4ade80;
+  font-weight:950;
+  font-size:12px;
+}
+
+@media(max-width:430px){
+  .hero h1{font-size:42px}
+  .brand h2{font-size:30px}
 }
 </style>
+</head>
 
-<div class="auth-bg"></div>
-<div class="auth-grid"></div>
+<body>
 
-<div class="auth-rain">
-  <span>SECURE</span>
-  <span>AI</span>
-  <span>LOGIN</span>
-  <span>ZELLA</span>
-  <span>VERIFY</span>
-  <span>AUTH</span>
-</div>
+<div class="bg"></div>
+<div class="grid-bg"></div>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <a href="index.html" class="btn secondary">Home</a>
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>ACCOUNT</span>
   </div>
-</nav>
+
+  <div class="user-badge" id="topUserBadge">Z</div>
+</header>
 
 <main class="container">
 
-<section class="command-card">
+<section class="hero">
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
 
-  <div class="auth-core-wrap">
-    <div class="auth-orbit"></div>
-    <div class="auth-orbit"></div>
-    <div class="auth-orbit"></div>
-    <div class="auth-core"></div>
-    <div class="auth-scan"></div>
+    <div class="core">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20C4 16 7 14 12 14C17 14 20 16 20 20"/>
+      </svg>
+    </div>
   </div>
 
-  <div class="eyebrow">ZELLA SECURE ACCESS</div>
+  <div class="eyebrow">ACCOUNT CENTER V11 ULTRA</div>
 
-  <h1 class="command-title">
-    Welcome to<br>
-    Zella AI.
+  <h1>
+    Profile<br>
+    Security.
   </h1>
 
-  <p class="briefing-text">
-    Login or create your account to access Zella Copilot,
-    live scanner, market intelligence, watchlists and trade setup tools.
+  <p>
+    Manage your Zella identity, subscription status, trading profile,
+    cloud profile and account protection.
   </p>
 
-  <div class="security-pill">
-    🔐 Email verification enabled
+  <div class="status" id="accountStatus">
+    Account Engine • Checking
   </div>
-
 </section>
 
-<section class="briefing-card form-fade">
-
-  <div class="briefing-title" id="formTitle">
-    LOGIN
+<div class="stats">
+  <div class="card">
+    <div class="label">Display Name</div>
+    <div class="value blue" id="displayNameStat">--</div>
+    <div class="sub">Cloud profile</div>
   </div>
 
-  <button class="google-btn" onclick="loginWithGoogle()">
-    Continue with Google
-  </button>
-
-  <div style="text-align:center;color:#94a3b8;margin:18px 0;">
-    OR USE EMAIL
+  <div class="card">
+    <div class="label">Plan</div>
+    <div class="value orange" id="planStat">--</div>
+    <div class="sub">Subscription access</div>
   </div>
 
-  <input id="nameInput" class="auth-input" type="text" placeholder="Full name" style="display:none;">
+  <div class="card">
+    <div class="label">Zella ID</div>
+    <div class="value green" id="zellaIdStat">--</div>
+    <div class="sub">Account identity</div>
+  </div>
 
-  <input id="emailInput" class="auth-input" type="email" placeholder="Email address">
+  <div class="card">
+    <div class="label">Cloud Sync</div>
+    <div class="value green" id="cloudStat">Live</div>
+    <div class="sub">Firestore connected</div>
+  </div>
+</div>
 
-  <input id="passwordInput" class="auth-input" type="password" placeholder="Password">
+<section class="section">
+  <div class="section-title">PROFILE DETAILS</div>
 
-  <input id="confirmPasswordInput" class="auth-input" type="password" placeholder="Confirm password" style="display:none;">
+  <div class="field">
+    <label>Display Name</label>
+    <input id="displayName" placeholder="Zella User">
+  </div>
 
-  <button class="btn" style="width:100%;margin-top:18px;" id="mainAuthBtn" onclick="loginWithEmail()">
-    Login
-  </button>
+  <div class="field">
+    <label>Trading Style</label>
+    <select id="tradingStyle">
+      <option value="Beginner Trader">Beginner Trader</option>
+      <option value="Swing Trader">Swing Trader</option>
+      <option value="Day Trader">Day Trader</option>
+      <option value="Scalper">Scalper</option>
+      <option value="Long Term Investor">Long Term Investor</option>
+    </select>
+  </div>
 
-  <p class="briefing-text" style="text-align:center;margin-top:20px;">
-    <span id="switchText">Don't have an account?</span>
-    <span class="auth-switch" onclick="toggleMode()" id="switchBtn">Create account</span>
-  </p>
+  <div class="field">
+    <label>Risk Profile</label>
+    <select id="riskProfile">
+      <option value="Conservative">Conservative</option>
+      <option value="Balanced">Balanced</option>
+      <option value="Aggressive">Aggressive</option>
+    </select>
+  </div>
 
-  <p class="briefing-text" style="text-align:center;">
-    <span class="auth-switch" onclick="resetPassword()">Forgot password?</span>
-  </p>
+  <div class="btn-row">
+    <button class="btn primary" onclick="saveProfile()">Save Profile</button>
+    <button class="btn secondary" onclick="loadAccount()">Reload</button>
+  </div>
+</section>
 
-  <p class="auth-message" id="authMessage"></p>
+<section class="section">
+  <div class="section-title">SECURITY CENTER</div>
 
+  <div class="security-row">
+    <div class="security-left">
+      <strong>Firebase Authentication</strong>
+      <small>Login protection is active.</small>
+    </div>
+    <div class="security-tag">ACTIVE</div>
+  </div>
+
+  <div class="security-row">
+    <div class="security-left">
+      <strong>Auth Guard</strong>
+      <small>Protected pages require login.</small>
+    </div>
+    <div class="security-tag">ON</div>
+  </div>
+
+  <div class="security-row">
+    <div class="security-left">
+      <strong>Premium Guard</strong>
+      <small>Premium tools require active access.</small>
+    </div>
+    <div class="security-tag">ON</div>
+  </div>
+
+  <div class="security-row">
+    <div class="security-left">
+      <strong>Exchange Key Safety</strong>
+      <small>Withdrawal permission should stay disabled.</small>
+    </div>
+    <div class="security-tag">LOCKED</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">ACCOUNT ACTIONS</div>
+
+  <div class="btn-row">
+    <button class="btn secondary" onclick="go('premium.html')">Premium</button>
+    <button class="btn secondary" onclick="go('setup.html')">Setup</button>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn secondary" onclick="go('exchange-api.html')">Exchange APIs</button>
+    <button class="btn danger" onclick="logoutUser()">Logout</button>
+  </div>
 </section>
 
 </main>
 
-<script type="module">
+<nav class="bottom-dock">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  <div class="dock-item" onclick="go('dashboard.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11L12 4L21 11"/>
+      <path d="M5 10V21H19V10"/>
+      <path d="M9 21V14H15V21"/>
+    </svg>
+  </div>
 
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendEmailVerification,
-  sendPasswordResetEmail,
-  updateProfile,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  <div class="dock-item" onclick="go('scanner.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 19V5"/>
+      <path d="M4 19H20"/>
+      <path d="M8 16L11 12L14 14L19 7"/>
+    </svg>
+  </div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
-  authDomain: "zella-424f2.firebaseapp.com",
-  projectId: "zella-424f2",
-  storageBucket: "zella-424f2.firebasestorage.app",
-  messagingSenderId: "1008967672362",
-  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
-};
+  <div class="ai-dock" onclick="go('copilot.html')">
+    <svg viewBox="0 0 24 24">
+      <rect x="5" y="7" width="14" height="11" rx="4"/>
+      <path d="M9 11H9.01"/>
+      <path d="M15 11H15.01"/>
+      <path d="M12 3V7"/>
+    </svg>
+  </div>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+  <div class="dock-item" onclick="go('market.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18V6"/>
+      <path d="M8 18V10"/>
+      <path d="M12 18V4"/>
+      <path d="M16 18V8"/>
+      <path d="M20 18V12"/>
+    </svg>
+  </div>
 
-let isSignup = false;
+  <div class="dock-item active" onclick="go('more.html')">
+    <svg viewBox="0 0 24 24">
+      <circle cx="5" cy="12" r="1.6"/>
+      <circle cx="12" cy="12" r="1.6"/>
+      <circle cx="19" cy="12" r="1.6"/>
+    </svg>
+  </div>
 
-const msg = document.getElementById("authMessage");
+</nav>
 
-function showMessage(text){
-  msg.textContent = text;
+<script>
+const API_URL = "https://zella-backend.onrender.com";
+
+function go(page){
+  window.location.href = page;
 }
 
-function setLoading(text){
-  showMessage(text);
+async function getToken(){
+  if(window.zellaGetToken){
+    return await window.zellaGetToken();
+  }
+
+  const saved =
+    localStorage.getItem("zellaFirebaseToken") ||
+    localStorage.getItem("zellaToken");
+
+  if(saved){
+    return saved;
+  }
+
+  throw new Error("Login session token not found. Please login again.");
 }
 
-window.toggleMode = function(){
-  isSignup = !isSignup;
+async function apiFetch(path,options = {}){
+  const token = await getToken();
 
-  document.getElementById("formTitle").textContent =
-    isSignup ? "CREATE ACCOUNT" : "LOGIN";
+  const response = await fetch(API_URL + path,{
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer " + token,
+      ...(options.headers || {})
+    }
+  });
 
-  document.getElementById("nameInput").style.display =
-    isSignup ? "block" : "none";
+  const data = await response.json();
 
-  document.getElementById("confirmPasswordInput").style.display =
-    isSignup ? "block" : "none";
+  if(!data.success){
+    throw new Error(data.message || data.error || "Request failed.");
+  }
 
-  document.getElementById("mainAuthBtn").textContent =
-    isSignup ? "Create Account" : "Login";
+  return data;
+}
 
-  document.getElementById("mainAuthBtn").setAttribute(
-    "onclick",
-    isSignup ? "createAccount()" : "loginWithEmail()"
-  );
+function generateFallbackId(){
+  const saved =
+    localStorage.getItem("zellaLocalId");
 
-  document.getElementById("switchText").textContent =
-    isSignup ? "Already have an account?" : "Don't have an account?";
+  if(saved){
+    return saved;
+  }
 
-  document.getElementById("switchBtn").textContent =
-    isSignup ? "Login" : "Create account";
+  const id =
+    "ZLA-" + Math.random().toString(36).slice(2,8).toUpperCase();
 
-  showMessage("");
-};
+  localStorage.setItem("zellaLocalId",id);
 
-window.loginWithGoogle = async function(){
+  return id;
+}
+
+async function loadAccount(){
   try{
-    setLoading("Securing Google session...");
+    document.getElementById("accountStatus").textContent =
+      "Account Engine • Loading";
 
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
+    const profileData =
+      await apiFetch("/api/user/profile");
 
-    localStorage.setItem("zellaUserId", user.uid);
-    localStorage.setItem("zellaUser", user.displayName || user.email);
+    const subData =
+      await apiFetch("/api/subscription/status");
 
-    setLoading("Login successful. Opening dashboard...");
+    const profile =
+      profileData.profile || {};
 
-    setTimeout(() => {
-      window.location.href = "splash.html";
-    }, 800);
+    const subscription =
+      subData.subscription || {};
+
+    document.getElementById("displayName").value =
+      profile.displayName || "";
+
+    document.getElementById("tradingStyle").value =
+      profile.tradingStyle || "Beginner Trader";
+
+    document.getElementById("riskProfile").value =
+      profile.riskProfile || "Balanced";
+
+    document.getElementById("displayNameStat").textContent =
+      profile.displayName || "Zella User";
+
+    document.getElementById("planStat").textContent =
+      subscription.plan || "FREE";
+
+    document.getElementById("zellaIdStat").textContent =
+      profile.zellaId || generateFallbackId();
+
+    document.getElementById("topUserBadge").textContent =
+      (profile.displayName || "Z").slice(0,1).toUpperCase();
+
+    document.getElementById("accountStatus").textContent =
+      "Account Engine • Ready";
 
   }catch(error){
-    showMessage(error.message);
+    document.getElementById("accountStatus").textContent =
+      "Account Engine • Unavailable";
+
+    alert(error.message);
   }
-};
+}
 
-window.createAccount = async function(){
-  const name = document.getElementById("nameInput").value.trim();
-  const email = document.getElementById("emailInput").value.trim();
-  const password = document.getElementById("passwordInput").value;
-  const confirmPassword = document.getElementById("confirmPasswordInput").value;
-
-  if(!name || !email || !password || !confirmPassword){
-    showMessage("Please fill all fields.");
-    return;
-  }
-
-  if(password !== confirmPassword){
-    showMessage("Passwords do not match.");
-    return;
-  }
-
-  if(password.length < 6){
-    showMessage("Password must be at least 6 characters.");
-    return;
-  }
-
+async function saveProfile(){
   try{
-    setLoading("Creating secure Zella account...");
+    const payload = {
+      displayName:
+        document.getElementById("displayName").value.trim(),
 
-    const result = await createUserWithEmailAndPassword(auth, email, password);
+      tradingStyle:
+        document.getElementById("tradingStyle").value,
 
-    await updateProfile(result.user, {
-      displayName: name
+      riskProfile:
+        document.getElementById("riskProfile").value
+    };
+
+    await apiFetch("/api/user/profile",{
+      method:"POST",
+      body:JSON.stringify(payload)
     });
 
-    await sendEmailVerification(result.user);
+    await loadAccount();
 
-    await signOut(auth);
-
-    showMessage("Verification email sent. Check your inbox, verify your email, then login.");
-
-    if(isSignup){
-      toggleMode();
-    }
+    alert("Account profile saved.");
 
   }catch(error){
-    showMessage(error.message);
+    alert(error.message);
   }
-};
+}
 
-window.loginWithEmail = async function(){
-  const email = document.getElementById("emailInput").value.trim();
-  const password = document.getElementById("passwordInput").value;
+function logoutUser(){
+  localStorage.removeItem("zellaUser");
+  localStorage.removeItem("zellaToken");
+  localStorage.removeItem("zellaFirebaseToken");
+  localStorage.removeItem("zellaMembership");
 
-  if(!email || !password){
-    showMessage("Enter your email and password.");
-    return;
-  }
+  window.location.href = "index.html";
+}
 
-  try{
-    setLoading("Checking account security...");
-
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    const user = result.user;
-
-    await user.reload();
-
-    if(!user.emailVerified){
-      await signOut(auth);
-      showMessage("Please verify your email before logging in.");
-      return;
-    }
-
-    localStorage.setItem("zellaUserId", user.uid);
-    localStorage.setItem("zellaUser", user.displayName || user.email);
-
-    setLoading("Login successful. Opening dashboard...");
-
-    setTimeout(() => {
-      window.location.href = "splash.html";
-    }, 5000);
-
-  }catch(error){
-    showMessage(error.message);
-  }
-};
-
-window.resetPassword = async function(){
-  const email = document.getElementById("emailInput").value.trim();
-
-  if(!email){
-    showMessage("Enter your email first.");
-    return;
-  }
-
-  try{
-    setLoading("Sending password reset email...");
-    await sendPasswordResetEmail(auth, email);
-    showMessage("Password reset email sent.");
-  }catch(error){
-    showMessage(error.message);
-  }
-};
-
-onAuthStateChanged(auth, user => {
-  if(user && user.emailVerified){
-    window.location.href = "splash.html";
-  }
-});
-
+loadAccount();
 </script>
+
+<script src="premium-guard.js"></script>
+<script type="module" src="auth-guard.js"></script>
 
 </body>
 </html>

@@ -3,684 +3,690 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Analytics V11 Ultra</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body>
+<title>Zella Analytics V11 Ultra</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
-*{box-sizing:border-box}
-body{overflow-x:hidden}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-.analytics-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
+  overflow-x:hidden;
+  padding-bottom:130px;
+}
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
   background:
-    radial-gradient(circle at 18% 10%,rgba(56,189,248,.25),transparent 30%),
-    radial-gradient(circle at 82% 18%,rgba(37,99,235,.22),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
     #020617;
 }
 
-.analytics-grid-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+.grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
   background-image:
-    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+    linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
   background-size:42px 42px;
-  animation:analyticsGrid 18s linear infinite;
+  animation:gridMove 18s linear infinite;
 }
 
-@keyframes analyticsGrid{
+@keyframes gridMove{
   from{background-position:0 0}
   to{background-position:0 420px}
 }
 
-.analytics-particles{
-  position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1;
+.container{
+  width:92%;
+  max-width:560px;
+  margin:auto;
 }
 
-.analytics-particles span{
-  position:absolute;width:6px;height:6px;border-radius:50%;
-  background:#38bdf8;box-shadow:0 0 18px #38bdf8;opacity:.42;
-  animation:analyticsFloat 12s linear infinite;
+.topbar{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
-.analytics-particles span:nth-child(1){left:7%;animation-delay:0s}
-.analytics-particles span:nth-child(2){left:24%;animation-delay:2s}
-.analytics-particles span:nth-child(3){left:41%;animation-delay:5s}
-.analytics-particles span:nth-child(4){left:58%;animation-delay:1s}
-.analytics-particles span:nth-child(5){left:76%;animation-delay:4s}
-.analytics-particles span:nth-child(6){left:91%;animation-delay:3s}
-
-@keyframes analyticsFloat{
-  from{transform:translateY(110vh) scale(.6)}
-  to{transform:translateY(-140px) scale(1.4)}
+.brand h2{
+  font-size:34px;
+  letter-spacing:10px;
+  font-weight:950;
 }
 
-.analytics-orbits{
-  position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;
+.brand span{
+  color:#38bdf8;
+  letter-spacing:5px;
+  font-weight:950;
+  font-size:14px;
 }
 
-.analytics-orbits::before,
-.analytics-orbits::after{
+.user-badge{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  box-shadow:0 0 30px rgba(56,189,248,.5);
+}
+
+.hero,.section,.card{
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.38);
+}
+
+.hero{
+  padding:28px;
+  border-radius:34px;
+}
+
+.orbit{
+  width:245px;
+  height:245px;
+  margin:0 auto 24px;
+  position:relative;
+}
+
+.ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
+}
+
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
+
+.ring::before{
   content:"";
   position:absolute;
-  width:420px;
-  height:420px;
+  top:12px;
+  left:50%;
+  width:10px;
+  height:10px;
   border-radius:50%;
-  border:1px solid rgba(56,189,248,.10);
-  box-shadow:0 0 70px rgba(56,189,248,.08);
-  animation:analyticsDrift 20s linear infinite;
-}
-
-.analytics-orbits::before{
-  left:-180px;
-  top:120px;
-}
-
-.analytics-orbits::after{
-  right:-190px;
-  bottom:90px;
-  animation-duration:28s;
-}
-
-@keyframes analyticsDrift{
-  from{transform:rotate(0deg) scale(1)}
-  to{transform:rotate(360deg) scale(1.08)}
-}
-
-.container,.navbar{position:relative;z-index:3}
-
-.analytics-hero{
-  position:relative;overflow:hidden;padding:22px;border-radius:34px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:inset 0 0 34px rgba(56,189,248,.035),0 22px 65px rgba(0,0,0,.30);
-}
-
-.analytics-hero::after{
-  content:"";position:absolute;width:170px;height:170px;right:-65px;bottom:-65px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.26),transparent 70%);
-}
-
-.analytics-core-wrap{
-  width:270px;height:270px;margin:8px auto 22px;position:relative;
-}
-
-.analytics-ring{
-  position:absolute;border-radius:50%;
-  border:1px solid rgba(56,189,248,.38);
-  animation:spin 12s linear infinite;
-}
-
-.analytics-ring.r1{inset:12px}
-.analytics-ring.r2{inset:34px;border-color:rgba(34,197,94,.30);animation-duration:17s}
-.analytics-ring.r3{inset:0;border-color:rgba(147,197,253,.22);animation-duration:23s}
-.analytics-ring.r4{inset:66px;border-color:rgba(56,189,248,.18);animation-duration:28s}
-
-.analytics-ring::before{
-  content:"";width:11px;height:11px;border-radius:50%;
-  position:absolute;top:18px;left:50%;
-  background:#38bdf8;box-shadow:0 0 24px #38bdf8;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
 }
 
 @keyframes spin{
-  from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
 
-.analytics-core{
-  position:absolute;inset:70px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle,#e0f2fe 0%,#38bdf8 24%,#0f172a 64%,transparent 72%);
-  box-shadow:0 0 44px rgba(56,189,248,.92),0 0 105px rgba(37,99,235,.46);
-  animation:analyticsPulse 4s ease-in-out infinite;
+.core{
+  position:absolute;
+  inset:82px;
+  border-radius:50%;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.analytics-core svg{
-  width:76px;height:76px;fill:none;stroke:#020617;stroke-width:2.2;
-  stroke-linecap:round;stroke-linejoin:round;
+.core svg{
+  width:58px;
+  height:58px;
+  stroke:#020617;
+  fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-@keyframes analyticsPulse{
-  0%,100%{transform:scale(1);filter:brightness(1)}
-  50%{transform:scale(1.13);filter:brightness(1.35)}
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
+  font-weight:950;
 }
 
-.analytics-sweep{
-  position:absolute;left:0;right:0;top:50%;height:2px;
-  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-  box-shadow:0 0 26px rgba(56,189,248,.85);
-  animation:analyticsSweep 3s ease-in-out infinite;
+.hero h1{
+  margin-top:20px;
+  font-size:48px;
+  line-height:1.05;
 }
 
-@keyframes analyticsSweep{
-  0%,100%{transform:translateY(-84px);opacity:.2}
-  50%{transform:translateY(84px);opacity:1}
+.hero p{
+  margin-top:18px;
+  color:#94a3b8;
+  font-size:16px;
+  line-height:1.8;
+}
+
+.status{
+  margin-top:18px;
+  display:inline-flex;
+  padding:11px 17px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#4ade80;
+  font-weight:950;
+}
+
+.stats{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.card{
+  padding:20px;
+  border-radius:26px;
+}
+
+.label{
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:850;
+}
+
+.value{
+  margin-top:12px;
+  font-size:30px;
+  font-weight:950;
+}
+
+.sub{
+  margin-top:9px;
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.blue{color:#38bdf8}
+.green{color:#4ade80}
+.orange{color:#f59e0b}
+.red{color:#ef4444}
+
+.section{
+  margin-top:18px;
+  padding:22px;
+  border-radius:30px;
+}
+
+.section-title{
+  color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
+  font-weight:950;
+  margin-bottom:18px;
 }
 
 .analytics-card{
-  position:relative;overflow:hidden;padding:18px;border-radius:28px;
-  background:rgba(15,23,42,.84);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:inset 0 0 28px rgba(56,189,248,.035),0 18px 48px rgba(0,0,0,.26);
-  transition:.28s ease;
-}
-
-.analytics-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(56,189,248,.34);
-  box-shadow:0 0 34px rgba(56,189,248,.15),0 20px 54px rgba(0,0,0,.35);
-}
-
-.analytics-board{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-  margin-top:16px;
-}
-
-.analytics-panel{
   padding:18px;
-  border-radius:26px;
-  background:rgba(15,23,42,.86);
-  border:1px solid rgba(148,163,184,.14);
-  position:relative;
-  overflow:hidden;
+  border-radius:24px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
+  margin-bottom:14px;
 }
 
-.analytics-panel::after{
-  content:"";
-  position:absolute;
-  width:100px;
-  height:100px;
-  right:-40px;
-  bottom:-40px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.18),transparent 70%);
+.analytics-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
 }
 
-.analytics-title{
-  color:#e5eefb;
-  font-weight:950;
-  font-size:15px;
+.analytics-top strong{
+  display:block;
+  font-size:20px;
 }
 
-.analytics-sub{
+.analytics-top small{
   color:#94a3b8;
-  font-size:12px;
-  line-height:1.7;
-  margin-top:8px;
 }
 
-.analytics-value{
-  font-size:28px;
-  font-weight:950;
-  color:#38bdf8;
-  margin-top:12px;
-}
-
-.analytics-bar{
-  width:100%;
-  height:12px;
+.bar{
+  height:10px;
   border-radius:999px;
+  background:rgba(148,163,184,.12);
   overflow:hidden;
-  background:rgba(255,255,255,.08);
-  margin-top:12px;
+  margin-top:14px;
 }
 
-.analytics-fill{
+.fill{
   height:100%;
   width:0%;
   border-radius:999px;
   background:linear-gradient(90deg,#38bdf8,#22c55e);
-  box-shadow:0 0 18px rgba(56,189,248,.45);
-  transition:1s ease;
 }
 
-.analytics-stream{
-  display:grid;
-  gap:12px;
-  margin-top:16px;
-}
-
-.stream-row{
-  padding:15px;
-  border-radius:22px;
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(255,255,255,.08);
+.row{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:14px;
+  align-items:center;
+  padding:15px 0;
+  border-bottom:1px solid rgba(148,163,184,.1);
 }
 
-.stream-row strong{color:#e5eefb}
-.stream-row small{color:#94a3b8}
+.row:last-child{
+  border-bottom:none;
+}
+
+.row-left strong{
+  display:block;
+}
+
+.row-left small{
+  color:#94a3b8;
+}
+
+.row-right{
+  text-align:right;
+}
+
+.row-right strong{
+  display:block;
+}
+
+.row-right small{
+  color:#94a3b8;
+}
 
 @media(max-width:430px){
-  .analytics-board{grid-template-columns:1fr}
+  .hero h1{font-size:42px}
+  .brand h2{font-size:30px}
 }
 </style>
+</head>
 
-<div class="analytics-bg"></div>
-<div class="analytics-grid-bg"></div>
-<div class="analytics-orbits"></div>
+<body>
 
-<div class="analytics-particles">
-  <span></span><span></span><span></span>
-  <span></span><span></span><span></span>
-</div>
+<div class="bg"></div>
+<div class="grid-bg"></div>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <div class="avatar-dot">AN</div>
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>ANALYTICS</span>
   </div>
-</nav>
+
+  <div class="user-badge">Z</div>
+</header>
 
 <main class="container">
 
-<section class="analytics-hero">
+<section class="hero">
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
 
-  <div class="analytics-core-wrap">
-    <div class="analytics-ring r1"></div>
-    <div class="analytics-ring r2"></div>
-    <div class="analytics-ring r3"></div>
-    <div class="analytics-ring r4"></div>
-
-    <div class="analytics-core">
+    <div class="core">
       <svg viewBox="0 0 24 24">
-        <path d="M5 19V11"/>
-        <path d="M12 19V5"/>
-        <path d="M19 19V8"/>
+        <path d="M4 19V5"/>
         <path d="M4 19H20"/>
-        <path d="M4 8L9 13L13 10L20 16"/>
+        <path d="M8 16L11 12L14 14L19 7"/>
       </svg>
     </div>
-
-    <div class="analytics-sweep"></div>
   </div>
 
-  <div class="eyebrow">ZELLA ANALYTICS V11 ULTRA</div>
+  <div class="eyebrow">ANALYTICS CENTER V11 ULTRA</div>
 
-  <h1 class="command-title">
-    Intelligence<br>
-    Analytics.
+  <h1>
+    Performance<br>
+    Intelligence.
   </h1>
 
-  <p class="briefing-text">
-    Analyze scanner strength, market behavior, portfolio exposure,
-    opportunity quality, risk pulse, confidence patterns and Zella performance intelligence.
+  <p>
+    Analyze live market strength, signal confidence, exchange readiness,
+    wallet sync and Zella system performance using real backend data.
   </p>
 
-  <div class="command-status-pill">
-    Analytics engine online
+  <div class="status" id="analyticsStatus">
+    Analytics Engine • Checking
   </div>
-
 </section>
 
-<section class="mini-grid">
-
-  <div class="mini-box analytics-card">
-    <div class="mini-label">Analytics Score</div>
-    <div class="mini-value green" id="analyticsScore">--</div>
+<div class="stats">
+  <div class="card">
+    <div class="label">Top Asset</div>
+    <div class="value blue" id="topAsset">--</div>
+    <div class="sub">Highest confidence</div>
   </div>
 
-  <div class="mini-box analytics-card">
-    <div class="mini-label">Top Signal</div>
-    <div class="mini-value blue" id="topSignal">--</div>
+  <div class="card">
+    <div class="label">Avg Confidence</div>
+    <div class="value green" id="avgConfidence">--</div>
+    <div class="sub">Signal quality</div>
   </div>
 
-  <div class="mini-box analytics-card">
-    <div class="mini-label">Market Strength</div>
-    <div class="mini-value orange" id="marketStrength">--</div>
+  <div class="card">
+    <div class="label">Market Bias</div>
+    <div class="value orange" id="marketBias">--</div>
+    <div class="sub">Live signal direction</div>
   </div>
 
-  <div class="mini-box analytics-card">
-    <div class="mini-label">Risk Index</div>
-    <div class="mini-value blue" id="riskIndex">--</div>
+  <div class="card">
+    <div class="label">Exchanges</div>
+    <div class="value blue" id="exchangeCount">--</div>
+    <div class="sub">Connected accounts</div>
   </div>
+</div>
 
+<section class="section">
+  <div class="section-title">SIGNAL PERFORMANCE</div>
+
+  <div id="signalAnalytics">
+    <p class="sub">Loading live signal analytics...</p>
+  </div>
 </section>
 
-<section class="briefing-card">
+<section class="section">
+  <div class="section-title">SYSTEM READINESS</div>
 
-  <div class="briefing-title">ANALYTICS COMMAND GRID</div>
-
-  <div class="analytics-board">
-
-    <div class="analytics-panel">
-      <div class="analytics-title">Scanner Confidence</div>
-      <div class="analytics-sub">Average confidence from live scanner assets.</div>
-      <div class="analytics-value" id="confidenceMetric">--</div>
-      <div class="analytics-bar"><div class="analytics-fill" id="confidenceFill"></div></div>
-    </div>
-
-    <div class="analytics-panel">
-      <div class="analytics-title">Risk Control</div>
-      <div class="analytics-sub">How controlled the current risk environment appears.</div>
-      <div class="analytics-value" id="riskMetric">--</div>
-      <div class="analytics-bar"><div class="analytics-fill" id="riskFill"></div></div>
-    </div>
-
-    <div class="analytics-panel">
-      <div class="analytics-title">Opportunity Quality</div>
-      <div class="analytics-sub">Strength of the top opportunity compared to the market.</div>
-      <div class="analytics-value" id="opportunityMetric">--</div>
-      <div class="analytics-bar"><div class="analytics-fill" id="opportunityFill"></div></div>
-    </div>
-
-    <div class="analytics-panel">
-      <div class="analytics-title">Portfolio Health</div>
-      <div class="analytics-sub">Future-ready health score connected to portfolio intelligence.</div>
-      <div class="analytics-value" id="portfolioMetric">--</div>
-      <div class="analytics-bar"><div class="analytics-fill" id="portfolioFill"></div></div>
-    </div>
-
+  <div id="systemReadiness">
+    <p class="sub">Checking Zella systems...</p>
   </div>
-
 </section>
 
-<section class="briefing-card">
+<section class="section">
+  <div class="section-title">PORTFOLIO READINESS</div>
 
-  <div class="briefing-title">LIVE ANALYTICS STREAM</div>
-
-  <div class="analytics-stream" id="analyticsStream">
-
-    <div class="stream-row">
-      <div>
-        <strong>Loading Analytics Engine</strong><br>
-        <small>Connecting to scanner intelligence...</small>
-      </div>
-      <div class="command-status-pill">LIVE</div>
-    </div>
-
+  <div id="portfolioReadiness">
+    <p class="sub">Checking synced portfolio...</p>
   </div>
-
 </section>
 
-<section class="briefing-card">
+</main>
 
-  <div class="briefing-title">ZELLA ANALYTICS COPILOT</div>
+<nav class="bottom-dock">
 
-  <h2 class="briefing-headline" id="analyticsTitle">
-    Loading analytics intelligence...
-  </h2>
-
-  <p class="briefing-text" id="analyticsText">
-    Zella is analyzing scanner, market, portfolio and opportunity data.
-  </p>
-
-  <div class="hero-actions">
-    <button class="btn" onclick="speakAnalytics()">
-      Voice Briefing
-    </button>
-
-    <a href="copilot.html" class="btn secondary">
-      Ask Zella
-    </a>
-  </div>
-
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">FORECAST & INTELLIGENCE CENTER</div>
-
-  <div class="analytics-board">
-
-    <div class="analytics-panel">
-      <div class="analytics-title">AI Forecast</div>
-      <div class="analytics-sub">
-        Expected market environment based on confidence and risk behavior.
-      </div>
-
-      <div class="analytics-value" id="forecastValue">
-        --
-      </div>
-    </div>
-
-    <div class="analytics-panel">
-      <div class="analytics-title">Market Dominance</div>
-      <div class="analytics-sub">
-        Relative strength of the leading scanner asset.
-      </div>
-
-      <div class="analytics-value" id="dominanceValue">
-        --
-      </div>
-    </div>
-
-    <div class="analytics-panel">
-      <div class="analytics-title">Wealth Analytics</div>
-      <div class="analytics-sub">
-        Portfolio growth readiness and health estimation.
-      </div>
-
-      <div class="analytics-value" id="wealthValue">
-        --
-      </div>
-    </div>
-
-    <div class="analytics-panel">
-      <div class="analytics-title">Execution Readiness</div>
-      <div class="analytics-sub">
-        Future connection between Trade Prep and AutoTrader.
-      </div>
-
-      <div class="analytics-value" id="executionValue">
-        --
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-<nav class="zella-nav">
-
-  <a href="dashboard.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/>
+  <div class="dock-item" onclick="go('dashboard.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11L12 4L21 11"/>
+      <path d="M5 10V21H19V10"/>
+      <path d="M9 21V14H15V21"/>
     </svg>
-    <span>Home</span>
-  </a>
+  </div>
 
-  <a href="scanner.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M5 19V11M12 19V5M19 19V8"/>
+  <div class="dock-item" onclick="go('scanner.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 19V5"/>
+      <path d="M4 19H20"/>
+      <path d="M8 16L11 12L14 14L19 7"/>
     </svg>
-    <span>Scanner</span>
-  </a>
+  </div>
 
-  <a href="copilot.html" class="nav-item copilot-center">
-    <div class="copilot-core">
-      <svg viewBox="0 0 24 24" class="copilot-icon">
-        <rect x="6" y="8" width="12" height="9" rx="2"/>
-        <circle cx="9" cy="12" r="1"/>
-        <circle cx="15" cy="12" r="1"/>
-        <path d="M12 4V8"/>
-      </svg>
-    </div>
-    <span>Copilot</span>
-  </a>
-
-  <a href="market.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M4 16L9 11L13 14L20 7"/>
+  <div class="ai-dock" onclick="go('copilot.html')">
+    <svg viewBox="0 0 24 24">
+      <rect x="5" y="7" width="14" height="11" rx="4"/>
+      <path d="M9 11H9.01"/>
+      <path d="M15 11H15.01"/>
+      <path d="M12 3V7"/>
     </svg>
-    <span>Market</span>
-  </a>
+  </div>
 
-  <a href="watchlist.html" class="nav-item">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M6 3H18V21L12 17L6 21V3Z"/>
+  <div class="dock-item" onclick="go('market.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18V6"/>
+      <path d="M8 18V10"/>
+      <path d="M12 18V4"/>
+      <path d="M16 18V8"/>
+      <path d="M20 18V12"/>
     </svg>
-    <span>Watchlist</span>
-  </a>
+  </div>
 
-  <a href="analytics.html" class="nav-item active">
-    <svg viewBox="0 0 24 24" class="nav-icon">
-      <path d="M5 19V11"/>
-      <path d="M12 19V5"/>
-      <path d="M19 19V8"/>
+  <div class="dock-item active" onclick="go('more.html')">
+    <svg viewBox="0 0 24 24">
+      <circle cx="5" cy="12" r="1.6"/>
+      <circle cx="12" cy="12" r="1.6"/>
+      <circle cx="19" cy="12" r="1.6"/>
     </svg>
-    <span>Analytics</span>
-  </a>
+  </div>
 
 </nav>
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 
-async function loadAnalytics(){
-
-  try{
-
-    const res = await fetch(API_URL + "/scanner");
-    const data = await res.json();
-
-    const items = data.items || [];
-
-    if(!items.length) return;
-
-    const avgConfidence =
-      items.reduce((a,b)=>a + Number(b.confidence || 0),0) / items.length;
-
-    const avgRisk =
-      items.reduce((a,b)=>a + Number(b.riskScore || 0),0) / items.length;
-
-    const top =
-      [...items].sort((a,b)=>b.confidence - a.confidence)[0];
-
-    const analyticsScore =
-      Math.round(avgConfidence - (avgRisk * 0.25));
-
-    document.getElementById("analyticsScore").textContent =
-      analyticsScore + "%";
-
-    document.getElementById("topSignal").textContent =
-      top.signal || "--";
-
-    document.getElementById("marketStrength").textContent =
-      Math.round(avgConfidence) + "%";
-
-    document.getElementById("riskIndex").textContent =
-      Math.round(avgRisk) + "%";
-
-    document.getElementById("confidenceMetric").textContent =
-      Math.round(avgConfidence) + "%";
-
-    document.getElementById("riskMetric").textContent =
-      Math.round(100 - avgRisk) + "%";
-
-    document.getElementById("opportunityMetric").textContent =
-      top.confidence + "%";
-
-    document.getElementById("portfolioMetric").textContent =
-      Math.round(avgConfidence - avgRisk * .3 + 30) + "%";
-
-    document.getElementById("confidenceFill").style.width =
-      avgConfidence + "%";
-
-    document.getElementById("riskFill").style.width =
-      (100 - avgRisk) + "%";
-
-    document.getElementById("opportunityFill").style.width =
-      top.confidence + "%";
-
-    document.getElementById("portfolioFill").style.width =
-      Math.max(0,Math.min(100,
-      avgConfidence - avgRisk * .3 + 30)) + "%";
-
-    document.getElementById("forecastValue").textContent =
-      avgConfidence > 70 ? "Bullish" : "Neutral";
-
-    document.getElementById("dominanceValue").textContent =
-      top.asset;
-
-    document.getElementById("wealthValue").textContent =
-      Math.round(avgConfidence) + "%";
-
-    document.getElementById("executionValue").textContent =
-      analyticsScore + "%";
-
-    document.getElementById("analyticsTitle").textContent =
-      `${top.asset} currently leads the intelligence engine`;
-
-    document.getElementById("analyticsText").textContent =
-      `${top.asset} shows the strongest scanner confidence. Average market confidence is ${Math.round(avgConfidence)}% while risk conditions remain around ${Math.round(avgRisk)}%. Analytics score currently stands at ${analyticsScore}%.`;
-
-    document.getElementById("analyticsStream").innerHTML = `
-      <div class="stream-row">
-        <div>
-          <strong>Top Opportunity</strong><br>
-          <small>${top.asset} • ${top.signal}</small>
-        </div>
-        <div>${top.confidence}%</div>
-      </div>
-
-      <div class="stream-row">
-        <div>
-          <strong>Confidence Engine</strong><br>
-          <small>Average scanner confidence</small>
-        </div>
-        <div>${Math.round(avgConfidence)}%</div>
-      </div>
-
-      <div class="stream-row">
-        <div>
-          <strong>Risk Monitor</strong><br>
-          <small>Average market risk profile</small>
-        </div>
-        <div>${Math.round(avgRisk)}%</div>
-      </div>
-
-      <div class="stream-row">
-        <div>
-          <strong>Forecast Status</strong><br>
-          <small>AI market projection</small>
-        </div>
-        <div>${avgConfidence > 70 ? "Bullish" : "Neutral"}</div>
-      </div>
-    `;
-
-  }catch(error){
-    console.error(error);
-  }
+function go(page){
+  window.location.href = page;
 }
 
-function speakAnalytics(){
+async function getToken(){
+  if(window.zellaGetToken){
+    return await window.zellaGetToken();
+  }
 
-  const text =
-    document.getElementById("analyticsTitle").textContent +
-    ". " +
-    document.getElementById("analyticsText").textContent;
+  const saved =
+    localStorage.getItem("zellaFirebaseToken") ||
+    localStorage.getItem("zellaToken");
 
-  if(!window.speechSynthesis){
-    alert("Voice briefing not supported.");
+  if(saved){
+    return saved;
+  }
+
+  throw new Error("Login session token not found. Please login again.");
+}
+
+async function apiFetch(path,options = {}){
+  const token = await getToken();
+
+  const response = await fetch(API_URL + path,{
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer " + token,
+      ...(options.headers || {})
+    }
+  });
+
+  const data = await response.json();
+
+  if(!data.success){
+    throw new Error(data.message || data.error || "Request failed.");
+  }
+
+  return data;
+}
+
+async function publicFetch(path){
+  const response = await fetch(API_URL + path);
+  const data = await response.json();
+
+  if(!data.success){
+    throw new Error(data.message || data.error || "Request failed.");
+  }
+
+  return data;
+}
+
+function renderSignalAnalytics(signals){
+  const box = document.getElementById("signalAnalytics");
+  box.innerHTML = "";
+
+  signals.forEach(item=>{
+    const confidence = Number(item.confidence || 0);
+
+    box.innerHTML += `
+      <div class="analytics-card">
+        <div class="analytics-top">
+          <div>
+            <strong>${item.symbol} ${item.signal}</strong>
+            <small>${item.name} • ${item.risk} Risk • ${item.source || "Live"}</small>
+          </div>
+
+          <strong class="blue">${confidence}%</strong>
+        </div>
+
+        <div class="bar">
+          <div class="fill" style="width:${confidence}%"></div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function renderSystemStatus(status){
+  const box = document.getElementById("systemReadiness");
+  const modules = status.modules || {};
+
+  box.innerHTML = `
+    <div class="row">
+      <div class="row-left">
+        <strong>Market Engine</strong>
+        <small>5-source fallback</small>
+      </div>
+      <div class="row-right">
+        <strong class="green">${modules.marketEngine || "--"}</strong>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-left">
+        <strong>Signal Engine</strong>
+        <small>Live signal analytics</small>
+      </div>
+      <div class="row-right">
+        <strong class="green">${modules.signalEngine || "--"}</strong>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-left">
+        <strong>Copilot</strong>
+        <small>AI assistant backend</small>
+      </div>
+      <div class="row-right">
+        <strong class="blue">${modules.copilot || "--"}</strong>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row-left">
+        <strong>Auto Trading</strong>
+        <small>Execution engine</small>
+      </div>
+      <div class="row-right">
+        <strong class="orange">${modules.autoTrading || "--"}</strong>
+      </div>
+    </div>
+  `;
+}
+
+function renderPortfolio(portfolios){
+  const box = document.getElementById("portfolioReadiness");
+
+  if(!portfolios.length){
+    box.innerHTML =
+      `<p class="sub">No synced portfolio found. Connect an exchange first.</p>`;
     return;
   }
 
-  speechSynthesis.cancel();
+  box.innerHTML = "";
 
-  const utterance =
-    new SpeechSynthesisUtterance(text);
+  portfolios.forEach(item=>{
+    box.innerHTML += `
+      <div class="row">
+        <div class="row-left">
+          <strong>${String(item.exchange).toUpperCase()}</strong>
+          <small>Last sync: ${item.syncedAt || "Unknown"}</small>
+        </div>
 
-  utterance.rate = 1;
-  utterance.pitch = 1.05;
+        <div class="row-right">
+          <strong class="green">Synced</strong>
+          <small>Portfolio ready</small>
+        </div>
+      </div>
+    `;
+  });
+}
 
-  speechSynthesis.speak(utterance);
+async function loadAnalytics(){
+  try{
+    document.getElementById("analyticsStatus").textContent =
+      "Analytics Engine • Live";
+
+    const signalsData = await publicFetch("/api/signals/live");
+    const systemData = await publicFetch("/api/system/status");
+
+    const signals = (signalsData.signals || [])
+      .slice()
+      .sort((a,b)=>Number(b.confidence || 0) - Number(a.confidence || 0));
+
+    const top = signals[0];
+    const avg = signals.length
+      ? Math.round(signals.reduce((sum,x)=>sum + Number(x.confidence || 0),0) / signals.length)
+      : 0;
+
+    document.getElementById("topAsset").textContent =
+      top ? top.symbol : "--";
+
+    document.getElementById("avgConfidence").textContent =
+      avg ? avg + "%" : "--";
+
+    document.getElementById("marketBias").textContent =
+      top && String(top.signal).includes("BUY")
+        ? "Bullish"
+        : top && String(top.signal).includes("SELL")
+          ? "Bearish"
+          : "Neutral";
+
+    renderSignalAnalytics(signals);
+    renderSystemStatus(systemData);
+
+    try{
+      const portfolioData = await apiFetch("/api/portfolio/latest");
+      const portfolios = portfolioData.portfolios || [];
+
+      document.getElementById("exchangeCount").textContent =
+        portfolios.length;
+
+      renderPortfolio(portfolios);
+
+    }catch(error){
+      document.getElementById("exchangeCount").textContent =
+        "--";
+
+      document.getElementById("portfolioReadiness").innerHTML =
+        `<p class="sub red">${error.message}</p>`;
+    }
+
+  }catch(error){
+    document.getElementById("analyticsStatus").textContent =
+      "Analytics Engine • Unavailable";
+
+    document.getElementById("signalAnalytics").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
+  }
 }
 
 loadAnalytics();
 setInterval(loadAnalytics,30000);
 </script>
 
-</main>
+<script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
+
 </body>
 </html>

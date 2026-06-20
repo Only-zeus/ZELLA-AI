@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Zella AI Signal Engine V11 Ultra</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
 *{
@@ -14,31 +17,31 @@
 }
 
 body{
+  min-height:100vh;
   background:#020617;
   color:white;
-  min-height:100vh;
   overflow-x:hidden;
-  padding-bottom:110px;
+  padding-bottom:130px;
 }
 
 .bg{
   position:fixed;
   inset:0;
-  z-index:-2;
+  z-index:-3;
   background:
-  radial-gradient(circle at 20% 10%,rgba(56,189,248,.22),transparent 30%),
-  radial-gradient(circle at 85% 15%,rgba(59,130,246,.18),transparent 30%),
-  radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
-  #020617;
+    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
+    #020617;
 }
 
-.grid{
+.grid-bg{
   position:fixed;
   inset:0;
-  z-index:-1;
+  z-index:-2;
   background-image:
-  linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
+    linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
   background-size:42px 42px;
   animation:gridMove 18s linear infinite;
 }
@@ -52,244 +55,278 @@ body{
   width:92%;
   max-width:560px;
   margin:auto;
-  padding:20px;
+}
+
+.topbar{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand h2{
+  font-size:34px;
+  letter-spacing:10px;
+  font-weight:950;
+}
+
+.brand span{
+  color:#38bdf8;
+  letter-spacing:5px;
+  font-weight:950;
+  font-size:14px;
+}
+
+.user-badge{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:950;
+  box-shadow:0 0 30px rgba(56,189,248,.5);
+}
+
+.hero,.section,.card{
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.38);
 }
 
 .hero{
-  margin-top:20px;
   padding:28px;
   border-radius:34px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.15);
-  box-shadow:0 22px 65px rgba(0,0,0,.35);
-  text-align:center;
 }
 
-.orb{
-  width:150px;
-  height:150px;
+.orbit{
+  width:245px;
+  height:245px;
+  margin:0 auto 24px;
+  position:relative;
+}
+
+.ring{
+  position:absolute;
   border-radius:50%;
-  margin:0 auto 20px;
-  background:radial-gradient(circle,#e0f2fe,#38bdf8 42%,#2563eb 70%);
-  box-shadow:0 0 55px rgba(56,189,248,.85);
-  animation:pulse 2s infinite;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
 }
 
-@keyframes pulse{
-  50%{transform:scale(1.1);filter:brightness(1.3)}
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
+
+.ring::before{
+  content:"";
+  position:absolute;
+  top:12px;
+  left:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
 }
 
-.badge{
-  display:inline-block;
-  padding:10px 18px;
-  border-radius:999px;
-  color:#38bdf8;
-  background:rgba(56,189,248,.12);
-  font-weight:900;
-  letter-spacing:2px;
-  font-size:12px;
+@keyframes spin{
+  to{transform:rotate(360deg)}
 }
 
-h1{
-  margin-top:18px;
-  font-size:42px;
-  line-height:1.1;
+.core{
+  position:absolute;
+  inset:82px;
+  border-radius:50%;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.core svg{
+  width:58px;
+  height:58px;
+  stroke:#020617;
+  fill:none;
+  stroke-width:2.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
+  font-weight:950;
+}
+
+.hero h1{
+  margin-top:20px;
+  font-size:48px;
+  line-height:1.05;
 }
 
 .hero p{
-  margin-top:15px;
+  margin-top:18px;
   color:#94a3b8;
+  font-size:16px;
   line-height:1.8;
 }
 
+.status{
+  margin-top:18px;
+  display:inline-flex;
+  padding:11px 17px;
+  border-radius:999px;
+  background:rgba(34,197,94,.12);
+  color:#4ade80;
+  font-weight:950;
+}
+
 .stats{
+  margin-top:18px;
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:1fr 1fr;
   gap:14px;
-  margin-top:20px;
 }
 
 .card{
-  padding:18px;
-  border-radius:24px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
+  padding:20px;
+  border-radius:26px;
 }
 
 .label{
   color:#94a3b8;
   font-size:13px;
-  font-weight:800;
+  font-weight:850;
 }
 
 .value{
-  margin-top:10px;
-  font-size:28px;
+  margin-top:12px;
+  font-size:30px;
   font-weight:950;
 }
 
-.green{color:#4ade80}
+.sub{
+  margin-top:9px;
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
+}
+
 .blue{color:#38bdf8}
+.green{color:#4ade80}
 .orange{color:#f59e0b}
 .red{color:#ef4444}
 
 .section{
-  margin-top:20px;
-  padding:20px;
+  margin-top:18px;
+  padding:22px;
   border-radius:30px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
 }
 
 .section-title{
-  font-size:13px;
-  letter-spacing:5px;
   color:#38bdf8;
+  font-size:13px;
+  letter-spacing:6px;
   font-weight:950;
   margin-bottom:18px;
 }
 
-.signal{
+.signal-card{
   padding:18px;
-  border-radius:22px;
-  margin-bottom:14px;
+  border-radius:24px;
   background:#0f172a;
   border:1px solid rgba(148,163,184,.12);
+  margin-bottom:14px;
 }
 
 .signal-top{
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
+  gap:12px;
 }
 
-.coin{
-  font-size:22px;
-  font-weight:950;
+.signal-title strong{
+  display:block;
+  font-size:21px;
 }
 
-.tag{
-  padding:8px 12px;
+.signal-title small{
+  color:#94a3b8;
+}
+
+.signal-pill{
+  padding:9px 12px;
   border-radius:999px;
   font-size:12px;
   font-weight:950;
 }
 
 .buy{
-  background:rgba(34,197,94,.15);
   color:#4ade80;
+  background:rgba(34,197,94,.12);
 }
 
 .sell{
-  background:rgba(239,68,68,.15);
   color:#ef4444;
+  background:rgba(239,68,68,.12);
 }
 
 .watch{
-  background:rgba(245,158,11,.15);
   color:#f59e0b;
+  background:rgba(245,158,11,.12);
 }
 
-.signal-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
+.score-bar{
+  height:10px;
+  border-radius:999px;
+  background:rgba(148,163,184,.12);
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.score-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#38bdf8,#22c55e);
+}
+
+.trade-grid{
   margin-top:16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
 
-.signal-box{
-  padding:12px;
-  border-radius:16px;
+.trade-box{
+  padding:13px;
+  border-radius:18px;
   background:rgba(255,255,255,.035);
 }
 
-.signal-box small{
+.trade-box small{
   color:#94a3b8;
 }
 
-.signal-box strong{
+.trade-box strong{
   display:block;
   margin-top:6px;
-}
-
-.confidence-bar{
-  height:10px;
-  background:rgba(255,255,255,.08);
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:14px;
-}
-
-.confidence-fill{
-  height:100%;
-  border-radius:999px;
-  background:linear-gradient(90deg,#38bdf8,#22c55e);
-  box-shadow:0 0 18px rgba(56,189,248,.55);
-}
-
-.actions{
-  display:flex;
-  gap:12px;
-  margin-top:18px;
-}
-
-button{
-  flex:1;
-  padding:14px;
-  border:none;
-  border-radius:16px;
-  font-weight:950;
-  cursor:pointer;
-}
-
-.primary{
-  background:linear-gradient(135deg,#38bdf8,#2563eb);
-  color:white;
-}
-
-.secondary{
-  background:#0f172a;
-  color:#cbd5e1;
-  border:1px solid rgba(148,163,184,.15);
-}
-
-.notice{
-  color:#94a3b8;
-  line-height:1.7;
-  font-size:13px;
-}
-
-.bottom-nav{
-  position:fixed;
-  left:50%;
-  bottom:16px;
-  transform:translateX(-50%);
-  width:92%;
-  max-width:560px;
-  height:80px;
-  border-radius:30px;
-  background:rgba(15,23,42,.94);
-  border:1px solid rgba(148,163,184,.14);
-  backdrop-filter:blur(18px);
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:50;
-}
-
-.nav-item{
-  color:#94a3b8;
-  text-align:center;
-  font-size:12px;
-  font-weight:800;
-}
-
-.nav-item.active{
-  color:#38bdf8;
+  color:#e5eefb;
 }
 
 @media(max-width:430px){
-  h1{font-size:36px}
+  .hero h1{font-size:42px}
+  .brand h2{font-size:30px}
 }
 </style>
 </head>
@@ -297,223 +334,282 @@ button{
 <body>
 
 <div class="bg"></div>
-<div class="grid"></div>
+<div class="grid-bg"></div>
 
-<div class="container">
-
-<section class="hero">
-  <div class="orb"></div>
-
-  <div class="badge">
-    AI SIGNAL ENGINE V11 ULTRA
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>SIGNALS</span>
   </div>
 
+  <div class="user-badge">Z</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="ring r4"></div>
+
+    <div class="core">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2V22"/>
+        <path d="M5 12H19"/>
+        <circle cx="12" cy="12" r="5"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="eyebrow">AI SIGNAL ENGINE V11 ULTRA</div>
+
   <h1>
-    Zella Signal<br>
-    Intelligence.
+    Live Signal<br>
+    Engine.
   </h1>
 
   <p>
-    AI-powered trading signal center for BTC, ETH, SOL, BNB and XRP.
-    Signals are generated from trend, volume, RSI, MACD and risk scoring.
+    Track live AI trade signals, confidence scores, entry zones,
+    stop loss and take profit levels from the Zella backend.
   </p>
+
+  <div class="status" id="signalStatus">
+    Signal Engine • Checking
+  </div>
 </section>
 
 <div class="stats">
   <div class="card">
-    <div class="label">Market Mode</div>
-    <div class="value green" id="marketMode">Bullish</div>
+    <div class="label">Top Signal</div>
+    <div class="value blue" id="topSignal">--</div>
+    <div class="sub" id="topSignalSub">Waiting for engine</div>
   </div>
 
   <div class="card">
-    <div class="label">AI Accuracy</div>
-    <div class="value blue">91%</div>
+    <div class="label">Confidence</div>
+    <div class="value green" id="topConfidence">--</div>
+    <div class="sub">Highest live score</div>
   </div>
 
   <div class="card">
-    <div class="label">Signals Today</div>
-    <div class="value orange" id="signalsToday">5</div>
+    <div class="label">Market Bias</div>
+    <div class="value orange" id="marketBias">--</div>
+    <div class="sub">Derived from signals</div>
   </div>
 
   <div class="card">
-    <div class="label">Engine Status</div>
-    <div class="value green">Online</div>
+    <div class="label">Tracked Assets</div>
+    <div class="value blue" id="trackedAssets">--</div>
+    <div class="sub">Live signal list</div>
   </div>
 </div>
 
 <section class="section">
-  <div class="section-title">LIVE AI SIGNALS</div>
+  <div class="section-title">LIVE SIGNALS</div>
 
-  <div id="signalList"></div>
-
-  <div class="actions">
-    <button class="primary" onclick="generateSignals()">Refresh Signals</button>
-    <button class="secondary" onclick="saveSignals()">Save</button>
+  <div id="signalsList">
+    <p class="sub">Loading live AI signals...</p>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-title">ENGINE LOGIC</div>
+  <div class="section-title">SIGNAL RULE</div>
 
-  <p class="notice">
-    Zella combines RSI, MACD, volume momentum, trend direction,
-    support/resistance zones and AI confidence scoring to classify each asset.
-    This version is the frontend signal engine foundation. Real exchange and
-    live market APIs will be connected in the next phase.
-  </p>
+  <div class="signal-card">
+    <div class="signal-title">
+      <strong>No Fake Signals</strong>
+      <small>Zella only displays signals returned by the live backend signal engine.</small>
+    </div>
+  </div>
 </section>
 
-</div>
+</main>
 
-<div class="bottom-nav">
-  <div class="nav-item" onclick="location.href='dashboard.html'">Home</div>
-  <div class="nav-item active">Signals</div>
-  <div class="nav-item" onclick="location.href='market.html'">Market</div>
-  <div class="nav-item" onclick="location.href='watchlist.html'">Watchlist</div>
-  <div class="nav-item" onclick="location.href='more.html'">More</div>
-</div>
+<nav class="bottom-dock">
+
+  <div class="dock-item" onclick="go('dashboard.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 11L12 4L21 11"/>
+      <path d="M5 10V21H19V10"/>
+      <path d="M9 21V14H15V21"/>
+    </svg>
+  </div>
+
+  <div class="dock-item" onclick="go('scanner.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 19V5"/>
+      <path d="M4 19H20"/>
+      <path d="M8 16L11 12L14 14L19 7"/>
+    </svg>
+  </div>
+
+  <div class="ai-dock" onclick="go('copilot.html')">
+    <svg viewBox="0 0 24 24">
+      <rect x="5" y="7" width="14" height="11" rx="4"/>
+      <path d="M9 11H9.01"/>
+      <path d="M15 11H15.01"/>
+      <path d="M12 3V7"/>
+    </svg>
+  </div>
+
+  <div class="dock-item" onclick="go('market.html')">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 18V6"/>
+      <path d="M8 18V10"/>
+      <path d="M12 18V4"/>
+      <path d="M16 18V8"/>
+      <path d="M20 18V12"/>
+    </svg>
+  </div>
+
+  <div class="dock-item active" onclick="go('more.html')">
+    <svg viewBox="0 0 24 24">
+      <circle cx="5" cy="12" r="1.6"/>
+      <circle cx="12" cy="12" r="1.6"/>
+      <circle cx="19" cy="12" r="1.6"/>
+    </svg>
+  </div>
+
+</nav>
 
 <script>
-const assets = [
-  {
-    coin:"BTC",
-    price:"$107,000",
-    signal:"BUY",
-    confidence:91,
-    risk:"Low",
-    entry:"$107,000",
-    stop:"$104,500",
-    take:"$113,000"
-  },
-  {
-    coin:"ETH",
-    price:"$6,200",
-    signal:"STRONG BUY",
-    confidence:94,
-    risk:"Low",
-    entry:"$6,200",
-    stop:"$5,850",
-    take:"$6,900"
-  },
-  {
-    coin:"SOL",
-    price:"$340",
-    signal:"WATCH",
-    confidence:72,
-    risk:"Medium",
-    entry:"$340",
-    stop:"$318",
-    take:"$380"
-  },
-  {
-    coin:"BNB",
-    price:"$720",
-    signal:"HOLD",
-    confidence:68,
-    risk:"Medium",
-    entry:"$720",
-    stop:"$690",
-    take:"$760"
-  },
-  {
-    coin:"XRP",
-    price:"$2.80",
-    signal:"SELL",
-    confidence:76,
-    risk:"High",
-    entry:"$2.80",
-    stop:"$2.95",
-    take:"$2.45"
-  }
-];
+const API_URL = "https://zella-backend.onrender.com";
 
-function signalClass(signal){
-  if(signal.includes("BUY")) return "buy";
-  if(signal.includes("SELL")) return "sell";
+function go(page){
+  window.location.href = page;
+}
+
+function formatMoney(value){
+  const number = Number(value || 0);
+
+  if(number >= 1000){
+    return "$" + number.toLocaleString(undefined,{
+      maximumFractionDigits:2
+    });
+  }
+
+  return "$" + number.toFixed(4);
+}
+
+function getSignalClass(signal){
+  const text = String(signal || "").toUpperCase();
+
+  if(text.includes("BUY")){
+    return "buy";
+  }
+
+  if(text.includes("SELL")){
+    return "sell";
+  }
+
   return "watch";
 }
 
-function renderSignals(data){
-  const list = document.getElementById("signalList");
+function renderSignals(signals){
+  const list = document.getElementById("signalsList");
   list.innerHTML = "";
 
-  data.forEach(item=>{
+  signals.forEach(signal=>{
+    const signalClass = getSignalClass(signal.signal);
+    const confidence = Number(signal.confidence || 0);
+
     list.innerHTML += `
-      <div class="signal">
+      <div class="signal-card">
         <div class="signal-top">
-          <div>
-            <div class="coin">${item.coin}</div>
-            <small style="color:#94a3b8;">Current Price: ${item.price}</small>
+          <div class="signal-title">
+            <strong>${signal.symbol} ${signal.signal}</strong>
+            <small>${signal.name} • ${signal.source || "Live Source"} • ${signal.risk} Risk</small>
           </div>
 
-          <div class="tag ${signalClass(item.signal)}">
-            ${item.signal}
+          <div class="signal-pill ${signalClass}">
+            ${confidence}%
           </div>
         </div>
 
-        <div class="signal-grid">
-          <div class="signal-box">
-            <small>Entry</small>
-            <strong>${item.entry}</strong>
+        <div class="score-bar">
+          <div class="score-fill" style="width:${confidence}%"></div>
+        </div>
+
+        <div class="trade-grid">
+          <div class="trade-box">
+            <small>Entry Low</small>
+            <strong>${formatMoney(signal.entryZone?.low)}</strong>
           </div>
 
-          <div class="signal-box">
+          <div class="trade-box">
+            <small>Entry High</small>
+            <strong>${formatMoney(signal.entryZone?.high)}</strong>
+          </div>
+
+          <div class="trade-box">
             <small>Stop Loss</small>
-            <strong>${item.stop}</strong>
+            <strong>${formatMoney(signal.stopLoss)}</strong>
           </div>
 
-          <div class="signal-box">
-            <small>Take Profit</small>
-            <strong>${item.take}</strong>
-          </div>
-
-          <div class="signal-box">
-            <small>Risk</small>
-            <strong>${item.risk}</strong>
+          <div class="trade-box">
+            <small>TP1 / TP2</small>
+            <strong>${formatMoney(signal.takeProfit1)} / ${formatMoney(signal.takeProfit2)}</strong>
           </div>
         </div>
-
-        <div class="confidence-bar">
-          <div class="confidence-fill" style="width:${item.confidence}%"></div>
-        </div>
-
-        <p style="margin-top:10px;color:#94a3b8;">
-          AI Confidence: ${item.confidence}%
-        </p>
       </div>
     `;
   });
 }
 
-function generateSignals(){
-  const shuffled = assets.map(item=>{
-    const change = Math.floor(Math.random() * 10) - 3;
-    let newConfidence = item.confidence + change;
+async function loadSignals(){
+  try{
+    document.getElementById("signalStatus").textContent =
+      "Signal Engine • Live";
 
-    if(newConfidence > 98) newConfidence = 98;
-    if(newConfidence < 55) newConfidence = 55;
+    const response = await fetch(API_URL + "/api/signals/live");
+    const data = await response.json();
 
-    return {
-      ...item,
-      confidence:newConfidence
-    };
-  });
+    if(!data.success || !Array.isArray(data.signals)){
+      throw new Error(data.message || "Live signals unavailable");
+    }
 
-  renderSignals(shuffled);
-  document.getElementById("signalsToday").innerText =
-    shuffled.length;
+    const signals = data.signals
+      .slice()
+      .sort((a,b)=>{
+        return Number(b.confidence || 0) - Number(a.confidence || 0);
+      });
+
+    const top = signals[0];
+
+    document.getElementById("topSignal").textContent =
+      top.symbol;
+
+    document.getElementById("topSignalSub").textContent =
+      top.signal;
+
+    document.getElementById("topConfidence").textContent =
+      `${top.confidence}%`;
+
+    document.getElementById("trackedAssets").textContent =
+      signals.length;
+
+    document.getElementById("marketBias").textContent =
+      String(top.signal).includes("BUY")
+        ? "Bullish"
+        : String(top.signal).includes("SELL")
+          ? "Bearish"
+          : "Neutral";
+
+    renderSignals(signals);
+
+  }catch(error){
+    document.getElementById("signalStatus").textContent =
+      "Signal Engine • Unavailable";
+
+    document.getElementById("signalsList").innerHTML =
+      `<p class="sub red">${error.message}</p>`;
+  }
 }
 
-function saveSignals(){
-  localStorage.setItem(
-    "zellaAISignals",
-    JSON.stringify(assets)
-  );
-
-  alert("AI signals saved to this device.");
-}
-
-renderSignals(assets);
+loadSignals();
+setInterval(loadSignals,30000);
 </script>
 
 <script src="premium-guard.js"></script>

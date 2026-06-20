@@ -3,548 +3,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Learn V11 Ultra</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body>
+<title>Zella Learn V11 Ultra</title>
+
+<link rel="stylesheet" href="style.css">
 
 <style>
-*{box-sizing:border-box}
-body{overflow-x:hidden}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
-.learn-bg{
+body{
+background:#020617;
+color:white;
+overflow-x:hidden;
+padding-bottom:130px;
+min-height:100vh;
+}
+
+.bg{
 position:fixed;
 inset:0;
-z-index:0;
-pointer-events:none;
+z-index:-3;
 background:
-radial-gradient(circle at 20% 15%,rgba(56,189,248,.25),transparent 30%),
-radial-gradient(circle at 80% 15%,rgba(37,99,235,.22),transparent 30%),
-radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 34%),
+radial-gradient(circle at 20% 10%,rgba(56,189,248,.25),transparent 30%),
+radial-gradient(circle at 80% 10%,rgba(99,102,241,.25),transparent 30%),
 #020617;
 }
 
-.learn-grid{
+.grid-bg{
 position:fixed;
 inset:0;
-z-index:0;
-pointer-events:none;
+z-index:-2;
 background-image:
 linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
 linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
 background-size:40px 40px;
-animation:gridMove 18s linear infinite;
+animation:gridMove 20s linear infinite;
 }
 
 @keyframes gridMove{
-from{background-position:0 0}
-to{background-position:0 400px}
+from{background-position:0 0;}
+to{background-position:0 400px;}
 }
 
-.learn-particles{
-position:fixed;
-inset:0;
-overflow:hidden;
-pointer-events:none;
-z-index:1;
-}
-
-.learn-particles span{
-position:absolute;
-width:6px;
-height:6px;
-border-radius:50%;
-background:#38bdf8;
-box-shadow:0 0 20px #38bdf8;
-animation:floatLearn 12s linear infinite;
-}
-
-.learn-particles span:nth-child(1){left:8%;animation-delay:0s}
-.learn-particles span:nth-child(2){left:23%;animation-delay:2s}
-.learn-particles span:nth-child(3){left:41%;animation-delay:4s}
-.learn-particles span:nth-child(4){left:59%;animation-delay:1s}
-.learn-particles span:nth-child(5){left:78%;animation-delay:3s}
-.learn-particles span:nth-child(6){left:93%;animation-delay:5s}
-
-@keyframes floatLearn{
-from{transform:translateY(110vh)}
-to{transform:translateY(-100px)}
-}
-
-.learn-orbits{
-position:fixed;
-inset:0;
-pointer-events:none;
-z-index:1;
-}
-
-.learn-orbits::before,
-.learn-orbits::after{
-content:"";
-position:absolute;
-width:450px;
-height:450px;
-border-radius:50%;
-border:1px solid rgba(56,189,248,.08);
-animation:orbitMove 25s linear infinite;
-}
-
-.learn-orbits::before{
-left:-220px;
-top:120px;
-}
-
-.learn-orbits::after{
-right:-220px;
-bottom:120px;
-animation-duration:35s;
-}
-
-@keyframes orbitMove{
-from{transform:rotate(0deg)}
-to{transform:rotate(360deg)}
-}
-
-.container,.navbar{
-position:relative;
-z-index:3;
-}
-
-.learn-hero{
-padding:24px;
-border-radius:34px;
-position:relative;
-overflow:hidden;
-background:rgba(15,23,42,.88);
-border:1px solid rgba(148,163,184,.14);
-box-shadow:
-inset 0 0 30px rgba(56,189,248,.03),
-0 20px 60px rgba(0,0,0,.35);
-}
-
-.learn-core-wrap{
-width:280px;
-height:280px;
+.container{
+width:92%;
+max-width:560px;
 margin:auto;
-position:relative;
 }
 
-.learn-ring{
-position:absolute;
-border-radius:50%;
-border:1px solid rgba(56,189,248,.35);
-animation:spin 12s linear infinite;
-}
-
-.learn-ring.r1{inset:0}
-.learn-ring.r2{inset:25px;animation-duration:18s}
-.learn-ring.r3{inset:50px;animation-duration:25s}
-.learn-ring.r4{inset:75px;animation-duration:32s}
-
-.learn-ring::before{
-content:"";
-position:absolute;
-width:10px;
-height:10px;
-border-radius:50%;
-background:#38bdf8;
-left:50%;
-top:12px;
-box-shadow:0 0 20px #38bdf8;
-}
-
-@keyframes spin{
-from{transform:rotate(0)}
-to{transform:rotate(360deg)}
-}
-
-.learn-core{
-position:absolute;
-inset:95px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-background:
-radial-gradient(circle,#e0f2fe 0%,#38bdf8 25%,#0f172a 65%);
-box-shadow:
-0 0 40px rgba(56,189,248,.9),
-0 0 100px rgba(56,189,248,.35);
-animation:pulseLearn 4s ease-in-out infinite;
-}
-
-@keyframes pulseLearn{
-0%,100%{transform:scale(1)}
-50%{transform:scale(1.12)}
-}
-
-.learn-core svg{
-width:80px;
-height:80px;
-stroke:#020617;
-stroke-width:2;
-fill:none;
-}
-
-.learn-card{
-background:rgba(15,23,42,.88);
-border:1px solid rgba(148,163,184,.14);
-border-radius:28px;
-padding:18px;
-margin-top:16px;
-box-shadow:0 18px 48px rgba(0,0,0,.25);
-}
-
-.learn-card:hover{
-transform:translateY(-4px);
-transition:.3s;
-}
-
-.academy-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
-margin-top:16px;
-}
-
-.academy-module{
-padding:18px;
-border-radius:24px;
-background:rgba(255,255,255,.03);
-border:1px solid rgba(255,255,255,.06);
-position:relative;
-overflow:hidden;
-}
-
-.academy-module::after{
-content:"";
-position:absolute;
-width:90px;
-height:90px;
-right:-30px;
-bottom:-30px;
-border-radius:50%;
-background:radial-gradient(circle,rgba(56,189,248,.15),transparent 70%);
-}
-
-.module-title{
-font-size:16px;
-font-weight:900;
-color:#e5eefb;
-}
-
-.module-desc{
-font-size:12px;
-line-height:1.7;
-margin-top:8px;
-color:#94a3b8;
-}
-
-.module-progress{
-margin-top:12px;
-height:10px;
-border-radius:999px;
-overflow:hidden;
-background:rgba(255,255,255,.08);
-}
-
-.module-fill{
-height:100%;
-background:linear-gradient(90deg,#38bdf8,#22c55e);
-box-shadow:0 0 18px rgba(56,189,248,.45);
-}
-
-.learning-path{
-display:grid;
-gap:12px;
-margin-top:16px;
-}
-
-.path-node{
-padding:16px;
-border-radius:22px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.08);
+.topbar{
+width:92%;
+max-width:560px;
+margin:auto;
+padding:22px 0;
 display:flex;
 justify-content:space-between;
 align-items:center;
 }
 
-.path-node strong{
-color:#e5eefb;
+.brand h2{
+font-size:34px;
+letter-spacing:10px;
+font-weight:900;
 }
 
-.path-node small{
+.brand span{
+color:#38bdf8;
+font-size:13px;
+letter-spacing:5px;
+font-weight:900;
+}
+
+.user-badge{
+width:55px;
+height:55px;
+border-radius:50%;
+background:linear-gradient(135deg,#38bdf8,#2563eb);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+color:#020617;
+}
+
+.hero,.section,.card{
+background:rgba(15,23,42,.88);
+border:1px solid rgba(148,163,184,.14);
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.hero{
+padding:28px;
+border-radius:34px;
+}
+
+.hero h1{
+font-size:48px;
+line-height:1.05;
+margin-top:15px;
+}
+
+.hero p{
+margin-top:18px;
+line-height:1.7;
 color:#94a3b8;
 }
 
+.status{
+margin-top:18px;
+display:inline-flex;
+padding:11px 18px;
+border-radius:999px;
+background:rgba(34,197,94,.12);
+color:#4ade80;
+font-weight:900;
+}
+
+.stats{
+margin-top:18px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
+
+.card{
+padding:20px;
+border-radius:24px;
+}
+
+.label{
+font-size:13px;
+color:#94a3b8;
+}
+
+.value{
+font-size:28px;
+font-weight:900;
+margin-top:10px;
+}
+
+.section{
+margin-top:18px;
+padding:22px;
+border-radius:28px;
+}
+
+.section-title{
+font-size:13px;
+letter-spacing:6px;
+font-weight:900;
+color:#38bdf8;
+margin-bottom:18px;
+}
+
+.learn-card{
+padding:18px;
+border-radius:24px;
+background:#0f172a;
+border:1px solid rgba(148,163,184,.12);
+margin-bottom:14px;
+cursor:pointer;
+transition:.25s;
+}
+
+.learn-card:hover{
+transform:translateY(-3px);
+border-color:rgba(56,189,248,.4);
+}
+
+.learn-card strong{
+display:block;
+font-size:18px;
+}
+
+.learn-card p{
+margin-top:10px;
+color:#94a3b8;
+line-height:1.6;
+font-size:14px;
+}
+
+.progress{
+height:10px;
+background:rgba(148,163,184,.12);
+border-radius:999px;
+overflow:hidden;
+margin-top:14px;
+}
+
+.progress-fill{
+height:100%;
+background:linear-gradient(90deg,#38bdf8,#22c55e);
+width:0%;
+}
+
 @media(max-width:430px){
-.academy-grid{
-grid-template-columns:1fr;
+.hero h1{
+font-size:42px;
 }
 }
 </style>
+</head>
 
-<div class="learn-bg"></div>
-<div class="learn-grid"></div>
-<div class="learn-orbits"></div>
+<body>
 
-<div class="learn-particles">
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
+<div class="bg"></div>
+<div class="grid-bg"></div>
+
+<header class="topbar">
+
+<div class="brand">
+<h2>ZELLA</h2>
+<span>LEARN</span>
 </div>
 
-<nav class="navbar">
-<div class="nav-inner">
-<div class="logo">ZELLA</div>
-<div class="avatar-dot">ED</div>
-</div>
-</nav>
+<div class="user-badge">Z</div>
+
+</header>
 
 <main class="container">
 
-<section class="learn-hero">
+<section class="hero">
 
-<div class="learn-core-wrap">
-
-<div class="learn-ring r1"></div>
-<div class="learn-ring r2"></div>
-<div class="learn-ring r3"></div>
-<div class="learn-ring r4"></div>
-
-<div class="learn-core">
-<svg viewBox="0 0 24 24">
-<path d="M4 6L12 3L20 6L12 9L4 6Z"/>
-<path d="M4 6V14L12 17L20 14V6"/>
-<path d="M12 9V17"/>
-</svg>
+<div class="status" id="learnStatus">
+Learning Engine • Ready
 </div>
 
-</div>
-
-<div class="eyebrow">
-ZELLA LEARN V11 ULTRA
-</div>
-
-<h1 class="command-title">
-AI Trading<br>
-Academy
+<h1>
+Master<br>
+Trading.
 </h1>
 
-<p class="briefing-text">
-Master crypto trading through structured learning paths,
-AI-guided lessons, practical exercises and skill progression.
+<p>
+Learn crypto trading from beginner level to advanced professional level.
+Built directly into Zella with structured lessons, risk management guides,
+strategy breakdowns and market psychology training.
 </p>
 
-<div class="command-status-pill">
-Academy Online
-</div>
-
 </section>
 
-<section class="mini-grid">
+<div class="stats">
 
-<div class="mini-box learn-card">
-<div class="mini-label">Level</div>
-<div class="mini-value green" id="userLevel">1</div>
-</div>
-
-<div class="mini-box learn-card">
-<div class="mini-label">XP</div>
-<div class="mini-value blue" id="userXP">0</div>
+<div class="card">
+<div class="label">Courses</div>
+<div class="value" id="courseCount">12</div>
 </div>
 
-<div class="mini-box learn-card">
-<div class="mini-label">Courses</div>
-<div class="mini-value orange">12</div>
+<div class="card">
+<div class="label">Lessons</div>
+<div class="value" id="lessonCount">84</div>
 </div>
 
-<div class="mini-box learn-card">
-<div class="mini-label">Certificates</div>
-<div class="mini-value blue">0</div>
+<div class="card">
+<div class="label">Completed</div>
+<div class="value" id="completedCount">0</div>
 </div>
 
-</section>
-
-<section class="learn-card">
-
-<div class="briefing-title">
-ACADEMY MODULES
-</div>
-
-<div class="academy-grid">
-
-<div class="academy-module">
-<div class="module-title">Crypto Fundamentals</div>
-<div class="module-desc">
-Learn blockchain, wallets, exchanges and market structure.
-</div>
-<div class="module-progress">
-<div class="module-fill" style="width:15%"></div>
-</div>
-</div>
-
-<div class="academy-module">
-<div class="module-title">Technical Analysis</div>
-<div class="module-desc">
-Master support, resistance, trends and chart reading.
-</div>
-<div class="module-progress">
-<div class="module-fill" style="width:10%"></div>
-</div>
-</div>
-
-<div class="academy-module">
-<div class="module-title">Risk Management</div>
-<div class="module-desc">
-Position sizing, risk control and capital preservation.
-</div>
-<div class="module-progress">
-<div class="module-fill" style="width:5%"></div>
-</div>
-</div>
-
-<div class="academy-module">
-<div class="module-title">Advanced Trading</div>
-<div class="module-desc">
-Professional trading workflows and execution strategies.
-</div>
-<div class="module-progress">
-<div class="module-fill" style="width:0%"></div>
-</div>
+<div class="card">
+<div class="label">Progress</div>
+<div class="value" id="progressPercent">0%</div>
 </div>
 
 </div>
 
-</section>
+<section class="section">
 
-<section class="learn-card">
-
-<div class="briefing-title">
-LEARNING ROADMAP
+<div class="section-title">
+LEARNING PATH
 </div>
 
-<div class="learning-path">
+<div id="courseList">
 
-<div class="path-node">
-<div>
-<strong>Stage 1</strong><br>
-<small>Crypto Basics</small>
-</div>
-<div>✓</div>
-</div>
-
-<div class="path-node">
-<div>
-<strong>Stage 2</strong><br>
-<small>Technical Analysis</small>
-</div>
-<div>▶</div>
-</div>
-
-<div class="path-node">
-<div>
-<strong>Stage 3</strong><br>
-<small>Risk Management</small>
-</div>
-<div>🔒</div>
-</div>
-
-<div class="path-node">
-<div>
-<strong>Stage 4</strong><br>
-<small>Professional Trader</small>
-</div>
-<div>🔒</div>
-</div>
-
-</div>
-
-</section>
-
-<section class="learn-card">
-
-<div class="briefing-title">
-AI TUTOR ENGINE
-</div>
-
-<h2 class="briefing-headline" id="lessonTitle">
-Today’s lesson: Risk before reward.
-</h2>
-
-<p class="briefing-text" id="lessonText">
-Professional traders protect capital first. Before entering any trade, define your invalidation, risk amount, position size and target.
+<div class="learn-card" onclick="openLesson('Crypto Basics')">
+<strong>Crypto Basics</strong>
+<p>
+Understand blockchain, exchanges, wallets and market structure.
 </p>
-
-<div class="hero-actions">
-<button class="btn" onclick="completeLesson()">Complete Lesson</button>
-<button class="btn secondary" onclick="speakLesson()">Voice Lesson</button>
-</div>
-
-</section>
-
-<section class="learn-card">
-
-<div class="briefing-title">
-DAILY LEARNING MISSIONS
-</div>
-
-<div class="learning-path">
-
-<div class="path-node">
-<div>
-<strong>Read one lesson</strong><br>
-<small>Earn 20 XP</small>
-</div>
-<div id="missionOne">Pending</div>
-</div>
-
-<div class="path-node">
-<div>
-<strong>Ask Zella one trading question</strong><br>
-<small>Build learning memory</small>
-</div>
-<a href="copilot.html" class="btn secondary">Ask</a>
-</div>
-
-<div class="path-node">
-<div>
-<strong>Review risk management</strong><br>
-<small>Strengthen discipline</small>
-</div>
-<div>Ready</div>
-</div>
-
-</div>
-
-</section>
-
-<section class="learn-card">
-
-<div class="briefing-title">
-CERTIFICATION CENTER
-</div>
-
-<div class="academy-grid">
-
-<div class="academy-module">
-<div class="module-title">Beginner Trader Certificate</div>
-<div class="module-desc">Unlocked after completing fundamentals and risk basics.</div>
-<div class="module-progress">
-<div class="module-fill" id="certOne" style="width:0%"></div>
+<div class="progress">
+<div class="progress-fill" style="width:15%"></div>
 </div>
 </div>
 
-<div class="academy-module">
-<div class="module-title">Risk Management Certificate</div>
-<div class="module-desc">Unlocked after completing trade safety lessons.</div>
-<div class="module-progress">
-<div class="module-fill" style="width:0%"></div>
+<div class="learn-card" onclick="openLesson('Technical Analysis')">
+<strong>Technical Analysis</strong>
+<p>
+Support, resistance, trendlines, chart patterns and confirmations.
+</p>
+<div class="progress">
+<div class="progress-fill" style="width:25%"></div>
+</div>
+</div>
+
+<div class="learn-card" onclick="openLesson('Risk Management')">
+<strong>Risk Management</strong>
+<p>
+Protect capital using position sizing, stop loss and risk controls.
+</p>
+<div class="progress">
+<div class="progress-fill" style="width:35%"></div>
+</div>
+</div>
+
+<div class="learn-card" onclick="openLesson('Market Psychology')">
+<strong>Market Psychology</strong>
+<p>
+Master emotions, discipline and trading consistency.
+</p>
+<div class="progress">
+<div class="progress-fill" style="width:45%"></div>
 </div>
 </div>
 
@@ -552,102 +323,134 @@ CERTIFICATION CENTER
 
 </section>
 
-<nav class="zella-nav">
+<section class="section">
 
-<a href="dashboard.html" class="nav-item">
-<svg viewBox="0 0 24 24" class="nav-icon"><path d="M3 10.5L12 3L21 10.5V21H3V10.5Z"/></svg>
-<span>Home</span>
-</a>
+<div class="section-title">
+ADVANCED MODULES
+</div>
 
-<a href="scanner.html" class="nav-item">
-<svg viewBox="0 0 24 24" class="nav-icon"><path d="M5 19V11M12 19V5M19 19V8"/></svg>
-<span>Scanner</span>
-</a>
+<div class="learn-card" onclick="openLesson('Scalping Masterclass')">
+<strong>Scalping Masterclass</strong>
+<p>
+Fast execution strategies for lower timeframes.
+</p>
+</div>
 
-<a href="copilot.html" class="nav-item copilot-center">
-<div class="copilot-core">
-<svg viewBox="0 0 24 24" class="copilot-icon">
-<rect x="6" y="8" width="12" height="9" rx="2"/>
-<circle cx="9" cy="12" r="1"/>
-<circle cx="15" cy="12" r="1"/>
-<path d="M12 4V8"/>
+<div class="learn-card" onclick="openLesson('Swing Trading')">
+<strong>Swing Trading</strong>
+<p>
+Capture multi-day and multi-week market moves.
+</p>
+</div>
+
+<div class="learn-card" onclick="openLesson('On-Chain Analysis')">
+<strong>On-Chain Analysis</strong>
+<p>
+Analyze blockchain activity and investor behaviour.
+</p>
+</div>
+
+<div class="learn-card" onclick="openLesson('Institutional Concepts')">
+<strong>Institutional Concepts</strong>
+<p>
+Liquidity, market structure shifts and smart money concepts.
+</p>
+</div>
+
+</section>
+
+</main>
+
+<nav class="bottom-dock">
+
+<div class="dock-item" onclick="go('dashboard.html')">
+<svg viewBox="0 0 24 24">
+<path d="M3 11L12 4L21 11"/>
+<path d="M5 10V21H19V10"/>
 </svg>
 </div>
-<span>Copilot</span>
-</a>
 
-<a href="market.html" class="nav-item">
-<svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 16L9 11L13 14L20 7"/></svg>
-<span>Market</span>
-</a>
+<div class="dock-item" onclick="go('scanner.html')">
+<svg viewBox="0 0 24 24">
+<path d="M4 19V5"/>
+<path d="M4 19H20"/>
+<path d="M8 16L11 12L14 14L19 7"/>
+</svg>
+</div>
 
-<a href="watchlist.html" class="nav-item">
-<svg viewBox="0 0 24 24" class="nav-icon"><path d="M6 3H18V21L12 17L6 21V3Z"/></svg>
-<span>Watchlist</span>
-</a>
+<div class="ai-dock" onclick="go('copilot.html')">
+<svg viewBox="0 0 24 24">
+<rect x="5" y="7" width="14" height="11" rx="4"/>
+</svg>
+</div>
 
-<a href="more.html" class="nav-item active">
-<svg viewBox="0 0 24 24" class="nav-icon">
-<circle cx="12" cy="5" r="1.5"/>
+<div class="dock-item" onclick="go('market.html')">
+<svg viewBox="0 0 24 24">
+<path d="M4 18V6"/>
+<path d="M8 18V10"/>
+<path d="M12 18V4"/>
+<path d="M16 18V8"/>
+</svg>
+</div>
+
+<div class="dock-item active" onclick="go('more.html')">
+<svg viewBox="0 0 24 24">
+<circle cx="5" cy="12" r="1.5"/>
 <circle cx="12" cy="12" r="1.5"/>
-<circle cx="12" cy="19" r="1.5"/>
+<circle cx="19" cy="12" r="1.5"/>
 </svg>
-<span>More</span>
-</a>
+</div>
 
 </nav>
 
 <script>
-let xp = Number(localStorage.getItem("zellaLearnXP") || 0);
-
-function updateLearning(){
-  const level = Math.floor(xp / 100) + 1;
-
-  document.getElementById("userXP").textContent = xp;
-  document.getElementById("userLevel").textContent = level;
-
-  const certProgress = Math.min(100,xp);
-  document.getElementById("certOne").style.width = certProgress + "%";
+function go(page){
+window.location.href=page;
 }
 
-function completeLesson(){
-  xp += 20;
-  localStorage.setItem("zellaLearnXP",xp);
+function openLesson(title){
 
-  document.getElementById("lessonTitle").textContent =
-    "Lesson completed.";
+const completed =
+parseInt(localStorage.getItem("zellaLearnCompleted") || 0);
 
-  document.getElementById("lessonText").textContent =
-    "You earned 20 XP. Keep building discipline, risk awareness and market understanding.";
+const nextCompleted = completed + 1;
 
-  document.getElementById("missionOne").textContent =
-    "Complete";
+localStorage.setItem(
+"zellaLearnCompleted",
+nextCompleted
+);
 
-  updateLearning();
+document.getElementById("completedCount").textContent =
+nextCompleted;
+
+const progress =
+Math.min(Math.round((nextCompleted/84)*100),100);
+
+document.getElementById("progressPercent").textContent =
+progress + "%";
+
+alert(
+title +
+"\n\nLearning module opened.\n\nFuture update: Full lesson viewer, quizzes, certificates and AI tutor."
+);
 }
 
-function speakLesson(){
-  const text =
-    document.getElementById("lessonTitle").textContent + ". " +
-    document.getElementById("lessonText").textContent;
+window.addEventListener("load",()=>{
 
-  if(!window.speechSynthesis){
-    alert("Voice lesson is not supported on this browser.");
-    return;
-  }
+const completed =
+parseInt(localStorage.getItem("zellaLearnCompleted") || 0);
 
-  speechSynthesis.cancel();
+document.getElementById("completedCount").textContent =
+completed;
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate = 1;
-  utterance.pitch = 1.05;
-  speechSynthesis.speak(utterance);
-}
+document.getElementById("progressPercent").textContent =
+Math.min(Math.round((completed/84)*100),100) + "%";
 
-updateLearning();
+});
 </script>
 
-</main>
+<script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
+
 </body>
 </html>

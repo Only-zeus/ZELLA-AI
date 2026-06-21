@@ -3,365 +3,818 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella AI — Trade Smarter</title>
-<link rel="stylesheet" href="style.css">
-</head>
 
-<body>
+<title>Zella AI — Trade Smarter. Profit Faster.</title>
 
 <style>
 *{
+  margin:0;
+  padding:0;
   box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
 
 body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
   overflow-x:hidden;
 }
 
-.index-bg{
+.bg{
   position:fixed;
   inset:0;
-  z-index:0;
-  pointer-events:none;
+  z-index:-4;
   background:
-    radial-gradient(circle at 20% 10%,rgba(56,189,248,.18),transparent 30%),
-    radial-gradient(circle at 80% 20%,rgba(34,197,94,.12),transparent 28%),
-    radial-gradient(circle at 50% 90%,rgba(59,130,246,.18),transparent 32%);
+    radial-gradient(circle at 20% 8%,rgba(56,189,248,.25),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
+    #020617;
 }
 
-.grid-glow{
+.grid-bg{
   position:fixed;
   inset:0;
-  z-index:0;
-  pointer-events:none;
+  z-index:-3;
   background-image:
-    linear-gradient(rgba(56,189,248,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56,189,248,.06) 1px, transparent 1px);
+    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
   background-size:42px 42px;
-  mask-image:linear-gradient(to bottom,black,transparent 85%);
   animation:gridMove 18s linear infinite;
 }
 
 @keyframes gridMove{
-  from{background-position:0 0;}
-  to{background-position:0 420px;}
+  from{background-position:0 0}
+  to{background-position:0 420px}
 }
 
-.zella-rain{
+.float-coins{
   position:fixed;
   inset:0;
-  overflow:hidden;
+  z-index:-2;
   pointer-events:none;
-  z-index:1;
+  overflow:hidden;
 }
 
-.zella-rain span{
+.coin{
   position:absolute;
-  top:-120px;
-  opacity:.11;
-  font-size:32px;
-  font-weight:900;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#020617;
+  font-weight:950;
+  box-shadow:0 0 35px rgba(56,189,248,.45);
+  opacity:.45;
+  animation:floatCoin 16s linear infinite;
+}
+
+.coin:nth-child(1){left:8%;animation-delay:0s}
+.coin:nth-child(2){left:28%;animation-delay:4s}
+.coin:nth-child(3){left:52%;animation-delay:2s}
+.coin:nth-child(4){left:74%;animation-delay:6s}
+.coin:nth-child(5){left:90%;animation-delay:1s}
+
+@keyframes floatCoin{
+  from{transform:translateY(110vh) rotate(0deg)}
+  to{transform:translateY(-120px) rotate(360deg)}
+}
+
+.topbar{
+  width:92%;
+  max-width:1120px;
+  margin:auto;
+  padding:24px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand h2{
+  font-size:36px;
+  letter-spacing:11px;
+  font-weight:950;
+}
+
+.brand span{
   color:#38bdf8;
-  animation:zellaRain 16s linear infinite;
+  letter-spacing:5px;
+  font-size:14px;
+  font-weight:950;
 }
 
-.zella-rain span:nth-child(1){left:6%;}
-.zella-rain span:nth-child(2){left:18%;animation-delay:2s;}
-.zella-rain span:nth-child(3){left:34%;animation-delay:5s;}
-.zella-rain span:nth-child(4){left:50%;animation-delay:1s;}
-.zella-rain span:nth-child(5){left:68%;animation-delay:4s;}
-.zella-rain span:nth-child(6){left:84%;animation-delay:3s;}
-
-@keyframes zellaRain{
-  from{transform:translateY(-150px) rotate(0deg);}
-  to{transform:translateY(125vh) rotate(360deg);}
+.launch-small{
+  padding:13px 20px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  color:#020617;
+  font-weight:950;
+  cursor:pointer;
+  box-shadow:0 0 28px rgba(56,189,248,.35);
 }
 
-.ai-core-wrap{
-  width:240px;
-  height:240px;
-  margin:20px auto 30px;
+.container{
+  width:92%;
+  max-width:1120px;
+  margin:auto;
+}
+
+.hero{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  align-items:center;
+}
+
+.hero-card{
+  padding:34px;
+  border-radius:38px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 28px 80px rgba(0,0,0,.42);
+}
+
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:8px;
+  font-size:13px;
+  font-weight:950;
+}
+
+.hero h1{
+  margin-top:22px;
+  font-size:68px;
+  line-height:1.02;
+  letter-spacing:-2px;
+}
+
+.hero h1 span{
+  color:#38bdf8;
+}
+
+.hero p{
+  margin-top:22px;
+  color:#94a3b8;
+  line-height:1.8;
+  font-size:17px;
+  max-width:520px;
+}
+
+.launch-btn{
+  margin-top:26px;
+  padding:17px 26px;
+  border:none;
+  border-radius:22px;
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  font-weight:950;
+  font-size:15px;
+  cursor:pointer;
+  box-shadow:0 0 40px rgba(56,189,248,.45);
+}
+
+.orbital-card{
+  min-height:430px;
+  border-radius:38px;
+  background:
+    linear-gradient(135deg,rgba(15,23,42,.92),rgba(8,47,73,.38)),
+    rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 28px 80px rgba(0,0,0,.42);
+  display:flex;
+  align-items:center;
+  justify-content:center;
   position:relative;
+  overflow:hidden;
+}
+
+.ai-orbit{
+  width:330px;
+  height:330px;
+  position:relative;
+}
+
+.ai-ring{
+  position:absolute;
+  border-radius:50%;
+  border:2px solid rgba(56,189,248,.20);
+  animation:spin 18s linear infinite;
+}
+
+.ai-ring.r1{inset:0}
+.ai-ring.r2{inset:32px;border-color:rgba(56,189,248,.30);animation-duration:14s}
+.ai-ring.r3{inset:64px;border-color:rgba(34,197,94,.20);animation-duration:20s}
+.ai-ring.r4{inset:96px;border-color:rgba(148,163,184,.22);animation-duration:26s}
+
+.ai-ring::before{
+  content:"";
+  position:absolute;
+  top:18px;
+  left:50%;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 25px #38bdf8;
 }
 
 .ai-core{
   position:absolute;
-  inset:54px;
+  inset:105px;
   border-radius:50%;
-  background:
-    radial-gradient(circle,#e0f2fe 0%,#38bdf8 22%,#0f172a 64%,transparent 70%);
+  background:radial-gradient(circle,#e0faff 0%,#38bdf8 35%,#082f49 65%,#020617 100%);
   box-shadow:
-    0 0 40px rgba(56,189,248,.9),
-    0 0 90px rgba(56,189,248,.45);
-  animation:corePulse 4s ease-in-out infinite;
-}
-
-@keyframes corePulse{
-  0%,100%{transform:scale(1);filter:brightness(1);}
-  50%{transform:scale(1.12);filter:brightness(1.35);}
-}
-
-.orbit{
-  position:absolute;
-  inset:18px;
-  border:1px solid rgba(56,189,248,.45);
-  border-radius:50%;
-  animation:spin 9s linear infinite;
-}
-
-.orbit:nth-child(2){
-  inset:34px;
-  border-color:rgba(34,197,94,.35);
-  animation-duration:13s;
-  transform:rotate(40deg);
-}
-
-.orbit:nth-child(3){
-  inset:4px;
-  border-color:rgba(147,197,253,.30);
-  animation-duration:17s;
-  transform:rotate(-30deg);
-}
-
-.orbit::before{
-  content:"";
-  width:12px;
-  height:12px;
-  background:#38bdf8;
-  border-radius:50%;
-  position:absolute;
-  top:18px;
-  left:50%;
-  box-shadow:0 0 20px #38bdf8;
-}
-
-@keyframes spin{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
+    0 0 75px rgba(56,189,248,.85),
+    inset 0 0 42px rgba(2,6,23,.8);
 }
 
 .scan-line{
   position:absolute;
-  left:0;
-  right:0;
-  height:2px;
-  top:50%;
+  left:11%;
+  right:11%;
+  top:54%;
+  height:3px;
   background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-  box-shadow:0 0 25px rgba(56,189,248,.8);
-  animation:scanMove 3s ease-in-out infinite;
+  box-shadow:0 0 18px rgba(56,189,248,.9);
+  animation:scan 3s ease-in-out infinite;
 }
 
-@keyframes scanMove{
-  0%,100%{transform:translateY(-80px);opacity:.2;}
-  50%{transform:translateY(80px);opacity:1;}
+@keyframes scan{
+  0%,100%{opacity:.25;transform:translateY(-45px)}
+  50%{opacity:1;transform:translateY(45px)}
 }
 
-.container,
-.navbar{
-  position:relative;
-  z-index:3;
+@keyframes spin{
+  to{transform:rotate(360deg)}
 }
 
-.launch-only{
-  width:100%;
+.market-ribbon{
+  margin-top:22px;
+  padding:14px;
+  border-radius:24px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  overflow:hidden;
+}
+
+.ticker{
+  display:flex;
+  gap:18px;
+  white-space:nowrap;
+  animation:tickerMove 28s linear infinite;
+}
+
+.ticker-item{
+  padding:12px 18px;
+  border-radius:18px;
+  background:#0f172a;
+  color:#e5eefb;
+  font-weight:900;
+}
+
+.ticker-item span{
+  color:#38bdf8;
+}
+
+@keyframes tickerMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+.section{
+  margin-top:28px;
+  padding:30px;
+  border-radius:34px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 22px 65px rgba(0,0,0,.35);
+}
+
+.section-title{
+  color:#38bdf8;
+  font-size:13px;
+  letter-spacing:7px;
+  font-weight:950;
+  margin-bottom:16px;
+}
+
+.section h2{
+  font-size:40px;
+  line-height:1.1;
+}
+
+.section p.lead{
+  margin-top:14px;
+  color:#94a3b8;
+  line-height:1.8;
+  max-width:720px;
+}
+
+.grid{
+  margin-top:22px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.feature-card{
+  padding:22px;
+  border-radius:26px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
+  min-height:170px;
+}
+
+.icon-box{
+  width:58px;
+  height:58px;
+  border-radius:20px;
+  background:rgba(56,189,248,.10);
+  border:1px solid rgba(56,189,248,.25);
+  display:flex;
+  align-items:center;
   justify-content:center;
 }
 
-.feature-glow{
-  transition:.3s ease;
+.icon-box svg{
+  width:30px;
+  height:30px;
+  stroke:#38bdf8;
+  fill:none;
+  stroke-width:2.3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-.feature-glow:hover{
-  transform:translateY(-6px) scale(1.02);
-  border-color:rgba(56,189,248,.35);
-  box-shadow:0 0 35px rgba(56,189,248,.16);
+.feature-card h3{
+  margin-top:18px;
+  font-size:20px;
+}
+
+.feature-card p{
+  margin-top:10px;
+  color:#94a3b8;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.steps{
+  margin-top:22px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.step{
+  padding:20px;
+  border-radius:24px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.12);
+}
+
+.step strong{
+  color:#38bdf8;
+  display:block;
+  font-size:24px;
+}
+
+.step h3{
+  margin-top:12px;
+  font-size:17px;
+}
+
+.step p{
+  margin-top:9px;
+  color:#94a3b8;
+  line-height:1.55;
+  font-size:13px;
+}
+
+@media(max-width:850px){
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .steps{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:52px;
+  }
+}
+
+@media(max-width:460px){
+  .brand h2{
+    font-size:30px;
+  }
+
+  .hero h1{
+    font-size:45px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .orbital-card{
+    min-height:360px;
+  }
+
+  .ai-orbit{
+    width:280px;
+    height:280px;
+  }
+
+  .ai-core{
+    inset:88px;
+  }
 }
 </style>
+</head>
 
-<div class="index-bg"></div>
-<div class="grid-glow"></div>
+<body>
 
-<div class="zella-rain">
-  <span>BTC</span>
-  <span>ETH</span>
-  <span>SOL</span>
-  <span>AI</span>
-  <span>LIVE</span>
-  <span>ZELLA</span>
+<div class="bg"></div>
+<div class="grid-bg"></div>
+
+<div class="float-coins">
+  <div class="coin">BTC</div>
+  <div class="coin">ETH</div>
+  <div class="coin">SOL</div>
+  <div class="coin">BNB</div>
+  <div class="coin">XRP</div>
 </div>
 
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="logo">ZELLA</div>
-    <a href="account.html" class="btn">Launch Zella</a>
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>AI</span>
   </div>
-</nav>
+
+  <button class="launch-small" onclick="launchZella()">
+    LAUNCH ZELLA
+  </button>
+</header>
 
 <main class="container">
 
-<section class="command-card">
+<section class="hero">
 
-  <div class="ai-core-wrap">
-    <div class="orbit"></div>
-    <div class="orbit"></div>
-    <div class="orbit"></div>
-    <div class="ai-core"></div>
-    <div class="scan-line"></div>
+  <div class="hero-card">
+    <div class="eyebrow">AI CRYPTO TRADING ASSISTANT</div>
+
+    <h1>
+      Trade Smarter.<br>
+      <span>Profit Faster.</span>
+    </h1>
+
+    <p>
+      Zella helps traders scan markets, find opportunities, receive live signals,
+      track portfolios, follow market news and automate trading from one premium AI platform.
+    </p>
+
+    <button class="launch-btn" onclick="launchZella()">
+      LAUNCH ZELLA
+    </button>
   </div>
 
-  <div class="eyebrow">AI CRYPTO TRADING COPILOT</div>
+  <div class="orbital-card">
+    <div class="ai-orbit">
+      <div class="ai-ring r1"></div>
+      <div class="ai-ring r2"></div>
+      <div class="ai-ring r3"></div>
+      <div class="ai-ring r4"></div>
+      <div class="ai-core"></div>
+      <div class="scan-line"></div>
+    </div>
+  </div>
 
-  <h1 class="command-title">
-    Trade smarter.<br>
-    Profit faster.
-  </h1>
+</section>
 
-  <p class="briefing-text">
-    Zella is an AI-powered trading copilot built to help traders understand
-    the market, scan live assets, track crypto news, manage risk and make
-    smarter decisions with confidence.
+<section class="market-ribbon">
+  <div class="ticker" id="marketTicker">
+    <div class="ticker-item">BTC <span>Loading...</span></div>
+    <div class="ticker-item">ETH <span>Loading...</span></div>
+    <div class="ticker-item">SOL <span>Loading...</span></div>
+    <div class="ticker-item">BNB <span>Loading...</span></div>
+    <div class="ticker-item">XRP <span>Loading...</span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">WHY ZELLA</div>
+
+  <h2>Built for traders who want clarity, speed and confidence.</h2>
+
+  <p class="lead">
+    Zella combines live market intelligence, AI trading support, portfolio visibility and automation tools
+    so users can make smarter decisions without jumping across multiple platforms.
   </p>
 
-  <div class="hero-actions launch-only">
-    <a href="account.html" class="btn">
-      🚀 Launch Zella
-    </a>
-  </div>
+  <div class="grid">
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/></svg>
+      </div>
+      <h3>Spot Opportunities Faster</h3>
+      <p>Scan key assets and discover high-confidence trade setups quickly.</p>
+    </div>
 
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><path d="M12 2V22"/><path d="M5 12H19"/><circle cx="12" cy="12" r="5"/></svg>
+      </div>
+      <h3>Trade With Confidence</h3>
+      <p>Use live signals, entry zones, stop loss and take profit levels.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M16 12H21"/></svg>
+      </div>
+      <h3>Track Everything</h3>
+      <p>Keep portfolio, wallet sync, analytics and performance in one place.</p>
+    </div>
+  </div>
 </section>
 
-<section class="briefing-card">
+<section class="section">
+  <div class="section-title">ZELLA ECOSYSTEM</div>
 
-  <div class="briefing-title">WHY TRADERS CHOOSE ZELLA</div>
+  <h2>Everything a trader needs inside one platform.</h2>
 
-  <div class="ranking-list">
-
-    <div class="rank-row feature-glow">
-      <div class="rank-position">🤖</div>
-      <div class="rank-asset">
-        Interactive AI Copilot<br>
-        <small>Chat naturally, learn crypto and understand market opportunities.</small>
-      </div>
-      <div class="rank-score">AI</div>
-    </div>
-
-    <div class="rank-row feature-glow">
-      <div class="rank-position">📈</div>
-      <div class="rank-asset">
-        Live Market Scanner<br>
-        <small>Ranks assets using confidence, momentum, trend, risk and opportunity.</small>
-      </div>
-      <div class="rank-score">Live</div>
-    </div>
-
-    <div class="rank-row feature-glow">
-      <div class="rank-position">📰</div>
-      <div class="rank-asset">
-        News Intelligence<br>
-        <small>Tracks real crypto news and sentiment to improve market awareness.</small>
-      </div>
-      <div class="rank-score">RSS</div>
-    </div>
-
-  </div>
-
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">ZELLA MISSION</div>
-
-  <h2 class="briefing-headline">
-    Make intelligent trading guidance accessible to every trader.
-  </h2>
-
-  <p class="briefing-text">
-    Zella’s mission is to help traders reduce confusion, understand market
-    movements, manage risk, and make more informed decisions using live data
-    and AI-powered insight.
+  <p class="lead">
+    Zella brings together market scanning, AI copilot support, trading signals,
+    portfolio tracking, exchange connections, analytics, news and learning tools.
   </p>
 
+  <div class="grid">
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/></svg>
+      </div>
+      <h3>Scanner</h3>
+      <p>Find market opportunities and rank assets by live confidence.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/></svg>
+      </div>
+      <h3>Copilot</h3>
+      <p>Ask trading questions or regular questions naturally.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M8 18V10"/><path d="M12 18V4"/><path d="M16 18V8"/></svg>
+      </div>
+      <h3>Market</h3>
+      <p>Track live prices, market status, volume and crypto news.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M16 12H21"/></svg>
+      </div>
+      <h3>Wallet</h3>
+      <p>Sync exchange balances and view portfolio holdings.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><path d="M7 7H17"/><path d="M7 12H17"/><path d="M7 17H17"/></svg>
+      </div>
+      <h3>Exchange APIs</h3>
+      <p>Connect exchanges securely with encrypted API storage.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><path d="M4 12H20"/><path d="M14 6L20 12L14 18"/></svg>
+      </div>
+      <h3>Auto Trader</h3>
+      <p>Configure execution, risk controls and automated trade settings.</p>
+    </div>
+  </div>
 </section>
 
-<section class="briefing-card">
+<section class="section">
+  <div class="section-title">HOW ZELLA WORKS</div>
 
-  <div class="briefing-title">CORE INTELLIGENCE</div>
+  <h2>From market discovery to portfolio tracking.</h2>
 
-  <div class="ranking-list">
-
-    <div class="rank-row feature-glow">
-      <div class="rank-position">1</div>
-      <div class="rank-asset">Live Market Data<br><small>Multiple providers power real-time asset intelligence.</small></div>
-      <div class="rank-score">Live</div>
+  <div class="steps">
+    <div class="step">
+      <strong>01</strong>
+      <h3>Create Account</h3>
+      <p>Sign up and access your Zella command center.</p>
     </div>
 
-    <div class="rank-row feature-glow">
-      <div class="rank-position">2</div>
-      <div class="rank-asset">Scanner Engine<br><small>Scores confidence, momentum, liquidity, trend and risk.</small></div>
-      <div class="rank-score">V6</div>
+    <div class="step">
+      <strong>02</strong>
+      <h3>Connect Exchange</h3>
+      <p>Add API keys with withdrawals disabled for safety.</p>
     </div>
 
-    <div class="rank-row feature-glow">
-      <div class="rank-position">3</div>
-      <div class="rank-asset">Zella Copilot<br><small>Explains the market like an interactive AI assistant.</small></div>
-      <div class="rank-score">AI</div>
+    <div class="step">
+      <strong>03</strong>
+      <h3>Scan Market</h3>
+      <p>View live opportunities, market signals and ranking.</p>
     </div>
 
+    <div class="step">
+      <strong>04</strong>
+      <h3>Use Zella</h3>
+      <p>Ask Copilot, review entries, manage risk and plan trades.</p>
+    </div>
+
+    <div class="step">
+      <strong>05</strong>
+      <h3>Track Results</h3>
+      <p>Monitor portfolio, analytics and trade journal progress.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">SECURITY LAYER</div>
+
+  <h2>Designed for trust, privacy and control.</h2>
+
+  <p class="lead">
+    Zella uses Firebase authentication, Firestore cloud sync and encrypted exchange API storage.
+    Users should never enable withdrawal permissions on exchange API keys.
+  </p>
+
+  <div class="grid">
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><path d="M12 22S20 18 20 11V5L12 2L4 5V11C4 18 12 22 12 22Z"/></svg>
+      </div>
+      <h3>Auth Protected</h3>
+      <p>Account pages are protected using authentication guards.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7A4 4 0 0 1 16 7V10"/></svg>
+      </div>
+      <h3>Encrypted Keys</h3>
+      <p>Exchange credentials are encrypted before storage.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">
+        <svg viewBox="0 0 24 24"><path d="M4 12A8 8 0 0 1 18 6"/><path d="M20 4V10H14"/><path d="M20 12A8 8 0 0 1 6 18"/><path d="M4 20V14H10"/></svg>
+      </div>
+      <h3>Cloud Synced</h3>
+      <p>Profiles, settings and journals can sync securely to cloud.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">ZELLA PRO</div>
+
+  <h2>Upgrade your trading command center.</h2>
+
+  <p class="lead">
+    Premium users unlock advanced signal access, auto trading tools,
+    multi-exchange features, portfolio intelligence and stronger analytics.
+  </p>
+
+  <div class="grid">
+    <div class="feature-card">
+      <h3>Advanced Signals</h3>
+      <p>Access stronger signal intelligence for supported assets.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Auto Trading</h3>
+      <p>Use connected exchanges with trade execution controls.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Portfolio Intelligence</h3>
+      <p>Analyze performance, risk and synced exchange activity.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">FAQ</div>
+
+  <div class="feature-card">
+    <h3>Is Zella beginner friendly?</h3>
+    <p>Yes. Zella is built to help new traders understand markets while giving advanced users powerful tools.</p>
   </div>
 
-</section>
-
-<section class="briefing-card">
-
-  <div class="briefing-title">ROADMAP</div>
-
-  <div class="ranking-list">
-
-    <div class="rank-row feature-glow">
-      <div class="rank-position">✅</div>
-      <div class="rank-asset">Foundation<br><small>Live backend, scanner, news engine, account system and copilot.</small></div>
-      <div class="rank-score">Done</div>
-    </div>
-
-    <div class="rank-row feature-glow">
-      <div class="rank-position">🚧</div>
-      <div class="rank-asset">Intelligence<br><small>Smarter scanner, news sentiment integration and setup engine.</small></div>
-      <div class="rank-score">Now</div>
-    </div>
-
-    <div class="rank-row feature-glow">
-      <div class="rank-position">🔜</div>
-      <div class="rank-asset">Expansion<br><small>More assets, alerts, portfolio intelligence and mobile app.</small></div>
-      <div class="rank-score">Next</div>
-    </div>
-
+  <div class="feature-card" style="margin-top:14px;">
+    <h3>Can Zella trade automatically?</h3>
+    <p>Yes, auto trading is available when exchange APIs and premium access are configured.</p>
   </div>
 
-</section>
-
-<section class="command-card">
-
-  <div class="card-label">READY TO START?</div>
-
-  <h2 class="briefing-headline">
-    Your AI trading copilot is waiting.
-  </h2>
-
-  <div class="hero-actions launch-only">
-    <a href="account.html" class="btn">
-      🚀 Launch Zella
-    </a>
+  <div class="feature-card" style="margin-top:14px;">
+    <h3>Does Zella need withdrawal access?</h3>
+    <p>No. Withdrawal permission should stay disabled for safety.</p>
   </div>
-
 </section>
 
-<footer style="text-align:center;padding:35px 15px;color:#94a3b8;">
-  <strong style="color:#38bdf8;">ZELLA AI</strong><br>
-  Trade smarter. Profit faster.<br><br>
-  © Zella AI
+<section class="section" style="text-align:center;">
+  <div class="section-title">START WITH ZELLA</div>
+
+  <h2>Ready to trade smarter?</h2>
+
+  <p class="lead" style="margin-left:auto;margin-right:auto;">
+    Launch Zella and start building your AI-powered trading command center.
+  </p>
+
+  <button class="launch-btn" onclick="launchZella()">
+    LAUNCH ZELLA
+  </button>
+</section>
+
+<footer class="section" style="text-align:center;margin-bottom:28px;">
+  <h2>ZELLA</h2>
+  <p class="lead" style="margin-left:auto;margin-right:auto;">
+    Trade smarter. Profit faster.
+    <br>
+    @ZELLA_OFFICIAL_
+  </p>
 </footer>
 
 </main>
+
+<script>
+const API_URL = "https://zella-backend.onrender.com";
+
+function launchZella(){
+  window.location.href = "signup.html";
+}
+
+function formatMoney(value){
+  const number = Number(value || 0);
+
+  if(number >= 1000){
+    return "$" + number.toLocaleString(undefined,{
+      maximumFractionDigits:2
+    });
+  }
+
+  return "$" + number.toFixed(4);
+}
+
+async function loadTicker(){
+  try{
+    const response = await fetch(API_URL + "/api/market/live");
+    const data = await response.json();
+
+    if(!data.success || !Array.isArray(data.assets)){
+      throw new Error("Market unavailable");
+    }
+
+    const ticker = document.getElementById("marketTicker");
+
+    const items = data.assets.map(asset=>{
+      const change = Number(asset.change24h || 0);
+      const sign = change >= 0 ? "+" : "";
+
+      return `
+        <div class="ticker-item">
+          ${asset.symbol}
+          <span>${formatMoney(asset.price)} ${sign}${change.toFixed(2)}%</span>
+        </div>
+      `;
+    }).join("");
+
+    ticker.innerHTML = items + items;
+
+  }catch(error){
+    document.getElementById("marketTicker").innerHTML =
+      `<div class="ticker-item">Live market temporarily unavailable</div>`;
+  }
+}
+
+loadTicker();
+setInterval(loadTicker,30000);
+</script>
 
 </body>
 </html>

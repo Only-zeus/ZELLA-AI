@@ -577,6 +577,24 @@ function formatMoney(value){
   return "$" + number.toFixed(4);
 }
 
+function getSavedUserName(){
+  try{
+    const user = JSON.parse(localStorage.getItem("zellaUser") || "{}");
+
+    if(user.displayName){
+      return user.displayName.split(" ")[0];
+    }
+
+    if(user.email){
+      return user.email.split("@")[0];
+    }
+
+    return "Trader";
+  }catch(error){
+    return "Trader";
+  }
+}
+
 function setGreeting(){
   const hour = new Date().getHours();
   let greeting = "Good Day";
@@ -589,8 +607,10 @@ function setGreeting(){
     greeting = "Good Evening";
   }
 
+  const name = getSavedUserName();
+
   document.getElementById("greetingTitle").innerHTML =
-    greeting + ",<br>Trader.";
+    greeting + ",<br>" + name + ".";
 }
 
 async function loadMarket(){

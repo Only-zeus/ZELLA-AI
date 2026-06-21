@@ -8,6 +8,8 @@
 
 <link rel="stylesheet" href="style.css">
 
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
 <style>
 *{
   margin:0;
@@ -268,15 +270,17 @@ body{
   font-size:24px;
   font-weight:950;
   color:#fbbf24;
+  text-align:right;
 }
 
 .feature-row{
   display:flex;
-  align-items:center;
+  align-items:flex-start;
   gap:10px;
   padding:10px 0;
   border-bottom:1px solid rgba(148,163,184,.08);
   color:#e5eefb;
+  line-height:1.5;
 }
 
 .feature-row:last-child{
@@ -284,6 +288,7 @@ body{
 }
 
 .feature-row svg{
+  min-width:20px;
   width:20px;
   height:20px;
   stroke:#4ade80;
@@ -303,6 +308,45 @@ body{
   color:#020617;
   font-weight:950;
   cursor:pointer;
+}
+
+.btn-secondary{
+  background:#020617;
+  color:#e5eefb;
+  border:1px solid rgba(148,163,184,.18);
+}
+
+.payment-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+
+.payment-option{
+  padding:15px;
+  border-radius:20px;
+  background:#020617;
+  border:1px solid rgba(148,163,184,.15);
+  color:#e5eefb;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.payment-option.active{
+  border-color:#fbbf24;
+  color:#fbbf24;
+  box-shadow:0 0 22px rgba(251,191,36,.12);
+}
+
+.notice{
+  margin-top:14px;
+  padding:14px;
+  border-radius:18px;
+  background:rgba(251,191,36,.10);
+  color:#fbbf24;
+  line-height:1.6;
+  font-size:13px;
 }
 
 @media(max-width:430px){
@@ -380,11 +424,31 @@ body{
   </div>
 
   <div class="card">
-    <div class="label">Exchanges</div>
-    <div class="value gold" id="exchangeLimit">--</div>
-    <div class="sub">Connection limit</div>
+    <div class="label">Payment</div>
+    <div class="value gold" id="paymentState">--</div>
+    <div class="sub">Paystack ready</div>
   </div>
 </div>
+
+<section class="section">
+  <div class="section-title">PAYMENT METHOD</div>
+
+  <div class="plan-card">
+    <div class="plan-title">
+      <strong>Choose Payment Method</strong>
+      <small>Paystack is ready on the frontend. Backend verification is the only part left.</small>
+    </div>
+
+    <div class="payment-grid">
+      <button class="payment-option active" id="paystackOption" onclick="selectPayment('paystack')">Paystack</button>
+      <button class="payment-option" id="cryptoOption" onclick="selectPayment('crypto')">Crypto Soon</button>
+    </div>
+
+    <div class="notice">
+      Paystack supports card, bank transfer and local payments. Do not put your Paystack secret key in this HTML file.
+    </div>
+  </div>
+</section>
 
 <section class="section">
   <div class="section-title">PREMIUM PLANS</div>
@@ -393,9 +457,12 @@ body{
     <div class="plan-top">
       <div class="plan-title">
         <strong>Pro</strong>
-        <small>Advanced trading tools</small>
+        <small>Advanced trading tools for active traders</small>
       </div>
-      <div class="price">PRO</div>
+      <div class="price">
+        ₦9,000<br>
+        <small>/ month</small>
+      </div>
     </div>
 
     <div class="feature-row">
@@ -413,16 +480,26 @@ body{
       Cloud sync enabled
     </div>
 
-    <button class="btn" onclick="upgradePlan('PRO')">Activate Pro</button>
-  </div>
+    <div class="feature-row">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"/></svg>
+      Portfolio analytics
+    </div>
 
-  <div class="plan-card">
+    <button class="btn" onclick="startPayment('PRO',900000)">
+      Pay ₦9,000 With Paystack
+    </button>
+  </div>
+  
+    <div class="plan-card">
     <div class="plan-top">
       <div class="plan-title">
         <strong>Premium</strong>
         <small>Full Zella command access</small>
       </div>
-      <div class="price">VIP</div>
+      <div class="price">
+        ₦29,000<br>
+        <small>/ month</small>
+      </div>
     </div>
 
     <div class="feature-row">
@@ -445,7 +522,9 @@ body{
       VIP AI intelligence layer
     </div>
 
-    <button class="btn" onclick="upgradePlan('PREMIUM')">Activate Premium</button>
+    <button class="btn" onclick="startPayment('PREMIUM',2900000)">
+      Pay ₦29,000 With Paystack
+    </button>
   </div>
 
 </section>
@@ -478,6 +557,32 @@ body{
       <svg viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"/></svg>
       Advanced analytics and portfolio intelligence
     </div>
+  </div>
+
+  <div class="plan-card">
+    <div class="plan-title">
+      <strong>Payment Verification</strong>
+      <small>After payment, Zella sends the payment reference to the backend for verification.</small>
+    </div>
+
+    <div class="feature-row">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"/></svg>
+      Frontend payment popup ready
+    </div>
+
+    <div class="feature-row">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"/></svg>
+      Backend verification route required
+    </div>
+
+    <div class="feature-row">
+      <svg viewBox="0 0 24 24"><path d="M20 6L9 17L4 12"/></svg>
+      Firestore membership update required
+    </div>
+
+    <button class="btn btn-secondary" onclick="manualRefresh()">
+      Refresh Subscription
+    </button>
   </div>
 </section>
 
@@ -533,8 +638,36 @@ body{
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 
+const PAYSTACK_PUBLIC_KEY = "PASTE_YOUR_PAYSTACK_PUBLIC_KEY_HERE";
+
+let selectedPayment = "paystack";
+
 function go(page){
   window.location.href = page;
+}
+
+function selectPayment(method){
+  selectedPayment = method;
+
+  document.getElementById("paystackOption").classList.remove("active");
+  document.getElementById("cryptoOption").classList.remove("active");
+
+  if(method === "paystack"){
+    document.getElementById("paystackOption").classList.add("active");
+  }
+
+  if(method === "crypto"){
+    document.getElementById("cryptoOption").classList.add("active");
+    alert("Crypto payment will be added later.");
+  }
+}
+
+function getSavedUser(){
+  try{
+    return JSON.parse(localStorage.getItem("zellaUser") || "{}");
+  }catch(error){
+    return {};
+  }
 }
 
 async function getToken(){
@@ -584,8 +717,11 @@ async function loadSubscription(){
     const subscription = data.subscription || {};
     const limits = subscription.limits || {};
 
+    const plan =
+      subscription.plan || localStorage.getItem("zellaMembership") || "FREE";
+
     document.getElementById("currentPlan").textContent =
-      subscription.plan || "FREE";
+      plan;
 
     document.getElementById("autoAccess").textContent =
       limits.autoTrading ? "ON" : "OFF";
@@ -593,41 +729,121 @@ async function loadSubscription(){
     document.getElementById("signalLimit").textContent =
       limits.signalsPerDay >= 999999 ? "∞" : limits.signalsPerDay || "--";
 
-    document.getElementById("exchangeLimit").textContent =
-      limits.exchanges >= 999 ? "∞" : limits.exchanges || "--";
-
-  }catch(error){
-    document.getElementById("premiumStatus").textContent =
-      "Premium Engine • Unavailable";
-
-    document.getElementById("currentPlan").textContent =
-      "--";
-  }
-}
-
-async function upgradePlan(plan){
-  try{
-    const confirmed =
-      confirm("Activate " + plan + " plan?");
-
-    if(!confirmed){
-      return;
-    }
-
-    await apiFetch("/api/subscription/update",{
-      method:"POST",
-      body:JSON.stringify({ plan })
-    });
+    document.getElementById("paymentState").textContent =
+      subscription.paymentStatus || "Ready";
 
     localStorage.setItem("zellaMembership",plan);
 
-    await loadSubscription();
+  }catch(error){
+    document.getElementById("premiumStatus").textContent =
+      "Premium Engine • Backend Needed";
 
-    alert(plan + " activated.");
+    document.getElementById("currentPlan").textContent =
+      localStorage.getItem("zellaMembership") || "FREE";
+
+    document.getElementById("paymentState").textContent =
+      "Ready";
+  }
+}
+
+function startPayment(plan,amount){
+  try{
+    if(selectedPayment !== "paystack"){
+      alert("Paystack is the active payment method for now.");
+      return;
+    }
+
+    if(!PAYSTACK_PUBLIC_KEY || PAYSTACK_PUBLIC_KEY.includes("PASTE_")){
+      alert("Add your Paystack public key inside premium.html first.");
+      return;
+    }
+
+    const user = getSavedUser();
+
+    if(!user.email){
+      alert("User email not found. Please login again.");
+      return;
+    }
+
+    const handler = PaystackPop.setup({
+      key:PAYSTACK_PUBLIC_KEY,
+      email:user.email,
+      amount:amount,
+      currency:"NGN",
+      ref:"ZELLA_" + plan + "_" + Date.now(),
+
+      metadata:{
+        custom_fields:[
+          {
+            display_name:"Zella Plan",
+            variable_name:"zella_plan",
+            value:plan
+          },
+          {
+            display_name:"Zella User",
+            variable_name:"zella_user",
+            value:user.uid || user.email
+          }
+        ]
+      },
+
+      callback:function(response){
+        verifyPayment(response.reference,plan);
+      },
+
+      onClose:function(){
+        alert("Payment window closed.");
+      }
+    });
+
+    handler.openIframe();
 
   }catch(error){
     alert(error.message);
   }
+}
+
+async function verifyPayment(reference,plan){
+  try{
+    document.getElementById("premiumStatus").textContent =
+      "Premium Engine • Verifying Payment";
+
+    const data = await apiFetch("/api/paystack/verify",{
+      method:"POST",
+      body:JSON.stringify({
+        reference,
+        plan
+      })
+    });
+
+    localStorage.setItem("zellaMembership",plan);
+
+    document.getElementById("currentPlan").textContent =
+      plan;
+
+    document.getElementById("paymentState").textContent =
+      "Paid";
+
+    document.getElementById("premiumStatus").textContent =
+      "Premium Engine • Active";
+
+    alert(data.message || "Payment verified. Premium activated.");
+
+    await loadSubscription();
+
+  }catch(error){
+    alert(
+      "Payment received but backend verification is not ready yet. Reference: " +
+      reference
+    );
+
+    document.getElementById("premiumStatus").textContent =
+      "Premium Engine • Verification Pending";
+  }
+}
+
+function manualRefresh(){
+  loadSubscription();
 }
 
 loadSubscription();
@@ -637,6 +853,4 @@ loadSubscription();
 <script type="module" src="auth-guard.js"></script>
 
 </body>
-</html> 
-
- 
+</html>

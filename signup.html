@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zella Signup V11 Ultra</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:#020617;
+  color:white;
+  overflow-x:hidden;
+}
+
+.bg{
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background:
+    radial-gradient(circle at 18% 8%,rgba(56,189,248,.25),transparent 30%),
+    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
+    #020617;
+}
+
+.grid-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background-image:
+    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
+  background-size:42px 42px;
+  animation:gridMove 18s linear infinite;
+}
+
+@keyframes gridMove{
+  from{background-position:0 0}
+  to{background-position:0 420px}
+}
+
+.container{
+  width:92%;
+  max-width:560px;
+  margin:auto;
+  padding:24px 0 40px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
+}
+
+.brand h2{
+  font-size:34px;
+  letter-spacing:10px;
+  font-weight:950;
+}
+
+.brand span{
+  color:#38bdf8;
+  letter-spacing:5px;
+  font-size:14px;
+  font-weight:950;
+}
+
+.back-btn{
+  padding:12px 18px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.18);
+  background:rgba(15,23,42,.88);
+  color:#e5eefb;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.auth-card{
+  padding:28px;
+  border-radius:34px;
+  background:rgba(15,23,42,.88);
+  border:1px solid rgba(148,163,184,.14);
+  box-shadow:0 28px 80px rgba(0,0,0,.42);
+}
+
+.orbit{
+  width:210px;
+  height:210px;
+  margin:0 auto 24px;
+  position:relative;
+}
+
+.ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(56,189,248,.28);
+  animation:spin 14s linear infinite;
+}
+
+.r1{inset:0}
+.r2{inset:26px;animation-duration:18s}
+.r3{inset:52px;animation-duration:22s}
+
+.ring::before{
+  content:"";
+  position:absolute;
+  top:12px;
+  left:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#38bdf8;
+  box-shadow:0 0 18px #38bdf8;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.core{
+  position:absolute;
+  inset:70px;
+  border-radius:50%;
+  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+  box-shadow:
+    0 0 45px rgba(56,189,248,.85),
+    inset 0 0 28px rgba(2,6,23,.8);
+}
+
+.eyebrow{
+  color:#7dd3fc;
+  letter-spacing:7px;
+  font-size:12px;
+  font-weight:950;
+}
+
+.auth-card h1{
+  margin-top:16px;
+  font-size:42px;
+  line-height:1.05;
+}
+
+.auth-card p{
+  margin-top:14px;
+  color:#94a3b8;
+  line-height:1.7;
+  font-size:15px;
+}
+
+.tabs{
+  margin-top:22px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.tab{
+  padding:14px;
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.14);
+  background:#0f172a;
+  color:#94a3b8;
+  font-weight:950;
+  cursor:pointer;
+}
+
+.tab.active{
+  background:linear-gradient(135deg,#38bdf8,#2563eb);
+  color:#020617;
+}
+
+.form{
+  margin-top:22px;
+  display:none;
+}
+
+.form.active{
+  display:block;
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+.field label{
+  display:block;
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:850;
+  margin-bottom:8px;
+}
+
+.field input{
+  width:100%;
+  padding:15px;
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.15);
+  background:#020617;
+  color:white;
+  outline:none;
+}
+
+.field input:focus{
+  border-color:#38bdf8;
+  box-shadow:0 0 18px rgba(56,189,248,.16);
+}
+
+.btn{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:20px;
+  font-weight:950;
+  cursor:pointer;
+  margin-top:8px;
+}
+
+.primary{
+  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+  color:#020617;
+  box-shadow:0 0 35px rgba(56,189,248,.35);
+}
+
+.google{
+  background:#0f172a;
+  color:#e5eefb;
+  border:1px solid rgba(148,163,184,.16);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+.google svg{
+  width:22px;
+  height:22px;
+}
+
+.forgot{
+  margin-top:14px;
+  color:#38bdf8;
+  text-align:center;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.message{
+  margin-top:14px;
+  padding:13px;
+  border-radius:18px;
+  background:rgba(56,189,248,.10);
+  color:#7dd3fc;
+  font-size:13px;
+  line-height:1.6;
+  display:none;
+}
+
+.message.show{
+  display:block;
+}
+
+.error{
+  background:rgba(239,68,68,.12);
+  color:#fca5a5;
+}
+
+.success{
+  background:rgba(34,197,94,.12);
+  color:#86efac;
+}
+
+@media(max-width:430px){
+  .auth-card h1{
+    font-size:38px;
+  }
+
+  .brand h2{
+    font-size:30px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="grid-bg"></div>
+
+<main class="container">
+
+<header class="topbar">
+  <div class="brand">
+    <h2>ZELLA</h2>
+    <span>ACCESS</span>
+  </div>
+
+  <button class="back-btn" onclick="goHome()">Home</button>
+</header>
+
+<section class="auth-card">
+
+  <div class="orbit">
+    <div class="ring r1"></div>
+    <div class="ring r2"></div>
+    <div class="ring r3"></div>
+    <div class="core"></div>
+  </div>
+
+  <div class="eyebrow">ZELLA V11 ULTRA</div>
+
+  <h1>
+    Launch<br>
+    Zella.
+  </h1>
+
+  <p>
+    Create your account or login to enter your Zella AI trading command center.
+  </p>
+
+  <div class="tabs">
+    <button class="tab active" id="signupTab" onclick="showSignup()">SIGN UP</button>
+    <button class="tab" id="loginTab" onclick="showLogin()">LOGIN</button>
+  </div>
+
+  <div class="form active" id="signupForm">
+
+    <div class="field">
+      <label>Surname</label>
+      <input id="surname" placeholder="Enter surname">
+    </div>
+
+    <div class="field">
+      <label>Middle Name</label>
+      <input id="middleName" placeholder="Enter middle name">
+    </div>
+
+    <div class="field">
+      <label>Other Names</label>
+      <input id="otherNames" placeholder="Enter other names">
+    </div>
+
+    <div class="field">
+      <label>Email Address</label>
+      <input id="signupEmail" type="email" placeholder="Enter email address">
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input id="signupPassword" type="password" placeholder="Minimum 6 characters">
+    </div>
+
+    <div class="field">
+      <label>Confirm Password</label>
+      <input id="confirmPassword" type="password" placeholder="Confirm password">
+    </div>
+
+    <button class="btn primary" onclick="signupUser()">Create Account</button>
+
+    <button class="btn google" onclick="googleLogin()">
+      <svg viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/>
+      </svg>
+      Continue with Google
+    </button>
+
+  </div>
+
+  <div class="form" id="loginForm">
+
+    <div class="field">
+      <label>Email Address</label>
+      <input id="loginEmail" type="email" placeholder="Enter email address">
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input id="loginPassword" type="password" placeholder="Enter password">
+    </div>
+
+    <button class="btn primary" onclick="loginUser()">Login</button>
+
+    <button class="btn google" onclick="googleLogin()">
+      <svg viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/>
+      </svg>
+      Continue with Google
+    </button>
+
+    <div class="forgot" onclick="forgotPassword()">
+      Forgot Password?
+    </div>
+
+  </div>
+
+  <div class="message" id="messageBox"></div>
+
+</section>
+
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCQfmnqIL4_FlfDVGPl0o_oLdDQK4fUjeo",
+  authDomain: "zella-424f2.firebaseapp.com",
+  databaseURL: "https://zella-424f2-default-rtdb.firebaseio.com",
+  projectId: "zella-424f2",
+  storageBucket: "zella-424f2.firebasestorage.app",
+  messagingSenderId: "1008967672362",
+  appId: "1:1008967672362:web:20cdc14e463c1e81949953"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.showSignup = function(){
+  document.getElementById("signupTab").classList.add("active");
+  document.getElementById("loginTab").classList.remove("active");
+  document.getElementById("signupForm").classList.add("active");
+  document.getElementById("loginForm").classList.remove("active");
+  clearMessage();
+};
+
+window.showLogin = function(){
+  document.getElementById("loginTab").classList.add("active");
+  document.getElementById("signupTab").classList.remove("active");
+  document.getElementById("loginForm").classList.add("active");
+  document.getElementById("signupForm").classList.remove("active");
+  clearMessage();
+};
+
+window.goHome = function(){
+  window.location.href = "index.html";
+};
+
+function showMessage(text,type){
+  const box = document.getElementById("messageBox");
+  box.textContent = text;
+  box.className = "message show " + type;
+}
+
+function clearMessage(){
+  const box = document.getElementById("messageBox");
+  box.textContent = "";
+  box.className = "message";
+}
+
+function goSplash(){
+  window.location.href = "splash.html";
+}
+
+function requireValue(id,label){
+  const value = document.getElementById(id).value.trim();
+
+  if(!value){
+    throw new Error(label + " is required.");
+  }
+
+  return value;
+}
+
+async function saveUserProfile(user,profile){
+  const ref = doc(db,"users",user.uid);
+  const snap = await getDoc(ref);
+
+  const payload = {
+    uid:user.uid,
+    email:user.email || profile.email || "",
+    surname:profile.surname || "",
+    middleName:profile.middleName || "",
+    otherNames:profile.otherNames || "",
+    displayName:profile.displayName || "",
+    plan:"FREE",
+    role:"user",
+    provider:profile.provider || "email",
+    updatedAt:serverTimestamp()
+  };
+
+  if(!snap.exists()){
+    payload.createdAt = serverTimestamp();
+  }
+
+  await setDoc(ref,payload,{merge:true});
+}
+
+window.signupUser = async function(){
+  try{
+    clearMessage();
+
+    const surname = requireValue("surname","Surname");
+    const middleName = requireValue("middleName","Middle name");
+    const otherNames = requireValue("otherNames","Other names");
+    const email = requireValue("signupEmail","Email");
+    const password = requireValue("signupPassword","Password");
+    const confirmPassword = requireValue("confirmPassword","Confirm password");
+
+    if(password.length < 6){
+      throw new Error("Password must not be less than 6 characters.");
+    }
+
+    if(password !== confirmPassword){
+      throw new Error("Password and confirm password do not match.");
+    }
+
+    showMessage("Creating your Zella account...","success");
+
+    const credential =
+      await createUserWithEmailAndPassword(auth,email,password);
+
+    const displayName =
+      `${surname} ${middleName} ${otherNames}`.trim();
+
+    await updateProfile(credential.user,{
+      displayName
+    });
+
+    await saveUserProfile(credential.user,{
+      surname,
+      middleName,
+      otherNames,
+      email,
+      displayName,
+      provider:"email"
+    });
+
+    const token = await credential.user.getIdToken();
+
+    localStorage.setItem("zellaFirebaseToken",token);
+    localStorage.setItem("zellaUser",JSON.stringify({
+      uid:credential.user.uid,
+      email,
+      displayName
+    }));
+    localStorage.setItem("zellaMembership","FREE");
+
+    showMessage("Account created. Launching Zella...","success");
+
+    setTimeout(goSplash,900);
+
+  }catch(error){
+    showMessage(error.message,"error");
+  }
+};
+
+window.loginUser = async function(){
+  try{
+    clearMessage();
+
+    const email = requireValue("loginEmail","Email");
+    const password = requireValue("loginPassword","Password");
+
+    if(password.length < 6){
+      throw new Error("Password must not be less than 6 characters.");
+    }
+
+    showMessage("Logging in...","success");
+
+    const credential =
+      await signInWithEmailAndPassword(auth,email,password);
+
+    const token = await credential.user.getIdToken();
+
+    localStorage.setItem("zellaFirebaseToken",token);
+    localStorage.setItem("zellaUser",JSON.stringify({
+      uid:credential.user.uid,
+      email:credential.user.email,
+      displayName:credential.user.displayName || "Zella User"
+    }));
+
+    showMessage("Login successful. Launching Zella...","success");
+
+    setTimeout(goSplash,900);
+
+  }catch(error){
+    showMessage(error.message,"error");
+  }
+};
+
+window.googleLogin = async function(){
+  try{
+    clearMessage();
+
+    showMessage("Opening Google login...","success");
+
+    const provider = new GoogleAuthProvider();
+
+    const credential =
+      await signInWithPopup(auth,provider);
+
+    const user = credential.user;
+
+    await saveUserProfile(user,{
+      email:user.email || "",
+      displayName:user.displayName || "Zella User",
+      otherNames:user.displayName || "",
+      provider:"google"
+    });
+
+    const token = await user.getIdToken();
+
+    localStorage.setItem("zellaFirebaseToken",token);
+    localStorage.setItem("zellaUser",JSON.stringify({
+      uid:user.uid,
+      email:user.email,
+      displayName:user.displayName || "Zella User"
+    }));
+    localStorage.setItem("zellaMembership","FREE");
+
+    showMessage("Google login successful. Launching Zella...","success");
+
+    setTimeout(goSplash,900);
+
+  }catch(error){
+    showMessage(error.message,"error");
+  }
+};
+
+window.forgotPassword = async function(){
+  try{
+    clearMessage();
+
+    const email =
+      document.getElementById("loginEmail").value.trim() ||
+      prompt("Enter your email address for password reset:");
+
+    if(!email){
+      return;
+    }
+
+    await sendPasswordResetEmail(auth,email);
+
+    showMessage("Password reset email sent. Check your inbox.","success");
+
+  }catch(error){
+    showMessage(error.message,"error");
+  }
+};
+</script>
+
+</body>
+</html>

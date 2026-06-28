@@ -3,690 +3,385 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Zella Analytics V11 Ultra</title>
-
+<title>Zella Analytics V12 Ultra</title>
 <link rel="stylesheet" href="style.css">
-
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  min-height:100vh;
-  background:#020617;
-  color:white;
-  overflow-x:hidden;
-  padding-bottom:130px;
-}
-
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background:
-    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
-    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
-    #020617;
-}
-
-.grid-bg{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background-image:
-    linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
-  background-size:42px 42px;
-  animation:gridMove 18s linear infinite;
-}
-
-@keyframes gridMove{
-  from{background-position:0 0}
-  to{background-position:0 420px}
-}
-
-.container{
-  width:92%;
-  max-width:560px;
-  margin:auto;
-}
-
-.topbar{
-  width:92%;
-  max-width:560px;
-  margin:auto;
-  padding:22px 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.brand h2{
-  font-size:34px;
-  letter-spacing:10px;
-  font-weight:950;
-}
-
-.brand span{
-  color:#38bdf8;
-  letter-spacing:5px;
-  font-weight:950;
-  font-size:14px;
-}
-
-.user-badge{
-  width:54px;
-  height:54px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
-  color:#020617;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:950;
-  box-shadow:0 0 30px rgba(56,189,248,.5);
-}
-
-.hero,.section,.card{
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:0 22px 65px rgba(0,0,0,.38);
-}
-
-.hero{
-  padding:28px;
-  border-radius:34px;
-}
-
-.orbit{
-  width:245px;
-  height:245px;
-  margin:0 auto 24px;
-  position:relative;
-}
-
-.ring{
-  position:absolute;
-  border-radius:50%;
-  border:1px solid rgba(56,189,248,.28);
-  animation:spin 14s linear infinite;
-}
-
-.r1{inset:0}
-.r2{inset:28px;animation-duration:18s}
-.r3{inset:56px;animation-duration:22s}
-.r4{inset:84px;animation-duration:28s}
-
-.ring::before{
-  content:"";
-  position:absolute;
-  top:12px;
-  left:50%;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#38bdf8;
-  box-shadow:0 0 18px #38bdf8;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-.core{
-  position:absolute;
-  inset:82px;
-  border-radius:50%;
-  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
-  box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.core svg{
-  width:58px;
-  height:58px;
-  stroke:#020617;
-  fill:none;
-  stroke-width:2.5;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-.eyebrow{
-  color:#7dd3fc;
-  letter-spacing:8px;
-  font-size:13px;
-  font-weight:950;
-}
-
-.hero h1{
-  margin-top:20px;
-  font-size:48px;
-  line-height:1.05;
-}
-
-.hero p{
-  margin-top:18px;
-  color:#94a3b8;
-  font-size:16px;
-  line-height:1.8;
-}
-
-.status{
-  margin-top:18px;
-  display:inline-flex;
-  padding:11px 17px;
-  border-radius:999px;
-  background:rgba(34,197,94,.12);
-  color:#4ade80;
-  font-weight:950;
-}
-
-.stats{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.card{
-  padding:20px;
-  border-radius:26px;
-}
-
-.label{
-  color:#94a3b8;
-  font-size:13px;
-  font-weight:850;
-}
-
-.value{
-  margin-top:12px;
-  font-size:30px;
-  font-weight:950;
-}
-
-.sub{
-  margin-top:9px;
-  color:#94a3b8;
-  font-size:13px;
-  line-height:1.5;
-}
-
-.blue{color:#38bdf8}
-.green{color:#4ade80}
-.orange{color:#f59e0b}
-.red{color:#ef4444}
-
-.section{
-  margin-top:18px;
-  padding:22px;
-  border-radius:30px;
-}
-
-.section-title{
-  color:#38bdf8;
-  font-size:13px;
-  letter-spacing:6px;
-  font-weight:950;
-  margin-bottom:18px;
-}
-
-.analytics-card{
-  padding:18px;
-  border-radius:24px;
-  background:#0f172a;
-  border:1px solid rgba(148,163,184,.12);
-  margin-bottom:14px;
-}
-
-.analytics-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-
-.analytics-top strong{
-  display:block;
-  font-size:20px;
-}
-
-.analytics-top small{
-  color:#94a3b8;
-}
-
-.bar{
-  height:10px;
-  border-radius:999px;
-  background:rgba(148,163,184,.12);
-  overflow:hidden;
-  margin-top:14px;
-}
-
-.fill{
-  height:100%;
-  width:0%;
-  border-radius:999px;
-  background:linear-gradient(90deg,#38bdf8,#22c55e);
-}
-
-.row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 0;
-  border-bottom:1px solid rgba(148,163,184,.1);
-}
-
-.row:last-child{
-  border-bottom:none;
-}
-
-.row-left strong{
-  display:block;
-}
-
-.row-left small{
-  color:#94a3b8;
-}
-
-.row-right{
-  text-align:right;
-}
-
-.row-right strong{
-  display:block;
-}
-
-.row-right small{
-  color:#94a3b8;
-}
-
-@media(max-width:430px){
-  .hero h1{font-size:42px}
-  .brand h2{font-size:30px}
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-bottom:130px}
+.bg{position:fixed;inset:0;z-index:-3;background:radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),#020617}
+.grid-bg{position:fixed;inset:0;z-index:-2;background-image:linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);background-size:42px 42px;animation:gridMove 18s linear infinite}
+@keyframes gridMove{from{background-position:0 0}to{background-position:0 420px}}
+.container{width:92%;max-width:560px;margin:auto}
+.topbar{width:92%;max-width:560px;margin:auto;padding:22px 0;display:flex;align-items:center;justify-content:space-between}
+.brand h2{font-size:34px;letter-spacing:10px;font-weight:950}
+.brand span{color:#38bdf8;letter-spacing:5px;font-weight:950;font-size:14px}
+.user-badge{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);color:#020617;display:flex;align-items:center;justify-content:center;font-weight:950;box-shadow:0 0 30px rgba(56,189,248,.5)}
+.hero,.section,.card{background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.14);box-shadow:0 22px 65px rgba(0,0,0,.38)}
+.hero{padding:28px;border-radius:34px}
+.eyebrow{color:#7dd3fc;letter-spacing:8px;font-size:13px;font-weight:950}
+.hero h1{margin-top:20px;font-size:48px;line-height:1.05}
+.hero p{margin-top:18px;color:#94a3b8;font-size:16px;line-height:1.8}
+.status{margin-top:18px;display:inline-flex;padding:11px 17px;border-radius:999px;background:rgba(34,197,94,.12);color:#4ade80;font-weight:950}
+.controls{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.controls select,.controls button{width:100%;padding:15px;border-radius:18px;border:1px solid rgba(148,163,184,.15);background:#020617;color:white;outline:none;font-weight:900}
+.controls button{background:linear-gradient(135deg,#38bdf8,#2563eb);color:#020617;border:none;cursor:pointer}
+.stats{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{padding:20px;border-radius:26px}
+.label{color:#94a3b8;font-size:13px;font-weight:850}
+.value{margin-top:12px;font-size:30px;font-weight:950}
+.sub{margin-top:9px;color:#94a3b8;font-size:13px;line-height:1.5}
+.blue{color:#38bdf8}.green{color:#4ade80}.orange{color:#f59e0b}.red{color:#ef4444}
+.section{margin-top:18px;padding:22px;border-radius:30px}
+.section-title{color:#38bdf8;font-size:13px;letter-spacing:6px;font-weight:950;margin-bottom:18px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid rgba(148,163,184,.1)}
+.row:last-child{border-bottom:none}
+.row-left strong,.row-right strong{display:block}
+.row-left small,.row-right small{color:#94a3b8}
+.row-right{text-align:right}
+.pill{display:inline-flex;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:950;background:rgba(56,189,248,.12);color:#38bdf8;margin:4px 6px 4px 0}
+.meter{margin-top:12px;height:10px;border-radius:999px;background:#020617;overflow:hidden;border:1px solid rgba(148,163,184,.14)}
+.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#38bdf8,#4ade80)}
+.reason p{color:#94a3b8;line-height:1.7;font-size:13px;margin-top:8px}
+@media(max-width:430px){.hero h1{font-size:42px}.brand h2{font-size:30px}}
 </style>
 </head>
-
 <body>
-
 <div class="bg"></div>
 <div class="grid-bg"></div>
 
 <header class="topbar">
-  <div class="brand">
-    <h2>ZELLA</h2>
-    <span>ANALYTICS</span>
-  </div>
-
-  <div class="user-badge">Z</div>
+ <div class="brand">
+  <h2>ZELLA</h2>
+  <span>ANALYTICS</span>
+ </div>
+ <div class="user-badge">Z</div>
 </header>
 
 <main class="container">
-
 <section class="hero">
-  <div class="orbit">
-    <div class="ring r1"></div>
-    <div class="ring r2"></div>
-    <div class="ring r3"></div>
-    <div class="ring r4"></div>
+ <div class="eyebrow">ZELLA ANALYTICS V12 ULTRA</div>
+ <h1>Deep Market<br>Analysis.</h1>
+ <p>
+  Institutional-grade Cortex analysis with trend, momentum, candles,
+  structure, risk, AI Council, evidence and trade plan.
+ </p>
+ <div class="status" id="analyticsStatus">Analytics • Connecting</div>
 
-    <div class="core">
-      <svg viewBox="0 0 24 24">
-        <path d="M4 19V5"/>
-        <path d="M4 19H20"/>
-        <path d="M8 16L11 12L14 14L19 7"/>
-      </svg>
-    </div>
-  </div>
+ <div class="controls">
+  <select id="symbolSelect">
+   <option value="BTC">BTC</option>
+   <option value="ETH">ETH</option>
+   <option value="SOL">SOL</option>
+   <option value="BNB">BNB</option>
+   <option value="XRP">XRP</option>
+  </select>
+  <select id="timeframeSelect">
+   <option value="1m">1 Minute</option>
+   <option value="3m">3 Minutes</option>
+   <option value="5m">5 Minutes</option>
+   <option value="15m">15 Minutes</option>
+   <option value="30m">30 Minutes</option>
+   <option value="1h" selected>1 Hour</option>
+   <option value="4h">4 Hours</option>
+   <option value="1d">1 Day</option>
+   <option value="1w">1 Week</option>
+   <option value="1M">1 Month</option>
+  </select>
+ </div>
 
-  <div class="eyebrow">ANALYTICS CENTER V11 ULTRA</div>
-
-  <h1>
-    Performance<br>
-    Intelligence.
-  </h1>
-
-  <p>
-    Analyze live market strength, signal confidence, exchange readiness,
-    wallet sync and Zella system performance using real backend data.
-  </p>
-
-  <div class="status" id="analyticsStatus">
-    Analytics Engine • Checking
-  </div>
+ <div class="controls">
+  <button onclick="loadAnalytics()">Run Cortex Analysis</button>
+  <button onclick="openCopilot()">Ask Copilot</button>
+ </div>
 </section>
 
 <div class="stats">
-  <div class="card">
-    <div class="label">Top Asset</div>
-    <div class="value blue" id="topAsset">--</div>
-    <div class="sub">Highest confidence</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Avg Confidence</div>
-    <div class="value green" id="avgConfidence">--</div>
-    <div class="sub">Signal quality</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Market Bias</div>
-    <div class="value orange" id="marketBias">--</div>
-    <div class="sub">Live signal direction</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Exchanges</div>
-    <div class="value blue" id="exchangeCount">--</div>
-    <div class="sub">Connected accounts</div>
-  </div>
+ <div class="card">
+  <div class="label">Recommendation</div>
+  <div class="value blue" id="recValue">--</div>
+  <div class="sub" id="recSub">Waiting for Cortex</div>
+ </div>
+ <div class="card">
+  <div class="label">Confidence</div>
+  <div class="value green" id="confidenceValue">--</div>
+  <div class="sub">AI confidence score</div>
+ </div>
+ <div class="card">
+  <div class="label">Conviction</div>
+  <div class="value orange" id="convictionValue">--</div>
+  <div class="sub">Evidence weight</div>
+ </div>
+ <div class="card">
+  <div class="label">Risk</div>
+  <div class="value orange" id="riskValue">--</div>
+  <div class="sub">Cortex risk status</div>
+ </div>
 </div>
 
 <section class="section">
-  <div class="section-title">SIGNAL PERFORMANCE</div>
-
-  <div id="signalAnalytics">
-    <p class="sub">Loading live signal analytics...</p>
-  </div>
+ <div class="section-title">MARKET DNA</div>
+ <div id="marketDNA"><p class="sub">Waiting for live analysis...</p></div>
 </section>
 
 <section class="section">
-  <div class="section-title">SYSTEM READINESS</div>
-
-  <div id="systemReadiness">
-    <p class="sub">Checking Zella systems...</p>
-  </div>
+ <div class="section-title">TRADE PLAN</div>
+ <div id="tradePlan"><p class="sub">Waiting for trade plan...</p></div>
 </section>
 
 <section class="section">
-  <div class="section-title">PORTFOLIO READINESS</div>
-
-  <div id="portfolioReadiness">
-    <p class="sub">Checking synced portfolio...</p>
-  </div>
+ <div class="section-title">EVIDENCE ENGINE</div>
+ <div id="evidenceBox"><p class="sub">Waiting for evidence scores...</p></div>
 </section>
 
+<section class="section">
+ <div class="section-title">AI COUNCIL</div>
+ <div id="councilBox"><p class="sub">Waiting for AI Council...</p></div>
+</section>
+
+<section class="section">
+ <div class="section-title">ENGINE BREAKDOWN</div>
+ <div id="engineBreakdown"><p class="sub">Waiting for engine results...</p></div>
+</section>
+
+<section class="section">
+ <div class="section-title">WHY / WHY NOT</div>
+ <div id="whyBox"><p class="sub">Waiting for explanation...</p></div>
+</section>
+
+<section class="section">
+ <div class="section-title">HEALTH CHECK</div>
+ <div id="healthBox"><p class="sub">Waiting for health check...</p></div>
+</section>
 </main>
 
 <nav class="bottom-dock">
-
-  <div class="dock-item" onclick="go('dashboard.html')">
-    <svg viewBox="0 0 24 24">
-      <path d="M3 11L12 4L21 11"/>
-      <path d="M5 10V21H19V10"/>
-      <path d="M9 21V14H15V21"/>
-    </svg>
-  </div>
-
-  <div class="dock-item" onclick="go('scanner.html')">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 19V5"/>
-      <path d="M4 19H20"/>
-      <path d="M8 16L11 12L14 14L19 7"/>
-    </svg>
-  </div>
-
-  <div class="ai-dock" onclick="go('copilot.html')">
-    <svg viewBox="0 0 24 24">
-      <rect x="5" y="7" width="14" height="11" rx="4"/>
-      <path d="M9 11H9.01"/>
-      <path d="M15 11H15.01"/>
-      <path d="M12 3V7"/>
-    </svg>
-  </div>
-
-  <div class="dock-item" onclick="go('market.html')">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 18V6"/>
-      <path d="M8 18V10"/>
-      <path d="M12 18V4"/>
-      <path d="M16 18V8"/>
-      <path d="M20 18V12"/>
-    </svg>
-  </div>
-
-  <div class="dock-item active" onclick="go('more.html')">
-    <svg viewBox="0 0 24 24">
-      <circle cx="5" cy="12" r="1.6"/>
-      <circle cx="12" cy="12" r="1.6"/>
-      <circle cx="19" cy="12" r="1.6"/>
-    </svg>
-  </div>
-
+ <div class="dock-item" onclick="go('dashboard.html')">
+  <svg viewBox="0 0 24 24"><path d="M3 11L12 4L21 11"/><path d="M5 10V21H19V10"/><path d="M9 21V14H15V21"/></svg>
+ </div>
+ <div class="dock-item" onclick="go('scanner.html')">
+  <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/></svg>
+ </div>
+ <div class="ai-dock" onclick="go('copilot.html')">
+  <svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/><path d="M12 3V7"/></svg>
+ </div>
+ <div class="dock-item" onclick="go('market.html')">
+  <svg viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M8 18V10"/><path d="M12 18V4"/><path d="M16 18V8"/><path d="M20 18V12"/></svg>
+ </div>
+ <div class="dock-item active" onclick="go('more.html')">
+  <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+ </div>
 </nav>
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 
-function go(page){
-  window.location.href = page;
+function go(page){window.location.href = page}
+
+function escapeHTML(text){
+ return String(text || "")
+ .replaceAll("&","&amp;")
+ .replaceAll("<","&lt;")
+ .replaceAll(">","&gt;");
 }
 
-async function getToken(){
-  if(window.zellaGetToken){
-    return await window.zellaGetToken();
-  }
-
-  const saved =
-    localStorage.getItem("zellaFirebaseToken") ||
-    localStorage.getItem("zellaToken");
-
-  if(saved){
-    return saved;
-  }
-
-  throw new Error("Login session token not found. Please login again.");
+function formatMoney(value){
+ const number = Number(value || 0);
+ if(!Number.isFinite(number)) return "--";
+ if(number >= 1000){
+  return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
+ }
+ return "$" + number.toFixed(4);
 }
 
-async function apiFetch(path,options = {}){
-  const token = await getToken();
-
-  const response = await fetch(API_URL + path,{
-    ...options,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization":"Bearer " + token,
-      ...(options.headers || {})
-    }
-  });
-
-  const data = await response.json();
-
-  if(!data.success){
-    throw new Error(data.message || data.error || "Request failed.");
-  }
-
-  return data;
+function getParam(name){
+ return new URLSearchParams(window.location.search).get(name);
 }
 
-async function publicFetch(path){
-  const response = await fetch(API_URL + path);
-  const data = await response.json();
-
-  if(!data.success){
-    throw new Error(data.message || data.error || "Request failed.");
-  }
-
-  return data;
+function colorAction(action){
+ const text = String(action || "").toUpperCase();
+ if(text.includes("BUY")) return "green";
+ if(text.includes("SELL")) return "red";
+ if(text.includes("NO TRADE")) return "orange";
+ return "orange";
 }
 
-function renderSignalAnalytics(signals){
-  const box = document.getElementById("signalAnalytics");
-  box.innerHTML = "";
+function renderEvidence(evidence){
+ const items = [
+  ["Trend", evidence.trend],
+  ["Momentum", evidence.momentum],
+  ["Volume", evidence.volume],
+  ["Candles", evidence.candles],
+  ["Market Structure", evidence.marketStructure],
+  ["Support / Resistance", evidence.supportResistance],
+  ["Risk Quality", evidence.riskQuality]
+ ];
 
-  signals.forEach(item=>{
-    const confidence = Number(item.confidence || 0);
-
-    box.innerHTML += `
-      <div class="analytics-card">
-        <div class="analytics-top">
-          <div>
-            <strong>${item.symbol} ${item.signal}</strong>
-            <small>${item.name} • ${item.risk} Risk • ${item.source || "Live"}</small>
-          </div>
-
-          <strong class="blue">${confidence}%</strong>
-        </div>
-
-        <div class="bar">
-          <div class="fill" style="width:${confidence}%"></div>
-        </div>
-      </div>
-    `;
-  });
-}
-
-function renderSystemStatus(status){
-  const box = document.getElementById("systemReadiness");
-  const modules = status.modules || {};
-
-  box.innerHTML = `
-    <div class="row">
-      <div class="row-left">
-        <strong>Market Engine</strong>
-        <small>5-source fallback</small>
-      </div>
-      <div class="row-right">
-        <strong class="green">${modules.marketEngine || "--"}</strong>
-      </div>
+ document.getElementById("evidenceBox").innerHTML = items.map(item=>{
+  const value = Number(item[1] || 0);
+  return `
+   <div class="row">
+    <div class="row-left">
+     <strong>${item[0]}</strong>
+     <small>Evidence score</small>
     </div>
-
-    <div class="row">
-      <div class="row-left">
-        <strong>Signal Engine</strong>
-        <small>Live signal analytics</small>
-      </div>
-      <div class="row-right">
-        <strong class="green">${modules.signalEngine || "--"}</strong>
-      </div>
+    <div class="row-right">
+     <strong class="blue">${value}</strong>
+     <small>/100</small>
     </div>
-
-    <div class="row">
-      <div class="row-left">
-        <strong>Copilot</strong>
-        <small>AI assistant backend</small>
-      </div>
-      <div class="row-right">
-        <strong class="blue">${modules.copilot || "--"}</strong>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="row-left">
-        <strong>Auto Trading</strong>
-        <small>Execution engine</small>
-      </div>
-      <div class="row-right">
-        <strong class="orange">${modules.autoTrading || "--"}</strong>
-      </div>
-    </div>
+   </div>
+   <div class="meter"><div class="fill" style="width:${Math.max(0,Math.min(100,value))}%"></div></div>
   `;
+ }).join("");
 }
 
-function renderPortfolio(portfolios){
-  const box = document.getElementById("portfolioReadiness");
+function renderCouncil(council){
+ document.getElementById("councilBox").innerHTML = council.map(item=>`
+  <div class="row">
+   <div class="row-left">
+    <strong>${escapeHTML(item.analyst)}</strong>
+    <small>Specialist vote</small>
+   </div>
+   <div class="row-right">
+    <strong class="${colorAction(item.verdict)}">${escapeHTML(item.verdict)}</strong>
+    <small>${item.confidence}% confidence</small>
+   </div>
+  </div>
+ `).join("");
+}
 
-  if(!portfolios.length){
-    box.innerHTML =
-      `<p class="sub">No synced portfolio found. Connect an exchange first.</p>`;
-    return;
-  }
+function renderBreakdown(analysis){
+ const a = analysis.analysis || {};
+ const items = [
+  ["Trend Engine", a.trend?.direction, a.trend?.score],
+  ["Momentum Engine", a.momentum?.state, a.momentum?.score],
+  ["Volume Engine", a.volume?.state, a.volume?.score],
+  ["Candle Engine", a.candles?.pattern, a.candles?.score],
+  ["Structure Engine", a.structure?.structure, a.structure?.score],
+  ["Support", formatMoney(a.supportResistance?.support), a.supportResistance?.score],
+  ["Resistance", formatMoney(a.supportResistance?.resistance), a.supportResistance?.score],
+  ["Volatility Risk", a.volatility?.risk, a.volatility?.riskScore]
+ ];
 
-  box.innerHTML = "";
+ document.getElementById("engineBreakdown").innerHTML = items.map(item=>`
+  <div class="row">
+   <div class="row-left">
+    <strong>${escapeHTML(item[0])}</strong>
+    <small>${escapeHTML(item[1] || "--")}</small>
+   </div>
+   <div class="row-right">
+    <strong class="blue">${item[2] !== undefined ? item[2] : "--"}</strong>
+    <small>score</small>
+   </div>
+  </div>
+ `).join("");
+}
 
-  portfolios.forEach(item=>{
-    box.innerHTML += `
-      <div class="row">
-        <div class="row-left">
-          <strong>${String(item.exchange).toUpperCase()}</strong>
-          <small>Last sync: ${item.syncedAt || "Unknown"}</small>
-        </div>
+function renderAnalysis(data){
+ const rec = data.recommendation || {};
+ const plan = data.tradePlan || {};
+ const dna = data.marketDNA || {};
+ const cls = colorAction(rec.action);
 
-        <div class="row-right">
-          <strong class="green">Synced</strong>
-          <small>Portfolio ready</small>
-        </div>
-      </div>
-    `;
-  });
+ document.getElementById("recValue").textContent = rec.action || "--";
+ document.getElementById("recValue").className = "value " + cls;
+ document.getElementById("recSub").textContent = `${data.symbol} • ${data.timeframe} • ${data.regime}`;
+ document.getElementById("confidenceValue").textContent = (rec.confidence || 0) + "%";
+ document.getElementById("convictionValue").textContent = rec.conviction || "--";
+ document.getElementById("riskValue").textContent = rec.risk || "--";
+
+ document.getElementById("marketDNA").innerHTML = `
+  <div class="row">
+   <div class="row-left"><strong>Personality</strong><small>${escapeHTML(dna.personality || "--")}</small></div>
+   <div class="row-right"><strong class="blue">${escapeHTML(data.regime || "--")}</strong><small>Regime</small></div>
+  </div>
+  <p class="sub">${escapeHTML(dna.behavior || "")}</p>
+  <p class="sub">${escapeHTML(dna.bestApproach || "")}</p>
+ `;
+
+ document.getElementById("tradePlan").innerHTML = `
+  <div class="row">
+   <div class="row-left"><strong>Current Price</strong><small>${formatMoney(plan.currentPrice || data.market?.price)}</small></div>
+   <div class="row-right"><strong>${escapeHTML(plan.holdingPeriod || "--")}</strong><small>Holding period</small></div>
+  </div>
+  <div class="row">
+   <div class="row-left"><strong>Entry Zone</strong><small>${formatMoney(plan.entryZone?.low)} - ${formatMoney(plan.entryZone?.high)}</small></div>
+   <div class="row-right"><strong>Stop Loss</strong><small>${formatMoney(plan.stopLoss)}</small></div>
+  </div>
+  <div class="row">
+   <div class="row-left"><strong>TP1</strong><small>${formatMoney(plan.takeProfit1)}</small></div>
+   <div class="row-right"><strong>TP2</strong><small>${formatMoney(plan.takeProfit2)}</small></div>
+  </div>
+  <p class="sub">Invalidation: ${escapeHTML(plan.invalidation || "Wait for confirmation.")}</p>
+ `;
+
+ renderEvidence(data.evidence || {});
+ renderCouncil(data.aiCouncil || []);
+ renderBreakdown(data);
+
+ document.getElementById("whyBox").innerHTML = `
+  <div class="reason">
+   <strong class="green">Why this verdict?</strong>
+   ${(data.explanation || []).map(x=>`<p>• ${escapeHTML(x)}</p>`).join("")}
+  </div>
+  <div class="reason" style="margin-top:16px">
+   <strong class="orange">Why not?</strong>
+   ${(data.whyNot || []).map(x=>`<p>• ${escapeHTML(x)}</p>`).join("")}
+  </div>
+ `;
+
+ const h = data.healthCheck || {};
+ document.getElementById("healthBox").innerHTML = `
+  <div class="row"><div class="row-left"><strong>Data Quality</strong><small>Candle depth</small></div><div class="row-right"><strong class="green">${h.dataQuality || "--"}%</strong></div></div>
+  <div class="row"><div class="row-left"><strong>Indicator Agreement</strong><small>Trend vs momentum</small></div><div class="row-right"><strong class="blue">${h.indicatorAgreement || "--"}%</strong></div></div>
+  <div class="row"><div class="row-left"><strong>Market Clarity</strong><small>Directional quality</small></div><div class="row-right"><strong class="orange">${h.marketClarity || "--"}%</strong></div></div>
+  <div class="row"><div class="row-left"><strong>Reliability</strong><small>Confidence + risk quality</small></div><div class="row-right"><strong class="green">${h.recommendationReliability || "--"}%</strong></div></div>
+ `;
 }
 
 async function loadAnalytics(){
-  try{
-    document.getElementById("analyticsStatus").textContent =
-      "Analytics Engine • Live";
+ const symbol = document.getElementById("symbolSelect").value;
+ const timeframe = document.getElementById("timeframeSelect").value;
 
-    const signalsData = await publicFetch("/api/signals/live");
-    const systemData = await publicFetch("/api/system/status");
+ localStorage.setItem("zellaSelectedSymbol",symbol);
+ localStorage.setItem("zellaSelectedTimeframe",timeframe);
 
-    const signals = (signalsData.signals || [])
-      .slice()
-      .sort((a,b)=>Number(b.confidence || 0) - Number(a.confidence || 0));
+ try{
+  document.getElementById("analyticsStatus").textContent = "Analytics • Analyzing";
+  const response = await fetch(`${API_URL}/api/cortex/analyze/${symbol}/${timeframe}`);
+  const data = await response.json();
 
-    const top = signals[0];
-    const avg = signals.length
-      ? Math.round(signals.reduce((sum,x)=>sum + Number(x.confidence || 0),0) / signals.length)
-      : 0;
-
-    document.getElementById("topAsset").textContent =
-      top ? top.symbol : "--";
-
-    document.getElementById("avgConfidence").textContent =
-      avg ? avg + "%" : "--";
-
-    document.getElementById("marketBias").textContent =
-      top && String(top.signal).includes("BUY")
-        ? "Bullish"
-        : top && String(top.signal).includes("SELL")
-          ? "Bearish"
-          : "Neutral";
-
-    renderSignalAnalytics(signals);
-    renderSystemStatus(systemData);
-
-    try{
-      const portfolioData = await apiFetch("/api/portfolio/latest");
-      const portfolios = portfolioData.portfolios || [];
-
-      document.getElementById("exchangeCount").textContent =
-        portfolios.length;
-
-      renderPortfolio(portfolios);
-
-    }catch(error){
-      document.getElementById("exchangeCount").textContent =
-        "--";
-
-      document.getElementById("portfolioReadiness").innerHTML =
-        `<p class="sub red">${error.message}</p>`;
-    }
-
-  }catch(error){
-    document.getElementById("analyticsStatus").textContent =
-      "Analytics Engine • Unavailable";
-
-    document.getElementById("signalAnalytics").innerHTML =
-      `<p class="sub red">${error.message}</p>`;
+  if(!data.success){
+   throw new Error(data.message || data.error || "Analysis unavailable");
   }
+
+  renderAnalysis(data);
+  document.getElementById("analyticsStatus").textContent = "Analytics • Live";
+ }catch(error){
+  document.getElementById("analyticsStatus").textContent = "Analytics • Unavailable";
+  document.getElementById("marketDNA").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
+ }
 }
 
-loadAnalytics();
-setInterval(loadAnalytics,30000);
+function openCopilot(){
+ const symbol = document.getElementById("symbolSelect").value;
+ const timeframe = document.getElementById("timeframeSelect").value;
+ localStorage.setItem("zellaSelectedSymbol",symbol);
+ localStorage.setItem("zellaSelectedTimeframe",timeframe);
+ window.location.href = "copilot.html";
+}
+
+function boot(){
+ const symbol = getParam("symbol") || localStorage.getItem("zellaSelectedSymbol") || "BTC";
+ const timeframe = getParam("timeframe") || localStorage.getItem("zellaSelectedTimeframe") || "1h";
+ document.getElementById("symbolSelect").value = symbol;
+ document.getElementById("timeframeSelect").value = timeframe;
+ loadAnalytics();
+}
+
+boot();
 </script>
 
 <script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
-
 </body>
 </html>

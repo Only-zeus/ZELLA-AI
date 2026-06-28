@@ -3,828 +3,575 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Zella Auto Trader V11 Ultra</title>
-
+<title>Zella Auto Trader V12 Ultra</title>
 <link rel="stylesheet" href="style.css">
-
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  min-height:100vh;
-  background:#020617;
-  color:white;
-  overflow-x:hidden;
-  padding-bottom:130px;
-}
-
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background:
-    radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
-    radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
-    #020617;
-}
-
-.grid-bg{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background-image:
-    linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
-  background-size:42px 42px;
-  animation:gridMove 18s linear infinite;
-}
-
-@keyframes gridMove{
-  from{background-position:0 0}
-  to{background-position:0 420px}
-}
-
-.container{
-  width:92%;
-  max-width:560px;
-  margin:auto;
-}
-
-.topbar{
-  width:92%;
-  max-width:560px;
-  margin:auto;
-  padding:22px 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.brand h2{
-  font-size:34px;
-  letter-spacing:10px;
-  font-weight:950;
-}
-
-.brand span{
-  color:#38bdf8;
-  letter-spacing:5px;
-  font-weight:950;
-  font-size:14px;
-}
-
-.user-badge{
-  width:54px;
-  height:54px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
-  color:#020617;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:950;
-  box-shadow:0 0 30px rgba(56,189,248,.5);
-}
-
-.hero,.section,.card{
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:0 22px 65px rgba(0,0,0,.38);
-}
-
-.hero{
-  padding:28px;
-  border-radius:34px;
-}
-
-.orbit{
-  width:245px;
-  height:245px;
-  margin:0 auto 24px;
-  position:relative;
-}
-
-.ring{
-  position:absolute;
-  border-radius:50%;
-  border:1px solid rgba(56,189,248,.28);
-  animation:spin 14s linear infinite;
-}
-
-.r1{inset:0}
-.r2{inset:28px;animation-duration:18s}
-.r3{inset:56px;animation-duration:22s}
-.r4{inset:84px;animation-duration:28s}
-
-.ring::before{
-  content:"";
-  position:absolute;
-  top:12px;
-  left:50%;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#38bdf8;
-  box-shadow:0 0 18px #38bdf8;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-.core{
-  position:absolute;
-  inset:82px;
-  border-radius:50%;
-  background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
-  box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.core svg{
-  width:58px;
-  height:58px;
-  stroke:#020617;
-  fill:none;
-  stroke-width:2.5;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-.eyebrow{
-  color:#7dd3fc;
-  letter-spacing:8px;
-  font-size:13px;
-  font-weight:950;
-}
-
-.hero h1{
-  margin-top:20px;
-  font-size:48px;
-  line-height:1.05;
-}
-
-.hero p{
-  margin-top:18px;
-  color:#94a3b8;
-  font-size:16px;
-  line-height:1.8;
-}
-
-.status{
-  margin-top:18px;
-  display:inline-flex;
-  padding:11px 17px;
-  border-radius:999px;
-  background:rgba(245,158,11,.12);
-  color:#fbbf24;
-  font-weight:950;
-}
-
-.stats{
-  margin-top:18px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.card{
-  padding:20px;
-  border-radius:26px;
-}
-
-.label{
-  color:#94a3b8;
-  font-size:13px;
-  font-weight:850;
-}
-
-.value{
-  margin-top:12px;
-  font-size:30px;
-  font-weight:950;
-}
-
-.sub{
-  margin-top:9px;
-  color:#94a3b8;
-  font-size:13px;
-  line-height:1.5;
-}
-
-.blue{color:#38bdf8}
-.green{color:#4ade80}
-.orange{color:#f59e0b}
-.red{color:#ef4444}
-
-.section{
-  margin-top:18px;
-  padding:22px;
-  border-radius:30px;
-}
-
-.section-title{
-  color:#38bdf8;
-  font-size:13px;
-  letter-spacing:6px;
-  font-weight:950;
-  margin-bottom:18px;
-}
-
-.field{
-  margin-bottom:14px;
-}
-
-.field label{
-  display:block;
-  color:#94a3b8;
-  font-size:13px;
-  font-weight:850;
-  margin-bottom:8px;
-}
-
-.field input,.field select{
-  width:100%;
-  padding:15px;
-  border-radius:18px;
-  border:1px solid rgba(148,163,184,.15);
-  background:#020617;
-  color:white;
-  outline:none;
-}
-
-.field input:focus,.field select:focus{
-  border-color:#38bdf8;
-  box-shadow:0 0 18px rgba(56,189,248,.16);
-}
-
-.btn-row{
-  display:flex;
-  gap:12px;
-  margin-top:16px;
-}
-
-.btn{
-  flex:1;
-  padding:15px;
-  border:none;
-  border-radius:18px;
-  font-weight:950;
-  cursor:pointer;
-}
-
-.primary{
-  background:linear-gradient(135deg,#38bdf8,#2563eb);
-  color:#020617;
-}
-
-.secondary{
-  background:#0f172a;
-  color:#e5eefb;
-  border:1px solid rgba(148,163,184,.14);
-}
-
-.danger{
-  background:rgba(239,68,68,.14);
-  color:#ef4444;
-  border:1px solid rgba(239,68,68,.25);
-}
-
-.warning-box{
-  padding:15px;
-  border-radius:20px;
-  background:rgba(245,158,11,.10);
-  border:1px solid rgba(245,158,11,.20);
-  color:#fbbf24;
-  line-height:1.7;
-  font-size:13px;
-}
-
-.signal-card{
-  padding:18px;
-  border-radius:24px;
-  background:#0f172a;
-  border:1px solid rgba(148,163,184,.12);
-  margin-bottom:14px;
-}
-
-.signal-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-}
-
-.signal-title strong{
-  display:block;
-  font-size:20px;
-}
-
-.signal-title small{
-  color:#94a3b8;
-}
-
-.pill{
-  padding:9px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:950;
-}
-
-.ready{
-  color:#4ade80;
-  background:rgba(34,197,94,.12);
-}
-
-.locked{
-  color:#f59e0b;
-  background:rgba(245,158,11,.12);
-}
-
-@media(max-width:430px){
-  .hero h1{font-size:42px}
-  .brand h2{font-size:30px}
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-bottom:130px}
+.bg{position:fixed;inset:0;z-index:-3;background:radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),#020617}
+.grid-bg{position:fixed;inset:0;z-index:-2;background-image:linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);background-size:42px 42px;animation:gridMove 18s linear infinite}
+@keyframes gridMove{from{background-position:0 0}to{background-position:0 420px}}
+.container{width:92%;max-width:560px;margin:auto}
+.topbar{width:92%;max-width:560px;margin:auto;padding:22px 0;display:flex;align-items:center;justify-content:space-between}
+.brand h2{font-size:34px;letter-spacing:10px;font-weight:950}
+.brand span{color:#38bdf8;letter-spacing:5px;font-weight:950;font-size:14px}
+.user-badge{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);color:#020617;display:flex;align-items:center;justify-content:center;font-weight:950;box-shadow:0 0 30px rgba(56,189,248,.5)}
+.hero,.section,.card{background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.14);box-shadow:0 22px 65px rgba(0,0,0,.38)}
+.hero{padding:28px;border-radius:34px}
+.orbit{width:245px;height:245px;margin:0 auto 24px;position:relative}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(56,189,248,.28);animation:spin 14s linear infinite}
+.r1{inset:0}.r2{inset:28px;animation-duration:18s}.r3{inset:56px;animation-duration:22s}.r4{inset:84px;animation-duration:28s}
+.ring::before{content:"";position:absolute;top:12px;left:50%;width:10px;height:10px;border-radius:50%;background:#38bdf8;box-shadow:0 0 18px #38bdf8}
+@keyframes spin{to{transform:rotate(360deg)}}
+.core{position:absolute;inset:82px;border-radius:50%;background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);display:flex;align-items:center;justify-content:center}
+.core svg{width:58px;height:58px;stroke:#020617;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.eyebrow{color:#7dd3fc;letter-spacing:8px;font-size:13px;font-weight:950}
+.hero h1{margin-top:20px;font-size:48px;line-height:1.05}
+.hero p{margin-top:18px;color:#94a3b8;font-size:16px;line-height:1.8}
+.status{margin-top:18px;display:inline-flex;padding:11px 17px;border-radius:999px;background:rgba(245,158,11,.12);color:#fbbf24;font-weight:950}
+.stats{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{padding:20px;border-radius:26px}
+.label{color:#94a3b8;font-size:13px;font-weight:850}
+.value{margin-top:12px;font-size:30px;font-weight:950}
+.sub{margin-top:9px;color:#94a3b8;font-size:13px;line-height:1.5}
+.blue{color:#38bdf8}.green{color:#4ade80}.orange{color:#f59e0b}.red{color:#ef4444}
+.section{margin-top:18px;padding:22px;border-radius:30px}
+.section-title{color:#38bdf8;font-size:13px;letter-spacing:6px;font-weight:950;margin-bottom:18px}
+.field{margin-bottom:14px}
+.field label{display:block;color:#94a3b8;font-size:13px;font-weight:850;margin-bottom:8px}
+.field input,.field select{width:100%;padding:15px;border-radius:18px;border:1px solid rgba(148,163,184,.15);background:#020617;color:white;outline:none}
+.field input:focus,.field select:focus{border-color:#38bdf8;box-shadow:0 0 18px rgba(56,189,248,.16)}
+.btn-row{display:flex;gap:12px;margin-top:16px}
+.btn{flex:1;padding:15px;border:none;border-radius:18px;font-weight:950;cursor:pointer}
+.primary{background:linear-gradient(135deg,#38bdf8,#2563eb);color:#020617}
+.secondary{background:#0f172a;color:#e5eefb;border:1px solid rgba(148,163,184,.14)}
+.danger{background:rgba(239,68,68,.14);color:#ef4444;border:1px solid rgba(239,68,68,.25)}
+.warning-box{padding:15px;border-radius:20px;background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.20);color:#fbbf24;line-height:1.7;font-size:13px;margin-top:14px}
+.signal-card{padding:18px;border-radius:24px;background:#0f172a;border:1px solid rgba(148,163,184,.12);margin-bottom:14px}
+.signal-top,.row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid rgba(148,163,184,.1)}
+.row:last-child{border-bottom:none}
+.signal-title strong,.row-left strong,.row-right strong{display:block}
+.signal-title small,.row-left small,.row-right small{color:#94a3b8}
+.row-right{text-align:right}
+.pill{display:inline-flex;padding:9px 12px;border-radius:999px;font-size:12px;font-weight:950;margin:5px 6px 0 0}
+.ready{color:#4ade80;background:rgba(34,197,94,.12)}
+.locked{color:#f59e0b;background:rgba(245,158,11,.12)}
+.bad{color:#ef4444;background:rgba(239,68,68,.12)}
+.meter{margin-top:12px;height:10px;border-radius:999px;background:#020617;overflow:hidden;border:1px solid rgba(148,163,184,.14)}
+.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#38bdf8,#4ade80)}
+@media(max-width:430px){.hero h1{font-size:42px}.brand h2{font-size:30px}.btn-row{flex-direction:column}}
 </style>
 </head>
 
 <body>
-
 <div class="bg"></div>
 <div class="grid-bg"></div>
 
 <header class="topbar">
-  <div class="brand">
-    <h2>ZELLA</h2>
-    <span>AUTO</span>
-  </div>
-
-  <div class="user-badge">Z</div>
+ <div class="brand">
+  <h2>ZELLA</h2>
+  <span>AUTO</span>
+ </div>
+ <div class="user-badge">Z</div>
 </header>
 
 <main class="container">
-
 <section class="hero">
-  <div class="orbit">
-    <div class="ring r1"></div>
-    <div class="ring r2"></div>
-    <div class="ring r3"></div>
-    <div class="ring r4"></div>
-
-    <div class="core">
-      <svg viewBox="0 0 24 24">
-        <path d="M4 12H20"/>
-        <path d="M14 6L20 12L14 18"/>
-      </svg>
-    </div>
+ <div class="orbit">
+  <div class="ring r1"></div>
+  <div class="ring r2"></div>
+  <div class="ring r3"></div>
+  <div class="ring r4"></div>
+  <div class="core">
+   <svg viewBox="0 0 24 24">
+    <path d="M4 12H20"/>
+    <path d="M14 6L20 12L14 18"/>
+   </svg>
   </div>
+ </div>
 
-  <div class="eyebrow">AUTO TRADER V11 ULTRA</div>
-
-  <h1>
-    Trade<br>
-    Engine.
-  </h1>
-
-  <p>
-    Configure Zella auto trading, risk controls, exchange connection,
-    signal execution and live order previews.
-  </p>
-
-  <div class="status" id="autoStatus">
-    Auto Trader • Checking
-  </div>
+ <div class="eyebrow">AUTO TRADER V12 ULTRA</div>
+ <h1>Trade<br>Engine.</h1>
+ <p>
+  Configure Zella auto trading with Cortex approval, risk controls,
+  exchange connection, trade preview and final execution confirmation.
+ </p>
+ <div class="status" id="autoStatus">Auto Trader • Checking</div>
 </section>
 
 <div class="stats">
-  <div class="card">
-    <div class="label">Auto Trading</div>
-    <div class="value orange" id="autoState">OFF</div>
-    <div class="sub">User controlled</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Exchange</div>
-    <div class="value blue" id="exchangeState">--</div>
-    <div class="sub">Connected account</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Max Risk</div>
-    <div class="value green" id="riskValue">--</div>
-    <div class="sub">Per trade</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Premium</div>
-    <div class="value orange" id="premiumState">--</div>
-    <div class="sub">Required for execution</div>
-  </div>
+ <div class="card">
+  <div class="label">Auto Trading</div>
+  <div class="value orange" id="autoState">OFF</div>
+  <div class="sub">User controlled</div>
+ </div>
+ <div class="card">
+  <div class="label">Exchange</div>
+  <div class="value blue" id="exchangeState">--</div>
+  <div class="sub">Connected account</div>
+ </div>
+ <div class="card">
+  <div class="label">Cortex Approval</div>
+  <div class="value orange" id="approvalState">--</div>
+  <div class="sub">Before execution</div>
+ </div>
+ <div class="card">
+  <div class="label">Confidence</div>
+  <div class="value green" id="confidenceState">--</div>
+  <div class="sub">Live analysis score</div>
+ </div>
 </div>
 
 <section class="section">
-  <div class="section-title">AUTO TRADING SETTINGS</div>
+ <div class="section-title">AUTO TRADING SETTINGS</div>
 
-  <div class="field">
-    <label>Auto Trading Mode</label>
-    <select id="enabled">
-      <option value="false">Disabled</option>
-      <option value="true">Enabled</option>
-    </select>
-  </div>
+ <div class="field">
+  <label>Auto Trading Mode</label>
+  <select id="enabled">
+   <option value="false">Disabled</option>
+   <option value="true">Enabled</option>
+  </select>
+ </div>
 
-  <div class="field">
-    <label>Exchange</label>
-    <select id="exchange">
-      <option value="">Select connected exchange</option>
-      <option value="binance">Binance</option>
-      <option value="bybit">Bybit</option>
-      <option value="okx">OKX</option>
-      <option value="kucoin">KuCoin</option>
-      <option value="coinbase">Coinbase</option>
-    </select>
-  </div>
+ <div class="field">
+  <label>Exchange</label>
+  <select id="exchange">
+   <option value="">Select connected exchange</option>
+   <option value="binance">Binance</option>
+   <option value="bybit">Bybit</option>
+   <option value="okx">OKX</option>
+   <option value="kucoin">KuCoin</option>
+   <option value="coinbase">Coinbase</option>
+  </select>
+ </div>
 
-  <div class="field">
-    <label>Max Trade Risk %</label>
-    <input id="maxTradeRisk" type="number" placeholder="Example: 1" value="1">
-  </div>
+ <div class="field">
+  <label>Max Trade Risk %</label>
+  <input id="maxTradeRisk" type="number" placeholder="Example: 1" value="1">
+ </div>
 
-  <div class="field">
-    <label>Max Daily Loss $</label>
-    <input id="maxDailyLoss" type="number" placeholder="Example: 50" value="0">
-  </div>
+ <div class="field">
+  <label>Max Daily Loss $</label>
+  <input id="maxDailyLoss" type="number" placeholder="Example: 50" value="0">
+ </div>
 
-  <div class="field">
-    <label>Allowed Assets</label>
-    <input id="allowedAssets" placeholder="BTC,ETH,SOL,BNB,XRP" value="BTC,ETH,SOL,BNB,XRP">
-  </div>
+ <div class="field">
+  <label>Allowed Assets</label>
+  <input id="allowedAssets" placeholder="BTC,ETH,SOL,BNB,XRP" value="BTC,ETH,SOL,BNB,XRP">
+ </div>
 
-  <div class="btn-row">
-    <button class="btn primary" onclick="saveSettings()">Save Settings</button>
-    <button class="btn secondary" onclick="loadSettings()">Reload</button>
-  </div>
+ <div class="btn-row">
+  <button class="btn primary" onclick="saveSettings()">Save Settings</button>
+  <button class="btn secondary" onclick="loadSettings()">Reload</button>
+ </div>
 </section>
 
 <section class="section">
-  <div class="section-title">TRADE PREVIEW</div>
+ <div class="section-title">TRADE PREVIEW</div>
 
-  <div class="field">
-    <label>Symbol</label>
-    <select id="tradeSymbol">
-      <option value="BTC">BTC</option>
-      <option value="ETH">ETH</option>
-      <option value="SOL">SOL</option>
-      <option value="BNB">BNB</option>
-      <option value="XRP">XRP</option>
-    </select>
-  </div>
+ <div class="field">
+  <label>Symbol</label>
+  <select id="tradeSymbol" onchange="runCortexApproval()">
+   <option value="BTC">BTC</option>
+   <option value="ETH">ETH</option>
+   <option value="SOL">SOL</option>
+   <option value="BNB">BNB</option>
+   <option value="XRP">XRP</option>
+  </select>
+ </div>
 
-  <div class="field">
-    <label>Side</label>
-    <select id="tradeSide">
-      <option value="BUY">BUY</option>
-      <option value="SELL">SELL</option>
-    </select>
-  </div>
+ <div class="field">
+  <label>Timeframe</label>
+  <select id="tradeTimeframe" onchange="runCortexApproval()">
+   <option value="1m">1 Minute</option>
+   <option value="3m">3 Minutes</option>
+   <option value="5m">5 Minutes</option>
+   <option value="15m">15 Minutes</option>
+   <option value="30m">30 Minutes</option>
+   <option value="1h" selected>1 Hour</option>
+   <option value="4h">4 Hours</option>
+   <option value="1d">1 Day</option>
+   <option value="1w">1 Week</option>
+   <option value="1M">1 Month</option>
+  </select>
+ </div>
 
-  <div class="field">
-    <label>Amount</label>
-    <input id="tradeAmount" type="number" placeholder="Example: 0.01">
-  </div>
+ <div class="field">
+  <label>Side</label>
+  <select id="tradeSide" onchange="runCortexApproval()">
+   <option value="BUY">BUY</option>
+   <option value="SELL">SELL</option>
+  </select>
+ </div>
 
-  <div class="btn-row">
-    <button class="btn primary" onclick="previewTrade()">Preview</button>
-    <button class="btn danger" onclick="executeTrade()">Execute</button>
-  </div>
+ <div class="field">
+  <label>Amount</label>
+  <input id="tradeAmount" type="number" placeholder="Example: 0.01">
+ </div>
 
-  <div class="warning-box">
-    Trade execution can place real exchange orders when connected with trade permission. Use small sizes and verify everything before executing.
-  </div>
+ <div class="btn-row">
+  <button class="btn primary" onclick="previewTrade()">Preview</button>
+  <button class="btn danger" onclick="executeTrade()">Execute</button>
+ </div>
+
+ <div class="warning-box">
+  Live execution can place real exchange orders when connected with trading permission.
+  Cortex approval is required, but it is still not financial advice.
+ </div>
 </section>
 
 <section class="section">
-  <div class="section-title">LIVE SIGNAL INPUT</div>
-
-  <div id="signalBox">
-    <p class="sub">Loading top live signal...</p>
-  </div>
+ <div class="section-title">CORTEX APPROVAL CHECK</div>
+ <div id="approvalBox">
+  <p class="sub">Select symbol, side and timeframe to run Cortex approval.</p>
+ </div>
 </section>
 
+<section class="section">
+ <div class="section-title">TRADE PREVIEW RESULT</div>
+ <div id="previewBox">
+  <p class="sub">No preview yet.</p>
+ </div>
+</section>
+
+<section class="section">
+ <div class="section-title">LIVE SIGNAL INPUT</div>
+ <div id="signalBox">
+  <p class="sub">Loading top live signal...</p>
+ </div>
+</section>
 </main>
 
 <nav class="bottom-dock">
-
-  <div class="dock-item" onclick="go('dashboard.html')">
-    <svg viewBox="0 0 24 24">
-      <path d="M3 11L12 4L21 11"/>
-      <path d="M5 10V21H19V10"/>
-      <path d="M9 21V14H15V21"/>
-    </svg>
-  </div>
-
-  <div class="dock-item" onclick="go('scanner.html')">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 19V5"/>
-      <path d="M4 19H20"/>
-      <path d="M8 16L11 12L14 14L19 7"/>
-    </svg>
-  </div>
-
-  <div class="ai-dock" onclick="go('copilot.html')">
-    <svg viewBox="0 0 24 24">
-      <rect x="5" y="7" width="14" height="11" rx="4"/>
-      <path d="M9 11H9.01"/>
-      <path d="M15 11H15.01"/>
-      <path d="M12 3V7"/>
-    </svg>
-  </div>
-
-  <div class="dock-item" onclick="go('market.html')">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 18V6"/>
-      <path d="M8 18V10"/>
-      <path d="M12 18V4"/>
-      <path d="M16 18V8"/>
-      <path d="M20 18V12"/>
-    </svg>
-  </div>
-
-  <div class="dock-item active" onclick="go('more.html')">
-    <svg viewBox="0 0 24 24">
-      <circle cx="5" cy="12" r="1.6"/>
-      <circle cx="12" cy="12" r="1.6"/>
-      <circle cx="19" cy="12" r="1.6"/>
-    </svg>
-  </div>
-
+ <div class="dock-item" onclick="go('dashboard.html')">
+  <svg viewBox="0 0 24 24"><path d="M3 11L12 4L21 11"/><path d="M5 10V21H19V10"/><path d="M9 21V14H15V21"/></svg>
+ </div>
+ <div class="dock-item" onclick="go('scanner.html')">
+  <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/></svg>
+ </div>
+ <div class="ai-dock" onclick="go('copilot.html')">
+  <svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/><path d="M12 3V7"/></svg>
+ </div>
+ <div class="dock-item" onclick="go('market.html')">
+  <svg viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M8 18V10"/><path d="M12 18V4"/><path d="M16 18V8"/><path d="M20 18V12"/></svg>
+ </div>
+ <div class="dock-item active" onclick="go('more.html')">
+  <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+ </div>
 </nav>
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";
+let latestCortex = null;
 
-function go(page){
-  window.location.href = page;
+function go(page){window.location.href = page}
+
+function escapeHTML(text){
+ return String(text || "")
+ .replaceAll("&","&amp;")
+ .replaceAll("<","&lt;")
+ .replaceAll(">","&gt;");
+}
+
+function formatMoney(value){
+ const number = Number(value || 0);
+ if(!Number.isFinite(number)) return "--";
+ if(number >= 1000){
+  return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
+ }
+ return "$" + number.toFixed(4);
+}
+
+function getParam(name){
+ return new URLSearchParams(window.location.search).get(name);
 }
 
 async function getToken(){
-  if(window.zellaGetToken){
-    return await window.zellaGetToken();
-  }
-
-  const saved =
-    localStorage.getItem("zellaFirebaseToken") ||
-    localStorage.getItem("zellaToken");
-
-  if(saved){
-    return saved;
-  }
-
-  throw new Error("Login session token not found. Please login again.");
+ if(window.zellaGetToken){
+  return await window.zellaGetToken();
+ }
+ const saved = localStorage.getItem("zellaFirebaseToken") || localStorage.getItem("zellaToken");
+ if(saved) return saved;
+ throw new Error("Login session token not found. Please login again.");
 }
 
 async function apiFetch(path,options = {}){
-  const token = await getToken();
-
-  const response = await fetch(API_URL + path,{
-    ...options,
-    headers:{
-      "Content-Type":"application/json",
-      "Authorization":"Bearer " + token,
-      ...(options.headers || {})
-    }
-  });
-
-  const data = await response.json();
-
-  if(!data.success){
-    throw new Error(data.message || data.error || "Request failed.");
+ const token = await getToken();
+ const response = await fetch(API_URL + path,{
+  ...options,
+  headers:{
+   "Content-Type":"application/json",
+   "Authorization":"Bearer " + token,
+   ...(options.headers || {})
   }
-
-  return data;
+ });
+ const data = await response.json();
+ if(!data.success){
+  throw new Error(data.message || data.error || "Request failed.");
+ }
+ return data;
 }
 
 async function publicFetch(path){
-  const response = await fetch(API_URL + path);
-  const data = await response.json();
+ const response = await fetch(API_URL + path);
+ const data = await response.json();
+ if(!data.success){
+  throw new Error(data.message || data.error || "Request failed.");
+ }
+ return data;
+}
 
-  if(!data.success){
-    throw new Error(data.message || data.error || "Request failed.");
-  }
+function actionMatchesSide(action,side){
+ const a = String(action || "").toUpperCase();
+ const s = String(side || "").toUpperCase();
+ if(s === "BUY") return a.includes("BUY");
+ if(s === "SELL") return a.includes("SELL");
+ return false;
+}
 
-  return data;
+async function runCortexApproval(){
+ const symbol = document.getElementById("tradeSymbol").value;
+ const timeframe = document.getElementById("tradeTimeframe").value;
+ const side = document.getElementById("tradeSide").value;
+
+ localStorage.setItem("zellaSelectedSymbol",symbol);
+ localStorage.setItem("zellaSelectedTimeframe",timeframe);
+
+ try{
+  document.getElementById("autoStatus").textContent = "Auto Trader • Checking Cortex";
+  const data = await publicFetch(`/api/cortex/analyze/${symbol}/${timeframe}`);
+  latestCortex = data;
+
+  const rec = data.recommendation || {};
+  const plan = data.tradePlan || {};
+  const approved = actionMatchesSide(rec.action,side) && rec.confidence >= 60 && rec.action !== "NO TRADE";
+
+  document.getElementById("approvalState").textContent = approved ? "YES" : "WAIT";
+  document.getElementById("approvalState").className = approved ? "value green" : "value orange";
+  document.getElementById("confidenceState").textContent = (rec.confidence || 0) + "%";
+
+  document.getElementById("approvalBox").innerHTML = `
+   <div class="signal-card">
+    <div class="signal-top">
+     <div class="signal-title">
+      <strong>${escapeHTML(symbol)} ${escapeHTML(rec.action || "WATCH")}</strong>
+      <small>${escapeHTML(data.regime || "Market regime")} • ${escapeHTML(timeframe)}</small>
+     </div>
+     <span class="pill ${approved ? "ready" : "locked"}">${approved ? "APPROVED" : "WAIT"}</span>
+    </div>
+
+    <div class="meter">
+     <div class="fill" style="width:${Math.max(0,Math.min(100,Number(rec.confidence || 0)))}%"></div>
+    </div>
+
+    <div class="row">
+     <div class="row-left"><strong>Entry Zone</strong><small>${formatMoney(plan.entryZone?.low)} - ${formatMoney(plan.entryZone?.high)}</small></div>
+     <div class="row-right"><strong>Stop Loss</strong><small>${formatMoney(plan.stopLoss)}</small></div>
+    </div>
+
+    <div class="row">
+     <div class="row-left"><strong>Take Profit</strong><small>TP1 ${formatMoney(plan.takeProfit1)} • TP2 ${formatMoney(plan.takeProfit2)}</small></div>
+     <div class="row-right"><strong>${rec.confidence || 0}%</strong><small>Confidence</small></div>
+    </div>
+
+    <p class="sub">Invalidation: ${escapeHTML(plan.invalidation || "Wait for clearer structure.")}</p>
+   </div>
+  `;
+
+  document.getElementById("autoStatus").textContent = "Auto Trader • Ready";
+ }catch(error){
+  latestCortex = null;
+  document.getElementById("approvalState").textContent = "--";
+  document.getElementById("confidenceState").textContent = "--";
+  document.getElementById("approvalBox").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
+  document.getElementById("autoStatus").textContent = "Auto Trader • Cortex Unavailable";
+ }
 }
 
 async function loadSettings(){
-  try{
-    document.getElementById("autoStatus").textContent =
-      "Auto Trader • Loading";
+ try{
+  document.getElementById("autoStatus").textContent = "Auto Trader • Loading";
+  const data = await apiFetch("/api/autotrade/settings");
+  const settings = data.settings;
 
-    const data = await apiFetch("/api/autotrade/settings");
-
-    const settings = data.settings;
-
-    if(!settings){
-      document.getElementById("autoStatus").textContent =
-        "Auto Trader • Not Configured";
-      return;
-    }
-
-    document.getElementById("enabled").value =
-      String(Boolean(settings.enabled));
-
-    document.getElementById("exchange").value =
-      settings.exchange || "";
-
-    document.getElementById("maxTradeRisk").value =
-      settings.maxTradeRisk || 1;
-
-    document.getElementById("maxDailyLoss").value =
-      settings.maxDailyLoss || 0;
-
-    document.getElementById("allowedAssets").value =
-      Array.isArray(settings.allowedAssets)
-        ? settings.allowedAssets.join(",")
-        : "BTC,ETH,SOL,BNB,XRP";
-
-    document.getElementById("autoState").textContent =
-      settings.enabled ? "ON" : "OFF";
-
-    document.getElementById("exchangeState").textContent =
-      settings.exchange ? settings.exchange.toUpperCase() : "--";
-
-    document.getElementById("riskValue").textContent =
-      `${settings.maxTradeRisk || 1}%`;
-
-    document.getElementById("premiumState").textContent =
-      "Active";
-
-    document.getElementById("autoStatus").textContent =
-      "Auto Trader • Ready";
-
-  }catch(error){
-    document.getElementById("autoStatus").textContent =
-      "Auto Trader • Unavailable";
-
-    alert(error.message);
+  if(!settings){
+   document.getElementById("autoStatus").textContent = "Auto Trader • Not Configured";
+   return;
   }
+
+  document.getElementById("enabled").value = String(Boolean(settings.enabled));
+  document.getElementById("exchange").value = settings.exchange || "";
+  document.getElementById("maxTradeRisk").value = settings.maxTradeRisk || 1;
+  document.getElementById("maxDailyLoss").value = settings.maxDailyLoss || 0;
+  document.getElementById("allowedAssets").value = Array.isArray(settings.allowedAssets) ? settings.allowedAssets.join(",") : "BTC,ETH,SOL,BNB,XRP";
+
+  document.getElementById("autoState").textContent = settings.enabled ? "ON" : "OFF";
+  document.getElementById("autoState").className = settings.enabled ? "value green" : "value orange";
+  document.getElementById("exchangeState").textContent = settings.exchange || "--";
+  document.getElementById("autoStatus").textContent = "Auto Trader • Ready";
+ }catch(error){
+  document.getElementById("autoStatus").textContent = "Auto Trader • Login Required";
+ }
 }
 
 async function saveSettings(){
-  try{
-    const enabled =
-      document.getElementById("enabled").value === "true";
+ try{
+  const payload = {
+   enabled: document.getElementById("enabled").value === "true",
+   exchange: document.getElementById("exchange").value,
+   maxTradeRisk: Number(document.getElementById("maxTradeRisk").value || 1),
+   maxDailyLoss: Number(document.getElementById("maxDailyLoss").value || 0),
+   allowedAssets: document.getElementById("allowedAssets").value.split(",").map(x=>x.trim().toUpperCase()).filter(Boolean)
+  };
 
-    const exchange =
-      document.getElementById("exchange").value;
+  const data = await apiFetch("/api/autotrade/settings",{
+   method:"POST",
+   body:JSON.stringify(payload)
+  });
 
-    const maxTradeRisk =
-      Number(document.getElementById("maxTradeRisk").value || 1);
-
-    const maxDailyLoss =
-      Number(document.getElementById("maxDailyLoss").value || 0);
-
-    const allowedAssets =
-      document.getElementById("allowedAssets")
-      .value
-      .split(",")
-      .map(x => x.trim().toUpperCase())
-      .filter(Boolean);
-
-    await apiFetch("/api/autotrade/settings",{
-      method:"POST",
-      body:JSON.stringify({
-        enabled,
-        exchange,
-        maxTradeRisk,
-        maxDailyLoss,
-        allowedAssets
-      })
-    });
-
-    await loadSettings();
-
-    alert("Auto trading settings saved.");
-
-  }catch(error){
-    alert(error.message);
-  }
-}
-
-async function loadTopSignal(){
-  try{
-    const data = await publicFetch("/api/signals/live");
-
-    const signals =
-      data.signals
-      .slice()
-      .sort((a,b)=> Number(b.confidence || 0) - Number(a.confidence || 0));
-
-    const top = signals[0];
-
-    document.getElementById("signalBox").innerHTML = `
-      <div class="signal-card">
-        <div class="signal-top">
-          <div class="signal-title">
-            <strong>${top.symbol} ${top.signal}</strong>
-            <small>${top.name} • ${top.confidence}% confidence • ${top.risk} Risk</small>
-          </div>
-
-          <div class="pill ready">
-            LIVE
-          </div>
-        </div>
-      </div>
-    `;
-
-  }catch(error){
-    document.getElementById("signalBox").innerHTML =
-      `<p class="sub red">${error.message}</p>`;
-  }
+  document.getElementById("autoStatus").textContent = "Auto Trader • Settings Saved";
+  await loadSettings();
+ }catch(error){
+  alert(error.message);
+ }
 }
 
 async function previewTrade(){
-  try{
-    const symbol = document.getElementById("tradeSymbol").value;
-    const side = document.getElementById("tradeSide").value;
-    const amount = document.getElementById("tradeAmount").value;
+ try{
+  const symbol = document.getElementById("tradeSymbol").value;
+  const side = document.getElementById("tradeSide").value;
+  const amount = Number(document.getElementById("tradeAmount").value || 0);
+  const timeframe = document.getElementById("tradeTimeframe").value;
 
-    if(!amount){
-      alert("Enter trade amount.");
-      return;
-    }
-
-    const data = await apiFetch("/api/trade/preview",{
-      method:"POST",
-      body:JSON.stringify({
-        symbol,
-        side,
-        amount
-      })
-    });
-
-    alert(
-      "Preview generated. Estimated value: " +
-      data.preview.estimatedValue
-    );
-
-  }catch(error){
-    alert(error.message);
+  if(!amount){
+   throw new Error("Enter trade amount.");
   }
+
+  await runCortexApproval();
+
+  const data = await apiFetch("/api/trade/preview",{
+   method:"POST",
+   body:JSON.stringify({symbol,side,amount,timeframe})
+  });
+
+  const preview = data.preview;
+
+  document.getElementById("previewBox").innerHTML = `
+   <div class="signal-card">
+    <div class="signal-top">
+     <div class="signal-title">
+      <strong>${escapeHTML(preview.symbol)} ${escapeHTML(preview.side)}</strong>
+      <small>Preview only • No order executed</small>
+     </div>
+     <span class="pill ready">PREVIEW</span>
+    </div>
+    <div class="row">
+     <div class="row-left"><strong>Live Price</strong><small>${formatMoney(preview.livePrice)}</small></div>
+     <div class="row-right"><strong>Estimated Value</strong><small>${formatMoney(preview.estimatedValue)}</small></div>
+    </div>
+    <p class="sub">Cortex: ${escapeHTML(preview.cortexRecommendation?.action || latestCortex?.recommendation?.action || "Checked")} • ${escapeHTML(preview.source || "Live source")}</p>
+   </div>
+  `;
+ }catch(error){
+  document.getElementById("previewBox").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
+ }
 }
 
 async function executeTrade(){
-  try{
-    const confirmed =
-      confirm("This can place a real exchange order. Continue?");
+ try{
+  const exchange = document.getElementById("exchange").value;
+  const symbol = document.getElementById("tradeSymbol").value;
+  const side = document.getElementById("tradeSide").value;
+  const amount = Number(document.getElementById("tradeAmount").value || 0);
+  const timeframe = document.getElementById("tradeTimeframe").value;
 
-    if(!confirmed){
-      return;
-    }
+  if(!exchange) throw new Error("Select exchange first.");
+  if(!amount) throw new Error("Enter trade amount.");
 
-    const exchange = document.getElementById("exchange").value;
-    const symbol = document.getElementById("tradeSymbol").value;
-    const side = document.getElementById("tradeSide").value;
-    const amount = document.getElementById("tradeAmount").value;
+  await runCortexApproval();
 
-    if(!exchange || !amount){
-      alert("Select exchange and enter amount.");
-      return;
-    }
-
-    const data = await apiFetch("/api/trade/execute",{
-      method:"POST",
-      body:JSON.stringify({
-        exchange,
-        symbol,
-        side,
-        amount
-      })
-    });
-
-    alert(data.message || "Trade executed.");
-
-  }catch(error){
-    alert(error.message);
+  if(!latestCortex || !actionMatchesSide(latestCortex.recommendation?.action,side)){
+   throw new Error("Cortex does not approve this trade direction right now.");
   }
+
+  const confirmed = confirm("This can execute a real exchange order. Continue?");
+  if(!confirmed) return;
+
+  const data = await apiFetch("/api/trade/execute",{
+   method:"POST",
+   body:JSON.stringify({
+    exchange,
+    symbol,
+    side,
+    amount,
+    timeframe,
+    confirmExecution:true
+   })
+  });
+
+  document.getElementById("previewBox").innerHTML = `
+   <div class="signal-card">
+    <div class="signal-top">
+     <div class="signal-title">
+      <strong>Trade Executed</strong>
+      <small>${escapeHTML(symbol)} ${escapeHTML(side)} • ${escapeHTML(exchange)}</small>
+     </div>
+     <span class="pill ready">LIVE</span>
+    </div>
+    <p class="sub">${escapeHTML(data.message || "Order executed.")}</p>
+   </div>
+  `;
+ }catch(error){
+  document.getElementById("previewBox").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
+ }
 }
 
-loadSettings();
-loadTopSignal();
-setInterval(loadTopSignal,30000);
+async function loadTopSignal(){
+ try{
+  const data = await publicFetch("/api/signals/live?timeframe=1h");
+  const signals = Array.isArray(data.signals) ? data.signals : [];
+  const top = signals.sort((a,b)=>Number(b.confidence || 0) - Number(a.confidence || 0))[0];
+
+  if(!top){
+   document.getElementById("signalBox").innerHTML = `<p class="sub">No live signal available.</p>`;
+   return;
+  }
+
+  document.getElementById("signalBox").innerHTML = `
+   <div class="signal-card">
+    <div class="signal-top">
+     <div class="signal-title">
+      <strong>${escapeHTML(top.symbol)} ${escapeHTML(top.signal)}</strong>
+      <small>${top.confidence || 0}% confidence • ${escapeHTML(top.risk || "Risk")}</small>
+     </div>
+     <span class="pill ready">CORTEX</span>
+    </div>
+    <p class="sub">${(top.explanation || []).slice(0,2).map(x=>"• " + escapeHTML(x)).join("<br>")}</p>
+   </div>
+  `;
+ }catch(error){
+  document.getElementById("signalBox").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
+ }
+}
+
+function boot(){
+ const symbol = getParam("symbol") || localStorage.getItem("zellaSelectedSymbol") || "BTC";
+ const timeframe = getParam("timeframe") || localStorage.getItem("zellaSelectedTimeframe") || "1h";
+ document.getElementById("tradeSymbol").value = symbol;
+ document.getElementById("tradeTimeframe").value = timeframe;
+
+ loadSettings();
+ runCortexApproval();
+ loadTopSignal();
+
+ setInterval(runCortexApproval,30000);
+ setInterval(loadTopSignal,30000);
+}
+
+boot();
 </script>
 
 <script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
-
 </body>
 </html>

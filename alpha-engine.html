@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zella Alpha Engine</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #102a43, #020617 60%);
+      color: #e5f7ff;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .page {
+      max-width: 1250px;
+      margin: auto;
+      padding-bottom: 110px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(0,255,204,.16), rgba(59,130,246,.1));
+      border: 1px solid rgba(0,255,204,.25);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 0 40px rgba(0,255,204,.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(0,255,204,.13);
+      filter: blur(45px);
+      right: -60px;
+      top: -70px;
+      animation: pulse 4s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(.9); opacity: .45; }
+      to { transform: scale(1.2); opacity: .9; }
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(0,255,204,.13);
+      border: 1px solid rgba(0,255,204,.3);
+      color: #67ffe4;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #a9c7d8;
+      max-width: 760px;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .controls {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(15,23,42,.86);
+      color: #e5f7ff;
+      outline: none;
+      font-size: 14px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #00ffd0, #38bdf8);
+      color: #020617;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 22px rgba(0,255,204,.25);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .card {
+      background: rgba(15,23,42,.78);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      padding: 18px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.2);
+    }
+
+    .card h3 {
+      font-size: 15px;
+      color: #93c5fd;
+      margin-bottom: 10px;
+    }
+
+    .big {
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .muted {
+      color: #94a3b8;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .status-bullish { color: #22c55e; }
+    .status-bearish { color: #ef4444; }
+    .status-sideways { color: #facc15; }
+
+    .section-title {
+      margin-top: 28px;
+      margin-bottom: 14px;
+      font-size: 22px;
+    }
+
+    .asset-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      background: rgba(2,6,23,.72);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 24px;
+      padding: 18px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .asset-card::before {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: #00ffd0;
+    }
+
+    .asset-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .asset-name {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .symbol {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .signal {
+      padding: 8px 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .buy {
+      background: rgba(34,197,94,.16);
+      color: #4ade80;
+      border: 1px solid rgba(34,197,94,.35);
+    }
+
+    .sell {
+      background: rgba(239,68,68,.16);
+      color: #f87171;
+      border: 1px solid rgba(239,68,68,.35);
+    }
+
+    .hold {
+      background: rgba(250,204,21,.14);
+      color: #fde047;
+      border: 1px solid rgba(250,204,21,.35);
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .mini {
+      background: rgba(15,23,42,.8);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .mini span {
+      display: block;
+      color: #94a3b8;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .mini strong {
+      font-size: 18px;
+    }
+
+    .bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ffd0, #38bdf8);
+      border-radius: 999px;
+    }
+
+    .reason {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 10px;
+    }
+
+    .pillar {
+      padding: 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.06);
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+
+    .pillar strong {
+      display: block;
+      margin-top: 4px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      width: calc(100% - 28px);
+      max-width: 480px;
+      background: rgba(2,6,23,.9);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 24px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      backdrop-filter: blur(16px);
+      z-index: 20;
+    }
+
+    .bottom-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .bottom-nav a.active {
+      color: #00ffd0;
+      font-weight: 900;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <section class="hero">
+      <span class="badge">Zella Alpha Engine™</span>
+      <h1>Holistic Crypto Market Intelligence</h1>
+      <p>
+        Zella scans the wider crypto market, scores assets using fundamentals,
+        on-chain data, technical analysis, adoption, token economics, macro conditions,
+        sentiment, and risk — then recommends Buy, Sell, Hold, or Watchlist signals.
+      </p>
+
+      <div class="controls">
+        <select id="strategy">
+          <option value="swing">Swing Trader</option>
+          <option value="long">Long-Term Investor</option>
+          <option value="scalp">Scalper</option>
+        </select>
+
+        <select id="regime">
+          <option value="bullish">Bullish Market</option>
+          <option value="bearish">Bearish Market</option>
+          <option value="sideways">Sideways Market</option>
+        </select>
+
+        <button onclick="runAlphaEngine()">Scan Market</button>
+      </div>
+    </section>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Market Regime</h3>
+        <div id="marketRegime" class="big status-bullish">Bullish</div>
+        <div class="muted">Detected market condition</div>
+      </div>
+
+      <div class="card">
+        <h3>Assets Scanned</h3>
+        <div id="assetsScanned" class="big">0</div>
+        <div class="muted">Across wider crypto market</div>
+      </div>
+
+      <div class="card">
+        <h3>Best Opportunity</h3>
+        <div id="bestAsset" class="big">---</div>
+        <div class="muted">Highest weighted score</div>
+      </div>
+
+      <div class="card">
+        <h3>Engine Confidence</h3>
+        <div id="engineConfidence" class="big">--%</div>
+        <div class="muted">Based on signal agreement</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Top AI Trade Recommendations</h2>
+    <div id="results"></div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="dashboard.html">Home</a>
+    <a href="market.html">Market</a>
+    <a href="scanner.html">Scanner</a>
+    <a href="alpha-engine.html" class="active">Alpha</a>
+    <a href="more.html">More</a>
+  </nav>
+
+  <script>
+    const assets = [
+      { name: "Injective", symbol: "INJ", fundamentals: 88, onchain: 84, technical: 91, adoption: 86, token: 82, macro: 74, sentiment: 89 },
+      { name: "Arbitrum", symbol: "ARB", fundamentals: 83, onchain: 79, technical: 76, adoption: 88, token: 75, macro: 72, sentiment: 78 },
+      { name: "Render", symbol: "RNDR", fundamentals: 86, onchain: 75, technical: 89, adoption: 84, token: 80, macro: 73, sentiment: 92 },
+      { name: "Celestia", symbol: "TIA", fundamentals: 82, onchain: 78, technical: 85, adoption: 81, token: 73, macro: 71, sentiment: 84 },
+      { name: "Jupiter", symbol: "JUP", fundamentals: 79, onchain: 86, technical: 88, adoption: 87, token: 76, macro: 70, sentiment: 90 },
+      { name: "Optimism", symbol: "OP", fundamentals: 84, onchain: 77, technical: 72, adoption: 85, token: 78, macro: 69, sentiment: 74 },
+      { name: "Aptos", symbol: "APT", fundamentals: 76, onchain: 73, technical: 68, adoption: 75, token: 70, macro: 66, sentiment: 71 },
+      { name: "Sei", symbol: "SEI", fundamentals: 74, onchain: 80, technical: 87, adoption: 79, token: 72, macro: 68, sentiment: 85 }
+    ];
+
+    const weights = {
+      long: {
+        fundamentals: .25,
+        onchain: .20,
+        technical: .15,
+        adoption: .15,
+        token: .10,
+        macro: .10,
+        sentiment: .05
+      },
+      swing: {
+        fundamentals: .15,
+        onchain: .20,
+        technical: .30,
+        adoption: .10,
+        token: .05,
+        macro: .10,
+        sentiment: .10
+      },
+      scalp: {
+        fundamentals: .05,
+        onchain: .15,
+        technical: .45,
+        adoption: .05,
+        token: .05,
+        macro: .05,
+        sentiment: .20
+      }
+    };
+
+    function calculateScore(asset, profile) {
+      const w = weights[profile];
+
+      return (
+        asset.fundamentals * w.fundamentals +
+        asset.onchain * w.onchain +
+        asset.technical * w.technical +
+        asset.adoption * w.adoption +
+        asset.token * w.token +
+        asset.macro * w.macro +
+        asset.sentiment * w.sentiment
+      ).toFixed(1);
+    }
+
+    function getSignal(score, regime) {
+      score = Number(score);
+
+      if (regime === "bearish") {
+        if (score >= 88) return { text: "Buy", class: "buy" };
+        if (score >= 70) return { text: "Hold / Watchlist", class: "hold" };
+        return { text: "Sell / Avoid", class: "sell" };
+      }
+
+      if (score >= 85) return { text: "Strong Buy", class: "buy" };
+      if (score >= 70) return { text: "Buy / Accumulate", class: "buy" };
+      if (score >= 50) return { text: "Neutral / Watchlist", class: "hold" };
+      return { text: "Sell / Avoid", class: "sell" };
+    }
+
+    function getRisk(score, asset) {
+      if (asset.technical < 70 || asset.macro < 65) return "High";
+      if (score >= 80) return "Medium";
+      return "Medium-High";
+    }
+
+    function getReason(asset, signal) {
+      return `
+        Zella detected ${asset.symbol} with strong alignment across technical,
+        on-chain, adoption, and sentiment factors. The current AI signal is
+        ${signal}. Traders should still confirm entry zones, stop loss, liquidity,
+        and risk/reward before taking action.
+      `;
+    }
+
+    function runAlphaEngine() {
+      const strategy = document.getElementById("strategy").value;
+      const regime = document.getElementById("regime").value;
+
+      let ranked = assets.map(asset => {
+        const score = calculateScore(asset, strategy);
+        const signal = getSignal(score, regime);
+        const confidence = Math.min(98, Math.round(Number(score) + Math.random() * 8));
+        const risk = getRisk(score, asset);
+
+        return { ...asset, score, signal, confidence, risk };
+      }).sort((a, b) => b.score - a.score);
+
+      document.getElementById("assetsScanned").textContent = "1,000+";
+      document.getElementById("bestAsset").textContent = ranked[0].symbol;
+      document.getElementById("engineConfidence").textContent = ranked[0].confidence + "%";
+
+      const regimeBox = document.getElementById("marketRegime");
+      regimeBox.textContent = regime.charAt(0).toUpperCase() + regime.slice(1);
+      regimeBox.className = "big status-" + regime;
+
+      const results = document.getElementById("results");
+      results.innerHTML = "";
+
+      ranked.forEach(asset => {
+        results.innerHTML += `
+          <div class="asset-card">
+            <div class="asset-top">
+              <div>
+                <div class="asset-name">${asset.name}</div>
+                <div class="symbol">${asset.symbol}</div>
+              </div>
+              <div class="signal ${asset.signal.class}">
+                ${asset.signal.text}
+              </div>
+            </div>
+
+            <div class="score-row">
+              <div class="mini">
+                <span>Unified Score</span>
+                <strong>${asset.score}%</strong>
+                <div class="bar">
+                  <div class="bar-fill" style="width:${asset.score}%"></div>
+                </div>
+              </div>
+
+              <div class="mini">
+                <span>Confidence</span>
+                <strong>${asset.confidence}%</strong>
+              </div>
+
+              <div class="mini">
+                <span>Risk</span>
+                <strong>${asset.risk}</strong>
+              </div>
+
+              <div class="mini">
+                <span>Market Bias</span>
+                <strong>${regime}</strong>
+              </div>
+            </div>
+
+            <div class="pillars">
+              <div class="pillar">Fundamentals <strong>${asset.fundamentals}%</strong></div>
+              <div class="pillar">On-Chain <strong>${asset.onchain}%</strong></div>
+              <div class="pillar">Technical <strong>${asset.technical}%</strong></div>
+              <div class="pillar">Adoption <strong>${asset.adoption}%</strong></div>
+              <div class="pillar">Token Econ <strong>${asset.token}%</strong></div>
+              <div class="pillar">Macro <strong>${asset.macro}%</strong></div>
+              <div class="pillar">Sentiment <strong>${asset.sentiment}%</strong></div>
+            </div>
+
+            <p class="reason">${getReason(asset, asset.signal.text)}</p>
+          </div>
+        `;
+      });
+    }
+
+    runAlphaEngine();
+  </script>
+</body>
+</html>

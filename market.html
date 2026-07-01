@@ -392,7 +392,11 @@ async function loadCortex(){
 
  try{
   document.getElementById("marketStatus").textContent = "Market Engine • Analyzing";
-  const response = await fetch(`${API_URL}/api/cortex/analyze/${symbol}/${timeframe}`);
+  const assetId = getAssetId();
+
+const response = await fetch(
+  `${API_URL}/api/cortex/analyze/${encodeURIComponent(symbol)}/${encodeURIComponent(timeframe)}?assetId=${encodeURIComponent(assetId)}`
+);
   const data = await response.json();
 
   if(!data.success){
@@ -484,6 +488,10 @@ async function loadNews(){
 function selectAsset(symbol){
  document.getElementById("symbolSelect").value = symbol;
  loadCortex();
+}
+
+function getAssetId(){
+  return getParam("assetId") || localStorage.getItem("zellaSelectedAssetId") || "";
 }
 
 function openAnalytics(){

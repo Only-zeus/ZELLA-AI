@@ -746,7 +746,7 @@ function renderAssetRow(asset){
 
  <div class="controls" style="margin-top:14px">
   <button onclick="openCouncil('${escapeHTML(asset.id || asset.symbol)}')">Deep Council Review</button>
-  <button onclick="openMarket('${escapeHTML(asset.symbol)}')">Open Market</button>
+  <button onclick="openMarket('${escapeHTML(asset.symbol)}','${escapeHTML(asset.id)}')">Open Market</button>
  </div>
  `;
 }
@@ -933,9 +933,14 @@ async function openCouncil(asset){
  }
 }
 
-function openMarket(symbol){
- if(!symbol) return;
- window.location.href = `market.html?symbol=${encodeURIComponent(symbol)}&timeframe=1h`;
+function openMarket(symbol, id){
+  if(!symbol && !id) return;
+
+  localStorage.setItem("zellaSelectedSymbol", symbol || "");
+  localStorage.setItem("zellaSelectedAssetId", id || "");
+
+  window.location.href =
+    `market.html?symbol=${encodeURIComponent(symbol || "")}&assetId=${encodeURIComponent(id || "")}&timeframe=1h`;
 }
 
 function boot(){

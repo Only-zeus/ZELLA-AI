@@ -1,548 +1,963 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zella Alpha Engine</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Inter, Arial, sans-serif;
-    }
+<title>Zella Alpha Engine V3</title>
+<link rel="stylesheet" href="style.css">
 
-    body {
-      background: radial-gradient(circle at top, #102a43, #020617 60%);
-      color: #e5f7ff;
-      min-height: 100vh;
-      padding: 20px;
-      overflow-x: hidden;
-    }
+<style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:Arial,sans-serif;
+}
 
-    .page {
-      max-width: 1250px;
-      margin: auto;
-      padding-bottom: 110px;
-    }
+body{
+ min-height:100vh;
+ background:#020617;
+ color:white;
+ overflow-x:hidden;
+ padding-bottom:130px;
+}
 
-    .hero {
-      background: linear-gradient(135deg, rgba(0,255,204,.16), rgba(59,130,246,.1));
-      border: 1px solid rgba(0,255,204,.25);
-      border-radius: 28px;
-      padding: 24px;
-      box-shadow: 0 0 40px rgba(0,255,204,.08);
-      position: relative;
-      overflow: hidden;
-    }
+.bg{
+ position:fixed;
+ inset:0;
+ z-index:-3;
+ background:
+ radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+ radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+ radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
+ #020617;
+}
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: rgba(0,255,204,.13);
-      filter: blur(45px);
-      right: -60px;
-      top: -70px;
-      animation: pulse 4s infinite alternate;
-    }
+.grid-bg{
+ position:fixed;
+ inset:0;
+ z-index:-2;
+ background-image:
+ linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
+ background-size:42px 42px;
+ animation:gridMove 18s linear infinite;
+}
 
-    @keyframes pulse {
-      from { transform: scale(.9); opacity: .45; }
-      to { transform: scale(1.2); opacity: .9; }
-    }
+@keyframes gridMove{
+ from{background-position:0 0}
+ to{background-position:0 420px}
+}
 
-    .badge {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(0,255,204,.13);
-      border: 1px solid rgba(0,255,204,.3);
-      color: #67ffe4;
-      font-size: 13px;
-      margin-bottom: 14px;
-    }
+.container{
+ width:92%;
+ max-width:560px;
+ margin:auto;
+}
 
-    h1 {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
+.topbar{
+ width:92%;
+ max-width:560px;
+ margin:auto;
+ padding:22px 0;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
 
-    .hero p {
-      color: #a9c7d8;
-      max-width: 760px;
-      line-height: 1.6;
-      font-size: 15px;
-    }
+.brand h2{
+ font-size:34px;
+ letter-spacing:10px;
+ font-weight:950;
+}
 
-    .controls {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-    }
+.brand span{
+ color:#38bdf8;
+ letter-spacing:5px;
+ font-weight:950;
+ font-size:14px;
+}
 
-    select, button {
-      width: 100%;
-      padding: 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(15,23,42,.86);
-      color: #e5f7ff;
-      outline: none;
-      font-size: 14px;
-    }
+.user-badge{
+ width:54px;
+ height:54px;
+ border-radius:50%;
+ background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+ color:#020617;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:950;
+ box-shadow:0 0 30px rgba(56,189,248,.5);
+}
 
-    button {
-      background: linear-gradient(135deg, #00ffd0, #38bdf8);
-      color: #020617;
-      font-weight: 800;
-      cursor: pointer;
-      border: none;
-      box-shadow: 0 0 22px rgba(0,255,204,.25);
-    }
+.hero,
+.section,
+.card{
+ background:rgba(15,23,42,.88);
+ border:1px solid rgba(148,163,184,.14);
+ box-shadow:0 22px 65px rgba(0,0,0,.38);
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-      margin-top: 22px;
-    }
+.hero{
+ padding:28px;
+ border-radius:34px;
+}
 
-    .card {
-      background: rgba(15,23,42,.78);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 24px;
-      padding: 18px;
-      backdrop-filter: blur(14px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.2);
-    }
+.orbit{
+ width:245px;
+ height:245px;
+ margin:0 auto 24px;
+ position:relative;
+}
 
-    .card h3 {
-      font-size: 15px;
-      color: #93c5fd;
-      margin-bottom: 10px;
-    }
+.ring{
+ position:absolute;
+ border-radius:50%;
+ border:1px solid rgba(56,189,248,.28);
+ animation:spin 14s linear infinite;
+}
 
-    .big {
-      font-size: 30px;
-      font-weight: 900;
-    }
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
 
-    .muted {
-      color: #94a3b8;
-      font-size: 13px;
-      margin-top: 5px;
-    }
+.ring::before{
+ content:"";
+ position:absolute;
+ top:12px;
+ left:50%;
+ width:10px;
+ height:10px;
+ border-radius:50%;
+ background:#38bdf8;
+ box-shadow:0 0 18px #38bdf8;
+}
 
-    .status-bullish { color: #22c55e; }
-    .status-bearish { color: #ef4444; }
-    .status-sideways { color: #facc15; }
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
 
-    .section-title {
-      margin-top: 28px;
-      margin-bottom: 14px;
-      font-size: 22px;
-    }
+.core{
+ position:absolute;
+ inset:82px;
+ border-radius:50%;
+ background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+ box-shadow:
+ 0 0 45px rgba(56,189,248,.85),
+ inset 0 0 28px rgba(2,6,23,.8);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
 
-    .asset-card {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      background: rgba(2,6,23,.72);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 24px;
-      padding: 18px;
-      margin-bottom: 16px;
-      position: relative;
-      overflow: hidden;
-    }
+.core svg{
+ width:58px;
+ height:58px;
+ stroke:#020617;
+ fill:none;
+ stroke-width:2.5;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
 
-    .asset-card::before {
-      content: "";
-      position: absolute;
-      width: 5px;
-      height: 100%;
-      left: 0;
-      top: 0;
-      background: #00ffd0;
-    }
+.eyebrow{
+ color:#7dd3fc;
+ letter-spacing:8px;
+ font-size:13px;
+ font-weight:950;
+}
 
-    .asset-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
+.hero h1{
+ margin-top:20px;
+ font-size:45px;
+ line-height:1.05;
+}
 
-    .asset-name {
-      font-size: 22px;
-      font-weight: 900;
-    }
+.hero p{
+ margin-top:18px;
+ color:#94a3b8;
+ font-size:16px;
+ line-height:1.8;
+}
 
-    .symbol {
-      color: #94a3b8;
-      font-size: 13px;
-    }
+.status{
+ margin-top:18px;
+ display:inline-flex;
+ padding:11px 17px;
+ border-radius:999px;
+ background:rgba(34,197,94,.12);
+ color:#4ade80;
+ font-weight:950;
+}
 
-    .signal {
-      padding: 8px 13px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-    }
+.controls{
+ margin-top:18px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
 
-    .buy {
-      background: rgba(34,197,94,.16);
-      color: #4ade80;
-      border: 1px solid rgba(34,197,94,.35);
-    }
+.controls select,
+.controls button{
+ width:100%;
+ padding:15px;
+ border-radius:18px;
+ border:1px solid rgba(148,163,184,.15);
+ background:#020617;
+ color:white;
+ outline:none;
+ font-weight:900;
+}
 
-    .sell {
-      background: rgba(239,68,68,.16);
-      color: #f87171;
-      border: 1px solid rgba(239,68,68,.35);
-    }
+.controls button{
+ background:linear-gradient(135deg,#38bdf8,#2563eb);
+ color:#020617;
+ border:none;
+ cursor:pointer;
+}
 
-    .hold {
-      background: rgba(250,204,21,.14);
-      color: #fde047;
-      border: 1px solid rgba(250,204,21,.35);
-    }
+.full-control{
+ margin-top:12px;
+ display:grid;
+ grid-template-columns:1fr;
+}
 
-    .score-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 10px;
-    }
+.full-control button{
+ width:100%;
+ padding:15px;
+ border-radius:18px;
+ border:none;
+ background:linear-gradient(135deg,#4ade80,#38bdf8);
+ color:#020617;
+ font-weight:950;
+ cursor:pointer;
+}
 
-    .mini {
-      background: rgba(15,23,42,.8);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 16px;
-      padding: 12px;
-    }
+.stats{
+ margin-top:18px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:14px;
+}
 
-    .mini span {
-      display: block;
-      color: #94a3b8;
-      font-size: 12px;
-      margin-bottom: 4px;
-    }
+.card{
+ padding:20px;
+ border-radius:26px;
+}
 
-    .mini strong {
-      font-size: 18px;
-    }
+.label{
+ color:#94a3b8;
+ font-size:13px;
+ font-weight:850;
+}
 
-    .bar {
-      width: 100%;
-      height: 8px;
-      background: rgba(255,255,255,.08);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 8px;
-    }
+.value{
+ margin-top:12px;
+ font-size:29px;
+ font-weight:950;
+ word-break:break-word;
+}
 
-    .bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #00ffd0, #38bdf8);
-      border-radius: 999px;
-    }
+.sub{
+ margin-top:9px;
+ color:#94a3b8;
+ font-size:13px;
+ line-height:1.5;
+}
 
-    .reason {
-      color: #cbd5e1;
-      font-size: 14px;
-      line-height: 1.6;
-    }
+.blue{color:#38bdf8}
+.green{color:#4ade80}
+.orange{color:#f59e0b}
+.red{color:#ef4444}
+.purple{color:#a78bfa}
 
-    .pillars {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-      gap: 10px;
-    }
+.section{
+ margin-top:18px;
+ padding:22px;
+ border-radius:30px;
+}
 
-    .pillar {
-      padding: 10px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.06);
-      font-size: 12px;
-      color: #cbd5e1;
-    }
+.section-title{
+ color:#38bdf8;
+ font-size:13px;
+ letter-spacing:6px;
+ font-weight:950;
+ margin-bottom:18px;
+}
 
-    .pillar strong {
-      display: block;
-      margin-top: 4px;
-      color: #fff;
-      font-size: 15px;
-    }
+.row,
+.asset-row{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ padding:15px 0;
+ border-bottom:1px solid rgba(148,163,184,.1);
+}
 
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      width: calc(100% - 28px);
-      max-width: 480px;
-      background: rgba(2,6,23,.9);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 24px;
-      padding: 12px;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      backdrop-filter: blur(16px);
-      z-index: 20;
-    }
+.row:last-child,
+.asset-row:last-child{
+ border-bottom:none;
+}
 
-    .bottom-nav a {
-      color: #94a3b8;
-      text-decoration: none;
-      text-align: center;
-      font-size: 11px;
-    }
+.row-left strong,
+.row-right strong,
+.asset-info strong,
+.asset-score strong{
+ display:block;
+}
 
-    .bottom-nav a.active {
-      color: #00ffd0;
-      font-weight: 900;
-    }
-  </style>
+.row-left small,
+.row-right small,
+.asset-info small,
+.asset-score small{
+ color:#94a3b8;
+}
+
+.row-right,
+.asset-score{
+ text-align:right;
+}
+
+.asset-left{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ min-width:0;
+}
+
+.asset-logo{
+ width:44px;
+ height:44px;
+ min-width:44px;
+ border-radius:16px;
+ background:rgba(56,189,248,.12);
+ border:1px solid rgba(56,189,248,.18);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ overflow:hidden;
+}
+
+.asset-logo img{
+ width:30px;
+ height:30px;
+ border-radius:50%;
+}
+
+.asset-logo svg{
+ width:24px;
+ height:24px;
+ stroke:#38bdf8;
+ fill:none;
+ stroke-width:2.2;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+
+.asset-info{
+ min-width:0;
+}
+
+.asset-info strong{
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ max-width:220px;
+}
+
+.badge{
+ display:inline-flex;
+ padding:8px 11px;
+ border-radius:999px;
+ font-size:12px;
+ font-weight:950;
+ margin:4px 6px 4px 0;
+}
+
+.badge-buy{
+ background:rgba(34,197,94,.12);
+ color:#4ade80;
+}
+
+.badge-sell{
+ background:rgba(239,68,68,.12);
+ color:#ef4444;
+}
+
+.badge-hold{
+ background:rgba(245,158,11,.12);
+ color:#f59e0b;
+}
+
+.badge-blue{
+ background:rgba(56,189,248,.12);
+ color:#38bdf8;
+}
+
+.badge-purple{
+ background:rgba(167,139,250,.12);
+ color:#a78bfa;
+}
+
+.meter{
+ margin-top:12px;
+ height:10px;
+ border-radius:999px;
+ background:#020617;
+ overflow:hidden;
+ border:1px solid rgba(148,163,184,.14);
+}
+
+.fill{
+ height:100%;
+ border-radius:999px;
+ background:linear-gradient(90deg,#38bdf8,#4ade80);
+}
+
+.fill-red{
+ height:100%;
+ border-radius:999px;
+ background:linear-gradient(90deg,#ef4444,#f59e0b);
+}
+
+.reason p{
+ color:#94a3b8;
+ line-height:1.7;
+ font-size:13px;
+ margin-top:8px;
+}
+
+.split{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+ margin-top:14px;
+}
+
+.mini-card{
+ background:#020617;
+ border:1px solid rgba(148,163,184,.12);
+ border-radius:20px;
+ padding:15px;
+}
+
+.mini-card strong{
+ display:block;
+ margin-top:8px;
+ font-size:21px;
+}
+
+.empty{
+ color:#94a3b8;
+ line-height:1.7;
+ font-size:13px;
+}
+
+@media(max-width:430px){
+ .hero h1{font-size:39px}
+ .brand h2{font-size:30px}
+ .controls{grid-template-columns:1fr}
+ .stats{grid-template-columns:1fr 1fr}
+ .split{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
-  <div class="page">
-    <section class="hero">
-      <span class="badge">Zella Alpha Engine™</span>
-      <h1>Holistic Crypto Market Intelligence</h1>
-      <p>
-        Zella scans the wider crypto market, scores assets using fundamentals,
-        on-chain data, technical analysis, adoption, token economics, macro conditions,
-        sentiment, and risk — then recommends Buy, Sell, Hold, or Watchlist signals.
-      </p>
+<div class="bg"></div>
+<div class="grid-bg"></div>
 
-      <div class="controls">
-        <select id="strategy">
-          <option value="swing">Swing Trader</option>
-          <option value="long">Long-Term Investor</option>
-          <option value="scalp">Scalper</option>
-        </select>
+<header class="topbar">
+ <div class="brand">
+  <h2>ZELLA</h2>
+  <span>ALPHA</span>
+ </div>
+ <div class="user-badge">Z</div>
+</header>
 
-        <select id="regime">
-          <option value="bullish">Bullish Market</option>
-          <option value="bearish">Bearish Market</option>
-          <option value="sideways">Sideways Market</option>
-        </select>
+<main class="container">
 
-        <button onclick="runAlphaEngine()">Scan Market</button>
-      </div>
-    </section>
+<section class="hero">
+ <div class="orbit">
+  <div class="ring r1"></div>
+  <div class="ring r2"></div>
+  <div class="ring r3"></div>
+  <div class="ring r4"></div>
 
-    <div class="grid">
-      <div class="card">
-        <h3>Market Regime</h3>
-        <div id="marketRegime" class="big status-bullish">Bullish</div>
-        <div class="muted">Detected market condition</div>
-      </div>
+  <div class="core">
+   <svg viewBox="0 0 24 24">
+    <path d="M4 18V6"/>
+    <path d="M8 18V10"/>
+    <path d="M12 18V4"/>
+    <path d="M16 18V8"/>
+    <path d="M20 18V12"/>
+    <path d="M4 6L12 4L20 12"/>
+   </svg>
+  </div>
+ </div>
 
-      <div class="card">
-        <h3>Assets Scanned</h3>
-        <div id="assetsScanned" class="big">0</div>
-        <div class="muted">Across wider crypto market</div>
-      </div>
+ <div class="eyebrow">ZELLA ALPHA ENGINE V3</div>
+ <h1>Market Discovery<br>Intelligence.</h1>
 
-      <div class="card">
-        <h3>Best Opportunity</h3>
-        <div id="bestAsset" class="big">---</div>
-        <div class="muted">Highest weighted score</div>
-      </div>
+ <p>
+  Zella scans the wider crypto market using holistic trend intelligence,
+  compares bullish and bearish opportunities, then ranks the strongest
+  market direction for scalpers, swing traders and long-term investors.
+ </p>
 
-      <div class="card">
-        <h3>Engine Confidence</h3>
-        <div id="engineConfidence" class="big">--%</div>
-        <div class="muted">Based on signal agreement</div>
-      </div>
+ <div class="status" id="alphaStatus">Alpha Engine • Ready</div>
+
+ <div class="controls">
+  <select id="regimeSelect">
+   <option value="auto" selected>Auto Detect Market</option>
+   <option value="bullish">Bullish Market</option>
+   <option value="bearish">Bearish Market</option>
+   <option value="sideways">Sideways Market</option>
+  </select>
+
+  <select id="profileSelect">
+   <option value="scalper">Scalper</option>
+   <option value="swing" selected>Swing Trader</option>
+   <option value="long">Long-Term Investor</option>
+  </select>
+ </div>
+
+ <div class="controls">
+  <select id="directionSelect">
+   <option value="both" selected>Buy & Sell Opportunities</option>
+   <option value="buy">Buy Opportunities Only</option>
+   <option value="sell">Sell Opportunities Only</option>
+  </select>
+
+  <select id="depthSelect">
+   <option value="250">Quick Scan • 250 Assets</option>
+   <option value="750" selected>Deep Scan • 750 Assets</option>
+   <option value="1250">Ultra Scan • 1,250 Assets</option>
+  </select>
+ </div>
+
+ <div class="full-control">
+  <button onclick="runAlphaScan()">Run Alpha Scan</button>
+ </div>
+</section>
+
+<div class="stats">
+ <div class="card">
+  <div class="label">Strongest Signal</div>
+  <div class="value blue" id="strongestSignal">--</div>
+  <div class="sub" id="signalSub">Waiting for scan</div>
+ </div>
+
+ <div class="card">
+  <div class="label">Dominant Direction</div>
+  <div class="value green" id="dominantDirection">--</div>
+  <div class="sub">Buy or sell trend strength</div>
+ </div>
+
+ <div class="card">
+  <div class="label">Assets Scanned</div>
+  <div class="value orange" id="assetsScanned">--</div>
+  <div class="sub">Market universe depth</div>
+ </div>
+
+ <div class="card">
+  <div class="label">Market Regime</div>
+  <div class="value purple" id="marketRegime">--</div>
+  <div class="sub">Auto or selected regime</div>
+ </div>
+</div>
+
+<section class="section">
+ <div class="section-title">TOP MARKET OPPORTUNITIES</div>
+ <div id="topOpportunities">
+  <p class="empty">Run Alpha Scan to discover strongest buy and sell trends.</p>
+ </div>
+</section>
+
+<section class="section">
+ <div class="section-title">BUY TREND LEADERS</div>
+ <div id="buyLeaders">
+  <p class="empty">No buy opportunities loaded yet.</p>
+ </div>
+</section>
+
+<section class="section">
+ <div class="section-title">SELL TREND LEADERS</div>
+ <div id="sellLeaders">
+  <p class="empty">No sell opportunities loaded yet.</p>
+ </div>
+</section>
+
+<section class="section">
+ <div class="section-title">TREND INTELLIGENCE</div>
+ <div id="trendIntel">
+  <p class="empty">Trend intelligence will appear after scanning.</p>
+ </div>
+</section>
+
+<section class="section">
+ <div class="section-title">AI COUNCIL REVIEW</div>
+ <div id="councilReview">
+  <p class="empty">Tap Deep Council Review on any asset after scan.</p>
+ </div>
+</section>
+
+</main>
+
+<nav class="bottom-dock">
+ <div class="dock-item" onclick="go('dashboard.html')">
+  <svg viewBox="0 0 24 24"><path d="M3 11L12 4L21 11"/><path d="M5 10V21H19V10"/><path d="M9 21V14H15V21"/></svg>
+ </div>
+
+ <div class="dock-item" onclick="go('scanner.html')">
+  <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/><circle cx="19" cy="7" r="2"/></svg>
+ </div>
+
+ <div class="ai-dock" onclick="go('copilot.html')">
+  <svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/><path d="M12 3V7"/><path d="M8 18L6 21"/><path d="M16 18L18 21"/></svg>
+ </div>
+
+ <div class="dock-item active" onclick="go('alpha-engine.html')">
+  <svg viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M8 18V10"/><path d="M12 18V4"/><path d="M16 18V8"/><path d="M20 18V12"/></svg>
+ </div>
+
+ <div class="dock-item" onclick="go('more.html')">
+  <svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+ </div>
+</nav>
+
+<script>
+const API_URL = "https://zella-backend.onrender.com";
+
+function go(page){
+ window.location.href = page;
+}
+
+function escapeHTML(text){
+ return String(text || "")
+ .replaceAll("&","&amp;")
+ .replaceAll("<","&lt;")
+ .replaceAll(">","&gt;");
+}
+
+function formatMoney(value){
+ const number = Number(value || 0);
+ if(!Number.isFinite(number)) return "--";
+ if(number >= 1000){
+  return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
+ }
+ if(number >= 1){
+  return "$" + number.toFixed(4);
+ }
+ return "$" + number.toFixed(8);
+}
+
+function assetIcon(){
+ return `
+ <svg viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="8"/>
+  <path d="M8 12H16"/>
+  <path d="M12 8V16"/>
+ </svg>
+ `;
+}
+
+function signalClass(signal){
+ const text = String(signal || "").toUpperCase();
+ if(text.includes("BUY")) return "green";
+ if(text.includes("SELL")) return "red";
+ if(text.includes("REDUCE")) return "orange";
+ return "orange";
+}
+
+function badgeClass(signal){
+ const text = String(signal || "").toUpperCase();
+ if(text.includes("BUY")) return "badge badge-buy";
+ if(text.includes("SELL")) return "badge badge-sell";
+ if(text.includes("REDUCE")) return "badge badge-hold";
+ return "badge badge-hold";
+}
+
+function directionClass(direction){
+ const text = String(direction || "").toUpperCase();
+ if(text.includes("BUY") || text.includes("BULL")) return "green";
+ if(text.includes("SELL") || text.includes("BEAR")) return "red";
+ return "orange";
+}
+
+function getScore(asset, key){
+ return Number(asset?.[key] || 0).toFixed(1);
+}
+
+function renderAssetRow(asset){
+ const signal = asset.signal || asset.finalSignal || "HOLD";
+ const direction = asset.direction || asset.dominantDirection || "Neutral";
+ const trendScore = asset.dominantTrendScore || asset.trendScore || asset.finalScore || 0;
+ const buyScore = asset.buyTrendScore || 0;
+ const sellScore = asset.sellTrendScore || 0;
+ const confidence = asset.confidence || 0;
+ const risk = asset.riskScore || 0;
+
+ return `
+ <div class="asset-row">
+  <div class="asset-left">
+   <div class="asset-logo">
+    ${asset.image ? `<img src="${asset.image}" alt="">` : assetIcon()}
+   </div>
+
+   <div class="asset-info">
+    <strong>${escapeHTML(asset.name || asset.symbol || "Asset")}</strong>
+    <small>${escapeHTML(asset.symbol || "--")} • ${escapeHTML(direction)} • Rank #${asset.marketCapRank || "--"}</small>
+
+    <div style="margin-top:7px">
+     <span class="${badgeClass(signal)}">${escapeHTML(signal)}</span>
+     <span class="badge badge-blue">Trend ${Number(trendScore).toFixed(1)}%</span>
     </div>
-
-    <h2 class="section-title">Top AI Trade Recommendations</h2>
-    <div id="results"></div>
+   </div>
   </div>
 
-  <nav class="bottom-nav">
-    <a href="dashboard.html">Home</a>
-    <a href="market.html">Market</a>
-    <a href="scanner.html">Scanner</a>
-    <a href="alpha-engine.html" class="active">Alpha</a>
-    <a href="more.html">More</a>
-  </nav>
+  <div class="asset-score">
+   <strong class="${signalClass(signal)}">${Number(confidence).toFixed(1)}%</strong>
+   <small>Confidence</small>
+  </div>
+ </div>
 
-  <script>
-    const assets = [
-      { name: "Injective", symbol: "INJ", fundamentals: 88, onchain: 84, technical: 91, adoption: 86, token: 82, macro: 74, sentiment: 89 },
-      { name: "Arbitrum", symbol: "ARB", fundamentals: 83, onchain: 79, technical: 76, adoption: 88, token: 75, macro: 72, sentiment: 78 },
-      { name: "Render", symbol: "RNDR", fundamentals: 86, onchain: 75, technical: 89, adoption: 84, token: 80, macro: 73, sentiment: 92 },
-      { name: "Celestia", symbol: "TIA", fundamentals: 82, onchain: 78, technical: 85, adoption: 81, token: 73, macro: 71, sentiment: 84 },
-      { name: "Jupiter", symbol: "JUP", fundamentals: 79, onchain: 86, technical: 88, adoption: 87, token: 76, macro: 70, sentiment: 90 },
-      { name: "Optimism", symbol: "OP", fundamentals: 84, onchain: 77, technical: 72, adoption: 85, token: 78, macro: 69, sentiment: 74 },
-      { name: "Aptos", symbol: "APT", fundamentals: 76, onchain: 73, technical: 68, adoption: 75, token: 70, macro: 66, sentiment: 71 },
-      { name: "Sei", symbol: "SEI", fundamentals: 74, onchain: 80, technical: 87, adoption: 79, token: 72, macro: 68, sentiment: 85 }
-    ];
+ <div class="split">
+  <div class="mini-card">
+   <div class="label">Buy Trend</div>
+   <strong class="green">${Number(buyScore).toFixed(1)}%</strong>
+   <div class="meter"><div class="fill" style="width:${Math.min(100,buyScore)}%"></div></div>
+  </div>
 
-    const weights = {
-      long: {
-        fundamentals: .25,
-        onchain: .20,
-        technical: .15,
-        adoption: .15,
-        token: .10,
-        macro: .10,
-        sentiment: .05
-      },
-      swing: {
-        fundamentals: .15,
-        onchain: .20,
-        technical: .30,
-        adoption: .10,
-        token: .05,
-        macro: .10,
-        sentiment: .10
-      },
-      scalp: {
-        fundamentals: .05,
-        onchain: .15,
-        technical: .45,
-        adoption: .05,
-        token: .05,
-        macro: .05,
-        sentiment: .20
-      }
-    };
+  <div class="mini-card">
+   <div class="label">Sell Trend</div>
+   <strong class="red">${Number(sellScore).toFixed(1)}%</strong>
+   <div class="meter"><div class="fill-red" style="width:${Math.min(100,sellScore)}%"></div></div>
+  </div>
+ </div>
 
-    function calculateScore(asset, profile) {
-      const w = weights[profile];
+ <div class="reason">
+  <p>${escapeHTML(asset.trendInsight || asset.reason || "Zella ranked this asset using holistic trend intelligence, risk quality and strategy-specific scoring.")}</p>
+ </div>
 
-      return (
-        asset.fundamentals * w.fundamentals +
-        asset.onchain * w.onchain +
-        asset.technical * w.technical +
-        asset.adoption * w.adoption +
-        asset.token * w.token +
-        asset.macro * w.macro +
-        asset.sentiment * w.sentiment
-      ).toFixed(1);
-    }
+ <div class="controls" style="margin-top:14px">
+  <button onclick="openCouncil('${escapeHTML(asset.id || asset.symbol)}')">Deep Council Review</button>
+  <button onclick="openMarket('${escapeHTML(asset.symbol)}')">Open Market</button>
+ </div>
+ `;
+}
 
-    function getSignal(score, regime) {
-      score = Number(score);
+function renderList(id, assets, emptyText){
+ const box = document.getElementById(id);
 
-      if (regime === "bearish") {
-        if (score >= 88) return { text: "Buy", class: "buy" };
-        if (score >= 70) return { text: "Hold / Watchlist", class: "hold" };
-        return { text: "Sell / Avoid", class: "sell" };
-      }
+ if(!Array.isArray(assets) || !assets.length){
+  box.innerHTML = `<p class="empty">${escapeHTML(emptyText)}</p>`;
+  return;
+ }
 
-      if (score >= 85) return { text: "Strong Buy", class: "buy" };
-      if (score >= 70) return { text: "Buy / Accumulate", class: "buy" };
-      if (score >= 50) return { text: "Neutral / Watchlist", class: "hold" };
-      return { text: "Sell / Avoid", class: "sell" };
-    }
+ box.innerHTML = assets.map(asset => renderAssetRow(asset)).join("");
+}
 
-    function getRisk(score, asset) {
-      if (asset.technical < 70 || asset.macro < 65) return "High";
-      if (score >= 80) return "Medium";
-      return "Medium-High";
-    }
+function renderTrendIntel(data){
+ const intelligence = data.intelligence || {};
+ const profile = data.profile || data.strategy || "--";
+ const regime = data.marketRegime || "--";
 
-    function getReason(asset, signal) {
-      return `
-        Zella detected ${asset.symbol} with strong alignment across technical,
-        on-chain, adoption, and sentiment factors. The current AI signal is
-        ${signal}. Traders should still confirm entry zones, stop loss, liquidity,
-        and risk/reward before taking action.
-      `;
-    }
+ document.getElementById("trendIntel").innerHTML = `
+  <div class="row">
+   <div class="row-left">
+    <strong>Holistic Trend Model</strong>
+    <small>${escapeHTML(profile)} approach</small>
+   </div>
+   <div class="row-right">
+    <strong class="${directionClass(regime)}">${escapeHTML(regime)}</strong>
+    <small>Market regime</small>
+   </div>
+  </div>
 
-    function runAlphaEngine() {
-      const strategy = document.getElementById("strategy").value;
-      const regime = document.getElementById("regime").value;
+  <div class="row">
+   <div class="row-left">
+    <strong>Ranking Logic</strong>
+    <small>Dominant buy or sell trend</small>
+   </div>
+   <div class="row-right">
+    <strong class="blue">${escapeHTML(data.directionMode || "Both")}</strong>
+    <small>Direction mode</small>
+   </div>
+  </div>
 
-      let ranked = assets.map(asset => {
-        const score = calculateScore(asset, strategy);
-        const signal = getSignal(score, regime);
-        const confidence = Math.min(98, Math.round(Number(score) + Math.random() * 8));
-        const risk = getRisk(score, asset);
+  <p class="sub">
+   ${escapeHTML(intelligence.summary || "Zella ranks assets by trend strength, trend consistency, momentum, volatility quality, market structure, confidence and execution safety. Volume is used as a risk filter, not the main ranking factor.")}
+  </p>
+ `;
+}
 
-        return { ...asset, score, signal, confidence, risk };
-      }).sort((a, b) => b.score - a.score);
+function renderAlpha(data){
+ const topAssets = data.assets || data.topOpportunities || [];
+ const buyAssets = data.buyOpportunities || topAssets.filter(a => String(a.signal || "").toUpperCase().includes("BUY"));
+ const sellAssets = data.sellOpportunities || topAssets.filter(a => String(a.signal || "").toUpperCase().includes("SELL"));
 
-      document.getElementById("assetsScanned").textContent = "1,000+";
-      document.getElementById("bestAsset").textContent = ranked[0].symbol;
-      document.getElementById("engineConfidence").textContent = ranked[0].confidence + "%";
+ const best = data.bestAsset || topAssets[0] || null;
 
-      const regimeBox = document.getElementById("marketRegime");
-      regimeBox.textContent = regime.charAt(0).toUpperCase() + regime.slice(1);
-      regimeBox.className = "big status-" + regime;
+ document.getElementById("assetsScanned").textContent =
+  data.scannedAssets || data.scanned || "--";
 
-      const results = document.getElementById("results");
-      results.innerHTML = "";
+ document.getElementById("marketRegime").textContent =
+  data.marketRegime || "--";
 
-      ranked.forEach(asset => {
-        results.innerHTML += `
-          <div class="asset-card">
-            <div class="asset-top">
-              <div>
-                <div class="asset-name">${asset.name}</div>
-                <div class="symbol">${asset.symbol}</div>
-              </div>
-              <div class="signal ${asset.signal.class}">
-                ${asset.signal.text}
-              </div>
-            </div>
+ if(best){
+  const signal = best.signal || best.finalSignal || "--";
+  const direction = best.direction || best.dominantDirection || "--";
 
-            <div class="score-row">
-              <div class="mini">
-                <span>Unified Score</span>
-                <strong>${asset.score}%</strong>
-                <div class="bar">
-                  <div class="bar-fill" style="width:${asset.score}%"></div>
-                </div>
-              </div>
+  document.getElementById("strongestSignal").textContent = signal;
+  document.getElementById("strongestSignal").className = "value " + signalClass(signal);
+  document.getElementById("dominantDirection").textContent = direction;
+  document.getElementById("dominantDirection").className = "value " + directionClass(direction);
+  document.getElementById("signalSub").textContent =
+   `${best.symbol || "--"} • Trend ${Number(best.dominantTrendScore || best.finalScore || 0).toFixed(1)}%`;
+ }else{
+  document.getElementById("strongestSignal").textContent = "--";
+  document.getElementById("dominantDirection").textContent = "--";
+  document.getElementById("signalSub").textContent = "No opportunity found";
+ }
 
-              <div class="mini">
-                <span>Confidence</span>
-                <strong>${asset.confidence}%</strong>
-              </div>
+ renderList("topOpportunities", topAssets.slice(0,10), "No top opportunities found.");
+ renderList("buyLeaders", buyAssets.slice(0,8), "No buy trend leaders found.");
+ renderList("sellLeaders", sellAssets.slice(0,8), "No sell trend leaders found.");
+ renderTrendIntel(data);
+}
 
-              <div class="mini">
-                <span>Risk</span>
-                <strong>${asset.risk}</strong>
-              </div>
+async function runAlphaScan(){
+ const regime = document.getElementById("regimeSelect").value;
+ const profile = document.getElementById("profileSelect").value;
+ const direction = document.getElementById("directionSelect").value;
+ const depth = document.getElementById("depthSelect").value;
 
-              <div class="mini">
-                <span>Market Bias</span>
-                <strong>${regime}</strong>
-              </div>
-            </div>
+ localStorage.setItem("zellaAlphaRegime",regime);
+ localStorage.setItem("zellaAlphaProfile",profile);
+ localStorage.setItem("zellaAlphaDirection",direction);
+ localStorage.setItem("zellaAlphaDepth",depth);
 
-            <div class="pillars">
-              <div class="pillar">Fundamentals <strong>${asset.fundamentals}%</strong></div>
-              <div class="pillar">On-Chain <strong>${asset.onchain}%</strong></div>
-              <div class="pillar">Technical <strong>${asset.technical}%</strong></div>
-              <div class="pillar">Adoption <strong>${asset.adoption}%</strong></div>
-              <div class="pillar">Token Econ <strong>${asset.token}%</strong></div>
-              <div class="pillar">Macro <strong>${asset.macro}%</strong></div>
-              <div class="pillar">Sentiment <strong>${asset.sentiment}%</strong></div>
-            </div>
+ document.getElementById("alphaStatus").textContent = "Alpha Engine • Scanning";
+ document.getElementById("topOpportunities").innerHTML = `<p class="empty">Scanning market trends...</p>`;
+ document.getElementById("buyLeaders").innerHTML = `<p class="empty">Finding strongest buy trends...</p>`;
+ document.getElementById("sellLeaders").innerHTML = `<p class="empty">Finding strongest sell trends...</p>`;
 
-            <p class="reason">${getReason(asset, asset.signal.text)}</p>
-          </div>
-        `;
-      });
-    }
+ try{
+  const url =
+   `${API_URL}/api/alpha-engine-v3?regime=${encodeURIComponent(regime)}` +
+   `&profile=${encodeURIComponent(profile)}` +
+   `&direction=${encodeURIComponent(direction)}` +
+   `&depth=${encodeURIComponent(depth)}`;
 
-    runAlphaEngine();
-  </script>
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if(!data.success){
+   throw new Error(data.message || data.error || "Alpha Engine unavailable");
+  }
+
+  renderAlpha(data);
+  document.getElementById("alphaStatus").textContent = "Alpha Engine • Live";
+ }catch(error){
+  document.getElementById("alphaStatus").textContent = "Alpha Engine • Unavailable";
+  document.getElementById("topOpportunities").innerHTML = `<p class="empty red">${escapeHTML(error.message)}</p>`;
+ }
+}
+
+async function openCouncil(asset){
+ const profile = document.getElementById("profileSelect").value;
+ const regime = document.getElementById("regimeSelect").value;
+
+ document.getElementById("councilReview").innerHTML =
+  `<p class="empty">AI Council reviewing ${escapeHTML(asset)}...</p>`;
+
+ try{
+  const response = await fetch(
+   `${API_URL}/api/ai-council?asset=${encodeURIComponent(asset)}&strategy=${encodeURIComponent(profile)}&regime=${encodeURIComponent(regime)}`
+  );
+
+  const data = await response.json();
+
+  if(!data.success){
+   throw new Error(data.message || data.error || "AI Council unavailable");
+  }
+
+  const agents = data.council?.agents || {};
+  const chairman = data.council?.chairman || {};
+  const agentList = Object.values(agents);
+
+  document.getElementById("councilReview").innerHTML = `
+   <div class="row">
+    <div class="row-left">
+     <strong>${escapeHTML(data.asset?.name || asset)}</strong>
+     <small>Chairman verdict</small>
+    </div>
+    <div class="row-right">
+     <strong class="${signalClass(chairman.finalVerdict)}">${escapeHTML(chairman.finalVerdict || "--")}</strong>
+     <small>${chairman.confidence || 0}% confidence</small>
+    </div>
+   </div>
+
+   <div class="row">
+    <div class="row-left">
+     <strong>Consensus Score</strong>
+     <small>${chairman.agreement || 0}% agreement</small>
+    </div>
+    <div class="row-right">
+     <strong class="blue">${chairman.consensusScore || 0}%</strong>
+     <small>${chairman.buySupport || 0} buy • ${chairman.sellPressure || 0} sell</small>
+    </div>
+   </div>
+
+   ${agentList.map(agent=>`
+    <div class="row">
+     <div class="row-left">
+      <strong>${escapeHTML(agent.name)}</strong>
+      <small>${escapeHTML(agent.role)}</small>
+     </div>
+     <div class="row-right">
+      <strong class="${signalClass(agent.vote)}">${escapeHTML(agent.vote)}</strong>
+      <small>${agent.confidence}% confidence</small>
+     </div>
+    </div>
+   `).join("")}
+  `;
+ }catch(error){
+  document.getElementById("councilReview").innerHTML =
+   `<p class="empty red">${escapeHTML(error.message)}</p>`;
+ }
+}
+
+function openMarket(symbol){
+ if(!symbol) return;
+ window.location.href = `market.html?symbol=${encodeURIComponent(symbol)}&timeframe=1h`;
+}
+
+function boot(){
+ document.getElementById("regimeSelect").value =
+  localStorage.getItem("zellaAlphaRegime") || "auto";
+
+ document.getElementById("profileSelect").value =
+  localStorage.getItem("zellaAlphaProfile") || "swing";
+
+ document.getElementById("directionSelect").value =
+  localStorage.getItem("zellaAlphaDirection") || "both";
+
+ document.getElementById("depthSelect").value =
+  localStorage.getItem("zellaAlphaDepth") || "750";
+
+ runAlphaScan();
+}
+
+boot();
+</script>
+
+<script src="premium-guard.js"></script>
+<script type="module" src="auth-guard.js"></script>
 </body>
 </html>

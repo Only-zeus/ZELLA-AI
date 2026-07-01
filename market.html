@@ -202,12 +202,12 @@ body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-b
  </div>
 </nav>
 
-<script src="https://s3.tradingview.com/tv.js"></script>
+ <script src="https://s3.tradingview.com/tv.js"></script>
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 
-function go(page){window.location.href = page}
+function go(page){ window.location.href = page; }
 
 function escapeHTML(text){
  return String(text || "")
@@ -216,17 +216,20 @@ function escapeHTML(text){
  .replaceAll(">","&gt;");
 }
 
-function formatMoney(value){
- const number = Number(value || 0);
- if(!Number.isFinite(number)) return "--";
- if(number >= 1000){
-  return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
- }
- return "$" + number.toFixed(4);
-}
-
 function getParam(name){
  return new URLSearchParams(window.location.search).get(name);
+}
+
+function getAssetId(){
+ return getParam("assetId") || localStorage.getItem("zellaSelectedAssetId") || "";
+}
+
+function formatMoney(value){
+ const number = Number(value);
+ if(value === null || value === undefined || value === "" || !Number.isFinite(number)) return "--";
+ if(number >= 1000) return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
+ if(number >= 1) return "$" + number.toFixed(4);
+ return "$" + number.toFixed(8);
 }
 
 function assetIcon(){
@@ -235,19 +238,19 @@ function assetIcon(){
   <circle cx="12" cy="12" r="8"/>
   <path d="M8 12H16"/>
   <path d="M12 8V16"/>
- </svg>
- `;
+ </svg>`;
 }
 
 function colorAction(action){
  const text = String(action || "").toUpperCase();
- if(text.includes("BUY")) return "green";
+ if(text.includes("BUY") || text.includes("ALLOW")) return "green";
  if(text.includes("SELL")) return "red";
- if(text.includes("NO TRADE")) return "orange";
+ if(text.includes("NO TRADE") || text.includes("WATCH") || text.includes("WAIT")) return "orange";
  return "orange";
 }
 
 function mapTVSymbol(symbol){
+ const clean = String(symbol || "BTC").toUpperCase().replace("USDT","").replace("-USDT","");
  const map = {
   BTC:"BINANCE:BTCUSDT",
   ETH:"BINANCE:ETHUSDT",
@@ -255,21 +258,13 @@ function mapTVSymbol(symbol){
   BNB:"BINANCE:BNBUSDT",
   XRP:"BINANCE:XRPUSDT"
  };
- return map[symbol] || "BINANCE:BTCUSDT";
+ return map[clean] || `BINANCE:${clean}USDT`;
 }
 
 function mapTVInterval(timeframe){
  const map = {
-  "1m":"1",
-  "3m":"3",
-  "5m":"5",
-  "15m":"15",
-  "30m":"30",
-  "1h":"60",
-  "4h":"240",
-  "1d":"D",
-  "1w":"W",
-  "1M":"M"
+  "1m":"1","3m":"3","5m":"5","15m":"15","30m":"30",
+  "1h":"60","4h":"240","1d":"D","1w":"W","1M":"M"
  };
  return map[timeframe] || "60";
 }
@@ -299,6 +294,18 @@ function renderChart(symbol,timeframe){
  });
 }
 
+function ensureSymbolOption(symbol){
+ const select = document.getElementById("symbolSelect");
+ const clean = String(symbol || "").toUpperCase();
+
+ if(clean && ![...select.options].some(opt => opt.value === clean)){
+  const option = document.createElement("option");
+  option.value = clean;
+  option.textContent = clean;
+  select.appendChild(option);
+ }
+}
+
 function renderCortex(data){
  const rec = data.recommendation || {};
  const plan = data.tradePlan || {};
@@ -307,10 +314,10 @@ function renderCortex(data){
 
  document.getElementById("recValue").textContent = rec.action || "--";
  document.getElementById("recValue").className = "value " + cls;
- document.getElementById("recSub").textContent = `${data.symbol} • ${data.timeframe} • ${data.tradingStyle || ""}`;
- document.getElementById("confidenceValue").textContent = (rec.confidence || 0) + "%";
+ document.getElementById("recSub").textContent = `${data.symbol || "--"} • ${data.timeframe || "--"} • ${data.tradingStyle || ""}`;
+ document.getElementById("confidenceValue").textContent = (rec.confidence ?? 0) + "%";
  document.getElementById("regimeValue").textContent = data.regime || "--";
- document.getElementById("marketSource").textContent = data.source?.market || "Live";
+ document.getElementById("marketSource").textContent = data.source?.market || "Universal";
 
  document.getElementById("marketDNA").innerHTML = `
   <div class="row">
@@ -320,7 +327,7 @@ function renderCortex(data){
    </div>
    <div class="row-right">
     <strong class="blue">${escapeHTML(data.regime || "--")}</strong>
-    <small>Regime</small>
+    <small>${escapeHTML(data.source?.market || "Market source")}</small>
    </div>
   </div>
   <p class="sub">${escapeHTML(dna.behavior || "")}</p>
@@ -331,7 +338,7 @@ function renderCortex(data){
   <div class="row">
    <div class="row-left">
     <strong>Current Price</strong>
-    <small>${formatMoney(plan.currentPrice || data.market?.price)}</small>
+    <small>${formatMoney(plan.currentPrice ?? data.market?.price)}</small>
    </div>
    <div class="row-right">
     <strong>${escapeHTML(rec.risk || "--")} Risk</strong>
@@ -357,7 +364,7 @@ function renderCortex(data){
    </div>
    <div class="row-right">
     <strong class="${cls}">${escapeHTML(rec.action || "--")}</strong>
-    <small>${rec.confidence || 0}% confidence</small>
+    <small>${rec.confidence ?? 0}% confidence</small>
    </div>
   </div>
 
@@ -366,7 +373,7 @@ function renderCortex(data){
 
  const council = Array.isArray(data.aiCouncil) ? data.aiCouncil : [];
  document.getElementById("councilBox").innerHTML = council.length
-  ? council.map(item=>`
+ ? council.map(item=>`
    <div class="row">
     <div class="row-left">
      <strong>${escapeHTML(item.analyst)}</strong>
@@ -374,33 +381,34 @@ function renderCortex(data){
     </div>
     <div class="row-right">
      <strong class="${colorAction(item.verdict)}">${escapeHTML(item.verdict)}</strong>
-     <small>${item.confidence}% confidence</small>
+     <small>${item.confidence ?? 0}% confidence</small>
     </div>
    </div>
-  `).join("")
-  : `<p class="sub">No AI Council data available.</p>`;
+ `).join("")
+ : `<p class="sub">No AI Council data available.</p>`;
 }
 
 async function loadCortex(){
  const symbol = document.getElementById("symbolSelect").value;
  const timeframe = document.getElementById("timeframeSelect").value;
+ const assetId = getAssetId();
 
- localStorage.setItem("zellaSelectedSymbol",symbol);
- localStorage.setItem("zellaSelectedTimeframe",timeframe);
+ localStorage.setItem("zellaSelectedSymbol", symbol);
+ localStorage.setItem("zellaSelectedTimeframe", timeframe);
 
  renderChart(symbol,timeframe);
 
  try{
   document.getElementById("marketStatus").textContent = "Market Engine • Analyzing";
-  const assetId = getAssetId();
 
-const response = await fetch(
-  `${API_URL}/api/cortex/analyze/${encodeURIComponent(symbol)}/${encodeURIComponent(timeframe)}?assetId=${encodeURIComponent(assetId)}`
-);
+  const response = await fetch(
+   `${API_URL}/api/cortex/analyze/${encodeURIComponent(symbol)}/${encodeURIComponent(timeframe)}?assetId=${encodeURIComponent(assetId)}`
+  );
+
   const data = await response.json();
 
   if(!data.success){
-   throw new Error(data.message || data.error || "Cortex unavailable");
+   throw new Error(data.error || data.message || "Cortex unavailable");
   }
 
   renderCortex(data);
@@ -408,6 +416,8 @@ const response = await fetch(
  }catch(error){
   document.getElementById("marketStatus").textContent = "Market Engine • Unavailable";
   document.getElementById("marketDNA").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
+  document.getElementById("tradePlan").innerHTML = `<p class="sub">Waiting for trade plan...</p>`;
+  document.getElementById("councilBox").innerHTML = `<p class="sub">Waiting for AI Council...</p>`;
  }
 }
 
@@ -429,7 +439,7 @@ async function loadMarket(){
    const sign = change >= 0 ? "+" : "";
 
    list.innerHTML += `
-    <div class="market-row" onclick="selectAsset('${asset.symbol}')">
+    <div class="market-row" onclick="selectAsset('${escapeHTML(asset.symbol)}')">
      <div class="coin-left">
       <div class="coin-logo">
        ${asset.image ? `<img src="${asset.image}" style="width:28px;height:28px;border-radius:50%;">` : assetIcon()}
@@ -443,8 +453,7 @@ async function loadMarket(){
       <strong>${formatMoney(asset.price)}</strong>
       <small class="${cls}">${sign}${change.toFixed(2)}%</small>
      </div>
-    </div>
-   `;
+    </div>`;
   });
  }catch(error){
   document.getElementById("marketList").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
@@ -473,8 +482,7 @@ async function loadNews(){
       <strong>${escapeHTML(article.title)}</strong>
       <small>${escapeHTML(article.source || "News")} • ${escapeHTML(article.publishedAt || "")}</small>
      </div>
-    </div>
-   `;
+    </div>`;
   });
 
   if(!list.innerHTML.trim()){
@@ -486,33 +494,40 @@ async function loadNews(){
 }
 
 function selectAsset(symbol){
+ localStorage.removeItem("zellaSelectedAssetId");
+ ensureSymbolOption(symbol);
  document.getElementById("symbolSelect").value = symbol;
  loadCortex();
-}
-
-function getAssetId(){
-  return getParam("assetId") || localStorage.getItem("zellaSelectedAssetId") || "";
 }
 
 function openAnalytics(){
  const symbol = document.getElementById("symbolSelect").value;
  const timeframe = document.getElementById("timeframeSelect").value;
- localStorage.setItem("zellaSelectedSymbol",symbol);
- localStorage.setItem("zellaSelectedTimeframe",timeframe);
- window.location.href = `analytics.html?symbol=${encodeURIComponent(symbol)}&timeframe=${encodeURIComponent(timeframe)}`;
+ const assetId = getAssetId();
+
+ window.location.href =
+  `analytics.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&timeframe=${encodeURIComponent(timeframe)}`;
 }
 
 function openAutoTrader(){
  const symbol = document.getElementById("symbolSelect").value;
  const timeframe = document.getElementById("timeframeSelect").value;
- localStorage.setItem("zellaSelectedSymbol",symbol);
- localStorage.setItem("zellaSelectedTimeframe",timeframe);
- window.location.href = `autotrader.html?symbol=${encodeURIComponent(symbol)}&timeframe=${encodeURIComponent(timeframe)}`;
+ const assetId = getAssetId();
+
+ window.location.href =
+  `autotrader.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&timeframe=${encodeURIComponent(timeframe)}`;
 }
 
 function boot(){
- const symbol = getParam("symbol") || localStorage.getItem("zellaSelectedSymbol") || "BTC";
+ const symbol = (getParam("symbol") || localStorage.getItem("zellaSelectedSymbol") || "BTC").toUpperCase();
  const timeframe = getParam("timeframe") || localStorage.getItem("zellaSelectedTimeframe") || "1h";
+ const assetId = getParam("assetId") || localStorage.getItem("zellaSelectedAssetId") || "";
+
+ if(assetId){
+  localStorage.setItem("zellaSelectedAssetId", assetId);
+ }
+
+ ensureSymbolOption(symbol);
 
  document.getElementById("symbolSelect").value = symbol;
  document.getElementById("timeframeSelect").value = timeframe;

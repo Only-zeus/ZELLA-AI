@@ -249,16 +249,29 @@ function colorAction(action){
  return "orange";
 }
 
+function getSelectedSource(){
+ return getParam("source") || localStorage.getItem("zellaSelectedSource") || "";
+}
+
 function mapTVSymbol(symbol){
  const clean = String(symbol || "BTC").toUpperCase().replace("USDT","").replace("-USDT","");
- const map = {
+ const source = String(getSelectedSource() || "").toLowerCase();
+
+ const coreMap = {
   BTC:"BINANCE:BTCUSDT",
   ETH:"BINANCE:ETHUSDT",
   SOL:"BINANCE:SOLUSDT",
   BNB:"BINANCE:BNBUSDT",
   XRP:"BINANCE:XRPUSDT"
  };
- return map[clean] || `BINANCE:${clean}USDT`;
+
+ if(coreMap[clean]) return coreMap[clean];
+
+ if(source.includes("okx")) return `OKX:${clean}USDT`;
+ if(source.includes("bybit")) return `BYBIT:${clean}USDT`;
+ if(source.includes("binance")) return `BINANCE:${clean}USDT`;
+
+ return `BINANCE:${clean}USDT`;
 }
 
 function mapTVInterval(timeframe){
@@ -522,6 +535,10 @@ function boot(){
  const symbol = (getParam("symbol") || localStorage.getItem("zellaSelectedSymbol") || "BTC").toUpperCase();
  const timeframe = getParam("timeframe") || localStorage.getItem("zellaSelectedTimeframe") || "1h";
  const assetId = getParam("assetId") || localStorage.getItem("zellaSelectedAssetId") || "";
+const source = getParam("source") || localStorage.getItem("zellaSelectedSource") || "";
+if(source){
+ localStorage.setItem("zellaSelectedSource", source);
+}
 
  if(assetId){
   localStorage.setItem("zellaSelectedAssetId", assetId);

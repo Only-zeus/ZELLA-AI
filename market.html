@@ -299,25 +299,74 @@ function renderChart(symbol,timeframe){
  const box = document.getElementById("tvChart");
  box.innerHTML = "";
 
+ const clean = String(symbol || "BTC").toUpperCase().replace("USDT","").replace("-USDT","");
+ const tvSymbol = mapTVSymbol(clean);
+
  if(!window.TradingView){
-  box.innerHTML = `<p class="sub red" style="padding:20px">TradingView unavailable.</p>`;
+  renderExchangeChartFallback(clean);
   return;
  }
 
- new TradingView.widget({
-  autosize:true,
-  symbol:mapTVSymbol(symbol),
-  interval:mapTVInterval(timeframe),
-  timezone:"Etc/UTC",
-  theme:"dark",
-  style:"1",
-  locale:"en",
-  enable_publishing:false,
-  hide_top_toolbar:false,
-  hide_legend:false,
-  save_image:false,
-  container_id:"tvChart"
- });
+ try{
+  new TradingView.widget({
+   autosize:true,
+   symbol:tvSymbol,
+   interval:mapTVInterval(timeframe),
+   timezone:"Etc/UTC",
+   theme:"dark",
+   style:"1",
+   locale:"en",
+   enable_publishing:false,
+   hide_top_toolbar:false,
+   hide_legend:false,
+   save_image:false,
+   container_id:"tvChart"
+  });
+
+  setTimeout(()=>{
+   const text = box.innerText || "";
+   if(
+    text.toLowerCase().includes("invalid symbol") ||
+    text.toLowerCase().includes("symbol not found") ||
+    text.toLowerCase().includes("doesn't exist") ||
+    text.toLowerCase().includes("does not exist")
+   ){
+    renderExchangeChartFallback(clean);
+   }
+  },3500);
+
+ }catch(error){
+  renderExchangeChartFallback(clean);
+ }
+}
+
+function renderExchangeChartFallback(symbol){
+ const box = document.getElementById("tvChart");
+ const clean = String(symbol || "BTC").toUpperCase();
+
+ const binanceUrl = `https://www.binance.com/en/trade/${clean}_USDT`;
+ const bybitUrl = `https://www.bybit.com/trade/spot/${clean}/USDT`;
+ const okxUrl = `https://www.okx.com/trade-spot/${clean.toLowerCase()}-usdt`;
+
+ box.innerHTML = `
+  <div style="height:100%;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;background:#0f172a;">
+   <div>
+    <div style="font-size:42px;font-weight:950;color:#38bdf8;">${escapeHTML(clean)}</div>
+    <p class="sub" style="margin-top:14px">
+     TradingView chart is unavailable for this asset. Open the live exchange chart below.
+    </p>
+
+    <div class="controls" style="margin-top:18px">
+     <button onclick="window.open('${binanceUrl}','_blank')">Binance Chart</button>
+     <button onclick="window.open('${bybitUrl}','_blank')">Bybit Chart</button>
+    </div>
+
+    <div class="full-control" style="margin-top:12px">
+     <button onclick="window.open('${okxUrl}','_blank')">OKX Chart</button>
+    </div>
+   </div>
+  </div>
+ `;
 }
 
 function ensureSymbolOption(symbol){

@@ -245,8 +245,12 @@ function getSelectedSource(){
  return getParam("source") || localStorage.getItem("zellaSelectedSource") || "";
 }
 
+/* IMPORTANT:
+   No localStorage fallback here.
+   This prevents old/wrong TradingView symbols from being reused.
+*/
 function getTradingViewSymbol(){
- return getParam("tv") || localStorage.getItem("zellaTradingViewSymbol") || "";
+ return getParam("tv") || "";
 }
 
 function formatMoney(value){
@@ -276,6 +280,7 @@ function assetIcon(){
 function ensureSymbolOption(symbol){
  const select = document.getElementById("symbolSelect");
  const clean = String(symbol || "").toUpperCase();
+
  if(clean && ![...select.options].some(opt => opt.value === clean)){
   const option = document.createElement("option");
   option.value = clean;
@@ -284,11 +289,38 @@ function ensureSymbolOption(symbol){
  }
 }
 
+function isValidCryptoTVSymbol(tv){
+ const clean = String(tv || "").toUpperCase();
+
+ const validExchange =
+  clean.startsWith("BINANCE:") ||
+  clean.startsWith("BYBIT:") ||
+  clean.startsWith("OKX:");
+
+ const validQuote =
+  clean.endsWith("USDT") ||
+  clean.endsWith("USD") ||
+  clean.endsWith("USDC");
+
+ return validExchange && validQuote;
+}
+
+function getCorrectTV(data){
+ const tv =
+  data.tradingViewSymbol ||
+  data.asset?.tradingViewSymbol ||
+  data.universalAsset?.tradingViewSymbol ||
+  data.market?.tradingViewSymbol ||
+  "";
+
+ return isValidCryptoTVSymbol(tv) ? tv : "";
+}
+
 function renderChartWithSymbol(tvSymbol,timeframe){
  const box = document.getElementById("tvChart");
  box.innerHTML = "";
 
- if(!window.TradingView || !tvSymbol){
+ if(!window.TradingView || !isValidCryptoTVSymbol(tvSymbol)){
   renderExchangeChartFallback(document.getElementById("symbolSelect").value);
   return;
  }
@@ -325,24 +357,18 @@ function renderExchangeChartFallback(symbol){
   <div style="height:100%;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;background:#0f172a;">
    <div>
     <div style="font-size:42px;font-weight:950;color:#38bdf8;">${escapeHTML(clean)}</div>
-    <p class="sub" style="margin-top:14px">TradingView chart is unavailable. Open the live exchange chart below.</p>
+    <p class="sub" style="margin-top:14px">TradingView chart is unavailable or unverified. Open the live exchange chart below.</p>
+
     <div class="controls" style="margin-top:18px">
      <button onclick="window.open('${binanceUrl}','_blank')">Binance Chart</button>
      <button onclick="window.open('${bybitUrl}','_blank')">Bybit Chart</button>
     </div>
+
     <div class="full-control" style="margin-top:12px">
      <button onclick="window.open('${okxUrl}','_blank')">OKX Chart</button>
     </div>
    </div>
   </div>`;
-}
-
-function getCorrectTV(data){
- return data.tradingViewSymbol ||
- data.asset?.tradingViewSymbol ||
- data.universalAsset?.tradingViewSymbol ||
- data.market?.tradingViewSymbol ||
- "";
 }
 
 function renderCortex(data){
@@ -371,17 +397,21 @@ function renderCortex(data){
    <div class="row-left"><strong>Current Price</strong><small>${formatMoney(plan.currentPrice ?? data.market?.price)}</small></div>
    <div class="row-right"><strong>${escapeHTML(rec.risk || "--")} Risk</strong><small>${escapeHTML(plan.holdingPeriod || "--")}</small></div>
   </div>
+
   <div class="row">
    <div class="row-left"><strong>Entry Zone</strong><small>${formatMoney(plan.entryZone?.low)} - ${formatMoney(plan.entryZone?.high)}</small></div>
    <div class="row-right"><strong>Stop Loss</strong><small>${formatMoney(plan.stopLoss)}</small></div>
   </div>
+
   <div class="row">
    <div class="row-left"><strong>Take Profit</strong><small>TP1 ${formatMoney(plan.takeProfit1)} • TP2 ${formatMoney(plan.takeProfit2)}</small></div>
    <div class="row-right"><strong class="${cls}">${escapeHTML(rec.action || "--")}</strong><small>${rec.confidence ?? 0}% confidence</small></div>
   </div>
+
   <p class="sub">Invalidation: ${escapeHTML(plan.invalidation || "Wait for confirmation.")}</p>`;
 
  const council = Array.isArray(data.aiCouncil) ? data.aiCouncil : [];
+
  document.getElementById("councilBox").innerHTML = council.length
  ? council.map(item=>`
   <div class="row">
@@ -433,7 +463,8 @@ async function loadCortex(){
  localStorage.setItem("zellaSelectedSymbol", symbol);
  localStorage.setItem("zellaSelectedTimeframe", timeframe);
 
- document.getElementById("tvChart").innerHTML = `<p class="sub" style="padding:20px">Loading verified asset chart...</p>`;
+ document.getElementById("tvChart").innerHTML =
+  `<p class="sub" style="padding:20px">Loading verified asset chart...</p>`;
 
  try{
   document.getElementById("marketStatus").textContent = "Market Engine • Analyzing";
@@ -456,13 +487,16 @@ async function loadCortex(){
    localStorage.setItem("zellaTradingViewSymbol", correctTV);
    renderChartWithSymbol(correctTV, timeframe);
   }else{
+   localStorage.removeItem("zellaTradingViewSymbol");
    renderExchangeChartFallback(symbol);
   }
 
   document.getElementById("marketStatus").textContent = "Market Engine • Live";
+
  }catch(error){
   document.getElementById("marketStatus").textContent = "Market Engine • Unavailable";
   document.getElementById("marketDNA").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
+  localStorage.removeItem("zellaTradingViewSymbol");
   renderExchangeChartFallback(symbol);
  }
 }
@@ -493,6 +527,7 @@ async function loadMarket(){
      <div class="coin-price"><strong>${formatMoney(asset.price)}</strong><small class="${cls}">${sign}${change.toFixed(2)}%</small></div>
     </div>`;
   });
+
  }catch(error){
   document.getElementById("marketList").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
  }
@@ -502,13 +537,17 @@ async function loadNews(){
  try{
   const response = await fetch(API_URL + "/api/news/live");
   const data = await response.json();
-  if(!data.success || !Array.isArray(data.articles)) throw new Error(data.message || "Live news unavailable");
+
+  if(!data.success || !Array.isArray(data.articles)){
+   throw new Error(data.message || "Live news unavailable");
+  }
 
   const list = document.getElementById("newsList");
   list.innerHTML = "";
 
   data.articles.slice(0,4).forEach(article=>{
    if(!article.image) return;
+
    list.innerHTML += `
     <div class="news-card" onclick="window.open('${article.url}','_blank')">
      <img src="${article.image}" alt="">
@@ -516,7 +555,10 @@ async function loadNews(){
     </div>`;
   });
 
-  if(!list.innerHTML.trim()) list.innerHTML = `<p class="sub red">No image-based news available right now.</p>`;
+  if(!list.innerHTML.trim()){
+   list.innerHTML = `<p class="sub red">No image-based news available right now.</p>`;
+  }
+
  }catch(error){
   document.getElementById("newsList").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
  }
@@ -526,8 +568,10 @@ function selectAsset(symbol){
  localStorage.removeItem("zellaSelectedAssetId");
  localStorage.removeItem("zellaSelectedSource");
  localStorage.removeItem("zellaTradingViewSymbol");
+
  ensureSymbolOption(symbol);
  document.getElementById("symbolSelect").value = symbol;
+
  loadCortex();
 }
 
@@ -536,7 +580,7 @@ function openAnalytics(){
  const timeframe = document.getElementById("timeframeSelect").value;
  const assetId = getAssetId();
  const source = getSelectedSource();
- const tv = getTradingViewSymbol();
+ const tv = localStorage.getItem("zellaTradingViewSymbol") || "";
 
  window.location.href =
   `analytics.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&source=${encodeURIComponent(source)}&tv=${encodeURIComponent(tv)}&timeframe=${encodeURIComponent(timeframe)}`;
@@ -547,22 +591,22 @@ function openAutoTrader(){
  const timeframe = document.getElementById("timeframeSelect").value;
  const assetId = getAssetId();
  const source = getSelectedSource();
- const tv = getTradingViewSymbol();
+ const tv = localStorage.getItem("zellaTradingViewSymbol") || "";
 
  window.location.href =
   `autotrader.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&source=${encodeURIComponent(source)}&tv=${encodeURIComponent(tv)}&timeframe=${encodeURIComponent(timeframe)}`;
 }
 
 function boot(){
+ localStorage.removeItem("zellaTradingViewSymbol");
+
  const symbol = (getParam("symbol") || localStorage.getItem("zellaSelectedSymbol") || "BTC").toUpperCase();
  const timeframe = getParam("timeframe") || localStorage.getItem("zellaSelectedTimeframe") || "1h";
  const assetId = getParam("assetId") || localStorage.getItem("zellaSelectedAssetId") || "";
  const source = getParam("source") || localStorage.getItem("zellaSelectedSource") || "";
- const tv = getParam("tv") || localStorage.getItem("zellaTradingViewSymbol") || "";
 
  if(assetId) localStorage.setItem("zellaSelectedAssetId", assetId);
  if(source) localStorage.setItem("zellaSelectedSource", source);
- if(tv) localStorage.setItem("zellaTradingViewSymbol", tv);
 
  ensureSymbolOption(symbol);
 

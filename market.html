@@ -150,7 +150,7 @@ body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-b
 </div>
 
 <section class="section">
- <div class="section-title">TRADINGVIEW CHART</div>
+ <div class="section-title">SOURCE ASSET CHART</div>
  <div class="chart-box" id="tvChart"></div>
 </section>
 
@@ -217,6 +217,8 @@ body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-b
  </div>
 </nav>
 
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+
  <script>
 const API_URL = "https://zella-backend.onrender.com";
 
@@ -280,50 +282,87 @@ function ensureSymbolOption(symbol){
  }
 }
 
-function renderSourceChart(data){
+let zellaChart = null;
+
+async function renderSourceChart(data){
  const box = document.getElementById("tvChart");
  const symbol = zellaCleanSymbol(data?.symbol || document.getElementById("symbolSelect").value || "BTC");
- const source = String(data?.source?.market || data?.source || getSelectedSource() || "").toLowerCase();
- const exchange = String(data?.exchange || data?.asset?.exchange || data?.universalAsset?.exchange || "").toLowerCase();
+ const timeframe = document.getElementById("timeframeSelect").value;
+ const assetId = getAssetId();
+ const source = getSelectedSource();
 
- const binanceUrl = `https://www.binance.com/en/trade/${symbol}_USDT`;
- const bybitUrl = `https://www.bybit.com/trade/spot/${symbol}/USDT`;
- const okxUrl = `https://www.okx.com/trade-spot/${symbol.toLowerCase()}-usdt`;
+ box.innerHTML = `<p class="sub" style="padding:20px">Loading ${escapeHTML(symbol)} source candles...</p>`;
 
- let primaryTitle = "Binance Chart";
- let primaryUrl = binanceUrl;
+ try{
+  const response = await fetch(
+   `${API_URL}/api/cortex/candles/${encodeURIComponent(symbol)}/${encodeURIComponent(timeframe)}?assetId=${encodeURIComponent(assetId)}&source=${encodeURIComponent(source)}`
+  );
 
- if(source.includes("okx") || exchange.includes("okx")){
-  primaryTitle = "OKX Chart";
-  primaryUrl = okxUrl;
- }else if(source.includes("bybit") || exchange.includes("bybit")){
-  primaryTitle = "Bybit Chart";
-  primaryUrl = bybitUrl;
- }else if(source.includes("binance") || exchange.includes("binance")){
-  primaryTitle = "Binance Chart";
-  primaryUrl = binanceUrl;
- }
+  const chartData = await response.json();
 
- box.innerHTML = `
-  <div style="height:100%;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;background:#0f172a;">
-   <div>
-    <div style="font-size:42px;font-weight:950;color:#38bdf8;">${escapeHTML(symbol)}</div>
-    <p class="sub" style="margin-top:14px">
-     Source-based chart selected from ${escapeHTML(data?.source?.market || data?.source || data?.exchange || "exchange provider")}.
-    </p>
+  if(!chartData.success || !Array.isArray(chartData.candles) || !chartData.candles.length){
+   throw new Error(chartData.error || chartData.message || "No source candles available.");
+  }
 
-    <div class="controls" style="margin-top:18px">
-     <button onclick="window.open('${primaryUrl}','_blank')">${primaryTitle}</button>
-     <button onclick="window.open('${binanceUrl}','_blank')">Binance</button>
-    </div>
+  box.innerHTML = "";
 
-    <div class="controls" style="margin-top:12px">
-     <button onclick="window.open('${bybitUrl}','_blank')">Bybit</button>
-     <button onclick="window.open('${okxUrl}','_blank')">OKX</button>
+  if(zellaChart){
+   zellaChart.remove();
+   zellaChart = null;
+  }
+
+  zellaChart = LightweightCharts.createChart(box,{
+   width:box.clientWidth,
+   height:360,
+   layout:{
+    background:{color:"#0f172a"},
+    textColor:"#94a3b8"
+   },
+   grid:{
+    vertLines:{color:"rgba(148,163,184,.08)"},
+    horzLines:{color:"rgba(148,163,184,.08)"}
+   },
+   rightPriceScale:{
+    borderColor:"rgba(148,163,184,.18)"
+   },
+   timeScale:{
+    borderColor:"rgba(148,163,184,.18)",
+    timeVisible:true,
+    secondsVisible:false
+   }
+  });
+
+  const candleSeries = zellaChart.addCandlestickSeries();
+
+  candleSeries.setData(
+   chartData.candles.map(c=>({
+    time:Math.floor(Number(c.timestamp) / 1000),
+    open:Number(c.open),
+    high:Number(c.high),
+    low:Number(c.low),
+    close:Number(c.close)
+   })).filter(c =>
+    Number.isFinite(c.time) &&
+    Number.isFinite(c.open) &&
+    Number.isFinite(c.high) &&
+    Number.isFinite(c.low) &&
+    Number.isFinite(c.close)
+   )
+  );
+
+  zellaChart.timeScale().fitContent();
+
+ }catch(error){
+  box.innerHTML = `
+   <div style="height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:#0f172a;">
+    <div>
+     <strong style="color:#38bdf8;font-size:32px">${escapeHTML(symbol)}</strong>
+     <p class="sub">Source chart unavailable right now.</p>
+     <p class="sub red">${escapeHTML(error.message)}</p>
     </div>
    </div>
-  </div>
- `;
+  `;
+ }
 }
 
 function renderCortex(data){

@@ -540,8 +540,6 @@ body{
  </div>
 </nav>
 
-<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 let zellaChart = null;
@@ -630,7 +628,7 @@ async function renderSourceAssetChart(symbol,timeframe){
  const assetId = getAssetId();
  const source = getSelectedSource();
 
- box.innerHTML = `<div class="chart-loading">Loading ${escapeHTML(cleanSymbol)} source candles...</div>`;
+ box.innerHTML = `<div class="chart-loading">Loading ${escapeHTML(cleanSymbol)} Zella chart...</div>`;
 
  try{
   const response = await fetch(
@@ -643,72 +641,14 @@ async function renderSourceAssetChart(symbol,timeframe){
    throw new Error(data.error || data.message || "No source candles available.");
   }
 
-  const candles = data.candles
-   .map(normalizeCandle)
-   .filter(c =>
-    Number.isFinite(c.time) &&
-    Number.isFinite(c.open) &&
-    Number.isFinite(c.high) &&
-    Number.isFinite(c.low) &&
-    Number.isFinite(c.close)
-   )
+  const candles = data.candles.map(normalizeCandle)
+   .filter(c => Number.isFinite(c.time) && Number.isFinite(c.open) && Number.isFinite(c.high) && Number.isFinite(c.low) && Number.isFinite(c.close))
    .sort((a,b)=>a.time-b.time);
 
-  if(!candles.length){
-   throw new Error("Source candles returned invalid data.");
-  }
+  if(!candles.length) throw new Error("Invalid candle data.");
 
-  box.innerHTML = "";
-
-  if(zellaChart){
-   zellaChart.remove();
-   zellaChart = null;
-  }
-
-  zellaChart = LightweightCharts.createChart(box,{
-   width:box.clientWidth,
-   height:360,
-   layout:{
-    background:{color:"#0f172a"},
-    textColor:"#94a3b8"
-   },
-   grid:{
-    vertLines:{color:"rgba(148,163,184,.08)"},
-    horzLines:{color:"rgba(148,163,184,.08)"}
-   },
-   rightPriceScale:{
-    borderColor:"rgba(148,163,184,.18)"
-   },
-   timeScale:{
-    borderColor:"rgba(148,163,184,.18)",
-    timeVisible:true,
-    secondsVisible:false
-   },
-   crosshair:{
-    mode:1
-   }
-  });
-
-  const candleSeries = zellaChart.addSeries(
-    LightweightCharts.CandlestickSeries,
-    {
-        upColor:"#22c55e",
-        downColor:"#ef4444",
-        borderUpColor:"#22c55e",
-        borderDownColor:"#ef4444",
-        wickUpColor:"#22c55e",
-        wickDownColor:"#ef4444"
-    }
-);
-
-  candleSeries.setData(candles);
-  zellaChart.timeScale().fitContent();
-
-  setTimeout(()=>{
-   if(zellaChart){
-    zellaChart.applyOptions({width:box.clientWidth});
-   }
-  },250);
+  box.innerHTML = `<canvas id="zellaCanvasChart"></canvas>`;
+  drawZellaCanvasChart(candles, cleanSymbol);
 
  }catch(error){
   box.innerHTML = `
@@ -718,8 +658,131 @@ async function renderSourceAssetChart(symbol,timeframe){
      <p class="sub">Source chart unavailable right now.</p>
      <p class="sub red">${escapeHTML(error.message)}</p>
     </div>
-   </div>
-  `;
+   </div>`;
+ }
+}
+
+ function drawZellaCanvasChart(candles, symbol){
+ const canvas = document.getElementById("zellaCanvasChart");
+ const box = document.getElementById("tvChart");
+ const ctx = canvas.getContext("2d");
+
+ const dpr = window.devicePixelRatio || 1;
+ const width = box.clientWidth;
+ const height = 360;
+
+ canvas.style.width = width + "px";
+ canvas.style.height = height + "px";
+ canvas.width = width * dpr;
+ canvas.height = height * dpr;
+ ctx.scale(dpr,dpr);
+
+ ctx.clearRect(0,0,width,height);
+ ctx.fillStyle = "#0f172a";
+ ctx.fillRect(0,0,width,height);
+
+ const padL = 12;
+ const padR = 54;
+ const padT = 38;
+ const padB = 30;
+ const chartW = width - padL - padR;
+ const chartH = height - padT - padB;
+
+ const view = candles.slice(-80);
+ const highs = view.map(c=>c.high);
+ const lows = view.map(c=>c.low);
+ const maxPrice = Math.max(...highs);
+ const minPrice = Math.min(...lows);
+ const range = maxPrice - minPrice || 1;
+
+ function y(price){
+  return padT + ((maxPrice - price) / range) * chartH;
+ }
+
+ function x(index){
+  return padL + index * (chartW / Math.max(view.length - 1,1));
+ }
+
+ ctx.strokeStyle = "rgba(148,163,184,.10)";
+ ctx.lineWidth = 1;
+
+ for(let i=0;i<5;i++){
+  const yy = padT + (chartH/4)*i;
+  ctx.beginPath();
+  ctx.moveTo(padL,yy);
+  ctx.lineTo(width-padR,yy);
+  ctx.stroke();
+ }
+
+ for(let i=0;i<5;i++){
+  const xx = padL + (chartW/4)*i;
+  ctx.beginPath();
+  ctx.moveTo(xx,padT);
+  ctx.lineTo(xx,padT+chartH);
+  ctx.stroke();
+ }
+
+ const candleGap = 3;
+ const candleW = Math.max(4, Math.min(12, chartW / view.length - candleGap));
+
+ view.forEach((c,i)=>{
+  const xx = x(i);
+  const openY = y(c.open);
+  const closeY = y(c.close);
+  const highY = y(c.high);
+  const lowY = y(c.low);
+  const bullish = c.close >= c.open;
+  const color = bullish ? "#22c55e" : "#ef4444";
+
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 1.5;
+
+  ctx.beginPath();
+  ctx.moveTo(xx,highY);
+  ctx.lineTo(xx,lowY);
+  ctx.stroke();
+
+  const bodyTop = Math.min(openY,closeY);
+  const bodyH = Math.max(Math.abs(closeY-openY),2);
+
+  ctx.fillRect(xx - candleW/2, bodyTop, candleW, bodyH);
+ });
+
+ ctx.fillStyle = "#38bdf8";
+ ctx.font = "900 18px Arial";
+ ctx.fillText(`${symbol} • Zella Source Chart`, padL, 24);
+
+ const lastCandle = view[view.length-1];
+ const lastPrice = lastCandle.close;
+ const lastY = y(lastPrice);
+
+ ctx.strokeStyle = "rgba(56,189,248,.55)";
+ ctx.setLineDash([4,4]);
+ ctx.beginPath();
+ ctx.moveTo(padL,lastY);
+ ctx.lineTo(width-padR,lastY);
+ ctx.stroke();
+ ctx.setLineDash([]);
+
+ ctx.fillStyle = "#38bdf8";
+ ctx.fillRect(width-padR+4,lastY-12,48,24);
+
+ ctx.fillStyle = "#020617";
+ ctx.font = "900 11px Arial";
+ ctx.fillText(
+  Number(lastPrice).toFixed(lastPrice < 1 ? 4 : 2),
+  width-padR+8,
+  lastY+4
+ );
+
+ ctx.fillStyle = "#94a3b8";
+ ctx.font = "700 11px Arial";
+
+ for(let i=0;i<5;i++){
+  const price = maxPrice - (range/4)*i;
+  const yy = padT + (chartH/4)*i;
+  ctx.fillText(Number(price).toFixed(price < 1 ? 4 : 2), width-padR+4, yy+4);
  }
 }
 

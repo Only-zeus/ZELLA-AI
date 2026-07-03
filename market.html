@@ -170,6 +170,21 @@ body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-b
 </section>
 
 <section class="section">
+ <div class="section-title">BREAKOUT INTELLIGENCE</div>
+ <div id="breakoutBox"><p class="sub">Waiting for breakout intelligence...</p></div>
+</section>
+
+<section class="section">
+ <div class="section-title">TRUTH ENGINE</div>
+ <div id="truthBox"><p class="sub">Waiting for truth analysis...</p></div>
+</section>
+
+<section class="section">
+ <div class="section-title">INSTITUTIONAL JUDGMENT</div>
+ <div id="judgmentBox"><p class="sub">Waiting for institutional report...</p></div>
+</section>
+
+<section class="section">
  <div class="section-title">LIVE ASSETS</div>
  <div id="marketList">
   <p class="sub">Loading live market assets...</p>
@@ -213,7 +228,9 @@ function escapeHTML(text){
  return String(text || "")
  .replaceAll("&","&amp;")
  .replaceAll("<","&lt;")
- .replaceAll(">","&gt;");
+ .replaceAll(">","&gt;")
+ .replaceAll('"',"&quot;")
+ .replaceAll("'","&#039;");
 }
 
 function getParam(name){
@@ -222,6 +239,14 @@ function getParam(name){
 
 function getAssetId(){
  return getParam("assetId") || localStorage.getItem("zellaSelectedAssetId") || "";
+}
+
+function getSelectedSource(){
+ return getParam("source") || localStorage.getItem("zellaSelectedSource") || "";
+}
+
+function getTradingViewSymbol(){
+ return getParam("tv") || localStorage.getItem("zellaTradingViewSymbol") || "";
 }
 
 function formatMoney(value){
@@ -233,27 +258,21 @@ function formatMoney(value){
 }
 
 function assetIcon(){
- return `
- <svg viewBox="0 0 24 24">
-  <circle cx="12" cy="12" r="8"/>
-  <path d="M8 12H16"/>
-  <path d="M12 8V16"/>
- </svg>`;
+ return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12H16"/><path d="M12 8V16"/></svg>`;
 }
 
 function colorAction(action){
  const text = String(action || "").toUpperCase();
- if(text.includes("BUY") || text.includes("ALLOW")) return "green";
- if(text.includes("SELL")) return "red";
- if(text.includes("NO TRADE") || text.includes("WATCH") || text.includes("WAIT")) return "orange";
+ if(text.includes("BUY") || text.includes("ALLOW") || text.includes("BULL")) return "green";
+ if(text.includes("SELL") || text.includes("BEAR")) return "red";
+ if(text.includes("WATCH") || text.includes("WAIT") || text.includes("HOLD") || text.includes("NO TRADE")) return "orange";
  return "orange";
 }
 
-function getSelectedSource(){
- return getParam("source") || localStorage.getItem("zellaSelectedSource") || "";
-}
-
 function mapTVSymbol(symbol){
+ const savedTV = getTradingViewSymbol();
+ if(savedTV) return savedTV;
+
  const clean = String(symbol || "BTC").toUpperCase().replace("USDT","").replace("-USDT","");
  const source = String(getSelectedSource() || "").toLowerCase();
 
@@ -266,19 +285,13 @@ function mapTVSymbol(symbol){
  };
 
  if(coreMap[clean]) return coreMap[clean];
-
  if(source.includes("okx")) return `OKX:${clean}USDT`;
  if(source.includes("bybit")) return `BYBIT:${clean}USDT`;
- if(source.includes("binance")) return `BINANCE:${clean}USDT`;
-
  return `BINANCE:${clean}USDT`;
 }
 
 function mapTVInterval(timeframe){
- const map = {
-  "1m":"1","3m":"3","5m":"5","15m":"15","30m":"30",
-  "1h":"60","4h":"240","1d":"D","1w":"W","1M":"M"
- };
+ const map = {"1m":"1","3m":"3","5m":"5","15m":"15","30m":"30","1h":"60","4h":"240","1d":"D","1w":"W","1M":"M"};
  return map[timeframe] || "60";
 }
 
@@ -310,7 +323,6 @@ function renderChart(symbol,timeframe){
 function ensureSymbolOption(symbol){
  const select = document.getElementById("symbolSelect");
  const clean = String(symbol || "").toUpperCase();
-
  if(clean && ![...select.options].some(opt => opt.value === clean)){
   const option = document.createElement("option");
   option.value = clean;
@@ -325,6 +337,10 @@ function renderCortex(data){
  const dna = data.marketDNA || {};
  const cls = colorAction(rec.action);
 
+ if(data.tradingViewSymbol){
+  localStorage.setItem("zellaTradingViewSymbol", data.tradingViewSymbol);
+ }
+
  document.getElementById("recValue").textContent = rec.action || "--";
  document.getElementById("recValue").className = "value " + cls;
  document.getElementById("recSub").textContent = `${data.symbol || "--"} • ${data.timeframe || "--"} • ${data.tradingStyle || ""}`;
@@ -334,14 +350,8 @@ function renderCortex(data){
 
  document.getElementById("marketDNA").innerHTML = `
   <div class="row">
-   <div class="row-left">
-    <strong>Personality</strong>
-    <small>${escapeHTML(dna.personality || "--")}</small>
-   </div>
-   <div class="row-right">
-    <strong class="blue">${escapeHTML(data.regime || "--")}</strong>
-    <small>${escapeHTML(data.source?.market || "Market source")}</small>
-   </div>
+   <div class="row-left"><strong>Personality</strong><small>${escapeHTML(dna.personality || "--")}</small></div>
+   <div class="row-right"><strong class="blue">${escapeHTML(data.regime || "--")}</strong><small>${escapeHTML(data.source?.market || "Market source")}</small></div>
   </div>
   <p class="sub">${escapeHTML(dna.behavior || "")}</p>
   <p class="sub">${escapeHTML(dna.bestApproach || "")}</p>
@@ -349,62 +359,68 @@ function renderCortex(data){
 
  document.getElementById("tradePlan").innerHTML = `
   <div class="row">
-   <div class="row-left">
-    <strong>Current Price</strong>
-    <small>${formatMoney(plan.currentPrice ?? data.market?.price)}</small>
-   </div>
-   <div class="row-right">
-    <strong>${escapeHTML(rec.risk || "--")} Risk</strong>
-    <small>${escapeHTML(plan.holdingPeriod || "--")}</small>
-   </div>
+   <div class="row-left"><strong>Current Price</strong><small>${formatMoney(plan.currentPrice ?? data.market?.price)}</small></div>
+   <div class="row-right"><strong>${escapeHTML(rec.risk || "--")} Risk</strong><small>${escapeHTML(plan.holdingPeriod || "--")}</small></div>
   </div>
-
   <div class="row">
-   <div class="row-left">
-    <strong>Entry Zone</strong>
-    <small>${formatMoney(plan.entryZone?.low)} - ${formatMoney(plan.entryZone?.high)}</small>
-   </div>
-   <div class="row-right">
-    <strong>Stop Loss</strong>
-    <small>${formatMoney(plan.stopLoss)}</small>
-   </div>
+   <div class="row-left"><strong>Entry Zone</strong><small>${formatMoney(plan.entryZone?.low)} - ${formatMoney(plan.entryZone?.high)}</small></div>
+   <div class="row-right"><strong>Stop Loss</strong><small>${formatMoney(plan.stopLoss)}</small></div>
   </div>
-
   <div class="row">
-   <div class="row-left">
-    <strong>Take Profit</strong>
-    <small>TP1 ${formatMoney(plan.takeProfit1)} • TP2 ${formatMoney(plan.takeProfit2)}</small>
-   </div>
-   <div class="row-right">
-    <strong class="${cls}">${escapeHTML(rec.action || "--")}</strong>
-    <small>${rec.confidence ?? 0}% confidence</small>
-   </div>
+   <div class="row-left"><strong>Take Profit</strong><small>TP1 ${formatMoney(plan.takeProfit1)} • TP2 ${formatMoney(plan.takeProfit2)}</small></div>
+   <div class="row-right"><strong class="${cls}">${escapeHTML(rec.action || "--")}</strong><small>${rec.confidence ?? 0}% confidence</small></div>
   </div>
-
   <p class="sub">Invalidation: ${escapeHTML(plan.invalidation || "Wait for confirmation.")}</p>
  `;
 
  const council = Array.isArray(data.aiCouncil) ? data.aiCouncil : [];
  document.getElementById("councilBox").innerHTML = council.length
  ? council.map(item=>`
-   <div class="row">
-    <div class="row-left">
-     <strong>${escapeHTML(item.analyst)}</strong>
-     <small>Specialist vote</small>
-    </div>
-    <div class="row-right">
-     <strong class="${colorAction(item.verdict)}">${escapeHTML(item.verdict)}</strong>
-     <small>${item.confidence ?? 0}% confidence</small>
-    </div>
-   </div>
- `).join("")
+  <div class="row">
+   <div class="row-left"><strong>${escapeHTML(item.analyst)}</strong><small>Specialist vote</small></div>
+   <div class="row-right"><strong class="${colorAction(item.verdict)}">${escapeHTML(item.verdict)}</strong><small>${item.confidence ?? 0}% confidence</small></div>
+  </div>`).join("")
  : `<p class="sub">No AI Council data available.</p>`;
+
+ renderV15Layers(data);
+}
+
+function renderV15Layers(data){
+ const breakout = data.breakout || data.breakoutIntelligence || null;
+ const truth = data.truth || data.truthEngine || null;
+ const judgment = data.judgment || data.institutionalJudgment || null;
+
+ document.getElementById("breakoutBox").innerHTML = breakout ? `
+  <div class="row">
+   <div class="row-left"><strong>${escapeHTML(breakout.stage || breakout.status || "Breakout Review")}</strong><small>Breakout stage</small></div>
+   <div class="row-right"><strong class="${colorAction(breakout.verdict || breakout.direction)}">${escapeHTML(breakout.verdict || breakout.direction || "--")}</strong><small>${breakout.score ?? breakout.confidence ?? 0}% score</small></div>
+  </div>
+  <p class="sub">${escapeHTML(breakout.summary || breakout.reason || "Breakout intelligence available.")}</p>
+ ` : `<p class="sub">Breakout intelligence not returned for this asset yet.</p>`;
+
+ document.getElementById("truthBox").innerHTML = truth ? `
+  <div class="row">
+   <div class="row-left"><strong>Truth Score</strong><small>${escapeHTML(truth.verdict || "Red-team review")}</small></div>
+   <div class="row-right"><strong class="orange">${truth.truthScore ?? truth.score ?? 0}%</strong><small>Risk challenge</small></div>
+  </div>
+  <p class="sub">${escapeHTML(truth.summary || truth.bearCase || "Truth Engine reviewed opposing evidence.")}</p>
+ ` : `<p class="sub">Truth Engine data not returned for this asset yet.</p>`;
+
+ document.getElementById("judgmentBox").innerHTML = judgment ? `
+  <div class="row">
+   <div class="row-left"><strong>${escapeHTML(judgment.finalVerdict || judgment.verdict || "--")}</strong><small>Institutional verdict</small></div>
+   <div class="row-right"><strong class="${colorAction(judgment.finalVerdict || judgment.verdict)}">${judgment.confidence ?? 0}%</strong><small>Confidence</small></div>
+  </div>
+  <p class="sub">${escapeHTML(judgment.summary || judgment.thesis || "Institutional judgment available.")}</p>
+ ` : `<p class="sub">Institutional Judgment data not returned for this asset yet.</p>`;
 }
 
 async function loadCortex(){
  const symbol = document.getElementById("symbolSelect").value;
  const timeframe = document.getElementById("timeframeSelect").value;
  const assetId = getAssetId();
+ const source = getSelectedSource();
+ const tv = getTradingViewSymbol();
 
  localStorage.setItem("zellaSelectedSymbol", symbol);
  localStorage.setItem("zellaSelectedTimeframe", timeframe);
@@ -415,7 +431,7 @@ async function loadCortex(){
   document.getElementById("marketStatus").textContent = "Market Engine • Analyzing";
 
   const response = await fetch(
-   `${API_URL}/api/cortex/analyze/${encodeURIComponent(symbol)}/${encodeURIComponent(timeframe)}?assetId=${encodeURIComponent(assetId)}`
+   `${API_URL}/api/cortex/analyze/${encodeURIComponent(symbol)}/${encodeURIComponent(timeframe)}?assetId=${encodeURIComponent(assetId)}&source=${encodeURIComponent(source)}&tv=${encodeURIComponent(tv)}`
   );
 
   const data = await response.json();
@@ -431,6 +447,9 @@ async function loadCortex(){
   document.getElementById("marketDNA").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
   document.getElementById("tradePlan").innerHTML = `<p class="sub">Waiting for trade plan...</p>`;
   document.getElementById("councilBox").innerHTML = `<p class="sub">Waiting for AI Council...</p>`;
+  document.getElementById("breakoutBox").innerHTML = `<p class="sub">Waiting for breakout intelligence...</p>`;
+  document.getElementById("truthBox").innerHTML = `<p class="sub">Waiting for truth analysis...</p>`;
+  document.getElementById("judgmentBox").innerHTML = `<p class="sub">Waiting for institutional report...</p>`;
  }
 }
 
@@ -454,18 +473,10 @@ async function loadMarket(){
    list.innerHTML += `
     <div class="market-row" onclick="selectAsset('${escapeHTML(asset.symbol)}')">
      <div class="coin-left">
-      <div class="coin-logo">
-       ${asset.image ? `<img src="${asset.image}" style="width:28px;height:28px;border-radius:50%;">` : assetIcon()}
-      </div>
-      <div class="coin-info">
-       <strong>${escapeHTML(asset.name)}</strong>
-       <small>${escapeHTML(asset.symbol)} • ${escapeHTML(asset.source)}</small>
-      </div>
+      <div class="coin-logo">${asset.image ? `<img src="${asset.image}" style="width:28px;height:28px;border-radius:50%;">` : assetIcon()}</div>
+      <div class="coin-info"><strong>${escapeHTML(asset.name)}</strong><small>${escapeHTML(asset.symbol)} • ${escapeHTML(asset.source)}</small></div>
      </div>
-     <div class="coin-price">
-      <strong>${formatMoney(asset.price)}</strong>
-      <small class="${cls}">${sign}${change.toFixed(2)}%</small>
-     </div>
+     <div class="coin-price"><strong>${formatMoney(asset.price)}</strong><small class="${cls}">${sign}${change.toFixed(2)}%</small></div>
     </div>`;
   });
  }catch(error){
@@ -487,20 +498,14 @@ async function loadNews(){
 
   data.articles.slice(0,4).forEach(article=>{
    if(!article.image) return;
-
    list.innerHTML += `
     <div class="news-card" onclick="window.open('${article.url}','_blank')">
      <img src="${article.image}" alt="">
-     <div class="news-body">
-      <strong>${escapeHTML(article.title)}</strong>
-      <small>${escapeHTML(article.source || "News")} • ${escapeHTML(article.publishedAt || "")}</small>
-     </div>
+     <div class="news-body"><strong>${escapeHTML(article.title)}</strong><small>${escapeHTML(article.source || "News")} • ${escapeHTML(article.publishedAt || "")}</small></div>
     </div>`;
   });
 
-  if(!list.innerHTML.trim()){
-   list.innerHTML = `<p class="sub red">No image-based news available right now.</p>`;
-  }
+  if(!list.innerHTML.trim()) list.innerHTML = `<p class="sub red">No image-based news available right now.</p>`;
  }catch(error){
   document.getElementById("newsList").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
  }
@@ -508,6 +513,8 @@ async function loadNews(){
 
 function selectAsset(symbol){
  localStorage.removeItem("zellaSelectedAssetId");
+ localStorage.removeItem("zellaSelectedSource");
+ localStorage.removeItem("zellaTradingViewSymbol");
  ensureSymbolOption(symbol);
  document.getElementById("symbolSelect").value = symbol;
  loadCortex();
@@ -517,32 +524,34 @@ function openAnalytics(){
  const symbol = document.getElementById("symbolSelect").value;
  const timeframe = document.getElementById("timeframeSelect").value;
  const assetId = getAssetId();
+ const source = getSelectedSource();
+ const tv = getTradingViewSymbol();
 
  window.location.href =
-  `analytics.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&timeframe=${encodeURIComponent(timeframe)}`;
+  `analytics.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&source=${encodeURIComponent(source)}&tv=${encodeURIComponent(tv)}&timeframe=${encodeURIComponent(timeframe)}`;
 }
 
 function openAutoTrader(){
  const symbol = document.getElementById("symbolSelect").value;
  const timeframe = document.getElementById("timeframeSelect").value;
  const assetId = getAssetId();
+ const source = getSelectedSource();
+ const tv = getTradingViewSymbol();
 
  window.location.href =
-  `autotrader.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&timeframe=${encodeURIComponent(timeframe)}`;
+  `autotrader.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&source=${encodeURIComponent(source)}&tv=${encodeURIComponent(tv)}&timeframe=${encodeURIComponent(timeframe)}`;
 }
 
 function boot(){
  const symbol = (getParam("symbol") || localStorage.getItem("zellaSelectedSymbol") || "BTC").toUpperCase();
  const timeframe = getParam("timeframe") || localStorage.getItem("zellaSelectedTimeframe") || "1h";
  const assetId = getParam("assetId") || localStorage.getItem("zellaSelectedAssetId") || "";
-const source = getParam("source") || localStorage.getItem("zellaSelectedSource") || "";
-if(source){
- localStorage.setItem("zellaSelectedSource", source);
-}
+ const source = getParam("source") || localStorage.getItem("zellaSelectedSource") || "";
+ const tv = getParam("tv") || localStorage.getItem("zellaTradingViewSymbol") || "";
 
- if(assetId){
-  localStorage.setItem("zellaSelectedAssetId", assetId);
- }
+ if(assetId) localStorage.setItem("zellaSelectedAssetId", assetId);
+ if(source) localStorage.setItem("zellaSelectedSource", source);
+ if(tv) localStorage.setItem("zellaTradingViewSymbol", tv);
 
  ensureSymbolOption(symbol);
 

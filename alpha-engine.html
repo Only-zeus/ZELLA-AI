@@ -632,45 +632,35 @@ body{
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";
+let lastAlphaAssets = [];
 
-function go(page){
- window.location.href = page;
-}
+function go(page){ window.location.href = page; }
 
 function escapeHTML(text){
  return String(text || "")
  .replaceAll("&","&amp;")
  .replaceAll("<","&lt;")
- .replaceAll(">","&gt;");
+ .replaceAll(">","&gt;")
+ .replaceAll('"',"&quot;")
+ .replaceAll("'","&#039;");
 }
 
 function formatMoney(value){
- const number = Number(value || 0);
- if(!Number.isFinite(number)) return "--";
- if(number >= 1000){
-  return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
- }
- if(number >= 1){
-  return "$" + number.toFixed(4);
- }
+ const number = Number(value);
+ if(value === null || value === undefined || value === "" || !Number.isFinite(number)) return "--";
+ if(number >= 1000) return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
+ if(number >= 1) return "$" + number.toFixed(4);
  return "$" + number.toFixed(8);
 }
 
 function assetIcon(){
- return `
- <svg viewBox="0 0 24 24">
-  <circle cx="12" cy="12" r="8"/>
-  <path d="M8 12H16"/>
-  <path d="M12 8V16"/>
- </svg>
- `;
+ return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8 12H16"/><path d="M12 8V16"/></svg>`;
 }
 
 function signalClass(signal){
  const text = String(signal || "").toUpperCase();
- if(text.includes("BUY")) return "green";
- if(text.includes("SELL")) return "red";
- if(text.includes("REDUCE")) return "orange";
+ if(text.includes("BUY") || text.includes("BULL")) return "green";
+ if(text.includes("SELL") || text.includes("BEAR")) return "red";
  return "orange";
 }
 
@@ -678,7 +668,7 @@ function badgeClass(signal){
  const text = String(signal || "").toUpperCase();
  if(text.includes("BUY")) return "badge badge-buy";
  if(text.includes("SELL")) return "badge badge-sell";
- if(text.includes("REDUCE")) return "badge badge-hold";
+ if(text.includes("BREAKOUT")) return "badge badge-purple";
  return "badge badge-hold";
 }
 
@@ -689,8 +679,37 @@ function directionClass(direction){
  return "orange";
 }
 
-function getScore(asset, key){
- return Number(asset?.[key] || 0).toFixed(1);
+function getAssetTV(asset){
+ return asset.tradingViewSymbol || asset.tv || asset.tradingView || "";
+}
+
+function saveSelectedAsset(asset){
+ localStorage.setItem("zellaSelectedSymbol", asset.symbol || "");
+ localStorage.setItem("zellaSelectedAssetId", asset.id || asset.assetId || "");
+ localStorage.setItem("zellaSelectedSource", asset.source || asset.providerUsed || "");
+ localStorage.setItem("zellaTradingViewSymbol", getAssetTV(asset));
+ localStorage.setItem("zellaSelectedAssetObject", JSON.stringify(asset));
+}
+
+function safeAssetData(asset){
+ return encodeURIComponent(JSON.stringify({
+  id: asset.id || asset.assetId || "",
+  symbol: asset.symbol || "",
+  name: asset.name || "",
+  source: asset.source || asset.providerUsed || "",
+  tradingViewSymbol: getAssetTV(asset),
+  signal: asset.signal || "",
+  direction: asset.direction || "",
+  finalScore: asset.finalScore || 0
+ }));
+}
+
+function parseAssetData(encoded){
+ try{
+  return JSON.parse(decodeURIComponent(encoded));
+ }catch(e){
+  return {};
+ }
 }
 
 function renderAssetRow(asset){
@@ -701,21 +720,22 @@ function renderAssetRow(asset){
  const sellScore = asset.sellTrendScore || 0;
  const confidence = asset.confidence || 0;
  const risk = asset.riskScore || 0;
+ const breakout = asset.breakout || asset.breakoutIntelligence || {};
+ const truth = asset.truth || asset.truthEngine || {};
+ const tv = getAssetTV(asset);
+ const encoded = safeAssetData(asset);
 
  return `
  <div class="asset-row">
   <div class="asset-left">
-   <div class="asset-logo">
-    ${asset.image ? `<img src="${asset.image}" alt="">` : assetIcon()}
-   </div>
-
+   <div class="asset-logo">${asset.image ? `<img src="${asset.image}" alt="">` : assetIcon()}</div>
    <div class="asset-info">
     <strong>${escapeHTML(asset.name || asset.symbol || "Asset")}</strong>
-    <small>${escapeHTML(asset.symbol || "--")} • ${escapeHTML(direction)} • Rank #${asset.marketCapRank || "--"}</small>
-
+    <small>${escapeHTML(asset.symbol || "--")} • ${escapeHTML(direction)} • ${escapeHTML(asset.source || asset.providerUsed || "Universal")}</small>
     <div style="margin-top:7px">
      <span class="${badgeClass(signal)}">${escapeHTML(signal)}</span>
      <span class="badge badge-blue">Trend ${Number(trendScore).toFixed(1)}%</span>
+     ${breakout.stage ? `<span class="badge badge-purple">${escapeHTML(breakout.stage)}</span>` : ""}
     </div>
    </div>
   </div>
@@ -740,25 +760,37 @@ function renderAssetRow(asset){
   </div>
  </div>
 
+ <div class="split">
+  <div class="mini-card">
+   <div class="label">Risk Score</div>
+   <strong class="orange">${Number(risk).toFixed(1)}%</strong>
+   <small>${asset.riskGuidance?.riskNote || "Risk-adjusted trend reading"}</small>
+  </div>
+
+  <div class="mini-card">
+   <div class="label">Truth / Breakout</div>
+   <strong class="purple">${truth.truthScore || breakout.score || "--"}</strong>
+   <small>${escapeHTML(truth.verdict || breakout.verdict || "Pending deeper review")}</small>
+  </div>
+ </div>
+
  <div class="reason">
-  <p>${escapeHTML(asset.trendInsight || asset.reason || "Zella ranked this asset using holistic trend intelligence, risk quality and strategy-specific scoring.")}</p>
+  <p>${escapeHTML(asset.trendInsight || asset.reason || "Zella ranked this asset using holistic trend intelligence, breakout context, risk quality and strategy-specific scoring.")}</p>
  </div>
 
  <div class="controls" style="margin-top:14px">
-  <button onclick="openCouncil('${escapeHTML(asset.id || asset.symbol)}')">Deep Council Review</button>
-  <button onclick="openMarket('${escapeHTML(asset.symbol)}','${escapeHTML(asset.id)}','${escapeHTML(asset.source || asset.liquidity?.source || "")}')">Open Market</button>
+  <button onclick="openDeepCouncil('${encoded}')">Deep Council Review</button>
+  <button onclick="openMarket('${encoded}')">Open Market</button>
  </div>
  `;
 }
 
 function renderList(id, assets, emptyText){
  const box = document.getElementById(id);
-
  if(!Array.isArray(assets) || !assets.length){
   box.innerHTML = `<p class="empty">${escapeHTML(emptyText)}</p>`;
   return;
  }
-
  box.innerHTML = assets.map(asset => renderAssetRow(asset)).join("");
 }
 
@@ -769,30 +801,17 @@ function renderTrendIntel(data){
 
  document.getElementById("trendIntel").innerHTML = `
   <div class="row">
-   <div class="row-left">
-    <strong>Holistic Trend Model</strong>
-    <small>${escapeHTML(profile)} approach</small>
-   </div>
-   <div class="row-right">
-    <strong class="${directionClass(regime)}">${escapeHTML(regime)}</strong>
-    <small>Market regime</small>
-   </div>
+   <div class="row-left"><strong>Holistic Trend Model</strong><small>${escapeHTML(profile)} approach</small></div>
+   <div class="row-right"><strong class="${directionClass(regime)}">${escapeHTML(regime)}</strong><small>Market regime</small></div>
   </div>
 
   <div class="row">
-   <div class="row-left">
-    <strong>Ranking Logic</strong>
-    <small>Dominant buy or sell trend</small>
-   </div>
-   <div class="row-right">
-    <strong class="blue">${escapeHTML(data.directionMode || "Both")}</strong>
-    <small>Direction mode</small>
-   </div>
+   <div class="row-left"><strong>Ranking Logic</strong><small>Dominant buy/sell trend + breakout intelligence</small></div>
+   <div class="row-right"><strong class="blue">${escapeHTML(data.directionMode || "Both")}</strong><small>Direction mode</small></div>
   </div>
 
-  <p class="sub">
-   ${escapeHTML(intelligence.summary || "Zella ranks assets by trend strength, trend consistency, momentum, volatility quality, market structure, confidence and execution safety. Volume is used as a risk filter, not the main ranking factor.")}
-  </p>
+  <p class="sub">${escapeHTML(intelligence.summary || "Zella ranks assets by trend strength, consistency, breakout quality, momentum, volatility, confidence and execution safety. Volume is treated as a risk factor, not the main ranking bias.")}</p>
+  <p class="sub">${escapeHTML(data.diversificationNote || "")}</p>
  `;
 }
 
@@ -800,14 +819,12 @@ function renderAlpha(data){
  const topAssets = data.assets || data.topOpportunities || [];
  const buyAssets = data.buyOpportunities || topAssets.filter(a => String(a.signal || "").toUpperCase().includes("BUY"));
  const sellAssets = data.sellOpportunities || topAssets.filter(a => String(a.signal || "").toUpperCase().includes("SELL"));
-
  const best = data.bestAsset || topAssets[0] || null;
 
- document.getElementById("assetsScanned").textContent =
-  data.scannedAssets || data.scanned || "--";
+ lastAlphaAssets = topAssets;
 
- document.getElementById("marketRegime").textContent =
-  data.marketRegime || "--";
+ document.getElementById("assetsScanned").textContent = data.scannedAssets || data.scanned || "--";
+ document.getElementById("marketRegime").textContent = data.marketRegime || "--";
 
  if(best){
   const signal = best.signal || best.finalSignal || "--";
@@ -817,8 +834,7 @@ function renderAlpha(data){
   document.getElementById("strongestSignal").className = "value " + signalClass(signal);
   document.getElementById("dominantDirection").textContent = direction;
   document.getElementById("dominantDirection").className = "value " + directionClass(direction);
-  document.getElementById("signalSub").textContent =
-   `${best.symbol || "--"} • Trend ${Number(best.dominantTrendScore || best.finalScore || 0).toFixed(1)}%`;
+  document.getElementById("signalSub").textContent = `${best.symbol || "--"} • Score ${Number(best.finalScore || best.dominantTrendScore || 0).toFixed(1)}%`;
  }else{
   document.getElementById("strongestSignal").textContent = "--";
   document.getElementById("dominantDirection").textContent = "--";
@@ -862,100 +878,47 @@ async function runAlphaScan(){
   }
 
   renderAlpha(data);
-  document.getElementById("alphaStatus").textContent = "Alpha Engine • Live";
+  document.getElementById("alphaStatus").textContent = data.cached ? "Alpha Engine • Cached Live" : "Alpha Engine • Live";
  }catch(error){
   document.getElementById("alphaStatus").textContent = "Alpha Engine • Unavailable";
   document.getElementById("topOpportunities").innerHTML = `<p class="empty red">${escapeHTML(error.message)}</p>`;
  }
 }
 
-async function openCouncil(asset){
- const profile = document.getElementById("profileSelect").value;
- const regime = document.getElementById("regimeSelect").value;
+function openMarket(encodedAsset){
+ const asset = parseAssetData(encodedAsset);
+ if(!asset.symbol && !asset.id) return;
 
- document.getElementById("councilReview").innerHTML =
-  `<p class="empty">AI Council reviewing ${escapeHTML(asset)}...</p>`;
+ saveSelectedAsset(asset);
 
- try{
-  const response = await fetch(
-   `${API_URL}/api/ai-council?asset=${encodeURIComponent(asset)}&strategy=${encodeURIComponent(profile)}&regime=${encodeURIComponent(regime)}`
-  );
-
-  const data = await response.json();
-
-  if(!data.success){
-   throw new Error(data.message || data.error || "AI Council unavailable");
-  }
-
-  const agents = data.council?.agents || {};
-  const chairman = data.council?.chairman || {};
-  const agentList = Object.values(agents);
-
-  document.getElementById("councilReview").innerHTML = `
-   <div class="row">
-    <div class="row-left">
-     <strong>${escapeHTML(data.asset?.name || asset)}</strong>
-     <small>Chairman verdict</small>
-    </div>
-    <div class="row-right">
-     <strong class="${signalClass(chairman.finalVerdict)}">${escapeHTML(chairman.finalVerdict || "--")}</strong>
-     <small>${chairman.confidence || 0}% confidence</small>
-    </div>
-   </div>
-
-   <div class="row">
-    <div class="row-left">
-     <strong>Consensus Score</strong>
-     <small>${chairman.agreement || 0}% agreement</small>
-    </div>
-    <div class="row-right">
-     <strong class="blue">${chairman.consensusScore || 0}%</strong>
-     <small>${chairman.buySupport || 0} buy • ${chairman.sellPressure || 0} sell</small>
-    </div>
-   </div>
-
-   ${agentList.map(agent=>`
-    <div class="row">
-     <div class="row-left">
-      <strong>${escapeHTML(agent.name)}</strong>
-      <small>${escapeHTML(agent.role)}</small>
-     </div>
-     <div class="row-right">
-      <strong class="${signalClass(agent.vote)}">${escapeHTML(agent.vote)}</strong>
-      <small>${agent.confidence}% confidence</small>
-     </div>
-    </div>
-   `).join("")}
-  `;
- }catch(error){
-  document.getElementById("councilReview").innerHTML =
-   `<p class="empty red">${escapeHTML(error.message)}</p>`;
- }
+ window.location.href =
+  `market.html?symbol=${encodeURIComponent(asset.symbol || "")}` +
+  `&assetId=${encodeURIComponent(asset.id || asset.assetId || "")}` +
+  `&source=${encodeURIComponent(asset.source || "")}` +
+  `&tv=${encodeURIComponent(asset.tradingViewSymbol || "")}` +
+  `&timeframe=1h`;
 }
 
-function openMarket(symbol, id, source){
-  if(!symbol && !id) return;
+function openDeepCouncil(encodedAsset){
+ const asset = parseAssetData(encodedAsset);
+ if(!asset.symbol && !asset.id) return;
 
-  localStorage.setItem("zellaSelectedSymbol", symbol || "");
-  localStorage.setItem("zellaSelectedAssetId", id || "");
-  localStorage.setItem("zellaSelectedSource", source || "");
+ saveSelectedAsset(asset);
 
-  window.location.href =
-    `market.html?symbol=${encodeURIComponent(symbol || "")}&assetId=${encodeURIComponent(id || "")}&source=${encodeURIComponent(source || "")}&timeframe=1h`;
+ window.location.href =
+  `scanner.html?mode=council` +
+  `&symbol=${encodeURIComponent(asset.symbol || "")}` +
+  `&assetId=${encodeURIComponent(asset.id || asset.assetId || "")}` +
+  `&source=${encodeURIComponent(asset.source || "")}` +
+  `&tv=${encodeURIComponent(asset.tradingViewSymbol || "")}` +
+  `&from=alpha-engine`;
 }
 
 function boot(){
- document.getElementById("regimeSelect").value =
-  localStorage.getItem("zellaAlphaRegime") || "auto";
-
- document.getElementById("profileSelect").value =
-  localStorage.getItem("zellaAlphaProfile") || "swing";
-
- document.getElementById("directionSelect").value =
-  localStorage.getItem("zellaAlphaDirection") || "both";
-
- document.getElementById("depthSelect").value =
-  localStorage.getItem("zellaAlphaDepth") || "750";
+ document.getElementById("regimeSelect").value = localStorage.getItem("zellaAlphaRegime") || "auto";
+ document.getElementById("profileSelect").value = localStorage.getItem("zellaAlphaProfile") || "swing";
+ document.getElementById("directionSelect").value = localStorage.getItem("zellaAlphaDirection") || "both";
+ document.getElementById("depthSelect").value = localStorage.getItem("zellaAlphaDepth") || "250";
 
  runAlphaScan();
 }

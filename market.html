@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Zella Market V15 Source Chart</title>
-
 <link rel="stylesheet" href="style.css">
 
 <style>
@@ -130,9 +129,7 @@ body{
  box-shadow:0 0 18px #38bdf8;
 }
 
-@keyframes spin{
- to{transform:rotate(360deg)}
-}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 .core{
  position:absolute;
@@ -274,9 +271,7 @@ body{
  border-bottom:1px solid rgba(148,163,184,.1);
 }
 
-.row:last-child,.market-row:last-child{
- border-bottom:none;
-}
+.row:last-child,.market-row:last-child{border-bottom:none}
 
 .row-left strong,
 .row-right strong,
@@ -292,10 +287,7 @@ body{
  color:#94a3b8;
 }
 
-.row-right,
-.coin-price{
- text-align:right;
-}
+.row-right,.coin-price{text-align:right}
 
 .coin-left{
  display:flex;
@@ -306,6 +298,7 @@ body{
 .coin-logo{
  width:42px;
  height:42px;
+ min-width:42px;
  border-radius:16px;
  background:rgba(56,189,248,.12);
  border:1px solid rgba(56,189,248,.18);
@@ -313,6 +306,12 @@ body{
  align-items:center;
  justify-content:center;
  overflow:hidden;
+}
+
+.coin-logo img{
+ width:28px;
+ height:28px;
+ border-radius:50%;
 }
 
 .coin-logo svg{
@@ -344,6 +343,13 @@ body{
  color:#94a3b8;
 }
 
+#zellaCanvasChart{
+ width:100%;
+ height:360px;
+ display:block;
+ touch-action:none;
+}
+
 .news-card{
  margin-bottom:14px;
  border-radius:22px;
@@ -366,13 +372,7 @@ body{
 @media(max-width:430px){
  .hero h1{font-size:42px}
  .brand h2{font-size:30px}
-}
-
-#zellaCanvasChart{
- width:100%;
- height:360px;
- display:block;
- touch-action:none;
+ .controls{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -550,7 +550,7 @@ body{
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 
-function go(page){window.location.href = page}
+function go(page){ window.location.href = page; }
 
 function escapeHTML(text){
  return String(text || "")
@@ -647,16 +647,26 @@ async function renderSourceAssetChart(symbol,timeframe){
    throw new Error(data.error || data.message || "No source candles available.");
   }
 
-  const candles = data.candles.map(normalizeCandle)
-   .filter(c => Number.isFinite(c.time) && Number.isFinite(c.open) && Number.isFinite(c.high) && Number.isFinite(c.low) && Number.isFinite(c.close))
+  const candles = data.candles
+   .map(normalizeCandle)
+   .filter(c =>
+    Number.isFinite(c.time) &&
+    Number.isFinite(c.open) &&
+    Number.isFinite(c.high) &&
+    Number.isFinite(c.low) &&
+    Number.isFinite(c.close)
+   )
    .sort((a,b)=>a.time-b.time);
 
-  if(!candles.length) throw new Error("Invalid candle data.");
+  if(!candles.length){
+   throw new Error("Source candles returned invalid data.");
+  }
 
   box.innerHTML = `<canvas id="zellaCanvasChart"></canvas>`;
+
   setTimeout(()=>{
- drawZellaCanvasChart(candles, cleanSymbol);
-},100);
+   drawZellaCanvasChart(candles, cleanSymbol);
+  },100);
 
  }catch(error){
   box.innerHTML = `
@@ -666,55 +676,53 @@ async function renderSourceAssetChart(symbol,timeframe){
      <p class="sub">Source chart unavailable right now.</p>
      <p class="sub red">${escapeHTML(error.message)}</p>
     </div>
-   </div>`;
+   </div>
+  `;
  }
 }
-
- function drawZellaCanvasChart(candles, symbol){
- let zellaChartState = {
- candles: [],
- symbol: "",
- offset: 0,
- zoom: 80,
- dragging: false,
- lastX: 0
-};
 
 function drawZellaCanvasChart(candles, symbol){
  const canvas = document.getElementById("zellaCanvasChart");
  const box = document.getElementById("tvChart");
+ if(!canvas || !box || !candles.length) return;
+
  const ctx = canvas.getContext("2d");
 
- zellaChartState.candles = candles;
- zellaChartState.symbol = symbol;
- zellaChartState.offset = 0;
- zellaChartState.zoom = Math.min(90, Math.max(35, candles.length));
+ const state = {
+  candles,
+  symbol,
+  offset:0,
+  zoom:Math.min(80,candles.length),
+  dragging:false,
+  lastX:0,
+  lastTouchDistance:null
+ };
 
  function resize(){
   const dpr = window.devicePixelRatio || 1;
-  const width = box.clientWidth;
+  const width = Math.max(300, box.clientWidth);
   const height = 360;
 
   canvas.style.width = width + "px";
   canvas.style.height = height + "px";
   canvas.width = width * dpr;
   canvas.height = height * dpr;
-
   ctx.setTransform(dpr,0,0,dpr,0,0);
-  render(true);
+
+  render(false);
  }
 
  function getView(){
-  const total = zellaChartState.candles.length;
-  const zoom = Math.round(zellaChartState.zoom);
-  const offset = Math.round(zellaChartState.offset);
-  const end = Math.max(zoom, total - offset);
-  const start = Math.max(0, end - zoom);
-  return zellaChartState.candles.slice(start,end);
+  const total = state.candles.length;
+  const zoom = Math.round(state.zoom);
+  const offset = Math.round(state.offset);
+  const end = Math.max(zoom,total-offset);
+  const start = Math.max(0,end-zoom);
+  return state.candles.slice(start,end);
  }
 
- function render(animated=false){
-  const width = box.clientWidth;
+ function render(animated){
+  const width = Math.max(300,box.clientWidth);
   const height = 360;
 
   ctx.clearRect(0,0,width,height);
@@ -722,27 +730,25 @@ function drawZellaCanvasChart(candles, symbol){
   ctx.fillRect(0,0,width,height);
 
   const padL = 12;
-  const padR = 58;
+  const padR = 60;
   const padT = 42;
   const padB = 30;
   const chartW = width - padL - padR;
   const chartH = height - padT - padB;
-
   const view = getView();
+
   if(!view.length) return;
 
-  const highs = view.map(c=>c.high);
-  const lows = view.map(c=>c.low);
-  const maxPrice = Math.max(...highs);
-  const minPrice = Math.min(...lows);
+  const maxPrice = Math.max(...view.map(c=>c.high));
+  const minPrice = Math.min(...view.map(c=>c.low));
   const range = maxPrice - minPrice || 1;
 
   function y(price){
-   return padT + ((maxPrice - price) / range) * chartH;
+   return padT + ((maxPrice-price)/range)*chartH;
   }
 
   function x(index){
-   return padL + index * (chartW / Math.max(view.length - 1,1));
+   return padL + index*(chartW/Math.max(view.length-1,1));
   }
 
   ctx.strokeStyle = "rgba(148,163,184,.09)";
@@ -754,9 +760,7 @@ function drawZellaCanvasChart(candles, symbol){
    ctx.moveTo(padL,yy);
    ctx.lineTo(width-padR,yy);
    ctx.stroke();
-  }
 
-  for(let i=0;i<5;i++){
    const xx = padL + (chartW/4)*i;
    ctx.beginPath();
    ctx.moveTo(xx,padT);
@@ -764,9 +768,7 @@ function drawZellaCanvasChart(candles, symbol){
    ctx.stroke();
   }
 
-  const candleGap = 3;
-  const candleW = Math.max(4, Math.min(14, chartW / view.length - candleGap));
-  const visibleCount = animated ? 0 : view.length;
+  const candleW = Math.max(4,Math.min(14,chartW/view.length-3));
 
   function drawCandle(c,i){
    const xx = x(i);
@@ -786,10 +788,9 @@ function drawZellaCanvasChart(candles, symbol){
    ctx.lineTo(xx,lowY);
    ctx.stroke();
 
-   const bodyTop = Math.min(openY,closeY);
+   const top = Math.min(openY,closeY);
    const bodyH = Math.max(Math.abs(closeY-openY),2);
-
-   ctx.fillRect(xx - candleW/2, bodyTop, candleW, bodyH);
+   ctx.fillRect(xx-candleW/2,top,candleW,bodyH);
   }
 
   if(animated){
@@ -807,7 +808,7 @@ function drawZellaCanvasChart(candles, symbol){
 
   ctx.fillStyle = "#38bdf8";
   ctx.font = "900 18px Arial";
-  ctx.fillText(`${symbol} • Zella Source Chart`, padL, 26);
+  ctx.fillText(`${symbol} • Zella Source Chart`,padL,26);
 
   const lastCandle = view[view.length-1];
   const lastPrice = lastCandle.close;
@@ -820,9 +821,9 @@ function drawZellaCanvasChart(candles, symbol){
   ctx.lineTo(width-padR,lastY);
   ctx.stroke();
   ctx.setLineDash([]);
-
-  ctx.fillStyle = "#38bdf8";
-  ctx.fillRect(width-padR+4,lastY-12,52,24);
+  
+    ctx.fillStyle = "#38bdf8";
+  ctx.fillRect(width-padR+4,lastY-12,54,24);
 
   ctx.fillStyle = "#020617";
   ctx.font = "900 11px Arial";
@@ -838,51 +839,49 @@ function drawZellaCanvasChart(candles, symbol){
   for(let i=0;i<5;i++){
    const price = maxPrice - (range/4)*i;
    const yy = padT + (chartH/4)*i;
-   ctx.fillText(Number(price).toFixed(price < 1 ? 4 : 2), width-padR+4, yy+4);
+   ctx.fillText(Number(price).toFixed(price < 1 ? 4 : 2),width-padR+4,yy+4);
   }
  }
 
  canvas.onwheel = function(e){
   e.preventDefault();
   const delta = e.deltaY > 0 ? 8 : -8;
-  zellaChartState.zoom = Math.min(
-   zellaChartState.candles.length,
-   Math.max(20, zellaChartState.zoom + delta)
+  state.zoom = Math.min(
+   state.candles.length,
+   Math.max(20,state.zoom + delta)
   );
   render(false);
  };
 
  canvas.onpointerdown = function(e){
-  zellaChartState.dragging = true;
-  zellaChartState.lastX = e.clientX;
-  canvas.setPointerCapture(e.pointerId);
+  state.dragging = true;
+  state.lastX = e.clientX;
+  try{canvas.setPointerCapture(e.pointerId)}catch(err){}
  };
 
  canvas.onpointermove = function(e){
-  if(!zellaChartState.dragging) return;
+  if(!state.dragging) return;
 
-  const dx = e.clientX - zellaChartState.lastX;
-  zellaChartState.lastX = e.clientX;
+  const dx = e.clientX - state.lastX;
+  state.lastX = e.clientX;
 
   if(Math.abs(dx) > 3){
-   zellaChartState.offset += dx > 0 ? 2 : -2;
-   zellaChartState.offset = Math.max(
+   state.offset += dx > 0 ? 2 : -2;
+   state.offset = Math.max(
     0,
-    Math.min(zellaChartState.candles.length - zellaChartState.zoom, zellaChartState.offset)
+    Math.min(state.candles.length-state.zoom,state.offset)
    );
    render(false);
   }
  };
 
  canvas.onpointerup = function(){
-  zellaChartState.dragging = false;
+  state.dragging = false;
  };
 
  canvas.onpointercancel = function(){
-  zellaChartState.dragging = false;
+  state.dragging = false;
  };
-
- let lastTouchDistance = null;
 
  canvas.ontouchmove = function(e){
   if(e.touches.length === 2){
@@ -892,24 +891,27 @@ function drawZellaCanvasChart(candles, symbol){
    const dy = e.touches[0].clientY - e.touches[1].clientY;
    const distance = Math.sqrt(dx*dx + dy*dy);
 
-   if(lastTouchDistance){
-    const diff = distance - lastTouchDistance;
-    zellaChartState.zoom = Math.min(
-     zellaChartState.candles.length,
-     Math.max(20, zellaChartState.zoom - diff * 0.15)
+   if(state.lastTouchDistance){
+    const diff = distance - state.lastTouchDistance;
+    state.zoom = Math.min(
+     state.candles.length,
+     Math.max(20,state.zoom - diff * 0.15)
     );
     render(false);
    }
 
-   lastTouchDistance = distance;
+   state.lastTouchDistance = distance;
   }
  };
 
  canvas.ontouchend = function(){
-  lastTouchDistance = null;
+  state.lastTouchDistance = null;
  };
 
  resize();
+ render(true);
+
+ window.addEventListener("resize",resize);
 }
 
 function renderCortex(data){
@@ -1051,8 +1053,8 @@ async function loadCortex(){
  const assetId = getAssetId();
  const source = getSelectedSource();
 
- localStorage.setItem("zellaSelectedSymbol", symbol);
- localStorage.setItem("zellaSelectedTimeframe", timeframe);
+ localStorage.setItem("zellaSelectedSymbol",symbol);
+ localStorage.setItem("zellaSelectedTimeframe",timeframe);
 
  document.getElementById("tvChart").innerHTML =
   `<div class="chart-loading">Loading ${escapeHTML(symbol)} source chart...</div>`;
@@ -1071,32 +1073,14 @@ async function loadCortex(){
   }
 
   renderCortex(data);
-
-  await renderSourceAssetChart(data.symbol || symbol, timeframe);
+  await renderSourceAssetChart(data.symbol || symbol,timeframe);
 
   document.getElementById("marketStatus").textContent = "Market Engine • Live";
 
  }catch(error){
   document.getElementById("marketStatus").textContent = "Market Engine • Unavailable";
-  document.getElementById("marketDNA").innerHTML =
-   `<p class="sub red">${escapeHTML(error.message)}</p>`;
-
-  document.getElementById("tradePlan").innerHTML =
-   `<p class="sub">Waiting for trade plan...</p>`;
-
-  document.getElementById("councilBox").innerHTML =
-   `<p class="sub">Waiting for AI Council...</p>`;
-
-  document.getElementById("breakoutBox").innerHTML =
-   `<p class="sub">Waiting for breakout intelligence...</p>`;
-
-  document.getElementById("truthBox").innerHTML =
-   `<p class="sub">Waiting for truth analysis...</p>`;
-
-  document.getElementById("judgmentBox").innerHTML =
-   `<p class="sub">Waiting for institutional report...</p>`;
-
-  await renderSourceAssetChart(symbol, timeframe);
+  document.getElementById("marketDNA").innerHTML = `<p class="sub red">${escapeHTML(error.message)}</p>`;
+  await renderSourceAssetChart(symbol,timeframe);
  }
 }
 
@@ -1121,15 +1105,13 @@ async function loadMarket(){
     <div class="market-row" onclick="selectAsset('${escapeHTML(asset.symbol)}','${escapeHTML(asset.source || "")}','${escapeHTML(asset.id || asset.assetId || "")}')">
      <div class="coin-left">
       <div class="coin-logo">
-       ${asset.image ? `<img src="${asset.image}" style="width:28px;height:28px;border-radius:50%;">` : assetIcon()}
+       ${asset.image ? `<img src="${asset.image}" alt="">` : assetIcon()}
       </div>
-
       <div class="coin-info">
        <strong>${escapeHTML(asset.name || asset.symbol)}</strong>
        <small>${escapeHTML(asset.symbol)} • ${escapeHTML(asset.source || "Universal")}</small>
       </div>
      </div>
-
      <div class="coin-price">
       <strong>${formatMoney(asset.price)}</strong>
       <small class="${cls}">${sign}${change.toFixed(2)}%</small>
@@ -1180,19 +1162,18 @@ async function loadNews(){
  }
 }
 
-function selectAsset(symbol, source = "", assetId = ""){
- localStorage.setItem("zellaSelectedSymbol", zellaCleanSymbol(symbol));
- localStorage.setItem("zellaSelectedSource", source || "");
+function selectAsset(symbol,source="",assetId=""){
+ localStorage.setItem("zellaSelectedSymbol",zellaCleanSymbol(symbol));
+ localStorage.setItem("zellaSelectedSource",source || "");
 
  if(assetId){
-  localStorage.setItem("zellaSelectedAssetId", assetId);
+  localStorage.setItem("zellaSelectedAssetId",assetId);
  }else{
   localStorage.removeItem("zellaSelectedAssetId");
  }
 
  ensureSymbolOption(symbol);
  document.getElementById("symbolSelect").value = zellaCleanSymbol(symbol);
-
  loadCortex();
 }
 
@@ -1217,8 +1198,6 @@ function openAutoTrader(){
 }
 
 function boot(){
- localStorage.removeItem("zellaTradingViewSymbol");
-
  const symbol = zellaCleanSymbol(
   getParam("symbol") ||
   localStorage.getItem("zellaSelectedSymbol") ||
@@ -1241,11 +1220,11 @@ function boot(){
   "";
 
  if(assetId){
-  localStorage.setItem("zellaSelectedAssetId", assetId);
+  localStorage.setItem("zellaSelectedAssetId",assetId);
  }
 
  if(source){
-  localStorage.setItem("zellaSelectedSource", source);
+  localStorage.setItem("zellaSelectedSource",source);
  }
 
  ensureSymbolOption(symbol);

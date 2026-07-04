@@ -1089,6 +1089,7 @@ function openAutoTrader(){
   `autotrader.html?symbol=${encodeURIComponent(symbol)}&assetId=${encodeURIComponent(assetId)}&source=${encodeURIComponent(source)}&timeframe=${encodeURIComponent(timeframe)}`;
 }
 
+<script>
 function boot(){
  localStorage.removeItem("zellaTradingViewSymbol");
 
@@ -1133,7 +1134,7 @@ function boot(){
  setInterval(loadCortex,30000);
  setInterval(loadMarket,30000);
  setInterval(loadNews,90000);
-
+}
 
 boot();
 </script>

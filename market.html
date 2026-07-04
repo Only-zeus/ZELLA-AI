@@ -662,127 +662,245 @@ async function renderSourceAssetChart(symbol,timeframe){
 }
 
  function drawZellaCanvasChart(candles, symbol){
+ let zellaChartState = {
+ candles: [],
+ symbol: "",
+ offset: 0,
+ zoom: 80,
+ dragging: false,
+ lastX: 0
+};
+
+function drawZellaCanvasChart(candles, symbol){
  const canvas = document.getElementById("zellaCanvasChart");
  const box = document.getElementById("tvChart");
  const ctx = canvas.getContext("2d");
 
- const dpr = window.devicePixelRatio || 1;
- const width = box.clientWidth;
- const height = 360;
+ zellaChartState.candles = candles;
+ zellaChartState.symbol = symbol;
+ zellaChartState.offset = 0;
+ zellaChartState.zoom = Math.min(90, Math.max(35, candles.length));
 
- canvas.style.width = width + "px";
- canvas.style.height = height + "px";
- canvas.width = width * dpr;
- canvas.height = height * dpr;
- ctx.scale(dpr,dpr);
+ function resize(){
+  const dpr = window.devicePixelRatio || 1;
+  const width = box.clientWidth;
+  const height = 360;
 
- ctx.clearRect(0,0,width,height);
- ctx.fillStyle = "#0f172a";
- ctx.fillRect(0,0,width,height);
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
 
- const padL = 12;
- const padR = 54;
- const padT = 38;
- const padB = 30;
- const chartW = width - padL - padR;
- const chartH = height - padT - padB;
-
- const view = candles.slice(-80);
- const highs = view.map(c=>c.high);
- const lows = view.map(c=>c.low);
- const maxPrice = Math.max(...highs);
- const minPrice = Math.min(...lows);
- const range = maxPrice - minPrice || 1;
-
- function y(price){
-  return padT + ((maxPrice - price) / range) * chartH;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  render(true);
  }
 
- function x(index){
-  return padL + index * (chartW / Math.max(view.length - 1,1));
+ function getView(){
+  const total = zellaChartState.candles.length;
+  const zoom = Math.round(zellaChartState.zoom);
+  const offset = Math.round(zellaChartState.offset);
+  const end = Math.max(zoom, total - offset);
+  const start = Math.max(0, end - zoom);
+  return zellaChartState.candles.slice(start,end);
  }
 
- ctx.strokeStyle = "rgba(148,163,184,.10)";
- ctx.lineWidth = 1;
+ function render(animated=false){
+  const width = box.clientWidth;
+  const height = 360;
 
- for(let i=0;i<5;i++){
-  const yy = padT + (chartH/4)*i;
+  ctx.clearRect(0,0,width,height);
+  ctx.fillStyle = "#0f172a";
+  ctx.fillRect(0,0,width,height);
+
+  const padL = 12;
+  const padR = 58;
+  const padT = 42;
+  const padB = 30;
+  const chartW = width - padL - padR;
+  const chartH = height - padT - padB;
+
+  const view = getView();
+  if(!view.length) return;
+
+  const highs = view.map(c=>c.high);
+  const lows = view.map(c=>c.low);
+  const maxPrice = Math.max(...highs);
+  const minPrice = Math.min(...lows);
+  const range = maxPrice - minPrice || 1;
+
+  function y(price){
+   return padT + ((maxPrice - price) / range) * chartH;
+  }
+
+  function x(index){
+   return padL + index * (chartW / Math.max(view.length - 1,1));
+  }
+
+  ctx.strokeStyle = "rgba(148,163,184,.09)";
+  ctx.lineWidth = 1;
+
+  for(let i=0;i<5;i++){
+   const yy = padT + (chartH/4)*i;
+   ctx.beginPath();
+   ctx.moveTo(padL,yy);
+   ctx.lineTo(width-padR,yy);
+   ctx.stroke();
+  }
+
+  for(let i=0;i<5;i++){
+   const xx = padL + (chartW/4)*i;
+   ctx.beginPath();
+   ctx.moveTo(xx,padT);
+   ctx.lineTo(xx,padT+chartH);
+   ctx.stroke();
+  }
+
+  const candleGap = 3;
+  const candleW = Math.max(4, Math.min(14, chartW / view.length - candleGap));
+  const visibleCount = animated ? 0 : view.length;
+
+  function drawCandle(c,i){
+   const xx = x(i);
+   const openY = y(c.open);
+   const closeY = y(c.close);
+   const highY = y(c.high);
+   const lowY = y(c.low);
+   const bullish = c.close >= c.open;
+   const color = bullish ? "#22c55e" : "#ef4444";
+
+   ctx.strokeStyle = color;
+   ctx.fillStyle = color;
+   ctx.lineWidth = 1.5;
+
+   ctx.beginPath();
+   ctx.moveTo(xx,highY);
+   ctx.lineTo(xx,lowY);
+   ctx.stroke();
+
+   const bodyTop = Math.min(openY,closeY);
+   const bodyH = Math.max(Math.abs(closeY-openY),2);
+
+   ctx.fillRect(xx - candleW/2, bodyTop, candleW, bodyH);
+  }
+
+  if(animated){
+   let i = 0;
+   function frame(){
+    if(i >= view.length) return;
+    drawCandle(view[i],i);
+    i += 2;
+    requestAnimationFrame(frame);
+   }
+   frame();
+  }else{
+   view.forEach(drawCandle);
+  }
+
+  ctx.fillStyle = "#38bdf8";
+  ctx.font = "900 18px Arial";
+  ctx.fillText(`${symbol} • Zella Source Chart`, padL, 26);
+
+  const lastCandle = view[view.length-1];
+  const lastPrice = lastCandle.close;
+  const lastY = y(lastPrice);
+
+  ctx.strokeStyle = "rgba(56,189,248,.55)";
+  ctx.setLineDash([4,4]);
   ctx.beginPath();
-  ctx.moveTo(padL,yy);
-  ctx.lineTo(width-padR,yy);
+  ctx.moveTo(padL,lastY);
+  ctx.lineTo(width-padR,lastY);
   ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle = "#38bdf8";
+  ctx.fillRect(width-padR+4,lastY-12,52,24);
+
+  ctx.fillStyle = "#020617";
+  ctx.font = "900 11px Arial";
+  ctx.fillText(
+   Number(lastPrice).toFixed(lastPrice < 1 ? 4 : 2),
+   width-padR+8,
+   lastY+4
+  );
+
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "700 11px Arial";
+
+  for(let i=0;i<5;i++){
+   const price = maxPrice - (range/4)*i;
+   const yy = padT + (chartH/4)*i;
+   ctx.fillText(Number(price).toFixed(price < 1 ? 4 : 2), width-padR+4, yy+4);
+  }
  }
 
- for(let i=0;i<5;i++){
-  const xx = padL + (chartW/4)*i;
-  ctx.beginPath();
-  ctx.moveTo(xx,padT);
-  ctx.lineTo(xx,padT+chartH);
-  ctx.stroke();
- }
+ canvas.onwheel = function(e){
+  e.preventDefault();
+  const delta = e.deltaY > 0 ? 8 : -8;
+  zellaChartState.zoom = Math.min(
+   zellaChartState.candles.length,
+   Math.max(20, zellaChartState.zoom + delta)
+  );
+  render(false);
+ };
 
- const candleGap = 3;
- const candleW = Math.max(4, Math.min(12, chartW / view.length - candleGap));
+ canvas.onpointerdown = function(e){
+  zellaChartState.dragging = true;
+  zellaChartState.lastX = e.clientX;
+  canvas.setPointerCapture(e.pointerId);
+ };
 
- view.forEach((c,i)=>{
-  const xx = x(i);
-  const openY = y(c.open);
-  const closeY = y(c.close);
-  const highY = y(c.high);
-  const lowY = y(c.low);
-  const bullish = c.close >= c.open;
-  const color = bullish ? "#22c55e" : "#ef4444";
+ canvas.onpointermove = function(e){
+  if(!zellaChartState.dragging) return;
 
-  ctx.strokeStyle = color;
-  ctx.fillStyle = color;
-  ctx.lineWidth = 1.5;
+  const dx = e.clientX - zellaChartState.lastX;
+  zellaChartState.lastX = e.clientX;
 
-  ctx.beginPath();
-  ctx.moveTo(xx,highY);
-  ctx.lineTo(xx,lowY);
-  ctx.stroke();
+  if(Math.abs(dx) > 3){
+   zellaChartState.offset += dx > 0 ? 2 : -2;
+   zellaChartState.offset = Math.max(
+    0,
+    Math.min(zellaChartState.candles.length - zellaChartState.zoom, zellaChartState.offset)
+   );
+   render(false);
+  }
+ };
 
-  const bodyTop = Math.min(openY,closeY);
-  const bodyH = Math.max(Math.abs(closeY-openY),2);
+ canvas.onpointerup = function(){
+  zellaChartState.dragging = false;
+ };
 
-  ctx.fillRect(xx - candleW/2, bodyTop, candleW, bodyH);
- });
+ canvas.onpointercancel = function(){
+  zellaChartState.dragging = false;
+ };
 
- ctx.fillStyle = "#38bdf8";
- ctx.font = "900 18px Arial";
- ctx.fillText(`${symbol} • Zella Source Chart`, padL, 24);
+ let lastTouchDistance = null;
 
- const lastCandle = view[view.length-1];
- const lastPrice = lastCandle.close;
- const lastY = y(lastPrice);
+ canvas.ontouchmove = function(e){
+  if(e.touches.length === 2){
+   e.preventDefault();
 
- ctx.strokeStyle = "rgba(56,189,248,.55)";
- ctx.setLineDash([4,4]);
- ctx.beginPath();
- ctx.moveTo(padL,lastY);
- ctx.lineTo(width-padR,lastY);
- ctx.stroke();
- ctx.setLineDash([]);
+   const dx = e.touches[0].clientX - e.touches[1].clientX;
+   const dy = e.touches[0].clientY - e.touches[1].clientY;
+   const distance = Math.sqrt(dx*dx + dy*dy);
 
- ctx.fillStyle = "#38bdf8";
- ctx.fillRect(width-padR+4,lastY-12,48,24);
+   if(lastTouchDistance){
+    const diff = distance - lastTouchDistance;
+    zellaChartState.zoom = Math.min(
+     zellaChartState.candles.length,
+     Math.max(20, zellaChartState.zoom - diff * 0.15)
+    );
+    render(false);
+   }
 
- ctx.fillStyle = "#020617";
- ctx.font = "900 11px Arial";
- ctx.fillText(
-  Number(lastPrice).toFixed(lastPrice < 1 ? 4 : 2),
-  width-padR+8,
-  lastY+4
- );
+   lastTouchDistance = distance;
+  }
+ };
 
- ctx.fillStyle = "#94a3b8";
- ctx.font = "700 11px Arial";
+ canvas.ontouchend = function(){
+  lastTouchDistance = null;
+ };
 
- for(let i=0;i<5;i++){
-  const price = maxPrice - (range/4)*i;
-  const yy = padT + (chartH/4)*i;
-  ctx.fillText(Number(price).toFixed(price < 1 ? 4 : 2), width-padR+4, yy+4);
- }
+ resize();
 }
 
 function renderCortex(data){

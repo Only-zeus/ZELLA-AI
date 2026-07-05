@@ -374,6 +374,47 @@ body{
  .brand h2{font-size:30px}
  .controls{grid-template-columns:1fr}
 }
+
+.chart-head{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:12px;
+ margin-bottom:18px;
+}
+
+.chart-head .section-title{
+ margin-bottom:0;
+}
+
+.chart-expand-btn{
+ padding:10px 14px;
+ border-radius:999px;
+ border:1px solid rgba(56,189,248,.25);
+ background:rgba(56,189,248,.12);
+ color:#38bdf8;
+ font-weight:950;
+ cursor:pointer;
+}
+
+.chart-box.fullscreen{
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ height:100vh;
+ width:100vw;
+ border-radius:0;
+ border:none;
+ background:#020617;
+}
+
+.chart-box.fullscreen #zellaCanvasChart{
+ height:100vh;
+}
+
+body.chart-fullscreen-active{
+ overflow:hidden;
+}
 </style>
 </head>
 
@@ -477,7 +518,10 @@ body{
 </div>
 
 <section class="section">
- <div class="section-title">SOURCE ASSET CHART</div>
+ <div class="chart-head">
+  <div class="section-title">SOURCE ASSET CHART</div>
+  <button class="chart-expand-btn" onclick="toggleChartFullscreen()">Expand</button>
+</div>
  <div class="chart-box" id="tvChart">
   <div class="chart-loading">Loading source chart...</div>
  </div>
@@ -682,6 +726,8 @@ async function renderSourceAssetChart(symbol,timeframe){
 }
 
 function drawZellaCanvasChart(candles, symbol){
+  zellaLastCandles = candles;
+zellaLastSymbol = symbol;
  const canvas = document.getElementById("zellaCanvasChart");
  const box = document.getElementById("tvChart");
  if(!canvas || !box || !candles.length) return;
@@ -698,10 +744,30 @@ function drawZellaCanvasChart(candles, symbol){
   lastTouchDistance:null
  };
 
+let zellaLastCandles = [];
+let zellaLastSymbol = "";
+
+function toggleChartFullscreen(){
+ const box = document.getElementById("tvChart");
+ const btn = document.querySelector(".chart-expand-btn");
+
+ box.classList.toggle("fullscreen");
+ document.body.classList.toggle("chart-fullscreen-active");
+
+ const isFull = box.classList.contains("fullscreen");
+ btn.textContent = isFull ? "Exit" : "Expand";
+
+ setTimeout(()=>{
+  if(zellaLastCandles.length){
+   drawZellaCanvasChart(zellaLastCandles,zellaLastSymbol);
+  }
+ },120);
+}
+
  function resize(){
   const dpr = window.devicePixelRatio || 1;
   const width = Math.max(300, box.clientWidth);
-  const height = 360;
+  const height = box.classList.contains("fullscreen") ? window.innerHeight : 360;
 
   canvas.style.width = width + "px";
   canvas.style.height = height + "px";
@@ -723,7 +789,7 @@ function drawZellaCanvasChart(candles, symbol){
 
  function render(animated){
   const width = Math.max(300,box.clientWidth);
-  const height = 360;
+  const height = box.classList.contains("fullscreen") ? window.innerHeight : 360;
 
   ctx.clearRect(0,0,width,height);
   ctx.fillStyle = "#0f172a";

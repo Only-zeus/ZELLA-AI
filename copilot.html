@@ -3,92 +3,447 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zella Copilot V16 Memory</title>
+
+<title>Zella Copilot V13 Ultra Memory</title>
 <link rel="stylesheet" href="style.css">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-bottom:130px}
-.bg{position:fixed;inset:0;z-index:-3;background:radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),#020617}
-.grid-bg{position:fixed;inset:0;z-index:-2;background-image:linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);background-size:42px 42px;animation:gridMove 18s linear infinite}
-@keyframes gridMove{from{background-position:0 0}to{background-position:0 420px}}
 
-.container,.topbar{width:92%;max-width:560px;margin:auto}
-.topbar{padding:22px 0;display:flex;align-items:center;justify-content:space-between}
-.brand h2{font-size:34px;letter-spacing:10px;font-weight:950}
-.brand span{color:#38bdf8;letter-spacing:5px;font-weight:950;font-size:14px}
-.user-badge{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);color:#020617;display:flex;align-items:center;justify-content:center;font-weight:950;box-shadow:0 0 30px rgba(56,189,248,.5)}
+body{
+ min-height:100vh;
+ background:#020617;
+ color:white;
+ overflow-x:hidden;
+ padding-bottom:130px;
+}
 
-.hero,.chat-panel,.section-card,.insight-card{background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.14);box-shadow:0 22px 65px rgba(0,0,0,.38)}
-.hero{padding:28px;border-radius:34px;text-align:center}
-.orbit{width:245px;height:245px;margin:0 auto 24px;position:relative}
-.ring{position:absolute;border-radius:50%;border:1px solid rgba(56,189,248,.28);animation:spin 14s linear infinite}
-.r1{inset:0}.r2{inset:28px;animation-duration:18s}.r3{inset:56px;animation-duration:22s}.r4{inset:84px;animation-duration:28s}
-.ring::before{content:"";position:absolute;top:12px;left:50%;width:10px;height:10px;border-radius:50%;background:#38bdf8;box-shadow:0 0 18px #38bdf8}
-@keyframes spin{to{transform:rotate(360deg)}}
-.core{position:absolute;inset:82px;border-radius:50%;background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);box-shadow:0 0 45px rgba(56,189,248,.85),inset 0 0 28px rgba(2,6,23,.8);display:flex;align-items:center;justify-content:center}
-.core svg{width:58px;height:58px;stroke:#020617;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.eyebrow{color:#7dd3fc;letter-spacing:8px;font-size:13px;font-weight:950}
-.hero h1{margin-top:20px;font-size:48px;line-height:1.05}
-.hero p{margin-top:18px;color:#94a3b8;font-size:16px;line-height:1.8}
-.status{margin-top:18px;display:inline-flex;padding:11px 17px;border-radius:999px;background:rgba(34,197,94,.12);color:#4ade80;font-weight:950}
+.bg{
+ position:fixed;
+ inset:0;
+ z-index:-3;
+ background:
+ radial-gradient(circle at 18% 8%,rgba(56,189,248,.24),transparent 30%),
+ radial-gradient(circle at 82% 12%,rgba(37,99,235,.22),transparent 30%),
+ radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
+ #020617;
+}
 
-.quick-grid,.insight-grid{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.quick-btn{padding:16px;border-radius:22px;border:1px solid rgba(148,163,184,.14);background:rgba(15,23,42,.88);color:#e5eefb;font-weight:900;cursor:pointer}
-.chat-panel,.section-card{margin-top:18px;padding:18px;border-radius:30px}
-.section-title{color:#38bdf8;font-size:13px;letter-spacing:6px;font-weight:950;margin-bottom:16px}
-.chat-box{min-height:330px;max-height:430px;overflow-y:auto;padding-right:4px}
-.message{margin-bottom:14px;padding:15px;border-radius:20px;line-height:1.65;font-size:14px}
-.user-msg{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.18)}
-.ai-msg{background:#0f172a;border:1px solid rgba(148,163,184,.12)}
-.ai-msg strong{color:#38bdf8}
-.input-wrap{margin-top:14px;display:flex;gap:10px}
-.input-wrap input{flex:1;padding:15px;border-radius:18px;border:1px solid rgba(148,163,184,.15);background:#020617;color:white;outline:none}
-.send-btn{width:58px;border:none;border-radius:18px;background:linear-gradient(135deg,#38bdf8,#2563eb);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.send-btn svg{width:24px;height:24px;stroke:#020617;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.grid-bg{
+ position:fixed;
+ inset:0;
+ z-index:-2;
+ background-image:
+ linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
+ background-size:42px 42px;
+ animation:gridMove 18s linear infinite;
+}
 
-.insight-card{padding:18px;border-radius:24px}
-.label{color:#94a3b8;font-size:13px;font-weight:850}
-.value{margin-top:12px;font-size:28px;font-weight:950}
-.sub{margin-top:9px;color:#94a3b8;font-size:13px;line-height:1.5}
-.blue{color:#38bdf8}.green{color:#4ade80}.orange{color:#f59e0b}.red{color:#ef4444}
-.cortex-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.cortex-card{padding:15px;border-radius:20px;background:#0f172a;border:1px solid rgba(148,163,184,.12)}
-.cortex-card strong{display:block;margin-top:8px;font-size:20px}
-.cortex-card small{color:#94a3b8}
-.row{display:flex;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid rgba(148,163,184,.1)}
+@keyframes gridMove{
+ from{background-position:0 0}
+ to{background-position:0 420px}
+}
+
+.container{
+ width:92%;
+ max-width:560px;
+ margin:auto;
+}
+
+.topbar{
+ width:92%;
+ max-width:560px;
+ margin:auto;
+ padding:22px 0;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.brand h2{
+ font-size:34px;
+ letter-spacing:10px;
+ font-weight:950;
+}
+
+.brand span{
+ color:#38bdf8;
+ letter-spacing:5px;
+ font-weight:950;
+ font-size:14px;
+}
+
+.user-badge{
+ width:54px;
+ height:54px;
+ border-radius:50%;
+ background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
+ color:#020617;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:950;
+ box-shadow:0 0 30px rgba(56,189,248,.5);
+}
+
+.hero,.chat-panel,.section-card,.insight-card{
+ background:rgba(15,23,42,.88);
+ border:1px solid rgba(148,163,184,.14);
+ box-shadow:0 22px 65px rgba(0,0,0,.38);
+}
+
+.hero{
+ padding:28px;
+ border-radius:34px;
+ text-align:center;
+}
+
+.orbit{
+ width:245px;
+ height:245px;
+ margin:0 auto 24px;
+ position:relative;
+}
+
+.ring{
+ position:absolute;
+ border-radius:50%;
+ border:1px solid rgba(56,189,248,.28);
+ animation:spin 14s linear infinite;
+}
+
+.r1{inset:0}
+.r2{inset:28px;animation-duration:18s}
+.r3{inset:56px;animation-duration:22s}
+.r4{inset:84px;animation-duration:28s}
+
+.ring::before{
+ content:"";
+ position:absolute;
+ top:12px;
+ left:50%;
+ width:10px;
+ height:10px;
+ border-radius:50%;
+ background:#38bdf8;
+ box-shadow:0 0 18px #38bdf8;
+}
+
+@keyframes spin{
+ to{transform:rotate(360deg)}
+}
+
+.core{
+ position:absolute;
+ inset:82px;
+ border-radius:50%;
+ background:radial-gradient(circle,#dff7ff,#38bdf8 38%,#020617 72%);
+ box-shadow:
+ 0 0 45px rgba(56,189,248,.85),
+ inset 0 0 28px rgba(2,6,23,.8);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+
+.core svg{
+ width:58px;
+ height:58px;
+ stroke:#020617;
+ fill:none;
+ stroke-width:2.5;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+
+.eyebrow{
+ color:#7dd3fc;
+ letter-spacing:8px;
+ font-size:13px;
+ font-weight:950;
+}
+
+.hero h1{
+ margin-top:20px;
+ font-size:48px;
+ line-height:1.05;
+}
+
+.hero p{
+ margin-top:18px;
+ color:#94a3b8;
+ font-size:16px;
+ line-height:1.8;
+}
+
+.status{
+ margin-top:18px;
+ display:inline-flex;
+ padding:11px 17px;
+ border-radius:999px;
+ background:rgba(34,197,94,.12);
+ color:#4ade80;
+ font-weight:950;
+}
+
+.quick-grid{
+ margin-top:18px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:14px;
+}
+
+.quick-btn{
+ padding:16px;
+ border-radius:22px;
+ border:1px solid rgba(148,163,184,.14);
+ background:rgba(15,23,42,.88);
+ color:#e5eefb;
+ font-weight:900;
+ cursor:pointer;
+ transition:.25s ease;
+}
+
+.quick-btn:hover{
+ border-color:rgba(56,189,248,.45);
+ transform:translateY(-2px);
+}
+
+.chat-panel,.section-card{
+ margin-top:18px;
+ padding:18px;
+ border-radius:30px;
+}
+
+.section-title{
+ color:#38bdf8;
+ font-size:13px;
+ letter-spacing:6px;
+ font-weight:950;
+ margin-bottom:16px;
+}
+
+.chat-box{
+ min-height:330px;
+ max-height:430px;
+ overflow-y:auto;
+ padding-right:4px;
+}
+
+.message{
+ margin-bottom:14px;
+ padding:15px;
+ border-radius:20px;
+ line-height:1.65;
+ font-size:14px;
+}
+
+.user-msg{
+ background:rgba(56,189,248,.12);
+ border:1px solid rgba(56,189,248,.18);
+}
+
+.ai-msg{
+ background:#0f172a;
+ border:1px solid rgba(148,163,184,.12);
+}
+
+.ai-msg strong{
+ color:#38bdf8;
+}
+
+.input-wrap{
+ margin-top:14px;
+ display:flex;
+ gap:10px;
+}
+
+.input-wrap input{
+ flex:1;
+ padding:15px;
+ border-radius:18px;
+ border:1px solid rgba(148,163,184,.15);
+ background:#020617;
+ color:white;
+ outline:none;
+}
+
+.input-wrap input:focus{
+ border-color:#38bdf8;
+ box-shadow:0 0 20px rgba(56,189,248,.16);
+}
+
+.send-btn{
+ width:58px;
+ border:none;
+ border-radius:18px;
+ background:linear-gradient(135deg,#38bdf8,#2563eb);
+ cursor:pointer;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+
+.send-btn svg{
+ width:24px;
+ height:24px;
+ stroke:#020617;
+ fill:none;
+ stroke-width:2.4;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+
+.insight-grid{
+ margin-top:18px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:14px;
+}
+
+.insight-card{
+ padding:18px;
+ border-radius:24px;
+}
+
+.label{
+ color:#94a3b8;
+ font-size:13px;
+ font-weight:850;
+}
+
+.value{
+ margin-top:12px;
+ font-size:28px;
+ font-weight:950;
+}
+
+.sub{
+ margin-top:9px;
+ color:#94a3b8;
+ font-size:13px;
+ line-height:1.5;
+}
+
+.blue{color:#38bdf8}
+.green{color:#4ade80}
+.orange{color:#f59e0b}
+.red{color:#ef4444}
+
+.cortex-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+
+.cortex-card{
+ padding:15px;
+ border-radius:20px;
+ background:#0f172a;
+ border:1px solid rgba(148,163,184,.12);
+}
+
+.cortex-card strong{
+ display:block;
+ margin-top:8px;
+ font-size:20px;
+}
+
+.cortex-card small{
+ color:#94a3b8;
+}
+
+.row{
+ display:flex;
+ justify-content:space-between;
+ gap:12px;
+ padding:13px 0;
+ border-bottom:1px solid rgba(148,163,184,.1);
+}
+
 .row:last-child{border-bottom:none}
-.row-left strong,.row-right strong{display:block}
-.row-left small,.row-right small{color:#94a3b8}
-.row-right{text-align:right}
-.meter{margin-top:12px;height:10px;border-radius:999px;background:#020617;overflow:hidden;border:1px solid rgba(148,163,184,.14)}
-.meter-fill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,#38bdf8,#4ade80);transition:.4s ease}
-@media(max-width:430px){.hero h1{font-size:42px}.brand h2{font-size:30px}}
+
+.row-left strong,.row-right strong{
+ display:block;
+}
+
+.row-left small,.row-right small{
+ color:#94a3b8;
+}
+
+.row-right{
+ text-align:right;
+}
+
+.meter{
+ margin-top:12px;
+ height:10px;
+ border-radius:999px;
+ background:#020617;
+ overflow:hidden;
+ border:1px solid rgba(148,163,184,.14);
+}
+
+.meter-fill{
+ height:100%;
+ width:0%;
+ border-radius:999px;
+ background:linear-gradient(90deg,#38bdf8,#4ade80);
+ transition:.4s ease;
+}
+
+@media(max-width:430px){
+ .hero h1{font-size:42px}
+ .brand h2{font-size:30px}
+}
 </style>
 </head>
 
 <body>
+
 <div class="bg"></div>
 <div class="grid-bg"></div>
 
 <header class="topbar">
- <div class="brand"><h2>ZELLA</h2><span>COPILOT</span></div>
+ <div class="brand">
+  <h2>ZELLA</h2>
+  <span>COPILOT</span>
+ </div>
  <div class="user-badge">Z</div>
 </header>
 
 <main class="container">
+
 <section class="hero">
  <div class="orbit">
-  <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="ring r4"></div>
+  <div class="ring r1"></div>
+  <div class="ring r2"></div>
+  <div class="ring r3"></div>
+  <div class="ring r4"></div>
+
   <div class="core">
-   <svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/><path d="M12 3V7"/><path d="M8 18L6 21"/><path d="M16 18L18 21"/></svg>
+   <svg viewBox="0 0 24 24">
+    <rect x="5" y="7" width="14" height="11" rx="4"/>
+    <path d="M9 11H9.01"/>
+    <path d="M15 11H15.01"/>
+    <path d="M12 3V7"/>
+    <path d="M8 18L6 21"/>
+    <path d="M16 18L18 21"/>
+   </svg>
   </div>
  </div>
 
- <div class="eyebrow">ZELLA COPILOT V16</div>
+ <div class="eyebrow">ZELLA COPILOT V13</div>
+
  <h1>AI Trading<br>Copilot.</h1>
- <p>Ask Zella for natural chat, live candle-based analysis, AI Council verdicts, trade plans, risk checks and memory.</p>
- <div class="status" id="copilotStatus">Copilot • Ready</div>
+
+ <p>
+  Live market intelligence, Cortex reasoning, AI Council support,
+  trade planning, risk review and session memory.
+ </p>
+
+ <div class="status" id="copilotStatus">Cortex • Online</div>
 </section>
 
 <div class="quick-grid">
@@ -100,64 +455,164 @@ body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-b
 
 <section class="chat-panel">
  <div class="section-title">LIVE COPILOT CHAT</div>
+
  <div class="chat-box" id="chatBox">
-  <div class="message ai-msg"><strong>Zella:</strong> I’m ready. I can remember this conversation until you log out.</div>
+  <div class="message ai-msg">
+   <strong>Zella:</strong> Zella Cortex is online. Ask anything — I’ll use live intelligence, market context and session memory when available.
+  </div>
  </div>
 
  <div class="input-wrap">
   <input id="userInput" placeholder="Ask Zella anything..." onkeydown="handleEnter(event)">
   <button class="send-btn" onclick="sendMessage()" aria-label="Send">
-   <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+   <svg viewBox="0 0 24 24">
+    <path d="M22 2L11 13"/>
+    <path d="M22 2L15 22L11 13L2 9L22 2Z"/>
+   </svg>
   </button>
  </div>
 </section>
 <div class="insight-grid">
- <div class="insight-card"><div class="label">Mode</div><div class="value blue" id="modeValue">Auto</div><div class="sub">Trading or general AI</div></div>
- <div class="insight-card"><div class="label">Memory</div><div class="value green" id="memoryValue">On</div><div class="sub" id="memorySub">Session active</div></div>
+ <div class="insight-card">
+  <div class="label">Mode</div>
+  <div class="value blue" id="modeValue">Auto</div>
+  <div class="sub">Trading or general AI</div>
+ </div>
+
+ <div class="insight-card">
+  <div class="label">Memory</div>
+  <div class="value green" id="memoryValue">On</div>
+  <div class="sub" id="memorySub">Session memory ready</div>
+ </div>
 </div>
 
 <section class="section-card">
  <div class="section-title">CORTEX LIVE SNAPSHOT</div>
+
  <div class="cortex-grid">
-  <div class="cortex-card"><small>Asset</small><strong id="snapAsset">--</strong></div>
-  <div class="cortex-card"><small>Timeframe</small><strong id="snapTimeframe">--</strong></div>
-  <div class="cortex-card"><small>Recommendation</small><strong id="snapAction" class="blue">--</strong></div>
-  <div class="cortex-card"><small>Confidence</small><strong id="snapConfidence" class="green">--</strong></div>
+  <div class="cortex-card">
+   <small>Asset</small>
+   <strong id="snapAsset">--</strong>
+  </div>
+
+  <div class="cortex-card">
+   <small>Timeframe</small>
+   <strong id="snapTimeframe">--</strong>
+  </div>
+
+  <div class="cortex-card">
+   <small>Recommendation</small>
+   <strong id="snapAction" class="blue">--</strong>
+  </div>
+
+  <div class="cortex-card">
+   <small>Confidence</small>
+   <strong id="snapConfidence" class="green">--</strong>
+  </div>
  </div>
- <div class="meter"><div class="meter-fill" id="confidenceMeter"></div></div>
+
+ <div class="meter">
+  <div class="meter-fill" id="confidenceMeter"></div>
+ </div>
+
  <p class="sub" id="snapRegime">Waiting for live analysis...</p>
 </section>
 
-<section class="section-card"><div class="section-title">TRADE PLAN</div><div id="tradePlanBox"><p class="sub">Ask Zella to analyze a coin and timeframe.</p></div></section>
-<section class="section-card"><div class="section-title">AI COUNCIL</div><div id="aiCouncilBox"><p class="sub">AI Council will appear after a trading analysis.</p></div></section>
-<section class="section-card"><div class="section-title">EVIDENCE ENGINE</div><div id="evidenceBox"><p class="sub">Evidence scores will appear after live Cortex analysis.</p></div></section>
+<section class="section-card">
+ <div class="section-title">TRADE PLAN</div>
+ <div id="tradePlanBox">
+  <p class="sub">Ask Zella to analyze a coin and timeframe.</p>
+ </div>
+</section>
+
+<section class="section-card">
+ <div class="section-title">AI COUNCIL</div>
+ <div id="aiCouncilBox">
+  <p class="sub">AI Council will appear after a trading analysis.</p>
+ </div>
+</section>
+
+<section class="section-card">
+ <div class="section-title">EVIDENCE ENGINE</div>
+ <div id="evidenceBox">
+  <p class="sub">Evidence scores will appear after live Cortex analysis.</p>
+ </div>
+</section>
+
 </main>
 
 <nav class="bottom-dock">
- <div class="dock-item" onclick="go('dashboard.html')"><svg viewBox="0 0 24 24"><path d="M3 11L12 4L21 11"/><path d="M5 10V21H19V10"/><path d="M9 21V14H15V21"/></svg></div>
- <div class="dock-item" onclick="go('scanner.html')"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/><circle cx="19" cy="7" r="2"/></svg></div>
- <div class="ai-dock" onclick="go('copilot.html')"><svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/><path d="M12 3V7"/><path d="M8 18L6 21"/><path d="M16 18L18 21"/></svg></div>
- <div class="dock-item" onclick="go('market.html')"><svg viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M8 18V10"/><path d="M12 18V4"/><path d="M16 18V8"/><path d="M20 18V12"/></svg></div>
- <div class="dock-item" onclick="go('more.html')"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></div>
+ <div class="dock-item" onclick="go('dashboard.html')">
+  <svg viewBox="0 0 24 24">
+   <path d="M3 11L12 4L21 11"/>
+   <path d="M5 10V21H19V10"/>
+   <path d="M9 21V14H15V21"/>
+  </svg>
+ </div>
+
+ <div class="dock-item" onclick="go('scanner.html')">
+  <svg viewBox="0 0 24 24">
+   <path d="M4 19V5"/>
+   <path d="M4 19H20"/>
+   <path d="M8 16L11 12L14 14L19 7"/>
+   <circle cx="19" cy="7" r="2"/>
+  </svg>
+ </div>
+
+ <div class="ai-dock" onclick="go('copilot.html')">
+  <svg viewBox="0 0 24 24">
+   <rect x="5" y="7" width="14" height="11" rx="4"/>
+   <path d="M9 11H9.01"/>
+   <path d="M15 11H15.01"/>
+   <path d="M12 3V7"/>
+   <path d="M8 18L6 21"/>
+   <path d="M16 18L18 21"/>
+  </svg>
+ </div>
+
+ <div class="dock-item" onclick="go('market.html')">
+  <svg viewBox="0 0 24 24">
+   <path d="M4 18V6"/>
+   <path d="M8 18V10"/>
+   <path d="M12 18V4"/>
+   <path d="M16 18V8"/>
+   <path d="M20 18V12"/>
+  </svg>
+ </div>
+
+ <div class="dock-item" onclick="go('more.html')">
+  <svg viewBox="0 0 24 24">
+   <circle cx="5" cy="12" r="1.6"/>
+   <circle cx="12" cy="12" r="1.6"/>
+   <circle cx="19" cy="12" r="1.6"/>
+  </svg>
+ </div>
 </nav>
 
 <script>
 const API_URL = "https://zella-backend.onrender.com";
 
-function go(page){window.location.href=page}
-
-function escapeHTML(text){
- return String(text||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+function go(page){
+ window.location.href = page;
 }
 
-function formatAI(text){return escapeHTML(text).replace(/\n/g,"<br>")}
+function escapeHTML(text){
+ return String(text || "")
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;");
+}
+
+function formatAI(text){
+ return escapeHTML(text).replace(/\n/g,"<br>");
+}
 
 function formatMoney(value){
- const number=Number(value);
- if(value===null||value===undefined||value===""||!Number.isFinite(number))return"--";
- if(number>=1000)return"$"+number.toLocaleString(undefined,{maximumFractionDigits:2});
- if(number>=1)return"$"+number.toFixed(4);
- return"$"+number.toFixed(8);
+ const number = Number(value);
+ if(value === null || value === undefined || value === "" || !Number.isFinite(number)) return "--";
+ if(number >= 1000) return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
+ if(number >= 1) return "$" + number.toFixed(4);
+ return "$" + number.toFixed(8);
 }
 
 function getZellaUserId(){
@@ -185,74 +640,198 @@ function getZellaSessionId(){
  return sessionId;
 }
 
+function getLocalMemory(){
+ try{
+  return JSON.parse(localStorage.getItem("zellaLocalMemory") || "[]");
+ }catch(error){
+  return [];
+ }
+}
+
+function saveLocalMemory(user,ai){
+ const memory = getLocalMemory();
+
+ memory.push({
+  user,
+  ai,
+  time:new Date().toISOString()
+ });
+
+ localStorage.setItem("zellaLocalMemory",JSON.stringify(memory.slice(-10)));
+ document.getElementById("memorySub").textContent = memory.slice(-10).length + " memory items active";
+}
+
+function buildMemoryPrompt(message){
+ const memory = getLocalMemory();
+
+ if(!memory.length){
+  return `
+User message:
+${message}
+
+Instruction:
+Answer naturally and professionally.
+Do not over-greet.
+  `;
+ }
+
+ const history = memory.map((m,i)=>
+  `Previous ${i+1}:
+User: ${m.user}
+Zella: ${m.ai}`
+ ).join("\n\n");
+
+ return `
+Use this conversation memory:
+${history}
+
+IMPORTANT:
+- Continue the conversation naturally.
+- Do not say "Hello", "nice to meet you", or "we are starting fresh" if memory exists.
+- Do not restart the conversation.
+- Use the memory as previous chat history.
+- Answer directly based on the previous conversation.
+- If the user asks what was discussed earlier, use the memory.
+- For trading topics, say it is market analysis, not financial advice.
+
+New user message:
+${message}
+ `;
+}
+
 async function getOptionalToken(){
  try{
-  if(window.zellaGetToken)return await window.zellaGetToken();
-  return localStorage.getItem("zellaFirebaseToken") || localStorage.getItem("zellaToken") || "";
+  if(window.zellaGetToken){
+   return await window.zellaGetToken();
+  }
+
+  return localStorage.getItem("zellaFirebaseToken") ||
+   localStorage.getItem("zellaToken") ||
+   "";
  }catch(error){
   return "";
  }
 }
 
 function addMessage(type,text){
- const box=document.getElementById("chatBox");
- const div=document.createElement("div");
- div.className="message "+(type==="user"?"user-msg":"ai-msg");
- div.innerHTML=type==="user"
-  ? "<strong>You:</strong> "+escapeHTML(text)
-  : "<strong>Zella:</strong> "+formatAI(text);
+ const box = document.getElementById("chatBox");
+ const div = document.createElement("div");
+
+ div.className = "message " + (type === "user" ? "user-msg" : "ai-msg");
+
+ div.innerHTML = type === "user"
+  ? "<strong>You:</strong> " + escapeHTML(text)
+  : "<strong>Zella:</strong> " + formatAI(text);
+
  box.appendChild(div);
- box.scrollTop=box.scrollHeight;
+ box.scrollTop = box.scrollHeight;
 }
 
 function quickAsk(text){
- document.getElementById("userInput").value=text;
+ document.getElementById("userInput").value = text;
  sendMessage();
 }
 
 function handleEnter(event){
- if(event.key==="Enter")sendMessage();
+ if(event.key === "Enter"){
+  sendMessage();
+ }
 }
 
 function detectLocalMode(message){
- const text=message.toLowerCase();
- const tradingWords=["btc","eth","sol","bnb","xrp","bitcoin","ethereum","solana","trade","entry","stop loss","take profit","tp1","tp2","signal","buy","sell","market","price","analysis","candle","timeframe","trend","support","resistance","hold","long term","short term","swing"];
- return tradingWords.some(word=>text.includes(word))?"Trading":"General";
+ const text = message.toLowerCase();
+
+ const tradingWords = [
+  "btc","eth","sol","bnb","xrp",
+  "bitcoin","ethereum","solana",
+  "trade","entry","stop loss",
+  "take profit","tp1","tp2",
+  "signal","buy","sell",
+  "market","price","analysis",
+  "candle","timeframe","trend",
+  "support","resistance","hold",
+  "long term","short term","swing"
+ ];
+
+ return tradingWords.some(word => text.includes(word)) ? "Trading" : "General";
 }
 
 function updateCortexSnapshot(analysis){
- if(!analysis)return;
+ if(!analysis) return;
 
- const recommendation=analysis.recommendation||{};
- const tradePlan=analysis.tradePlan||{};
- const evidence=analysis.evidence||{};
- const council=Array.isArray(analysis.aiCouncil)?analysis.aiCouncil:[];
+ const recommendation = analysis.recommendation || {};
+ const tradePlan = analysis.tradePlan || {};
+ const evidence = analysis.evidence || {};
+ const council = Array.isArray(analysis.aiCouncil) ? analysis.aiCouncil : [];
 
- document.getElementById("snapAsset").textContent=analysis.symbol||"--";
- document.getElementById("snapTimeframe").textContent=analysis.timeframe||"--";
- document.getElementById("snapAction").textContent=recommendation.action||"--";
- document.getElementById("snapConfidence").textContent=recommendation.confidence!==undefined?recommendation.confidence+"%":"--";
+ document.getElementById("snapAsset").textContent = analysis.symbol || "--";
+ document.getElementById("snapTimeframe").textContent = analysis.timeframe || "--";
+ document.getElementById("snapAction").textContent = recommendation.action || "--";
 
- const confidence=Number(recommendation.confidence||0);
- document.getElementById("confidenceMeter").style.width=Math.max(0,Math.min(100,confidence))+"%";
+ document.getElementById("snapConfidence").textContent =
+  recommendation.confidence !== undefined ? recommendation.confidence + "%" : "--";
 
- document.getElementById("snapRegime").textContent=
-  `${analysis.regime||"Unknown regime"} • ${analysis.marketDNA?.personality||"Market DNA loading"}`;
+ const confidence = Number(recommendation.confidence || 0);
 
- document.getElementById("tradePlanBox").innerHTML=`
-  <div class="row"><div class="row-left"><strong>Current Price</strong><small>${formatMoney(tradePlan.currentPrice||analysis.market?.price)}</small></div><div class="row-right"><strong>${recommendation.risk||"--"} Risk</strong><small>${recommendation.action||"--"}</small></div></div>
-  <div class="row"><div class="row-left"><strong>Entry Zone</strong><small>${formatMoney(tradePlan.entryZone?.low)} - ${formatMoney(tradePlan.entryZone?.high)}</small></div><div class="row-right"><strong>SL</strong><small>${formatMoney(tradePlan.stopLoss)}</small></div></div>
-  <div class="row"><div class="row-left"><strong>Take Profit</strong><small>TP1 ${formatMoney(tradePlan.takeProfit1)} • TP2 ${formatMoney(tradePlan.takeProfit2)}</small></div><div class="row-right"><strong>Holding</strong><small>${tradePlan.holdingPeriod||"--"}</small></div></div>
-  <p class="sub">Invalidation: ${escapeHTML(tradePlan.invalidation||"Wait for clearer confirmation.")}</p>
+ document.getElementById("confidenceMeter").style.width =
+  Math.max(0,Math.min(100,confidence)) + "%";
+
+ document.getElementById("snapRegime").textContent =
+  `${analysis.regime || "Unknown regime"} • ${analysis.marketDNA?.personality || "Market DNA loading"}`;
+
+ document.getElementById("tradePlanBox").innerHTML = `
+  <div class="row">
+   <div class="row-left">
+    <strong>Current Price</strong>
+    <small>${formatMoney(tradePlan.currentPrice || analysis.market?.price)}</small>
+   </div>
+   <div class="row-right">
+    <strong>${recommendation.risk || "--"} Risk</strong>
+    <small>${recommendation.action || "--"}</small>
+   </div>
+  </div>
+
+  <div class="row">
+   <div class="row-left">
+    <strong>Entry Zone</strong>
+    <small>${formatMoney(tradePlan.entryZone?.low)} - ${formatMoney(tradePlan.entryZone?.high)}</small>
+   </div>
+   <div class="row-right">
+    <strong>SL</strong>
+    <small>${formatMoney(tradePlan.stopLoss)}</small>
+   </div>
+  </div>
+
+  <div class="row">
+   <div class="row-left">
+    <strong>Take Profit</strong>
+    <small>TP1 ${formatMoney(tradePlan.takeProfit1)} • TP2 ${formatMoney(tradePlan.takeProfit2)}</small>
+   </div>
+   <div class="row-right">
+    <strong>Holding</strong>
+    <small>${tradePlan.holdingPeriod || "--"}</small>
+   </div>
+  </div>
+
+  <p class="sub">Invalidation: ${escapeHTML(tradePlan.invalidation || "Wait for clearer confirmation.")}</p>
  `;
 
- document.getElementById("aiCouncilBox").innerHTML=council.length
-  ? council.map(item=>`
-   <div class="row"><div class="row-left"><strong>${escapeHTML(item.analyst)}</strong><small>Specialist vote</small></div><div class="row-right"><strong class="${String(item.verdict).includes("BUY")?"green":String(item.verdict).includes("SELL")?"red":"orange"}">${escapeHTML(item.verdict)}</strong><small>${item.confidence||0}% confidence</small></div></div>
-  `).join("")
+ document.getElementById("aiCouncilBox").innerHTML = council.length
+  ? council.map(item => `
+    <div class="row">
+     <div class="row-left">
+      <strong>${escapeHTML(item.analyst)}</strong>
+      <small>Specialist vote</small>
+     </div>
+     <div class="row-right">
+      <strong class="${String(item.verdict).includes("BUY") ? "green" : String(item.verdict).includes("SELL") ? "red" : "orange"}">${escapeHTML(item.verdict)}</strong>
+      <small>${item.confidence || 0}% confidence</small>
+     </div>
+    </div>
+   `).join("")
   : `<p class="sub">No AI Council data available.</p>`;
 
- const evidenceItems=[
+ const evidenceItems = [
   ["Trend",evidence.trend],
   ["Momentum",evidence.momentum],
   ["Volume",evidence.volume],
@@ -262,136 +841,133 @@ function updateCortexSnapshot(analysis){
   ["Risk Quality",evidence.riskQuality]
  ];
 
- document.getElementById("evidenceBox").innerHTML=evidenceItems.map(item=>`
-  <div class="row"><div class="row-left"><strong>${item[0]}</strong><small>Evidence score</small></div><div class="row-right"><strong class="blue">${item[1]!==undefined?item[1]:"--"}</strong><small>/100</small></div></div>
+ document.getElementById("evidenceBox").innerHTML = evidenceItems.map(item => `
+  <div class="row">
+   <div class="row-left">
+    <strong>${item[0]}</strong>
+    <small>Evidence score</small>
+   </div>
+   <div class="row-right">
+    <strong class="blue">${item[1] !== undefined ? item[1] : "--"}</strong>
+    <small>/100</small>
+   </div>
+  </div>
  `).join("");
 }
 
-function getLocalMemory(){
- return JSON.parse(localStorage.getItem("zellaLocalMemory") || "[]");
-}
-
-function saveLocalMemory(user, ai){
- const memory = getLocalMemory();
- memory.push({user, ai});
- localStorage.setItem("zellaLocalMemory", JSON.stringify(memory.slice(-10)));
-}
-
-function buildMemoryPrompt(message){
- const memory = getLocalMemory();
-
- if(!memory.length) return message;
-
- const history = memory.map((m,i)=>
-  `Previous ${i+1}:\nUser: ${m.user}\nZella: ${m.ai}`
- ).join("\n\n");
-
- return `Use this conversation memory:\n${history}\n\nNew user message:\n${message}`;
-}
-
 async function sendMessage(){
- const input=document.getElementById("userInput");
- const message=input.value.trim();
- if(!message)return;
+ const input = document.getElementById("userInput");
+ const message = input.value.trim();
+
+ if(!message) return;
 
  input.value = "";
-addMessage("user", message);
+ addMessage("user",message);
 
-const finalMessage = buildMemoryPrompt(message);
+ const mode = detectLocalMode(message);
+ const finalMessage = buildMemoryPrompt(message);
 
- const mode=detectLocalMode(message);
- document.getElementById("modeValue").textContent=mode;
- document.getElementById("copilotStatus").textContent="Copilot • Thinking";
+ document.getElementById("modeValue").textContent = mode;
+ document.getElementById("copilotStatus").textContent = "Cortex • Thinking";
 
  try{
-  const token=await getOptionalToken();
-  const userId=getZellaUserId();
-  const sessionId=getZellaSessionId();
+  const token = await getOptionalToken();
+  const userId = getZellaUserId();
+  const sessionId = getZellaSessionId();
 
-  const headers={
+  const headers = {
    "Content-Type":"application/json",
    "x-zella-session":sessionId
   };
 
-  if(token)headers.Authorization="Bearer "+token;
+  if(token){
+   headers.Authorization = "Bearer " + token;
+  }
 
-  const response=await fetch(API_URL+"/api/copilot/chat",{
+  const response = await fetch(API_URL + "/api/copilot/chat",{
    method:"POST",
    headers,
    body:JSON.stringify({
-    message: finalMessage,
+    message:finalMessage,
+    rawMessage:message,
     userId,
     sessionId,
-    symbol:localStorage.getItem("zellaSelectedSymbol")||"BTC",
-    timeframe:localStorage.getItem("zellaSelectedTimeframe")||"1h",
-    provider:localStorage.getItem("zellaAIProvider")||"groq"
+    symbol:localStorage.getItem("zellaSelectedSymbol") || "BTC",
+    timeframe:localStorage.getItem("zellaSelectedTimeframe") || "1h",
+    provider:localStorage.getItem("zellaAIProvider") || "groq"
    })
   });
 
-  const data=await response.json();
+  const data = await response.json();
 
-  if(!data.success)throw new Error(data.message||data.error||"Copilot unavailable");
+  if(!data.success){
+   throw new Error(data.message || data.error || "Copilot unavailable");
+  }
 
-  // sourceValue removed in V16 memory version
-  document.getElementById("memoryValue").textContent="On";
-  document.getElementById("memorySub").textContent="Memory saved for this session";
+  const reply = data.reply || "Zella response unavailable.";
 
-  addMessage("ai",data.reply||"Zella response unavailable.");
-  saveLocalMemory(message, data.reply || "");
+  addMessage("ai",reply);
+  saveLocalMemory(message,reply);
 
-  if(data.analysis)updateCortexSnapshot(data.analysis);
-  if(data.context&&data.context.success)updateCortexSnapshot(data.context);
+  document.getElementById("memoryValue").textContent = "On";
+  document.getElementById("memorySub").textContent = getLocalMemory().length + " memory items active";
 
-  document.getElementById("copilotStatus").textContent="Copilot • Ready";
+  if(data.analysis){
+   updateCortexSnapshot(data.analysis);
+  }
+
+  if(data.context && data.context.success){
+   updateCortexSnapshot(data.context);
+  }
+
+  document.getElementById("copilotStatus").textContent = "Cortex • Online";
  }catch(error){
-  addMessage("ai","Copilot is unavailable right now. "+error.message);
-  document.getElementById("copilotStatus").textContent="Copilot • Unavailable";
+  addMessage("ai","Copilot is unavailable right now. " + error.message);
+  document.getElementById("copilotStatus").textContent = "Cortex • Unavailable";
  }
 }
 
 async function loadDefaultSnapshot(){
  try{
-  const response=await fetch(API_URL+"/api/cortex/analyze/BTC/1h");
-  const data=await response.json();
-  if(data.success)updateCortexSnapshot(data);
+  const response = await fetch(API_URL + "/api/cortex/analyze/BTC/1h");
+  const data = await response.json();
+
+  if(data.success){
+   updateCortexSnapshot(data);
+  }
  }catch(error){
   console.warn("Default Cortex snapshot unavailable:",error.message);
  }
 }
 
 async function loadExistingMemory(){
- try{
-  const userId=getZellaUserId();
-  const sessionId=getZellaSessionId();
+ const memory = getLocalMemory();
 
-  const response=await fetch(`${API_URL}/api/memory/load/${encodeURIComponent(userId)}?sessionId=${encodeURIComponent(sessionId)}`,{
-   headers:{"x-zella-session":sessionId}
-  });
-
-  const data=await response.json();
-
-  if(data.success&&Array.isArray(data.memory)&&data.memory.length){
-   document.getElementById("memorySub").textContent=data.memory.length+" saved memory items";
-  }
- }catch(error){
-  console.warn("Memory load unavailable:",error.message);
+ if(memory.length){
+  document.getElementById("memorySub").textContent = memory.length + " memory items active";
+ }else{
+  document.getElementById("memorySub").textContent = "Session memory ready";
  }
 }
 
 async function zellaLogout(){
- const userId=getZellaUserId();
- const sessionId=getZellaSessionId();
+ const userId = getZellaUserId();
+ const sessionId = getZellaSessionId();
 
  try{
   await fetch(`${API_URL}/api/memory/clear/${encodeURIComponent(userId)}?sessionId=${encodeURIComponent(sessionId)}`,{
    method:"DELETE",
-   headers:{"x-zella-session":sessionId}
+   headers:{
+    "x-zella-session":sessionId
+   }
   });
  }catch(error){}
 
  localStorage.removeItem("zellaSessionId");
  localStorage.removeItem("zellaUserId");
- window.location.href="index.html";
+ localStorage.removeItem("zellaLocalMemory");
+
+ window.location.href = "index.html";
 }
 
 function boot(){
@@ -406,5 +982,6 @@ boot();
 
 <script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
+
 </body>
 </html>

@@ -779,6 +779,51 @@ async function loadDefaultSnapshot(){
  }
 }
 
+const zellaUserId =
+  localStorage.getItem("zellaUserId") ||
+  localStorage.getItem("userId") ||
+  "guest-user";
+
+let zellaSessionId = localStorage.getItem("zellaSessionId");
+
+if (!zellaSessionId) {
+  zellaSessionId = "zella-session-" + Date.now();
+  localStorage.setItem("zellaSessionId", zellaSessionId);
+}
+
+const response = await fetch(`${API_URL}/api/copilot/chat`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-zella-session": zellaSessionId
+  },
+  body: JSON.stringify({
+    message: userMessage,
+    userId: zellaUserId,
+    sessionId: zellaSessionId,
+    symbol: localStorage.getItem("zellaSelectedSymbol") || "BTC",
+    timeframe: localStorage.getItem("zellaSelectedTimeframe") || "1h",
+    provider: localStorage.getItem("zellaAIProvider") || "groq"
+  })
+});
+
+async function zellaLogout(){
+  const userId = localStorage.getItem("zellaUserId") || "guest-user";
+  const sessionId = localStorage.getItem("zellaSessionId");
+
+  await fetch(`${API_URL}/api/memory/clear/${encodeURIComponent(userId)}?sessionId=${encodeURIComponent(sessionId || "")}`, {
+    method: "DELETE",
+    headers: {
+      "x-zella-session": sessionId || ""
+    }
+  });
+
+  localStorage.removeItem("zellaSessionId");
+  localStorage.removeItem("zellaUserId");
+
+  window.location.href = "index.html";
+}
+
 function boot(){
  loadDefaultSnapshot();
 }

@@ -299,7 +299,6 @@ async function renderSourceAssetChart(symbol,timeframe,cortexData){
   box.innerHTML=`<div class="chart-loading"><div><strong style="color:#38bdf8;font-size:30px">${escapeHTML(clean)}</strong><p class="sub">Source chart unavailable right now.</p><p class="sub red">${escapeHTML(e.message)}</p></div></div>`;
  }
 }
-<script>
 function drawZellaCanvasChart(candles,symbol,cortexData){
  zellaLastCandles=candles;zellaLastSymbol=symbol;zellaLastCortex=cortexData||null;
  const canvas=document.getElementById("zellaCanvasChart"),box=document.getElementById("tvChart");

@@ -267,13 +267,37 @@ function updateCortexSnapshot(analysis){
  `).join("");
 }
 
+function getLocalMemory(){
+ return JSON.parse(localStorage.getItem("zellaLocalMemory") || "[]");
+}
+
+function saveLocalMemory(user, ai){
+ const memory = getLocalMemory();
+ memory.push({user, ai});
+ localStorage.setItem("zellaLocalMemory", JSON.stringify(memory.slice(-10)));
+}
+
+function buildMemoryPrompt(message){
+ const memory = getLocalMemory();
+
+ if(!memory.length) return message;
+
+ const history = memory.map((m,i)=>
+  `Previous ${i+1}:\nUser: ${m.user}\nZella: ${m.ai}`
+ ).join("\n\n");
+
+ return `Use this conversation memory:\n${history}\n\nNew user message:\n${message}`;
+}
+
 async function sendMessage(){
  const input=document.getElementById("userInput");
  const message=input.value.trim();
  if(!message)return;
 
- input.value="";
- addMessage("user",message);
+ input.value = "";
+addMessage("user", message);
+
+const finalMessage = buildMemoryPrompt(message);
 
  const mode=detectLocalMode(message);
  document.getElementById("modeValue").textContent=mode;
@@ -295,7 +319,7 @@ async function sendMessage(){
    method:"POST",
    headers,
    body:JSON.stringify({
-    message,
+    message: finalMessage,
     userId,
     sessionId,
     symbol:localStorage.getItem("zellaSelectedSymbol")||"BTC",
@@ -313,6 +337,7 @@ async function sendMessage(){
   document.getElementById("memorySub").textContent="Memory saved for this session";
 
   addMessage("ai",data.reply||"Zella response unavailable.");
+  saveLocalMemory(message, data.reply || "");
 
   if(data.analysis)updateCortexSnapshot(data.analysis);
   if(data.context&&data.context.success)updateCortexSnapshot(data.context);

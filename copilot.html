@@ -308,7 +308,7 @@ async function sendMessage(){
 
   if(!data.success)throw new Error(data.message||data.error||"Copilot unavailable");
 
-  document.getElementById("sourceValue")?.remove;
+  // sourceValue removed in V16 memory version
   document.getElementById("memoryValue").textContent="On";
   document.getElementById("memorySub").textContent="Memory saved for this session";
 

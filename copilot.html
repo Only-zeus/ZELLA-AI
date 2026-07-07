@@ -657,8 +657,8 @@ function saveLocalMemory(user,ai){
   time:new Date().toISOString()
  });
 
- localStorage.setItem("zellaLocalMemory",JSON.stringify(memory.slice(-10)));
- document.getElementById("memorySub").textContent = memory.slice(-10).length + " memory items active";
+ localStorage.setItem("zellaLocalMemory",JSON.stringify(memory.slice(-5)));
+ document.getElementById("memorySub").textContent = memory.slice(-5).length + " memory items active";
 }
 
 function buildMemoryPrompt(message){
@@ -950,6 +950,12 @@ async function loadExistingMemory(){
  }else{
   document.getElementById("memorySub").textContent = "Session memory ready";
  }
+}
+
+function resetZellaMemory(){
+ localStorage.removeItem("zellaLocalMemory");
+ localStorage.removeItem("zellaSessionId");
+ document.getElementById("memorySub").textContent = "Session memory reset";
 }
 
 async function zellaLogout(){

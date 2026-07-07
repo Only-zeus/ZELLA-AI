@@ -682,20 +682,22 @@ Zella: ${m.ai}`
  ).join("\n\n");
 
  return `
-Use this conversation memory:
+Conversation memory:
 ${history}
 
-IMPORTANT:
-- Continue the conversation naturally.
+CURRENT USER MESSAGE:
+${message}
+
+MEMORY RULES:
+- Use memory only when it is relevant to the current message.
+- If the user is just greeting, joking, or saying casual things, reply casually and do not force old market analysis.
 - Do not say "Hello", "nice to meet you", or "we are starting fresh" if memory exists.
 - Do not restart the conversation.
-- Use the memory as previous chat history.
-- Answer directly based on the previous conversation.
-- If the user asks what was discussed earlier, use the memory.
+- If the user asks about earlier discussion, use the memory.
+- If the user changes topic, follow the new topic.
 - For trading topics, say it is market analysis, not financial advice.
 
-New user message:
-${message}
+Answer the current message naturally:
  `;
 }
 

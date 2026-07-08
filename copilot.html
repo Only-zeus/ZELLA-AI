@@ -622,7 +622,7 @@ function getZellaUserId(){
   localStorage.getItem("zellaUserUID");
 
  if(!userId){
-  userId = "guest-user";
+  userId = "guest-user-" + Date.now();
   localStorage.setItem("zellaUserId",userId);
  }
 
@@ -633,7 +633,7 @@ function getZellaSessionId(){
  let sessionId = localStorage.getItem("zellaSessionId");
 
  if(!sessionId){
-  sessionId = "zella-session-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+  sessionId = "zella-session-" + Date.now() + "-" + Math.random().toString(36).slice(2,12);
   localStorage.setItem("zellaSessionId",sessionId);
  }
 
@@ -648,56 +648,55 @@ function getLocalMemory(){
  }
 }
 
-function saveLocalMemory(user,ai){
+function saveLocalMemory(userMsg,aiReply){
  const memory = getLocalMemory();
 
  memory.push({
-  user,
-  ai,
+  user:userMsg,
+  ai:aiReply,
   time:new Date().toISOString()
  });
 
- localStorage.setItem("zellaLocalMemory",JSON.stringify(memory.slice(-5)));
- document.getElementById("memorySub").textContent = memory.slice(-5).length + " memory items active";
+ const savedMemory = memory.slice(-5);
+ localStorage.setItem("zellaLocalMemory",JSON.stringify(savedMemory));
+
+ document.getElementById("memorySub").textContent =
+  savedMemory.length + " memory items active";
 }
 
-function buildMemoryPrompt(message){
+function buildMemoryPrompt(rawMessage){
  const memory = getLocalMemory();
 
- if(!memory.length){
-  return `
-User message:
-${message}
+ let historyText = "";
 
-Instruction:
-Answer naturally and professionally.
-Do not over-greet.
-  `;
- }
-
- const history = memory.map((m,i)=>
-  `Previous ${i+1}:
+ if(memory.length > 0){
+  historyText = memory.map((m,i)=>
+   `Turn ${i+1}:
 User: ${m.user}
 Zella: ${m.ai}`
- ).join("\n\n");
+  ).join("\n\n");
+ }
 
  return `
-Conversation memory:
-${history}
+You are Zella, an expert AI Trading Copilot.
 
-CURRENT USER MESSAGE:
-${message}
-
-MEMORY RULES:
+CORE RULES:
+- You have session memory. Continue naturally when history is relevant.
+- NEVER say "Hello", "nice to meet you", "starting fresh", or restart the conversation when history exists.
 - Use memory only when it is relevant to the current message.
 - If the user is just greeting, joking, or saying casual things, reply casually and do not force old market analysis.
-- Do not say "Hello", "nice to meet you", or "we are starting fresh" if memory exists.
-- Do not restart the conversation.
+- If the current message is short like "sure", "okay", "cool", respond to the most recent topic only, not old unrelated topics.
 - If the user asks about earlier discussion, use the memory.
 - If the user changes topic, follow the new topic.
-- For trading topics, say it is market analysis, not financial advice.
+- For trading topics, always say this is market analysis, not financial advice.
+- Be concise, professional, and actionable.
 
-Answer the current message naturally:
+${historyText ? `CONVERSATION HISTORY:\n\n${historyText}\n\n` : ""}
+
+CURRENT USER MESSAGE:
+${rawMessage}
+
+Respond directly as Zella:
  `;
 }
 
@@ -857,17 +856,23 @@ function updateCortexSnapshot(analysis){
  `).join("");
 }
 
+let isSending = false;
+
 async function sendMessage(){
+ if(isSending) return;
+
  const input = document.getElementById("userInput");
- const message = input.value.trim();
+ const rawMessage = input.value.trim();
 
- if(!message) return;
+ if(!rawMessage) return;
 
+ isSending = true;
  input.value = "";
- addMessage("user",message);
 
- const mode = detectLocalMode(message);
- const finalMessage = buildMemoryPrompt(message);
+ addMessage("user",rawMessage);
+
+ const mode = detectLocalMode(rawMessage);
+ const finalPrompt = buildMemoryPrompt(rawMessage);
 
  document.getElementById("modeValue").textContent = mode;
  document.getElementById("copilotStatus").textContent = "Cortex • Thinking";
@@ -890,8 +895,8 @@ async function sendMessage(){
    method:"POST",
    headers,
    body:JSON.stringify({
-    message:finalMessage,
-    rawMessage:message,
+    message:finalPrompt,
+    rawMessage,
     userId,
     sessionId,
     symbol:localStorage.getItem("zellaSelectedSymbol") || "BTC",
@@ -906,13 +911,14 @@ async function sendMessage(){
    throw new Error(data.message || data.error || "Copilot unavailable");
   }
 
-  const reply = data.reply || "Zella response unavailable.";
+  const reply = data.reply || "No response received.";
 
   addMessage("ai",reply);
-  saveLocalMemory(message,reply);
+  saveLocalMemory(rawMessage,reply);
 
   document.getElementById("memoryValue").textContent = "On";
-  document.getElementById("memorySub").textContent = getLocalMemory().length + " memory items active";
+  document.getElementById("memorySub").textContent =
+   getLocalMemory().length + " memory items active";
 
   if(data.analysis){
    updateCortexSnapshot(data.analysis);
@@ -922,10 +928,11 @@ async function sendMessage(){
    updateCortexSnapshot(data.context);
   }
 
-  document.getElementById("copilotStatus").textContent = "Cortex • Online";
  }catch(error){
-  addMessage("ai","Copilot is unavailable right now. " + error.message);
-  document.getElementById("copilotStatus").textContent = "Cortex • Unavailable";
+  addMessage("ai","Copilot unavailable. " + error.message);
+ }finally{
+  document.getElementById("copilotStatus").textContent = "Cortex • Online";
+  isSending = false;
  }
 }
 
@@ -945,11 +952,8 @@ async function loadDefaultSnapshot(){
 async function loadExistingMemory(){
  const memory = getLocalMemory();
 
- if(memory.length){
-  document.getElementById("memorySub").textContent = memory.length + " memory items active";
- }else{
-  document.getElementById("memorySub").textContent = "Session memory ready";
- }
+ document.getElementById("memorySub").textContent =
+  memory.length ? memory.length + " memory items active" : "Session memory ready";
 }
 
 function resetZellaMemory(){

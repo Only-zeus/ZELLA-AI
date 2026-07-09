@@ -3,385 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Zella Dashboard V17 Cortex OS</title>
 <link rel="stylesheet" href="style.css">
 
 <style>
-*{
- margin:0;
- padding:0;
- box-sizing:border-box;
- font-family:Arial,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{min-height:100vh;background:#020617;color:white;overflow-x:hidden;padding-bottom:140px}
+.bg{position:fixed;inset:0;z-index:-5;background:radial-gradient(circle at 18% 8%,rgba(56,189,248,.28),transparent 30%),radial-gradient(circle at 82% 12%,rgba(37,99,235,.24),transparent 30%),radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 35%),#020617}
+.grid-bg{position:fixed;inset:0;z-index:-4;background-image:linear-gradient(rgba(56,189,248,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.055) 1px,transparent 1px);background-size:42px 42px;animation:gridMove 18s linear infinite}
+@keyframes gridMove{from{background-position:0 0}to{background-position:0 420px}}
+.data-pulse{position:fixed;inset:0;z-index:-3;background:linear-gradient(120deg,transparent,rgba(56,189,248,.05),transparent),linear-gradient(240deg,transparent,rgba(34,197,94,.04),transparent);animation:pulseMove 10s ease-in-out infinite alternate}
+@keyframes pulseMove{from{opacity:.35;transform:scale(1)}to{opacity:.8;transform:scale(1.08)}}
 
-body{
- min-height:100vh;
- background:#020617;
- color:white;
- overflow-x:hidden;
- padding-bottom:130px;
-}
+.container,.topbar{width:92%;max-width:580px;margin:auto}
+.topbar{padding:18px 0;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{width:142px;height:auto;display:block;filter:drop-shadow(0 0 18px rgba(56,189,248,.5))}
+.brand-mini{display:flex;flex-direction:column;gap:4px}
+.brand-mini strong{font-size:11px;letter-spacing:3px;font-weight:950;color:white}
+.brand-mini span{font-size:9px;letter-spacing:2px;font-weight:950;color:#38bdf8}
+.user-badge{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);color:#020617;display:flex;align-items:center;justify-content:center;font-weight:950;box-shadow:0 0 30px rgba(56,189,248,.5)}
 
-.bg{
- position:fixed;
- inset:0;
- z-index:-5;
- background:
- radial-gradient(circle at 18% 8%,rgba(56,189,248,.28),transparent 30%),
- radial-gradient(circle at 82% 12%,rgba(37,99,235,.24),transparent 30%),
- radial-gradient(circle at 50% 100%,rgba(34,197,94,.12),transparent 35%),
- #020617;
-}
+.glass{background:linear-gradient(180deg,rgba(15,23,42,.88),rgba(2,6,23,.86));border:1px solid rgba(148,163,184,.16);box-shadow:0 24px 80px rgba(0,0,0,.45);backdrop-filter:blur(18px)}
+.hero{padding:24px;border-radius:36px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-1px;background:linear-gradient(135deg,rgba(56,189,248,.16),transparent,rgba(34,197,94,.1));pointer-events:none}
+.hero-content{position:relative;z-index:2}
+.eyebrow{color:#7dd3fc;letter-spacing:7px;font-size:12px;font-weight:950}
+.hero h1{margin-top:18px;font-size:42px;line-height:1.07}
+.hero p{margin-top:15px;color:#94a3b8;font-size:15px;line-height:1.75}
+.status{margin-top:18px;display:inline-flex;align-items:center;gap:8px;padding:11px 17px;border-radius:999px;background:rgba(34,197,94,.12);color:#4ade80;font-weight:950}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 18px #4ade80}
 
-.grid-bg{
- position:fixed;
- inset:0;
- z-index:-4;
- background-image:
- linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
- linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
- background-size:42px 42px;
- animation:gridMove 18s linear infinite;
-}
+.earth-zone{width:100%;height:300px;margin:4px auto 20px;position:relative;display:flex;align-items:center;justify-content:center}
+#earthCanvas{width:280px;height:280px;display:block;filter:drop-shadow(0 0 35px rgba(56,189,248,.8))}
+.earth-ring{position:absolute;width:260px;height:260px;border-radius:50%;border:1px solid rgba(56,189,248,.25);animation:spin 18s linear infinite}
+.earth-ring.r2{width:310px;height:190px;transform:rotateX(65deg);border-color:rgba(99,102,241,.22);animation-duration:24s}
+.earth-ring.r3{width:230px;height:230px;border-color:rgba(34,197,94,.18);animation-duration:30s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.engine-tag{position:absolute;padding:9px 11px;border-radius:14px;background:rgba(2,6,23,.75);border:1px solid rgba(56,189,248,.18);box-shadow:0 0 24px rgba(56,189,248,.12)}
+.engine-tag small{display:block;color:#94a3b8;font-size:9px;font-weight:900}
+.engine-tag strong{display:block;font-size:11px;margin-top:3px}
+.tag-crt{top:24px;left:20px}.tag-ai{top:42px;right:8px}.tag-memory{right:14px;bottom:70px}.tag-truth{left:20px;bottom:62px}
 
-@keyframes gridMove{
- from{background-position:0 0}
- to{background-position:0 420px}
-}
+.cortex-status{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.status-chip{padding:12px;border-radius:18px;background:rgba(15,23,42,.78);border:1px solid rgba(148,163,184,.12)}
+.status-chip small{color:#94a3b8;display:block;font-size:11px;font-weight:850}
+.status-chip strong{display:block;margin-top:7px;font-size:13px}
 
-.data-pulse{
- position:fixed;
- inset:0;
- z-index:-3;
- background:
- linear-gradient(120deg,transparent,rgba(56,189,248,.05),transparent),
- linear-gradient(240deg,transparent,rgba(34,197,94,.04),transparent);
- animation:pulseMove 10s ease-in-out infinite alternate;
-}
-
-@keyframes pulseMove{
- from{opacity:.35;transform:scale(1)}
- to{opacity:.8;transform:scale(1.08)}
-}
-
-.container{
- width:92%;
- max-width:580px;
- margin:auto;
-}
-
-.topbar{
- width:92%;
- max-width:580px;
- margin:auto;
- padding:22px 0;
- display:flex;
- align-items:center;
- justify-content:space-between;
-}
-
-.brand h2{
- font-size:34px;
- letter-spacing:10px;
- font-weight:950;
-}
-
-.brand span{
- color:#38bdf8;
- letter-spacing:5px;
- font-weight:950;
- font-size:14px;
-}
-
-.user-badge{
- width:54px;
- height:54px;
- border-radius:50%;
- background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
- color:#020617;
- display:flex;
- align-items:center;
- justify-content:center;
- font-weight:950;
- box-shadow:0 0 30px rgba(56,189,248,.5);
-}
-
-.glass{
- background:linear-gradient(180deg,rgba(15,23,42,.88),rgba(2,6,23,.86));
- border:1px solid rgba(148,163,184,.16);
- box-shadow:0 24px 80px rgba(0,0,0,.45);
- backdrop-filter:blur(18px);
-}
-
-.hero{
- padding:26px;
- border-radius:36px;
- position:relative;
- overflow:hidden;
-}
-
-.hero::before{
- content:"";
- position:absolute;
- inset:-1px;
- background:linear-gradient(135deg,rgba(56,189,248,.18),transparent,rgba(34,197,94,.12));
- pointer-events:none;
-}
-
-.hero-content{
- position:relative;
- z-index:2;
-}
-
-.eyebrow{
- color:#7dd3fc;
- letter-spacing:8px;
- font-size:13px;
- font-weight:950;
-}
-
-.hero h1{
- margin-top:18px;
- font-size:46px;
- line-height:1.05;
-}
-
-.hero p{
- margin-top:16px;
- color:#94a3b8;
- font-size:15px;
- line-height:1.75;
-}
-
-.status{
- margin-top:18px;
- display:inline-flex;
- align-items:center;
- gap:8px;
- padding:11px 17px;
- border-radius:999px;
- background:rgba(34,197,94,.12);
- color:#4ade80;
- font-weight:950;
-}
-
-.status-dot{
- width:8px;
- height:8px;
- border-radius:50%;
- background:#4ade80;
- box-shadow:0 0 18px #4ade80;
-}
-
-.earth-wrap{
- width:280px;
- height:280px;
- margin:6px auto 22px;
- position:relative;
- display:flex;
- align-items:center;
- justify-content:center;
-}
-
-.earth-orbit{
- position:absolute;
- inset:0;
- border-radius:50%;
- border:1px solid rgba(56,189,248,.20);
- animation:spin 18s linear infinite;
-}
-
-.earth-orbit:nth-child(2){
- inset:24px;
- animation-duration:24s;
- border-color:rgba(34,197,94,.16);
-}
-
-.earth-orbit:nth-child(3){
- inset:48px;
- animation-duration:30s;
- border-color:rgba(99,102,241,.18);
-}
-
-@keyframes spin{
- to{transform:rotate(360deg)}
-}
-
-.cortex-earth{
- width:170px;
- height:170px;
- border-radius:50%;
- position:relative;
- overflow:hidden;
- background:
- radial-gradient(circle at 35% 25%,#e0f7ff 0%,#38bdf8 18%,#2563eb 38%,#020617 72%);
- box-shadow:
- 0 0 50px rgba(56,189,248,.85),
- inset -28px -18px 50px rgba(2,6,23,.85),
- inset 18px 8px 30px rgba(255,255,255,.18);
- animation:earthFloat 4s ease-in-out infinite alternate;
-}
-
-@keyframes earthFloat{
- from{transform:translateY(0) scale(1)}
- to{transform:translateY(-8px) scale(1.03)}
-}
-
-.cortex-earth::before{
- content:"";
- position:absolute;
- inset:-30%;
- background:
- linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent),
- repeating-linear-gradient(90deg,rgba(255,255,255,.16) 0 1px,transparent 1px 18px),
- repeating-linear-gradient(0deg,rgba(255,255,255,.10) 0 1px,transparent 1px 20px);
- animation:earthScan 7s linear infinite;
-}
-
-@keyframes earthScan{
- from{transform:translateX(-30%) rotate(0deg)}
- to{transform:translateX(30%) rotate(360deg)}
-}
-
-.node{
- position:absolute;
- width:10px;
- height:10px;
- border-radius:50%;
- background:#4ade80;
- box-shadow:0 0 20px #4ade80;
-}
-
-.node.n1{top:58px;left:74px}
-.node.n2{top:120px;right:62px;background:#38bdf8;box-shadow:0 0 20px #38bdf8}
-.node.n3{bottom:66px;left:92px;background:#f59e0b;box-shadow:0 0 20px #f59e0b}
-
-.cortex-status{
- margin-top:18px;
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-.status-chip{
- padding:12px;
- border-radius:18px;
- background:rgba(15,23,42,.78);
- border:1px solid rgba(148,163,184,.12);
-}
-
-.status-chip small{
- color:#94a3b8;
- display:block;
- font-size:11px;
- font-weight:850;
-}
-
-.status-chip strong{
- display:block;
- margin-top:7px;
- font-size:13px;
-}
-
-.green{color:#4ade80}
-.blue{color:#38bdf8}
-.orange{color:#f59e0b}
-.red{color:#ef4444}
-.purple{color:#a78bfa}
-
-.stats{
- margin-top:18px;
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:14px;
-}
-
-.card{
- padding:20px;
- border-radius:28px;
-}
-
-.card:hover,.action-card:hover{
- transform:translateY(-2px);
- border-color:rgba(56,189,248,.35);
-}
-
-.label{
- color:#94a3b8;
- font-size:13px;
- font-weight:850;
-}
-
-.value{
- margin-top:12px;
- font-size:30px;
- font-weight:950;
- word-break:break-word;
-}
-
-.sub{
- margin-top:9px;
- color:#94a3b8;
- font-size:13px;
- line-height:1.5;
-}
-
-.section{
- margin-top:18px;
- padding:22px;
- border-radius:32px;
-}
-
-.section-title{
- color:#38bdf8;
- font-size:13px;
- letter-spacing:6px;
- font-weight:950;
- margin-bottom:18px;
-}
-
-.row{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:12px;
- padding:15px 0;
- border-bottom:1px solid rgba(148,163,184,.1);
-}
-
+.green{color:#4ade80}.blue{color:#38bdf8}.orange{color:#f59e0b}.red{color:#ef4444}.purple{color:#a78bfa}
+.stats{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{padding:20px;border-radius:28px}
+.card:hover,.action-card:hover{transform:translateY(-2px);border-color:rgba(56,189,248,.35)}
+.label{color:#94a3b8;font-size:13px;font-weight:850}
+.value{margin-top:12px;font-size:29px;font-weight:950;word-break:break-word}
+.sub{margin-top:9px;color:#94a3b8;font-size:13px;line-height:1.5}
+.section{margin-top:18px;padding:22px;border-radius:32px}
+.section-title{color:#38bdf8;font-size:13px;letter-spacing:6px;font-weight:950;margin-bottom:18px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid rgba(148,163,184,.1);cursor:pointer}
 .row:last-child{border-bottom:none}
-
-.row-left strong,.row-right strong{
- display:block;
-}
-
-.row-left small,.row-right small{
- color:#94a3b8;
-}
-
+.row-left strong,.row-right strong{display:block}
+.row-left small,.row-right small{color:#94a3b8}
 .row-right{text-align:right}
-
-.meter{
- margin-top:12px;
- height:10px;
- border-radius:999px;
- background:#020617;
- overflow:hidden;
- border:1px solid rgba(148,163,184,.14);
-}
-
-.fill{
- height:100%;
- border-radius:999px;
- background:linear-gradient(90deg,#38bdf8,#4ade80);
-}
-
+.meter{margin-top:12px;height:10px;border-radius:999px;background:#020617;overflow:hidden;border:1px solid rgba(148,163,184,.14)}
+.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#38bdf8,#4ade80)}
+.news-card{margin-bottom:14px;border-radius:24px;overflow:hidden;background:#0f172a;border:1px solid rgba(148,163,184,.12)}
+.news-card img{width:100%;height:150px;object-fit:cover;display:block}
+.news-body{padding:15px}.news-body strong{display:block;line-height:1.5}.news-body small{display:block;margin-top:8px;color:#94a3b8}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.action-card{padding:18px;border-radius:26px;background:rgba(15,23,42,.82);border:1px solid rgba(148,163,184,.14);cursor:pointer;transition:.25s ease}
+.action-card svg{width:30px;height:30px;stroke:#38bdf8;fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.action-card strong{display:block;margin-top:12px}.action-card small{display:block;margin-top:7px;color:#94a3b8}
 @media(max-width:430px){
- .hero h1{font-size:40px}
- .brand h2{font-size:30px}
- .earth-wrap{width:250px;height:250px}
- .cortex-earth{width:155px;height:155px}
+ .brand-logo{width:132px}
+ .hero h1{font-size:39px}
+ .earth-zone{height:270px}
+ #earthCanvas{width:250px;height:250px}
+ .earth-ring{width:230px;height:230px}
+ .engine-tag{display:none}
 }
 </style>
 </head>
@@ -393,8 +91,11 @@ body{
 
 <header class="topbar">
  <div class="brand">
-  <h2>ZELLA</h2>
-  <span>OS V2</span>
+  <img src="zella-logo.jpg" alt="Zella Official Logo" class="brand-logo">
+  <div class="brand-mini">
+   <strong>CORTEX</strong>
+   <span>OS V2</span>
+  </div>
  </div>
  <div class="user-badge" id="userBadge">Z</div>
 </header>
@@ -403,27 +104,21 @@ body{
 
 <section class="hero glass">
  <div class="hero-content">
+  <div class="earth-zone">
+   <div class="earth-ring"></div>
+   <div class="earth-ring r2"></div>
+   <div class="earth-ring r3"></div>
+   <canvas id="earthCanvas" width="560" height="560"></canvas>
 
-  <div class="earth-wrap">
-   <div class="earth-orbit"></div>
-   <div class="earth-orbit"></div>
-   <div class="earth-orbit"></div>
-
-   <div class="cortex-earth">
-    <div class="node n1"></div>
-    <div class="node n2"></div>
-    <div class="node n3"></div>
-   </div>
+   <div class="engine-tag tag-crt"><small>CRT ENGINE</small><strong class="blue">READY</strong></div>
+   <div class="engine-tag tag-ai"><small>AI COUNCIL</small><strong class="purple">ACTIVE</strong></div>
+   <div class="engine-tag tag-memory"><small>MEMORY</small><strong class="green">ACTIVE</strong></div>
+   <div class="engine-tag tag-truth"><small>TRUTH ENGINE</small><strong class="orange">VERIFYING</strong></div>
   </div>
 
   <div class="eyebrow">ZELLA CORTEX OS V17</div>
-
   <h1 id="greetingTitle">Good Day,<br>Trader.</h1>
-
-  <p>
-   Your AI trading command center for live market intelligence,
-   Cortex verdicts, CRT setups, Alpha opportunities, portfolio signals and Zella Memory.
-  </p>
+  <p>Your AI trading command center for live market intelligence, Cortex verdicts, CRT setups, Alpha opportunities, portfolio signals and Zella Memory.</p>
 
   <div class="status" id="cloudStatus">
    <span class="status-dot"></span>
@@ -431,721 +126,284 @@ body{
   </div>
 
   <div class="cortex-status">
-   <div class="status-chip">
-    <small>AI COUNCIL</small>
-    <strong class="green" id="councilStatus">READY</strong>
-   </div>
-   <div class="status-chip">
-    <small>CRT ENGINE</small>
-    <strong class="blue" id="crtStatus">SYNCING</strong>
-   </div>
-   <div class="status-chip">
-    <small>TRUTH ENGINE</small>
-    <strong class="orange" id="truthStatus">VERIFYING</strong>
-   </div>
-   <div class="status-chip">
-    <small>MEMORY</small>
-    <strong class="green" id="memoryStatus">ACTIVE</strong>
-   </div>
+   <div class="status-chip"><small>AI COUNCIL</small><strong class="green" id="councilStatus">READY</strong></div>
+   <div class="status-chip"><small>CRT ENGINE</small><strong class="blue" id="crtStatus">SYNCING</strong></div>
+   <div class="status-chip"><small>TRUTH ENGINE</small><strong class="orange" id="truthStatus">VERIFYING</strong></div>
+   <div class="status-chip"><small>MEMORY</small><strong class="green" id="memoryStatus">ACTIVE</strong></div>
   </div>
-
  </div>
 </section>
+
 <div class="stats">
- <div class="card glass">
-  <div class="label">Portfolio Value</div>
-  <div class="value blue" id="portfolioValue">--</div>
-  <div class="sub" id="portfolioSub">Waiting for exchange sync</div>
- </div>
-
- <div class="card glass">
-  <div class="label">Membership</div>
-  <div class="value orange" id="membershipValue">--</div>
-  <div class="sub" id="membershipSub">Checking plan</div>
- </div>
-
- <div class="card glass">
-  <div class="label">Market Regime</div>
-  <div class="value green" id="marketBias">--</div>
-  <div class="sub">Cortex market state</div>
- </div>
-
- <div class="card glass">
-  <div class="label">Top Opportunity</div>
-  <div class="value blue" id="topSignal">--</div>
-  <div class="sub" id="topSignalSub">Live Alpha source</div>
- </div>
+ <div class="card glass"><div class="label">Portfolio Value</div><div class="value blue" id="portfolioValue">--</div><div class="sub" id="portfolioSub">Waiting for exchange sync</div></div>
+ <div class="card glass"><div class="label">Membership</div><div class="value orange" id="membershipValue">--</div><div class="sub" id="membershipSub">Checking plan</div></div>
+ <div class="card glass"><div class="label">Market Regime</div><div class="value green" id="marketBias">--</div><div class="sub">Cortex market state</div></div>
+ <div class="card glass"><div class="label">Top Opportunity</div><div class="value blue" id="topSignal">--</div><div class="sub" id="topSignalSub">Live Alpha source</div></div>
 </div>
 
 <section class="section glass">
  <div class="section-title">EXECUTIVE CORTEX VERDICT</div>
- <div id="topVerdict">
-  <p class="sub">Loading live Cortex verdict...</p>
- </div>
+ <div id="topVerdict"><p class="sub">Loading live Cortex verdict...</p></div>
 </section>
 
 <section class="section glass">
  <div class="section-title">ZELLA OS SYSTEM HEALTH</div>
- <div id="marketHealth">
-  <p class="sub">Checking Cortex system health...</p>
- </div>
+ <div id="marketHealth"><p class="sub">Checking Cortex system health...</p></div>
 </section>
-
 <section class="section glass">
  <div class="section-title">ALPHA OPPORTUNITY CENTER</div>
- <div id="opportunityList">
-  <p class="sub">Loading opportunity ranking...</p>
- </div>
+ <div id="opportunityList"><p class="sub">Loading opportunity ranking...</p></div>
 </section>
 
 <section class="section glass">
  <div class="section-title">CRT WATCHLIST</div>
- <div id="crtList">
-  <p class="sub">Preparing default CRT setup watchlist...</p>
- </div>
+ <div id="crtList"><p class="sub">Preparing default CRT setup watchlist...</p></div>
 </section>
 
 <section class="section glass">
  <div class="section-title">LIVE MARKET STATUS</div>
- <div id="marketList">
-  <p class="sub">Loading live market...</p>
- </div>
+ <div id="marketList"><p class="sub">Loading live market...</p></div>
 </section>
 
 <section class="section glass">
  <div class="section-title">CORTEX INTELLIGENCE FEED</div>
  <div id="intelligenceFeed">
   <div class="row">
-   <div class="row-left">
-    <strong>Initializing Cortex feed</strong>
-    <small>Waiting for live market events</small>
-   </div>
-   <div class="row-right">
-    <strong class="blue">LIVE</strong>
-    <small>Standby</small>
-   </div>
+   <div class="row-left"><strong>Initializing Cortex feed</strong><small>Waiting for live market events</small></div>
+   <div class="row-right"><strong class="blue">LIVE</strong><small>Standby</small></div>
   </div>
  </div>
 </section>
 
 <section class="section glass">
  <div class="section-title">NEWS INTELLIGENCE</div>
- <div id="newsList">
-  <p class="sub">Loading live news...</p>
- </div>
+ <div id="newsList"><p class="sub">Loading live news...</p></div>
 </section>
 
 <section class="section glass">
  <div class="section-title">QUICK ACTIONS</div>
-
  <div class="action-grid">
-  <div class="action-card" onclick="go('scanner.html')">
-   <svg viewBox="0 0 24 24">
-    <path d="M4 19V5"/>
-    <path d="M4 19H20"/>
-    <path d="M8 16L11 12L14 14L19 7"/>
-   </svg>
-   <strong>Scanner</strong>
-   <small>Find live Cortex opportunities.</small>
-  </div>
-
-  <div class="action-card" onclick="go('copilot.html')">
-   <svg viewBox="0 0 24 24">
-    <rect x="5" y="7" width="14" height="11" rx="4"/>
-    <path d="M9 11H9.01"/>
-    <path d="M15 11H15.01"/>
-    <path d="M12 3V7"/>
-   </svg>
-   <strong>Copilot</strong>
-   <small>Ask Zella with memory.</small>
-  </div>
-
-  <div class="action-card" onclick="go('market.html')">
-   <svg viewBox="0 0 24 24">
-    <path d="M4 18V6"/>
-    <path d="M8 18V10"/>
-    <path d="M12 18V4"/>
-    <path d="M16 18V8"/>
-    <path d="M20 18V12"/>
-   </svg>
-   <strong>Market</strong>
-   <small>Chart, CRT and AI Council.</small>
-  </div>
-
-  <div class="action-card" onclick="go('analytics.html')">
-   <svg viewBox="0 0 24 24">
-    <path d="M4 19V5"/>
-    <path d="M8 19V11"/>
-    <path d="M12 19V8"/>
-    <path d="M16 19V13"/>
-    <path d="M20 19V6"/>
-   </svg>
-   <strong>Analytics</strong>
-   <small>Deep Cortex breakdown.</small>
-  </div>
+  <div class="action-card" onclick="go('scanner.html')"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/></svg><strong>Scanner</strong><small>Find live Cortex opportunities.</small></div>
+  <div class="action-card" onclick="go('copilot.html')"><svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/><path d="M12 3V7"/></svg><strong>Copilot</strong><small>Ask Zella with memory.</small></div>
+  <div class="action-card" onclick="go('market.html')"><svg viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M8 18V10"/><path d="M12 18V4"/><path d="M16 18V8"/><path d="M20 18V12"/></svg><strong>Market</strong><small>Chart, CRT and AI Council.</small></div>
+  <div class="action-card" onclick="go('analytics.html')"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M8 19V11"/><path d="M12 19V8"/><path d="M16 19V13"/><path d="M20 19V6"/></svg><strong>Analytics</strong><small>Deep Cortex breakdown.</small></div>
  </div>
 </section>
-
 </main>
 
 <nav class="bottom-dock">
- <div class="dock-item active" onclick="go('dashboard.html')">
-  <svg viewBox="0 0 24 24">
-   <path d="M3 11L12 4L21 11"/>
-   <path d="M5 10V21H19V10"/>
-   <path d="M9 21V14H15V21"/>
-  </svg>
- </div>
-
- <div class="dock-item" onclick="go('scanner.html')">
-  <svg viewBox="0 0 24 24">
-   <path d="M4 19V5"/>
-   <path d="M4 19H20"/>
-   <path d="M8 16L11 12L14 14L19 7"/>
-   <circle cx="19" cy="7" r="2"/>
-  </svg>
- </div>
-
- <div class="ai-dock" onclick="go('copilot.html')">
-  <svg viewBox="0 0 24 24">
-   <rect x="5" y="7" width="14" height="11" rx="4"/>
-   <path d="M9 11H9.01"/>
-   <path d="M15 11H15.01"/>
-   <path d="M12 3V7"/>
-   <path d="M8 18L6 21"/>
-   <path d="M16 18L18 21"/>
-  </svg>
- </div>
-
- <div class="dock-item" onclick="go('market.html')">
-  <svg viewBox="0 0 24 24">
-   <path d="M4 18V6"/>
-   <path d="M8 18V10"/>
-   <path d="M12 18V4"/>
-   <path d="M16 18V8"/>
-   <path d="M20 18V12"/>
-  </svg>
- </div>
-
- <div class="dock-item" onclick="go('more.html')">
-  <svg viewBox="0 0 24 24">
-   <circle cx="5" cy="12" r="1.6"/>
-   <circle cx="12" cy="12" r="1.6"/>
-   <circle cx="19" cy="12" r="1.6"/>
-  </svg>
- </div>
+ <div class="dock-item active" onclick="go('dashboard.html')"><svg viewBox="0 0 24 24"><path d="M3 11L12 4L21 11"/><path d="M5 10V21H19V10"/><path d="M9 21V14H15V21"/></svg></div>
+ <div class="dock-item" onclick="go('scanner.html')"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/><circle cx="19" cy="7" r="2"/></svg></div>
+ <div class="ai-dock" onclick="go('copilot.html')"><svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/><path d="M12 3V7"/><path d="M8 18L6 21"/><path d="M16 18L18 21"/></svg></div>
+ <div class="dock-item" onclick="go('market.html')"><svg viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M8 18V10"/><path d="M12 18V4"/><path d="M16 18V8"/><path d="M20 18V12"/></svg></div>
+ <div class="dock-item" onclick="go('more.html')"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></div>
 </nav>
 
-<style>
-.news-card{
- margin-bottom:14px;
- border-radius:24px;
- overflow:hidden;
- background:#0f172a;
- border:1px solid rgba(148,163,184,.12);
-}
-
-.news-card img{
- width:100%;
- height:150px;
- object-fit:cover;
- display:block;
-}
-
-.news-body{padding:15px}
-.news-body strong{display:block;line-height:1.5}
-.news-body small{display:block;margin-top:8px;color:#94a3b8}
-
-.action-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:14px;
-}
-
-.action-card{
- padding:18px;
- border-radius:26px;
- background:rgba(15,23,42,.82);
- border:1px solid rgba(148,163,184,.14);
- cursor:pointer;
- transition:.25s ease;
-}
-
-.action-card svg{
- width:30px;
- height:30px;
- stroke:#38bdf8;
- fill:none;
- stroke-width:2.3;
- stroke-linecap:round;
- stroke-linejoin:round;
-}
-
-.action-card strong{
- display:block;
- margin-top:12px;
-}
-
-.action-card small{
- display:block;
- margin-top:7px;
- color:#94a3b8;
-}
-</style>
 <script>
-const API_URL = "https://zella-backend.onrender.com";
+const API_URL="https://zella-backend.onrender.com";
+function go(page){window.location.href=page}
+function escapeHTML(text){return String(text||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")}
+function formatMoney(value){const n=Number(value);if(value===null||value===undefined||value===""||!Number.isFinite(n))return"--";if(n>=1000)return"$"+n.toLocaleString(undefined,{maximumFractionDigits:2});if(n>=1)return"$"+n.toFixed(4);return"$"+n.toFixed(8)}
+function getSavedUserName(){try{const u=JSON.parse(localStorage.getItem("zellaUser")||"{}");if(u.displayName)return u.displayName.split(" ")[0];if(u.email)return u.email.split("@")[0];return localStorage.getItem("zellaUserName")||"Trader"}catch(e){return"Trader"}}
+function setGreeting(){const h=new Date().getHours();let g="Good Day";if(h<12)g="Good Morning";else if(h<17)g="Good Afternoon";else g="Good Evening";const n=getSavedUserName();document.getElementById("greetingTitle").innerHTML=g+",<br>"+escapeHTML(n)+".";document.getElementById("userBadge").textContent=n.slice(0,1).toUpperCase()}
+function colorAction(action){const t=String(action||"").toUpperCase();if(t.includes("BUY"))return"green";if(t.includes("SELL"))return"red";if(t.includes("HOLD")||t.includes("NO TRADE"))return"orange";return"blue"}
+async function fetchJSON(url){const r=await fetch(url);return await r.json()}
 
-function go(page){
- window.location.href = page;
-}
+function drawRealEarth(){
+ const canvas=document.getElementById("earthCanvas");
+ if(!canvas)return;
+ const ctx=canvas.getContext("2d");
+ const w=canvas.width,h=canvas.height,cx=w/2,cy=h/2,r=190;
+ let rot=0;
 
-function escapeHTML(text){
- return String(text || "")
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;");
-}
+ const stars=[];
+ for(let i=0;i<70;i++)stars.push({x:Math.random()*w,y:Math.random()*h,a:Math.random(),s:Math.random()*1.6+.4});
 
-function formatMoney(value){
- const number = Number(value);
- if(value === null || value === undefined || value === "" || !Number.isFinite(number)) return "--";
- if(number >= 1000) return "$" + number.toLocaleString(undefined,{maximumFractionDigits:2});
- if(number >= 1) return "$" + number.toFixed(4);
- return "$" + number.toFixed(8);
-}
-
-function getSavedUserName(){
- try{
-  const user = JSON.parse(localStorage.getItem("zellaUser") || "{}");
-
-  if(user.displayName){
-   return user.displayName.split(" ")[0];
-  }
-
-  if(user.email){
-   return user.email.split("@")[0];
-  }
-
-  return localStorage.getItem("zellaUserName") || "Trader";
- }catch(error){
-  return "Trader";
+ function project(lat,lon){
+  const phi=lat*Math.PI/180,theta=(lon+rot)*Math.PI/180;
+  const x=r*Math.cos(phi)*Math.sin(theta);
+  const y=-r*Math.sin(phi);
+  const z=r*Math.cos(phi)*Math.cos(theta);
+  const visible=z>0;
+  return {x:cx+x,y:cy+y,z,visible};
  }
-}
 
-function setGreeting(){
- const hour = new Date().getHours();
- let greeting = "Good Day";
+ const continents=[
+  [[50,-130],[60,-100],[48,-70],[30,-80],[18,-95],[25,-120]],
+  [[12,-82],[-8,-70],[-30,-62],[-52,-70],[-35,-45],[-5,-38]],
+  [[58,-10],[50,20],[35,35],[8,20],[0,5],[25,-15]],
+  [[34,-10],[20,20],[0,32],[-28,24],[-35,10],[-5,-5]],
+  [[55,35],[60,90],[45,125],[20,115],[8,78],[25,45]],
+  [[10,95],[-6,120],[-28,135],[-38,115],[-15,100]]
+ ];
 
- if(hour < 12) greeting = "Good Morning";
- else if(hour < 17) greeting = "Good Afternoon";
- else greeting = "Good Evening";
+ function drawContinent(poly){
+  ctx.beginPath();
+  let started=false;
+  poly.forEach(p=>{
+   const q=project(p[0],p[1]);
+   if(q.visible){
+    if(!started){ctx.moveTo(q.x,q.y);started=true}else ctx.lineTo(q.x,q.y);
+   }
+  });
+  if(started){
+   ctx.closePath();
+   ctx.fillStyle="rgba(34,197,94,.34)";
+   ctx.strokeStyle="rgba(125,211,252,.35)";
+   ctx.lineWidth=2;
+   ctx.fill();ctx.stroke();
+  }
+ }
 
- const name = getSavedUserName();
+ function draw(){
+  ctx.clearRect(0,0,w,h);
 
- document.getElementById("greetingTitle").innerHTML =
-  greeting + ",<br>" + escapeHTML(name) + ".";
+  stars.forEach(s=>{
+   ctx.globalAlpha=.25+s.a*.6;
+   ctx.fillStyle="#7dd3fc";
+   ctx.beginPath();ctx.arc(s.x,s.y,s.s,0,Math.PI*2);ctx.fill();
+  });
+  ctx.globalAlpha=1;
 
- document.getElementById("userBadge").textContent =
-  name.slice(0,1).toUpperCase();
-}
+  const glow=ctx.createRadialGradient(cx,cy,30,cx,cy,245);
+  glow.addColorStop(0,"rgba(56,189,248,.35)");
+  glow.addColorStop(.55,"rgba(37,99,235,.22)");
+  glow.addColorStop(1,"rgba(56,189,248,0)");
+  ctx.fillStyle=glow;ctx.beginPath();ctx.arc(cx,cy,245,0,Math.PI*2);ctx.fill();
 
-function colorAction(action){
- const text = String(action || "").toUpperCase();
- if(text.includes("BUY")) return "green";
- if(text.includes("SELL")) return "red";
- if(text.includes("NO TRADE")) return "orange";
- if(text.includes("HOLD")) return "orange";
- return "blue";
-}
+  ctx.save();
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
 
-async function fetchJSON(url){
- const response = await fetch(url);
- const data = await response.json();
- return data;
+  const ocean=ctx.createRadialGradient(cx-70,cy-90,10,cx,cy,r);
+  ocean.addColorStop(0,"#9eeaff");
+  ocean.addColorStop(.22,"#38bdf8");
+  ocean.addColorStop(.52,"#2563eb");
+  ocean.addColorStop(1,"#020617");
+  ctx.fillStyle=ocean;ctx.fillRect(cx-r,cy-r,r*2,r*2);
+
+  ctx.strokeStyle="rgba(255,255,255,.16)";
+  ctx.lineWidth=1;
+  for(let lat=-60;lat<=60;lat+=20){
+   ctx.beginPath();
+   for(let lon=-180;lon<=180;lon+=8){
+    const p=project(lat,lon);
+    if(p.visible){if(lon===-180)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)}
+   }
+   ctx.stroke();
+  }
+  for(let lon=-180;lon<=180;lon+=25){
+   ctx.beginPath();let first=true;
+   for(let lat=-80;lat<=80;lat+=4){
+    const p=project(lat,lon);
+    if(p.visible){if(first){ctx.moveTo(p.x,p.y);first=false}else ctx.lineTo(p.x,p.y)}
+   }
+   ctx.stroke();
+  }
+
+  continents.forEach(drawContinent);
+
+  const hotspots=[[40,-74],[51,0],[35,139],[1,103],[25,55],[-23,-46]];
+  hotspots.forEach((p,i)=>{
+   const q=project(p[0],p[1]);
+   if(q.visible){
+    ctx.fillStyle=i%2?"#38bdf8":"#4ade80";
+    ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=18;
+    ctx.beginPath();ctx.arc(q.x,q.y,5,0,Math.PI*2);ctx.fill();
+    ctx.shadowBlur=0;
+   }
+  });
+
+  ctx.restore();
+
+  ctx.strokeStyle="rgba(56,189,248,.9)";
+  ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
+
+  const shade=ctx.createRadialGradient(cx-70,cy-80,80,cx+80,cy+80,230);
+  shade.addColorStop(0,"rgba(255,255,255,.22)");
+  shade.addColorStop(.5,"rgba(255,255,255,0)");
+  shade.addColorStop(1,"rgba(0,0,0,.45)");
+  ctx.fillStyle=shade;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+
+  rot+=.25;
+  requestAnimationFrame(draw);
+ }
+ draw();
 }
 
 async function loadSystemStatus(){
  try{
-  let data;
-
-  try{
-   data = await fetchJSON(API_URL + "/api/system/status");
-  }catch(error){
-   data = await fetchJSON(API_URL + "/api/health");
-  }
-
-  if(!data.success){
-   throw new Error("System status unavailable");
-  }
-
-  document.getElementById("cloudStatus").innerHTML =
-   `<span class="status-dot"></span> Cortex • Online`;
-
-  const modules = data.modules || {};
-
-  document.getElementById("councilStatus").textContent =
-   modules.aiCouncil || modules.cortex?.aiCouncil || "READY";
-
-  document.getElementById("crtStatus").textContent =
-   modules.crtEngine || "READY";
-
-  document.getElementById("truthStatus").textContent =
-   modules.truthEngine || "VERIFYING";
-
-  document.getElementById("memoryStatus").textContent =
-   modules.memoryEngine || "ACTIVE";
-
-  document.getElementById("marketHealth").innerHTML = `
-   <div class="row">
-    <div class="row-left">
-     <strong>Cortex OS</strong>
-     <small>Universal market intelligence</small>
-    </div>
-    <div class="row-right">
-     <strong class="green">ONLINE</strong>
-     <small>Brain</small>
-    </div>
-   </div>
-
-   <div class="row">
-    <div class="row-left">
-     <strong>AI Council</strong>
-     <small>Specialist market voting</small>
-    </div>
-    <div class="row-right">
-     <strong class="green">${escapeHTML(modules.aiCouncil || "READY")}</strong>
-     <small>Reasoning</small>
-    </div>
-   </div>
-
-   <div class="row">
-    <div class="row-left">
-     <strong>CRT Engine</strong>
-     <small>Candle Range Theory setups</small>
-    </div>
-    <div class="row-right">
-     <strong class="blue">${escapeHTML(modules.crtEngine || "READY")}</strong>
-     <small>Institutional</small>
-    </div>
-   </div>
-
-   <div class="row">
-    <div class="row-left">
-     <strong>Memory Engine</strong>
-     <small>Session intelligence</small>
-    </div>
-    <div class="row-right">
-     <strong class="green">${escapeHTML(modules.memoryEngine || "ACTIVE")}</strong>
-     <small>Context</small>
-    </div>
-   </div>
-  `;
- }catch(error){
-  document.getElementById("cloudStatus").innerHTML =
-   `<span class="status-dot"></span> Cortex • Unavailable`;
-
-  document.getElementById("marketHealth").innerHTML =
-   `<p class="sub red">${escapeHTML(error.message)}</p>`;
+  let data;try{data=await fetchJSON(API_URL+"/api/system/status")}catch(e){data=await fetchJSON(API_URL+"/api/health")}
+  if(!data.success)throw new Error("System status unavailable");
+  document.getElementById("cloudStatus").innerHTML=`<span class="status-dot"></span> Cortex • Online`;
+  const m=data.modules||{};
+  document.getElementById("councilStatus").textContent=m.aiCouncil||"READY";
+  document.getElementById("crtStatus").textContent=m.crtEngine||"READY";
+  document.getElementById("truthStatus").textContent=m.truthEngine||"VERIFYING";
+  document.getElementById("memoryStatus").textContent=m.memoryEngine||"ACTIVE";
+  document.getElementById("marketHealth").innerHTML=`
+   <div class="row"><div class="row-left"><strong>Cortex OS</strong><small>Universal market intelligence</small></div><div class="row-right"><strong class="green">ONLINE</strong><small>Brain</small></div></div>
+   <div class="row"><div class="row-left"><strong>AI Council</strong><small>Specialist market voting</small></div><div class="row-right"><strong class="green">${escapeHTML(m.aiCouncil||"READY")}</strong><small>Reasoning</small></div></div>
+   <div class="row"><div class="row-left"><strong>CRT Engine</strong><small>Candle Range Theory setups</small></div><div class="row-right"><strong class="blue">${escapeHTML(m.crtEngine||"READY")}</strong><small>Institutional</small></div></div>
+   <div class="row"><div class="row-left"><strong>Memory Engine</strong><small>Session intelligence</small></div><div class="row-right"><strong class="green">${escapeHTML(m.memoryEngine||"ACTIVE")}</strong><small>Context</small></div></div>`;
+ }catch(e){
+  document.getElementById("cloudStatus").innerHTML=`<span class="status-dot"></span> Cortex • Unavailable`;
+  document.getElementById("marketHealth").innerHTML=`<p class="sub red">${escapeHTML(e.message)}</p>`;
  }
 }
 
 function renderTopVerdict(top){
- const action = top.action || top.signal || top.finalSignal || "WATCH";
- const confidence = top.confidence || top.dominantTrendScore || 0;
- const score = top.opportunityScore || top.dominantTrendScore || confidence || 0;
- const symbol = top.symbol || "--";
-
- document.getElementById("marketBias").textContent =
-  String(action).includes("BUY") ? "Bullish" :
-  String(action).includes("SELL") ? "Bearish" :
-  "Neutral";
-
- document.getElementById("topSignal").textContent = symbol;
- document.getElementById("topSignalSub").textContent =
-  `${action} • ${confidence}%`;
-
- document.getElementById("topVerdict").innerHTML = `
-  <div class="row">
-   <div class="row-left">
-    <strong>${escapeHTML(symbol)} ${escapeHTML(action)}</strong>
-    <small>${escapeHTML(top.name || symbol)} • ${escapeHTML(top.regime || top.direction || "Market regime")}</small>
-   </div>
-   <div class="row-right">
-    <strong class="${colorAction(action)}">${confidence}%</strong>
-    <small>Confidence</small>
-   </div>
-  </div>
-
-  <div class="row">
-   <div class="row-left">
-    <strong>Opportunity Score</strong>
-    <small>Cortex conviction</small>
-   </div>
-   <div class="row-right">
-    <strong class="blue">${score}</strong>
-    <small>${escapeHTML(top.risk || "Risk managed")}</small>
-   </div>
-  </div>
-
-  <div class="meter">
-   <div class="fill" style="width:${Math.max(0,Math.min(100,Number(score || 0)))}%"></div>
-  </div>
-
-  <p class="sub">${escapeHTML(top.trendInsight || "Cortex is evaluating market evidence across live sources.")}</p>
- `;
+ const action=top.action||top.signal||top.finalSignal||"WATCH", confidence=top.confidence||top.dominantTrendScore||0, score=top.opportunityScore||top.dominantTrendScore||confidence||0, symbol=top.symbol||"--";
+ document.getElementById("marketBias").textContent=String(action).includes("BUY")?"Bullish":String(action).includes("SELL")?"Bearish":"Neutral";
+ document.getElementById("topSignal").textContent=symbol;
+ document.getElementById("topSignalSub").textContent=`${action} • ${confidence}%`;
+ document.getElementById("topVerdict").innerHTML=`
+ <div class="row"><div class="row-left"><strong>${escapeHTML(symbol)} ${escapeHTML(action)}</strong><small>${escapeHTML(top.name||symbol)} • ${escapeHTML(top.regime||top.direction||"Market regime")}</small></div><div class="row-right"><strong class="${colorAction(action)}">${confidence}%</strong><small>Confidence</small></div></div>
+ <div class="row"><div class="row-left"><strong>Opportunity Score</strong><small>Cortex conviction</small></div><div class="row-right"><strong class="blue">${score}</strong><small>${escapeHTML(top.risk||"Risk managed")}</small></div></div>
+ <div class="meter"><div class="fill" style="width:${Math.max(0,Math.min(100,Number(score||0)))}%"></div></div>
+ <p class="sub">${escapeHTML(top.trendInsight||"Cortex is evaluating market evidence across live sources.")}</p>`;
 }
 
 async function loadOpportunities(){
  try{
-  let data;
-
-  try{
-   data = await fetchJSON(API_URL + "/api/scanner/opportunities?timeframe=1h");
-  }catch(error){
-   data = await fetchJSON(API_URL + "/api/alpha-engine-v3?profile=swing&direction=both");
-  }
-
-  const items =
-   data.opportunities ||
-   data.topOpportunities ||
-   data.assets ||
-   [];
-
-  if(!data.success || !Array.isArray(items)){
-   throw new Error(data.message || "Opportunities unavailable");
-  }
-
-  const opportunities = items
-   .filter(item => item.action !== "UNAVAILABLE")
-   .sort((a,b)=>
-    Number(b.opportunityScore || b.dominantTrendScore || b.confidence || 0) -
-    Number(a.opportunityScore || a.dominantTrendScore || a.confidence || 0)
-   );
-
-  if(!opportunities.length){
-   document.getElementById("topVerdict").innerHTML =
-    `<p class="sub orange">No high-quality opportunities right now.</p>`;
-
-   document.getElementById("opportunityList").innerHTML =
-    `<p class="sub">Waiting for clearer market structure.</p>`;
-
-   return;
-  }
-
-  renderTopVerdict(opportunities[0]);
-
-  document.getElementById("opportunityList").innerHTML =
-   opportunities.slice(0,5).map((item,index)=>{
-    const action = item.action || item.signal || item.finalSignal || "WATCH";
-    const score = item.opportunityScore || item.dominantTrendScore || item.confidence || 0;
-
-    return `
-     <div class="row" onclick="openMarketAsset('${escapeHTML(item.symbol)}')">
-      <div class="row-left">
-       <strong>#${index + 1} ${escapeHTML(item.symbol)} • ${escapeHTML(action)}</strong>
-       <small>${escapeHTML(item.regime || item.direction || "Cortex ranking")} • ${escapeHTML(item.risk || "Risk managed")}</small>
-      </div>
-      <div class="row-right">
-       <strong class="${colorAction(action)}">${item.confidence || score}%</strong>
-       <small>Score ${score}</small>
-      </div>
-     </div>
-    `;
-   }).join("");
-
-  buildIntelligenceFeed(opportunities);
- }catch(error){
-  document.getElementById("topVerdict").innerHTML =
-   `<p class="sub red">${escapeHTML(error.message)}</p>`;
-
-  document.getElementById("opportunityList").innerHTML =
-   `<p class="sub red">${escapeHTML(error.message)}</p>`;
- }
+  let data;try{data=await fetchJSON(API_URL+"/api/scanner/opportunities?timeframe=1h")}catch(e){data=await fetchJSON(API_URL+"/api/alpha-engine-v3?profile=swing&direction=both")}
+  const items=data.opportunities||data.topOpportunities||data.assets||[];
+  if(!data.success||!Array.isArray(items))throw new Error(data.message||"Opportunities unavailable");
+  const opp=items.filter(i=>i.action!=="UNAVAILABLE").sort((a,b)=>Number(b.opportunityScore||b.dominantTrendScore||b.confidence||0)-Number(a.opportunityScore||a.dominantTrendScore||a.confidence||0));
+  if(!opp.length){document.getElementById("topVerdict").innerHTML=`<p class="sub orange">No high-quality opportunities right now.</p>`;document.getElementById("opportunityList").innerHTML=`<p class="sub">Waiting for clearer market structure.</p>`;return}
+  renderTopVerdict(opp[0]);
+  document.getElementById("opportunityList").innerHTML=opp.slice(0,5).map((item,index)=>{const action=item.action||item.signal||item.finalSignal||"WATCH";const score=item.opportunityScore||item.dominantTrendScore||item.confidence||0;return `<div class="row" onclick="openMarketAsset('${escapeHTML(item.symbol)}')"><div class="row-left"><strong>#${index+1} ${escapeHTML(item.symbol)} • ${escapeHTML(action)}</strong><small>${escapeHTML(item.regime||item.direction||"Cortex ranking")} • ${escapeHTML(item.risk||"Risk managed")}</small></div><div class="row-right"><strong class="${colorAction(action)}">${item.confidence||score}%</strong><small>Score ${score}</small></div></div>`}).join("");
+  buildIntelligenceFeed(opp);
+ }catch(e){document.getElementById("topVerdict").innerHTML=`<p class="sub red">${escapeHTML(e.message)}</p>`;document.getElementById("opportunityList").innerHTML=`<p class="sub red">${escapeHTML(e.message)}</p>`}
 }
 
 function buildIntelligenceFeed(items){
- const top = items[0] || {};
- const second = items[1] || {};
- const third = items[2] || {};
-
- document.getElementById("intelligenceFeed").innerHTML = `
-  <div class="row">
-   <div class="row-left">
-    <strong>Alpha Engine ranked ${escapeHTML(top.symbol || "market")} highest</strong>
-    <small>${escapeHTML(top.trendInsight || "Opportunity scan updated")}</small>
-   </div>
-   <div class="row-right">
-    <strong class="green">LIVE</strong>
-    <small>Alpha</small>
-   </div>
-  </div>
-
-  <div class="row">
-   <div class="row-left">
-    <strong>CRT Engine watching default assets</strong>
-    <small>BTC, ETH, SOL, BNB and XRP setup layer</small>
-   </div>
-   <div class="row-right">
-    <strong class="blue">READY</strong>
-    <small>CRT</small>
-   </div>
-  </div>
-
-  <div class="row">
-   <div class="row-left">
-    <strong>AI Council monitoring ${escapeHTML(second.symbol || "market")}</strong>
-    <small>Secondary opportunity under review</small>
-   </div>
-   <div class="row-right">
-    <strong class="orange">VERIFY</strong>
-    <small>Council</small>
-   </div>
-  </div>
-
-  <div class="row">
-   <div class="row-left">
-    <strong>Truth Engine checking ${escapeHTML(third.symbol || "risk")}</strong>
-    <small>Opposing evidence filter active</small>
-   </div>
-   <div class="row-right">
-    <strong class="purple">ACTIVE</strong>
-    <small>Truth</small>
-   </div>
-  </div>
- `;
+ const a=items[0]||{},b=items[1]||{},c=items[2]||{};
+ document.getElementById("intelligenceFeed").innerHTML=`
+ <div class="row"><div class="row-left"><strong>Alpha Engine ranked ${escapeHTML(a.symbol||"market")} highest</strong><small>${escapeHTML(a.trendInsight||"Opportunity scan updated")}</small></div><div class="row-right"><strong class="green">LIVE</strong><small>Alpha</small></div></div>
+ <div class="row"><div class="row-left"><strong>CRT Engine watching default assets</strong><small>BTC, ETH, SOL, BNB and XRP setup layer</small></div><div class="row-right"><strong class="blue">READY</strong><small>CRT</small></div></div>
+ <div class="row"><div class="row-left"><strong>AI Council monitoring ${escapeHTML(b.symbol||"market")}</strong><small>Secondary opportunity under review</small></div><div class="row-right"><strong class="orange">VERIFY</strong><small>Council</small></div></div>
+ <div class="row"><div class="row-left"><strong>Truth Engine checking ${escapeHTML(c.symbol||"risk")}</strong><small>Opposing evidence filter active</small></div><div class="row-right"><strong class="purple">ACTIVE</strong><small>Truth</small></div></div>`;
 }
 
-function openMarketAsset(symbol){
- localStorage.setItem("zellaSelectedSymbol",symbol);
- window.location.href = `market.html?symbol=${encodeURIComponent(symbol)}&timeframe=1h`;
-}
+function openMarketAsset(symbol){localStorage.setItem("zellaSelectedSymbol",symbol);window.location.href=`market.html?symbol=${encodeURIComponent(symbol)}&timeframe=1h`}
+function buildCRTWatchlist(){const assets=["BTC","ETH","SOL","BNB","XRP"],states=["Forming","Ready","Watching","Confirming","Waiting"],scores=[86,78,74,69,63],directions=["BUY Setup","SELL Setup","BUY Setup","No Trade","Watching"];document.getElementById("crtList").innerHTML=assets.map((s,i)=>`<div class="row" onclick="openMarketAsset('${s}')"><div class="row-left"><strong>${s} • ${directions[i]}</strong><small>CRT ${states[i]} • Tap for Market V17 setup</small></div><div class="row-right"><strong class="${scores[i]>=75?"green":"orange"}">${scores[i]}%</strong><small>CRT score</small></div></div>`).join("")}
 
-function buildCRTWatchlist(){
- const assets = ["BTC","ETH","SOL","BNB","XRP"];
+async function loadMarket(){try{const data=await fetchJSON(API_URL+"/api/market/live");if(!data.success||!Array.isArray(data.assets))throw new Error(data.message||"Market unavailable");document.getElementById("marketList").innerHTML=data.assets.slice(0,8).map(a=>{const ch=Number(a.change24h||0),cls=ch>=0?"green":"red",sign=ch>=0?"+":"";return `<div class="row" onclick="openMarketAsset('${escapeHTML(a.symbol)}')"><div class="row-left"><strong>${escapeHTML(a.name||a.symbol)}</strong><small>${escapeHTML(a.symbol)} • ${escapeHTML(a.source||"Universal")}</small></div><div class="row-right"><strong>${formatMoney(a.price)}</strong><small class="${cls}">${sign}${ch.toFixed(2)}%</small></div></div>`}).join("")}catch(e){document.getElementById("marketList").innerHTML=`<p class="sub red">${escapeHTML(e.message)}</p>`}}
 
- document.getElementById("crtList").innerHTML = assets.map((symbol,index)=>{
-  const states = ["Forming","Ready","Watching","Confirming","Waiting"];
-  const scores = [86,78,74,69,63];
-  const directions = ["BUY Setup","SELL Setup","BUY Setup","No Trade","Watching"];
+async function loadNews(){try{const data=await fetchJSON(API_URL+"/api/news/live");if(!data.success||!Array.isArray(data.articles))throw new Error(data.message||"News unavailable");const list=document.getElementById("newsList");list.innerHTML="";data.articles.slice(0,3).forEach(a=>{if(!a.image)return;list.innerHTML+=`<div class="news-card" onclick="window.open('${a.url}','_blank')"><img src="${a.image}" alt=""><div class="news-body"><strong>${escapeHTML(a.title)}</strong><small>${escapeHTML(a.source||"News")} • ${escapeHTML(a.publishedAt||"")}</small></div></div>`});if(!list.innerHTML.trim())list.innerHTML=`<p class="sub orange">No image-based news available right now.</p>`}catch(e){document.getElementById("newsList").innerHTML=`<p class="sub red">${escapeHTML(e.message)}</p>`}}
 
-  return `
-   <div class="row" onclick="openMarketAsset('${symbol}')">
-    <div class="row-left">
-     <strong>${symbol} • ${directions[index]}</strong>
-     <small>CRT ${states[index]} • Tap for Market V17 setup</small>
-    </div>
-    <div class="row-right">
-     <strong class="${scores[index] >= 75 ? "green" : "orange"}">${scores[index]}%</strong>
-     <small>CRT score</small>
-    </div>
-   </div>
-  `;
- }).join("");
-}
-
-async function loadMarket(){
- try{
-  const data = await fetchJSON(API_URL + "/api/market/live");
-
-  if(!data.success || !Array.isArray(data.assets)){
-   throw new Error(data.message || "Market unavailable");
-  }
-
-  document.getElementById("marketList").innerHTML =
-   data.assets.slice(0,8).map(asset=>{
-    const change = Number(asset.change24h || 0);
-    const cls = change >= 0 ? "green" : "red";
-    const sign = change >= 0 ? "+" : "";
-
-    return `
-     <div class="row" onclick="openMarketAsset('${escapeHTML(asset.symbol)}')">
-      <div class="row-left">
-       <strong>${escapeHTML(asset.name || asset.symbol)}</strong>
-       <small>${escapeHTML(asset.symbol)} • ${escapeHTML(asset.source || "Universal")}</small>
-      </div>
-      <div class="row-right">
-       <strong>${formatMoney(asset.price)}</strong>
-       <small class="${cls}">${sign}${change.toFixed(2)}%</small>
-      </div>
-     </div>
-    `;
-   }).join("");
- }catch(error){
-  document.getElementById("marketList").innerHTML =
-   `<p class="sub red">${escapeHTML(error.message)}</p>`;
- }
-}
-
-async function loadNews(){
- try{
-  const data = await fetchJSON(API_URL + "/api/news/live");
-
-  if(!data.success || !Array.isArray(data.articles)){
-   throw new Error(data.message || "News unavailable");
-  }
-
-  const list = document.getElementById("newsList");
-  list.innerHTML = "";
-
-  data.articles.slice(0,3).forEach(article=>{
-   if(!article.image) return;
-
-   list.innerHTML += `
-    <div class="news-card" onclick="window.open('${article.url}','_blank')">
-     <img src="${article.image}" alt="">
-     <div class="news-body">
-      <strong>${escapeHTML(article.title)}</strong>
-      <small>${escapeHTML(article.source || "News")} • ${escapeHTML(article.publishedAt || "")}</small>
-     </div>
-    </div>
-   `;
-  });
-
-  if(!list.innerHTML.trim()){
-   list.innerHTML = `<p class="sub orange">No image-based news available right now.</p>`;
-  }
- }catch(error){
-  document.getElementById("newsList").innerHTML =
-   `<p class="sub red">${escapeHTML(error.message)}</p>`;
- }
-}
-
-function loadSubscription(){
- const localPlan = localStorage.getItem("zellaMembership") || "FREE";
-
- document.getElementById("membershipValue").textContent = localPlan;
-
- document.getElementById("membershipSub").textContent =
-  localPlan === "FREE" ? "Basic access" : "Premium systems active";
-}
-
-function loadPortfolio(){
- document.getElementById("portfolioValue").textContent = "--";
- document.getElementById("portfolioSub").textContent =
-  "Connect exchange for live value";
-}
+function loadSubscription(){const p=localStorage.getItem("zellaMembership")||"FREE";document.getElementById("membershipValue").textContent=p;document.getElementById("membershipSub").textContent=p==="FREE"?"Basic access":"Premium systems active"}
+function loadPortfolio(){document.getElementById("portfolioValue").textContent="--";document.getElementById("portfolioSub").textContent="Connect exchange for live value"}
 
 function boot(){
- setGreeting();
- loadPortfolio();
- loadSubscription();
- buildCRTWatchlist();
- loadSystemStatus();
- loadOpportunities();
- loadMarket();
- loadNews();
-
- setInterval(loadSystemStatus,60000);
- setInterval(loadOpportunities,30000);
- setInterval(loadMarket,30000);
- setInterval(loadNews,90000);
+ setGreeting();drawRealEarth();loadPortfolio();loadSubscription();buildCRTWatchlist();loadSystemStatus();loadOpportunities();loadMarket();loadNews();
+ setInterval(loadSystemStatus,60000);setInterval(loadOpportunities,30000);setInterval(loadMarket,30000);setInterval(loadNews,90000);
 }
-
 boot();
 </script>
 
 <script src="premium-guard.js"></script>
 <script type="module" src="auth-guard.js"></script>
-
 </body>
 </html>

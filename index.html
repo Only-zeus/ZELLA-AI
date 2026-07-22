@@ -1,831 +1,3593 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Zella AI — Trade Smarter. Profit Faster.</title>
-
-<meta property="og:title" content="Zella AI">
-<meta property="og:description" content="Trade Smarter. Profit Faster.">
-<meta property="og:image" content="https://zella-ai.vercel.app/zella-preview.PNG">
-<meta property="og:url" content="https://zella-ai.vercel.app">
-<meta property="og:type" content="website">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Zella AI - Trade Smarter. Profit Faster.">
-<meta name="twitter:description" content="AI-powered trading intelligence for smarter market decisions.">
-<meta name="twitter:image" content="https://only-zeus.github.io/ZELLA-AI/zella-preview.PNG">
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  min-height:100vh;
-  background:#020617;
-  color:white;
-  overflow-x:hidden;
-}
-
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:-4;
-  background:
-    radial-gradient(circle at 20% 8%,rgba(56,189,248,.25),transparent 30%),
-    radial-gradient(circle at 85% 15%,rgba(37,99,235,.22),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
-    #020617;
-}
-
-.grid-bg{
-  position:fixed;
-  inset:0;
-  z-index:-3;
-  background-image:
-    linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);
-  background-size:42px 42px;
-  animation:gridMove 18s linear infinite;
-}
-
-@keyframes gridMove{
-  from{background-position:0 0}
-  to{background-position:0 420px}
-}
-
-.float-coins{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-.coin{
-  position:absolute;
-  width:54px;
-  height:54px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#38bdf8,#2563eb);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#020617;
-  font-weight:950;
-  box-shadow:0 0 35px rgba(56,189,248,.45);
-  opacity:.45;
-  animation:floatCoin 16s linear infinite;
-}
-
-.coin:nth-child(1){left:8%;animation-delay:0s}
-.coin:nth-child(2){left:28%;animation-delay:4s}
-.coin:nth-child(3){left:52%;animation-delay:2s}
-.coin:nth-child(4){left:74%;animation-delay:6s}
-.coin:nth-child(5){left:90%;animation-delay:1s}
-
-@keyframes floatCoin{
-  from{transform:translateY(110vh) rotate(0deg)}
-  to{transform:translateY(-120px) rotate(360deg)}
-}
-
-.topbar{
-  width:92%;
-  max-width:1120px;
-  margin:auto;
-  padding:24px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.brand h2{
-  font-size:36px;
-  letter-spacing:11px;
-  font-weight:950;
-}
-
-.brand span{
-  color:#38bdf8;
-  letter-spacing:5px;
-  font-size:14px;
-  font-weight:950;
-}
-
-.launch-small{
-  padding:13px 20px;
-  border-radius:999px;
-  border:none;
-  background:linear-gradient(135deg,#38bdf8,#2563eb);
-  color:#020617;
-  font-weight:950;
-  cursor:pointer;
-  box-shadow:0 0 28px rgba(56,189,248,.35);
-}
-
-.container{
-  width:92%;
-  max-width:1120px;
-  margin:auto;
-}
-
-.hero{
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:28px;
-  align-items:center;
-}
-
-.hero-card{
-  padding:34px;
-  border-radius:38px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:0 28px 80px rgba(0,0,0,.42);
-}
-
-.eyebrow{
-  color:#7dd3fc;
-  letter-spacing:8px;
-  font-size:13px;
-  font-weight:950;
-}
-
-.hero h1{
-  margin-top:22px;
-  font-size:68px;
-  line-height:1.02;
-  letter-spacing:-2px;
-}
-
-.hero h1 span{
-  color:#38bdf8;
-}
-
-.hero p{
-  margin-top:22px;
-  color:#94a3b8;
-  line-height:1.8;
-  font-size:17px;
-  max-width:520px;
-}
-
-.launch-btn{
-  margin-top:26px;
-  padding:17px 26px;
-  border:none;
-  border-radius:22px;
-  background:linear-gradient(135deg,#38bdf8,#2563eb,#6366f1);
-  color:#020617;
-  font-weight:950;
-  font-size:15px;
-  cursor:pointer;
-  box-shadow:0 0 40px rgba(56,189,248,.45);
-}
-
-.orbital-card{
-  min-height:430px;
-  border-radius:38px;
-  background:
-    linear-gradient(135deg,rgba(15,23,42,.92),rgba(8,47,73,.38)),
-    rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:0 28px 80px rgba(0,0,0,.42);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.ai-orbit{
-  width:330px;
-  height:330px;
-  position:relative;
-}
-
-.ai-ring{
-  position:absolute;
-  border-radius:50%;
-  border:2px solid rgba(56,189,248,.20);
-  animation:spin 18s linear infinite;
-}
-
-.ai-ring.r1{inset:0}
-.ai-ring.r2{inset:32px;border-color:rgba(56,189,248,.30);animation-duration:14s}
-.ai-ring.r3{inset:64px;border-color:rgba(34,197,94,.20);animation-duration:20s}
-.ai-ring.r4{inset:96px;border-color:rgba(148,163,184,.22);animation-duration:26s}
-
-.ai-ring::before{
-  content:"";
-  position:absolute;
-  top:18px;
-  left:50%;
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:#38bdf8;
-  box-shadow:0 0 25px #38bdf8;
-}
-
-.ai-core{
-  position:absolute;
-  inset:105px;
-  border-radius:50%;
-  background:radial-gradient(circle,#e0faff 0%,#38bdf8 35%,#082f49 65%,#020617 100%);
-  box-shadow:
-    0 0 75px rgba(56,189,248,.85),
-    inset 0 0 42px rgba(2,6,23,.8);
-}
-
-.scan-line{
-  position:absolute;
-  left:11%;
-  right:11%;
-  top:54%;
-  height:3px;
-  background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-  box-shadow:0 0 18px rgba(56,189,248,.9);
-  animation:scan 3s ease-in-out infinite;
-}
-
-@keyframes scan{
-  0%,100%{opacity:.25;transform:translateY(-45px)}
-  50%{opacity:1;transform:translateY(45px)}
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-.market-ribbon{
-  margin-top:22px;
-  padding:14px;
-  border-radius:24px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
-  overflow:hidden;
-}
-
-.ticker{
-  display:flex;
-  gap:18px;
-  white-space:nowrap;
-  animation:tickerMove 28s linear infinite;
-}
-
-.ticker-item{
-  padding:12px 18px;
-  border-radius:18px;
-  background:#0f172a;
-  color:#e5eefb;
-  font-weight:900;
-}
-
-.ticker-item span{
-  color:#38bdf8;
-}
-
-@keyframes tickerMove{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
-
-.section{
-  margin-top:28px;
-  padding:30px;
-  border-radius:34px;
-  background:rgba(15,23,42,.88);
-  border:1px solid rgba(148,163,184,.14);
-  box-shadow:0 22px 65px rgba(0,0,0,.35);
-}
-
-.section-title{
-  color:#38bdf8;
-  font-size:13px;
-  letter-spacing:7px;
-  font-weight:950;
-  margin-bottom:16px;
-}
-
-.section h2{
-  font-size:40px;
-  line-height:1.1;
-}
-
-.section p.lead{
-  margin-top:14px;
-  color:#94a3b8;
-  line-height:1.8;
-  max-width:720px;
-}
-
-.grid{
-  margin-top:22px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-
-.feature-card{
-  padding:22px;
-  border-radius:26px;
-  background:#0f172a;
-  border:1px solid rgba(148,163,184,.12);
-  min-height:170px;
-}
-
-.icon-box{
-  width:58px;
-  height:58px;
-  border-radius:20px;
-  background:rgba(56,189,248,.10);
-  border:1px solid rgba(56,189,248,.25);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.icon-box svg{
-  width:30px;
-  height:30px;
-  stroke:#38bdf8;
-  fill:none;
-  stroke-width:2.3;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-}
-
-.feature-card h3{
-  margin-top:18px;
-  font-size:20px;
-}
-
-.feature-card p{
-  margin-top:10px;
-  color:#94a3b8;
-  line-height:1.6;
-  font-size:14px;
-}
-
-.steps{
-  margin-top:22px;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:14px;
-}
-
-.step{
-  padding:20px;
-  border-radius:24px;
-  background:#0f172a;
-  border:1px solid rgba(148,163,184,.12);
-}
-
-.step strong{
-  color:#38bdf8;
-  display:block;
-  font-size:24px;
-}
-
-.step h3{
-  margin-top:12px;
-  font-size:17px;
-}
-
-.step p{
-  margin-top:9px;
-  color:#94a3b8;
-  line-height:1.55;
-  font-size:13px;
-}
-
-@media(max-width:850px){
-  .hero{
-    grid-template-columns:1fr;
-  }
-
-  .grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .steps{
-    grid-template-columns:1fr;
-  }
-
-  .hero h1{
-    font-size:52px;
-  }
-}
-
-@media(max-width:460px){
-  .brand h2{
-    font-size:30px;
-  }
-
-  .hero h1{
-    font-size:45px;
-  }
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .orbital-card{
-    min-height:360px;
-  }
-
-  .ai-orbit{
-    width:280px;
-    height:280px;
-  }
-
-  .ai-core{
-    inset:88px;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta
+    name="description"
+    content="Zella is an AI-powered crypto trading copilot for market intelligence, asset analysis, portfolio monitoring, risk management and automated trading."
+  >
+
+  <meta name="theme-color" content="#050816">
+  <meta name="color-scheme" content="dark">
+
+  <title>Zella AI — Trade Smarter. Profit Faster.</title>
+
+  <link rel="canonical" href="https://zella-ai.vercel.app/">
+
+  <meta property="og:title" content="Zella AI">
+  <meta
+    property="og:description"
+    content="Trade smarter with AI-powered market intelligence, risk analysis and portfolio tools."
+  >
+  <meta
+    property="og:image"
+    content="https://zella-ai.vercel.app/zella-preview.PNG"
+  >
+  <meta property="og:url" content="https://zella-ai.vercel.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Zella AI">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta
+    name="twitter:title"
+    content="Zella AI — Trade Smarter. Profit Faster."
+  >
+  <meta
+    name="twitter:description"
+    content="AI-powered trading intelligence for smarter market decisions."
+  >
+  <meta
+    name="twitter:image"
+    content="https://only-zeus.github.io/ZELLA-AI/zella-preview.PNG"
+  >
+
+  <style>
+    :root {
+      color-scheme: dark;
+
+      --background: #030611;
+      --background-elevated: #070b18;
+      --surface: rgba(11, 17, 34, 0.78);
+      --surface-strong: rgba(13, 21, 42, 0.96);
+      --surface-soft: rgba(18, 28, 52, 0.62);
+
+      --border: rgba(148, 163, 184, 0.14);
+      --border-bright: rgba(92, 210, 255, 0.34);
+
+      --text-primary: #f7fbff;
+      --text-secondary: #9baac0;
+      --text-muted: #65748a;
+
+      --primary: #59d8ff;
+      --primary-strong: #21a8ff;
+      --secondary: #7167ff;
+      --success: #39e6a2;
+      --danger: #ff637f;
+      --warning: #ffcb66;
+
+      --gradient-primary:
+        linear-gradient(
+          135deg,
+          #6ce6ff 0%,
+          #2eb7ff 38%,
+          #6f63ff 100%
+        );
+
+      --gradient-text:
+        linear-gradient(
+          90deg,
+          #ffffff 0%,
+          #8ae8ff 45%,
+          #8f85ff 100%
+        );
+
+      --shadow-small:
+        0 12px 36px rgba(0, 0, 0, 0.26);
+
+      --shadow-large:
+        0 30px 100px rgba(0, 0, 0, 0.46);
+
+      --shadow-glow:
+        0 0 60px rgba(51, 190, 255, 0.22);
+
+      --radius-small: 14px;
+      --radius-medium: 22px;
+      --radius-large: 32px;
+      --radius-extra-large: 42px;
+
+      --container: 1180px;
+      --header-height: 88px;
+
+      --transition:
+        220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 110px;
+      background: var(--background);
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text-primary);
+      background: var(--background);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      border: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    svg {
+      display: block;
+    }
+
+    ::selection {
+      color: #02101a;
+      background: var(--primary);
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 4px;
+    }
+
+    .page-background {
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 12% 0%,
+          rgba(35, 178, 255, 0.18),
+          transparent 31%
+        ),
+        radial-gradient(
+          circle at 91% 12%,
+          rgba(103, 90, 255, 0.16),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 48% 100%,
+          rgba(32, 224, 164, 0.09),
+          transparent 36%
+        ),
+        linear-gradient(
+          180deg,
+          #030611 0%,
+          #050918 50%,
+          #030611 100%
+        );
+    }
+
+    .page-background::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.5;
+      background-image:
+        linear-gradient(
+          rgba(92, 210, 255, 0.045) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(92, 210, 255, 0.045) 1px,
+          transparent 1px
+        );
+      background-size: 64px 64px;
+      mask-image:
+        linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.8),
+          transparent 85%
+        );
+      animation: moveGrid 30s linear infinite;
+    }
+
+    .page-background::after {
+      content: "";
+      position: absolute;
+      width: 620px;
+      height: 620px;
+      left: 50%;
+      top: 430px;
+      border-radius: 50%;
+      filter: blur(70px);
+      transform: translateX(-50%);
+      background: rgba(47, 171, 255, 0.07);
+    }
+
+    @keyframes moveGrid {
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 0 640px;
+      }
+    }
+
+    .ambient-orb {
+      position: fixed;
+      z-index: -8;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(100px);
+      opacity: 0.16;
+    }
+
+    .ambient-orb--one {
+      top: -170px;
+      left: -150px;
+      background: var(--primary-strong);
+      animation: ambientFloat 12s ease-in-out infinite alternate;
+    }
+
+    .ambient-orb--two {
+      top: 280px;
+      right: -220px;
+      background: var(--secondary);
+      animation: ambientFloat 16s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes ambientFloat {
+      from {
+        transform: translate3d(0, 0, 0) scale(0.94);
+      }
+
+      to {
+        transform: translate3d(50px, 45px, 0) scale(1.08);
+      }
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--container));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--header-height);
+      border-bottom: 1px solid transparent;
+      transition:
+        background var(--transition),
+        border-color var(--transition),
+        backdrop-filter var(--transition);
+    }
+
+    .site-header.is-scrolled {
+      border-color: var(--border);
+      background: rgba(3, 6, 17, 0.78);
+      backdrop-filter: blur(24px);
+    }
+
+    .navbar {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(96, 224, 255, 0.32);
+      border-radius: 14px;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(101, 223, 255, 0.2),
+          rgba(62, 89, 255, 0.12)
+        );
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.08),
+        0 0 30px rgba(62, 197, 255, 0.16);
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      box-shadow: 0 0 22px rgba(89, 216, 255, 0.68);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: white;
+      box-shadow:
+        0 0 12px white,
+        0 0 26px var(--primary);
+    }
+
+    .brand-copy {
+      display: grid;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 0.27em;
+    }
+
+    .brand-label {
+      margin-top: 5px;
+      color: var(--primary);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+    }
+
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .desktop-nav a {
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 650;
+      transition: color var(--transition);
+    }
+
+    .desktop-nav a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -9px;
+      left: 0;
+      height: 2px;
+      border-radius: 999px;
+      transform: scaleX(0);
+      transition: transform var(--transition);
+      background: var(--gradient-primary);
+    }
+
+    .desktop-nav a:hover {
+      color: var(--text-primary);
+    }
+
+    .desktop-nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      position: relative;
+      isolation: isolate;
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 19px;
+      overflow: hidden;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.05em;
+      transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition),
+        background var(--transition);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .button--primary {
+      color: #02111b;
+      background: var(--gradient-primary);
+      box-shadow:
+        0 12px 28px rgba(39, 173, 255, 0.2),
+        inset 0 1px rgba(255, 255, 255, 0.46);
+    }
+
+    .button--primary::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 100px;
+      height: 180%;
+      left: -130px;
+      top: -40%;
+      transform: rotate(18deg);
+      background: rgba(255, 255, 255, 0.32);
+      transition: left 550ms ease;
+    }
+
+    .button--primary:hover::before {
+      left: 130%;
+    }
+
+    .button--secondary {
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .button--secondary:hover {
+      border-color: var(--border-bright);
+      background: rgba(89, 216, 255, 0.07);
+    }
+
+    .button svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .menu-button {
+      width: 46px;
+      height: 46px;
+      display: none;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      color: var(--text-primary);
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .menu-button svg {
+      width: 21px;
+      height: 21px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      z-index: 95;
+      inset: var(--header-height) 0 auto;
+      padding: 16px 20px 24px;
+      border-bottom: 1px solid var(--border);
+      transform: translateY(-130%);
+      opacity: 0;
+      visibility: hidden;
+      background: rgba(3, 6, 17, 0.97);
+      backdrop-filter: blur(28px);
+      transition:
+        transform var(--transition),
+        opacity var(--transition),
+        visibility var(--transition);
+    }
+
+    .mobile-menu.is-open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-menu__links {
+      display: grid;
+      gap: 9px;
+    }
+
+    .mobile-menu a {
+      padding: 15px 16px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .mobile-menu a:hover {
+      color: var(--text-primary);
+      border-color: var(--border);
+    }
+
+    .hero {
+      position: relative;
+      padding: 72px 0 38px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(400px, 0.92fr);
+      align-items: center;
+      gap: 44px;
+    }
+
+    .hero-content {
+      max-width: 680px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 13px;
+      border: 1px solid rgba(89, 216, 255, 0.19);
+      border-radius: 999px;
+      color: #b9f2ff;
+      background: rgba(89, 216, 255, 0.07);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.04);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 16px rgba(57, 230, 162, 0.9);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse {
+      0%,
+      100% {
+        opacity: 0.55;
+        transform: scale(0.9);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.18);
+      }
+    }
+
+    .hero h1 {
+      max-width: 720px;
+      margin-top: 25px;
+      font-size: clamp(54px, 7vw, 88px);
+      line-height: 0.96;
+      letter-spacing: -0.065em;
+      font-weight: 850;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: transparent;
+      background: var(--gradient-text);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-description {
+      max-width: 610px;
+      margin-top: 26px;
+      color: var(--text-secondary);
+      font-size: 17px;
+      line-height: 1.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .hero-actions .button {
+      min-height: 56px;
+      padding-inline: 24px;
+      border-radius: 18px;
+      font-size: 13px;
+    }
+
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      margin-top: 26px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .trust-item svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--primary);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .intelligence-panel {
+      position: relative;
+      min-height: 540px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-extra-large);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(17, 28, 53, 0.84),
+          rgba(5, 11, 27, 0.94)
+        );
+      box-shadow:
+        var(--shadow-large),
+        var(--shadow-glow),
+        inset 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .intelligence-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.5;
+      background:
+        linear-gradient(
+          120deg,
+          rgba(89, 216, 255, 0.1),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 50% 42%,
+          rgba(77, 194, 255, 0.12),
+          transparent 45%
+        );
+    }
+
+    .panel-topbar {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-title {
+      display: grid;
+      gap: 4px;
+    }
+
+    .panel-title strong {
+      font-size: 12px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .panel-title span {
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    .live-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--success);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .live-status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 14px currentColor;
+    }
+
+    .visual-stage {
+      position: relative;
+      min-height: 390px;
+      display: grid;
+      place-items: center;
+    }
+
+    .orbit-system {
+      position: relative;
+      width: min(330px, 74vw);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+    }
+
+    .orbit {
+      position: absolute;
+      border: 1px solid rgba(89, 216, 255, 0.2);
+      border-radius: 50%;
+      animation: orbitSpin 18s linear infinite;
+    }
+
+    .orbit::before {
+      content: "";
+      position: absolute;
+      top: 13%;
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      box-shadow:
+        0 0 12px var(--primary),
+        0 0 30px rgba(89, 216, 255, 0.5);
+    }
+
+    .orbit--one {
+      inset: 0;
+    }
+
+    .orbit--two {
+      inset: 30px;
+      border-style: dashed;
+      animation-duration: 14s;
+      animation-direction: reverse;
+    }
+
+    .orbit--three {
+      inset: 63px;
+      border-color: rgba(113, 103, 255, 0.32);
+      animation-duration: 22s;
+    }
+
+    .orbit--four {
+      inset: 94px;
+      border-color: rgba(57, 230, 162, 0.23);
+      animation-duration: 28s;
+      animation-direction: reverse;
+    }
+
+    @keyframes orbitSpin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .ai-core {
+      position: relative;
+      z-index: 3;
+      width: 116px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(203, 247, 255, 0.42);
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle at 40% 34%,
+          #f4fdff 0%,
+          #78e5ff 13%,
+          #2cb6ff 32%,
+          #21468a 60%,
+          #071126 100%
+        );
+      box-shadow:
+        0 0 30px rgba(89, 216, 255, 0.62),
+        0 0 90px rgba(53, 172, 255, 0.3),
+        inset 0 -20px 36px rgba(0, 0, 0, 0.5);
+      animation: corePulse 3.2s ease-in-out infinite;
+    }
+
+    .ai-core::before,
+    .ai-core::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .ai-core::before {
+      inset: 13px;
+    }
+
+    .ai-core::after {
+      inset: 29px;
+    }
+
+    @keyframes corePulse {
+      0%,
+      100% {
+        transform: scale(0.98);
+        filter: brightness(0.9);
+      }
+
+      50% {
+        transform: scale(1.04);
+        filter: brightness(1.16);
+      }
+    }
+
+    .core-label {
+      position: relative;
+      z-index: 2;
+      font-size: 10px;
+      font-weight: 950;
+      letter-spacing: 0.2em;
+      color: #03111d;
+    }
+
+    .scan-beam {
+      position: absolute;
+      z-index: 4;
+      width: 64%;
+      height: 2px;
+      top: 50%;
+      left: 18%;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(89, 216, 255, 0.9),
+          transparent
+        );
+      box-shadow: 0 0 22px rgba(89, 216, 255, 0.9);
+      animation: scanBeam 3.4s ease-in-out infinite;
+    }
+
+    @keyframes scanBeam {
+      0%,
+      100% {
+        opacity: 0.18;
+        transform: translateY(-92px);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateY(92px);
+      }
+    }
+
+    .data-node {
+      position: absolute;
+      z-index: 6;
+      min-width: 120px;
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 10, 24, 0.78);
+      box-shadow: var(--shadow-small);
+      animation: nodeFloat 5s ease-in-out infinite;
+    }
+
+    .data-node span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 8px;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .data-node strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+
+    .data-node--one {
+      left: 24px;
+      top: 100px;
+    }
+
+    .data-node--two {
+      right: 22px;
+      top: 163px;
+      animation-delay: -1.6s;
+    }
+
+    .data-node--three {
+      left: 38px;
+      bottom: 38px;
+      animation-delay: -2.8s;
+    }
+
+    @keyframes nodeFloat {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .panel-metrics {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+    }
+
+    .panel-metric {
+      padding: 18px;
+      text-align: center;
+    }
+
+    .panel-metric + .panel-metric {
+      border-left: 1px solid var(--border);
+    }
+
+    .panel-metric span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .panel-metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    .market-strip {
+      margin-top: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(10, 16, 32, 0.74);
+      box-shadow: var(--shadow-small);
+      backdrop-filter: blur(18px);
+    }
+
+    .market-strip__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .market-strip__title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--text-secondary);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    .market-strip__title::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 12px var(--success);
+    }
+
+    .market-updated {
+      color: var(--text-muted);
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .ticker-viewport {
+      overflow: hidden;
+      mask-image:
+        linear-gradient(
+          90deg,
+          transparent,
+          black 6%,
+          black 94%,
+          transparent
+        );
+    }
+
+    .ticker-track {
+      width: max-content;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      animation: tickerScroll 34s linear infinite;
+    }
+
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes tickerScroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .ticker-item {
+      min-width: 185px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 13px 15px;
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .ticker-symbol {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+    }
+
+    .ticker-values {
+      display: grid;
+      justify-items: end;
+      gap: 3px;
+    }
+
+    .ticker-price {
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .ticker-change {
+      font-size: 9px;
+      font-weight: 850;
+    }
+
+    .ticker-change.is-positive {
+      color: var(--success);
+    }
+
+    .ticker-change.is-negative {
+      color: var(--danger);
+    }
+
+    .section {
+      padding: 94px 0 0;
+    }
+
+    .section-shell {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(27px, 5vw, 54px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-extra-large);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(13, 20, 39, 0.82),
+          rgba(7, 11, 25, 0.92)
+        );
+      box-shadow:
+        var(--shadow-large),
+        inset 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .section-shell::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -180px;
+      top: -220px;
+      border-radius: 50%;
+      filter: blur(50px);
+      pointer-events: none;
+      background: rgba(52, 175, 255, 0.08);
+    }
+
+    .section-header {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .section h2 {
+      margin-top: 18px;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+      font-weight: 820;
+    }
+
+    .section-description {
+      max-width: 720px;
+      margin-top: 18px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .feature-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 34px;
+    }
+
+    .feature-card {
+      position: relative;
+      min-height: 230px;
+      overflow: hidden;
+      padding: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 24px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(17, 27, 50, 0.8),
+          rgba(9, 14, 29, 0.88)
+        );
+      transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+    }
+
+    .feature-card::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      right: -65px;
+      bottom: -70px;
+      border-radius: 50%;
+      filter: blur(22px);
+      opacity: 0;
+      transition: opacity var(--transition);
+      background: rgba(55, 190, 255, 0.16);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(89, 216, 255, 0.3);
+      box-shadow:
+        0 22px 50px rgba(0, 0, 0, 0.3),
+        0 0 40px rgba(52, 181, 255, 0.08);
+    }
+
+    .feature-card:hover::after {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(89, 216, 255, 0.2);
+      border-radius: 16px;
+      color: var(--primary);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(89, 216, 255, 0.12),
+          rgba(113, 103, 255, 0.06)
+        );
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.05),
+        0 0 28px rgba(89, 216, 255, 0.08);
+    }
+
+    .feature-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .feature-card h3 {
+      margin-top: 22px;
+      font-size: 18px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p {
+      margin-top: 11px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .feature-meta {
+      margin-top: 18px;
+      color: var(--text-muted);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .workflow-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .workflow-step {
+      position: relative;
+      min-height: 210px;
+      padding: 21px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .workflow-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 1px;
+      right: -15px;
+      top: 49px;
+      background: rgba(89, 216, 255, 0.28);
+    }
+
+    .step-number {
+      color: transparent;
+      background: var(--gradient-primary);
+      background-clip: text;
+      -webkit-background-clip: text;
+      font-size: 31px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+    }
+
+    .workflow-step h3 {
+      margin-top: 29px;
+      font-size: 15px;
+    }
+
+    .workflow-step p {
+      margin-top: 10px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .security-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .security-primary,
+    .security-stack article {
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .security-primary {
+      min-height: 390px;
+      padding: 28px;
+      border-radius: 27px;
+    }
+
+    .security-visual {
+      position: relative;
+      height: 210px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 21px;
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(68, 198, 255, 0.13),
+          transparent 58%
+        ),
+        rgba(4, 9, 22, 0.8);
+    }
+
+    .shield {
+      width: 92px;
+      height: 108px;
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      filter: drop-shadow(0 0 22px rgba(89, 216, 255, 0.4));
+    }
+
+    .shield svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      fill: rgba(89, 216, 255, 0.04);
+      stroke-width: 1.4;
+    }
+
+    .security-primary h3,
+    .security-stack h3 {
+      margin-top: 22px;
+      font-size: 19px;
+    }
+
+    .security-primary p,
+    .security-stack p {
+      margin-top: 10px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .security-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .security-stack article {
+      min-height: 187px;
+      padding: 24px;
+      border-radius: 24px;
+    }
+
+    .security-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--success);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .security-label::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .pro-shell {
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(113, 103, 255, 0.16),
+          transparent 36%
+        ),
+        linear-gradient(
+          145deg,
+          rgba(15, 22, 45, 0.93),
+          rgba(7, 11, 26, 0.95)
+        );
+    }
+
+    .pro-layout {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: stretch;
+      gap: 28px;
+    }
+
+    .pro-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .pro-benefits {
+      display: grid;
+      gap: 11px;
+      margin-top: 28px;
+    }
+
+    .pro-benefit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .pro-benefit svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      stroke: var(--success);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .pro-card {
+      position: relative;
+      overflow: hidden;
+      padding: 29px;
+      border: 1px solid rgba(113, 103, 255, 0.28);
+      border-radius: 28px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(107, 94, 255, 0.13),
+          rgba(12, 19, 39, 0.9)
+        );
+      box-shadow: 0 0 60px rgba(109, 94, 255, 0.1);
+    }
+
+    .pro-card::before {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      right: -120px;
+      top: -130px;
+      border-radius: 50%;
+      filter: blur(35px);
+      background: rgba(114, 102, 255, 0.2);
+    }
+
+    .pro-card__badge {
+      position: relative;
+      z-index: 2;
+      width: fit-content;
+      padding: 8px 11px;
+      border: 1px solid rgba(139, 129, 255, 0.3);
+      border-radius: 999px;
+      color: #c7c1ff;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: rgba(113, 103, 255, 0.12);
+    }
+
+    .pro-card h3 {
+      position: relative;
+      z-index: 2;
+      margin-top: 26px;
+      font-size: 30px;
+      letter-spacing: -0.04em;
+    }
+
+    .pro-card p {
+      position: relative;
+      z-index: 2;
+      margin-top: 12px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .pro-card .button {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      min-height: 52px;
+      margin-top: 25px;
+    }
+
+    .faq-list {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.024);
+      transition:
+        border-color var(--transition),
+        background var(--transition);
+    }
+
+    .faq-item[open] {
+      border-color: rgba(89, 216, 255, 0.24);
+      background: rgba(89, 216, 255, 0.035);
+    }
+
+    .faq-item summary {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 22px;
+      cursor: pointer;
+      list-style: none;
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-control {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--primary);
+    }
+
+    .faq-control::before,
+    .faq-control::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 1.5px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform var(--transition);
+    }
+
+    .faq-control::after {
+      transform: rotate(90deg);
+    }
+
+    .faq-item[open] .faq-control::after {
+      transform: rotate(0);
+    }
+
+    .faq-answer {
+      padding: 0 22px 22px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .final-cta {
+      padding: 94px 0 34px;
+    }
+
+    .cta-shell {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(40px, 7vw, 76px) 24px;
+      border: 1px solid rgba(89, 216, 255, 0.2);
+      border-radius: var(--radius-extra-large);
+      text-align: center;
+      background:
+        radial-gradient(
+          circle at 50% 15%,
+          rgba(68, 199, 255, 0.16),
+          transparent 40%
+        ),
+        linear-gradient(
+          145deg,
+          rgba(13, 23, 45, 0.95),
+          rgba(5, 10, 24, 0.95)
+        );
+      box-shadow:
+        var(--shadow-large),
+        0 0 80px rgba(51, 182, 255, 0.08);
+    }
+
+    .cta-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.38;
+      background-image:
+        linear-gradient(
+          rgba(89, 216, 255, 0.07) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(89, 216, 255, 0.07) 1px,
+          transparent 1px
+        );
+      background-size: 42px 42px;
+      mask-image:
+        radial-gradient(
+          circle at center,
+          black,
+          transparent 76%
+        );
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      max-width: 690px;
+      margin-inline: auto;
+    }
+
+    .cta-shell h2 {
+      margin-top: 18px;
+      font-size: clamp(39px, 6vw, 66px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+    }
+
+    .cta-shell p {
+      max-width: 570px;
+      margin: 20px auto 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .cta-shell .button {
+      min-height: 56px;
+      margin-top: 29px;
+      padding-inline: 28px;
+      border-radius: 18px;
+    }
+
+    .site-footer {
+      padding: 45px 0 30px;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+      padding-bottom: 34px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-brand {
+      max-width: 370px;
+    }
+
+    .footer-brand p {
+      margin-top: 17px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(130px, 1fr));
+      gap: 50px;
+    }
+
+    .footer-column strong {
+      display: block;
+      margin-bottom: 15px;
+      font-size: 11px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .footer-column a {
+      display: block;
+      width: fit-content;
+      margin-top: 11px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      transition: color var(--transition);
+    }
+
+    .footer-column a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      padding-top: 22px;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+    }
+
+    .social-handle {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      z-index: 500;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: #030611;
+      transition:
+        opacity 500ms ease,
+        visibility 500ms ease;
+    }
+
+    .loading-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader {
+      display: grid;
+      justify-items: center;
+      gap: 18px;
+    }
+
+    .loader-core {
+      position: relative;
+      width: 74px;
+      height: 74px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(89, 216, 255, 0.26);
+      border-radius: 50%;
+    }
+
+    .loader-core::before,
+    .loader-core::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid transparent;
+    }
+
+    .loader-core::before {
+      inset: 6px;
+      border-top-color: var(--primary);
+      animation: loaderSpin 1s linear infinite;
+    }
+
+    .loader-core::after {
+      inset: 16px;
+      border-bottom-color: var(--secondary);
+      animation: loaderSpin 0.75s linear infinite reverse;
+    }
+
+    .loader-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+      box-shadow:
+        0 0 12px white,
+        0 0 28px var(--primary);
+    }
+
+    .loader span {
+      color: var(--text-secondary);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    @keyframes loaderSpin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1060px) {
+      .desktop-nav {
+        display: none;
+      }
+
+      .menu-button {
+        display: grid;
+      }
+
+      .header-actions .button--secondary {
+        display: none;
+      }
+
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content {
+        max-width: 760px;
+      }
+
+      .intelligence-panel {
+        width: min(100%, 680px);
+        margin-inline: auto;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .workflow-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .workflow-step:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .workflow-step:not(:last-child)::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 780px) {
+      :root {
+        --header-height: 78px;
+      }
+
+      .container {
+        width: min(calc(100% - 28px), var(--container));
+      }
+
+      .site-header {
+        height: var(--header-height);
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+      }
+
+      .brand-name {
+        font-size: 17px;
+      }
+
+      .brand-label {
+        font-size: 8px;
+      }
+
+      .header-actions .button--primary {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 48px;
+      }
+
+      .hero h1 {
+        font-size: clamp(49px, 14vw, 68px);
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .feature-grid,
+      .security-grid,
+      .pro-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .workflow-step:last-child {
+        grid-column: auto;
+      }
+
+      .footer-top {
+        flex-direction: column;
+      }
+
+      .footer-links {
+        width: 100%;
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .hero-trust {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .intelligence-panel {
+        min-height: 490px;
+        border-radius: 30px;
+      }
+
+      .panel-topbar {
+        padding: 18px;
+      }
+
+      .visual-stage {
+        min-height: 350px;
+      }
+
+      .data-node {
+        min-width: 103px;
+        padding: 9px 10px;
+      }
+
+      .data-node--one {
+        left: 10px;
+        top: 76px;
+      }
+
+      .data-node--two {
+        right: 9px;
+        top: 160px;
+      }
+
+      .data-node--three {
+        left: 14px;
+        bottom: 27px;
+      }
+
+      .data-node strong {
+        font-size: 10px;
+      }
+
+      .panel-metric {
+        padding: 15px 7px;
+      }
+
+      .panel-metric strong {
+        font-size: 11px;
+      }
+
+      .section {
+        padding-top: 68px;
+      }
+
+      .section-shell {
+        padding: 27px 19px;
+        border-radius: 30px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card {
+        min-height: 210px;
+      }
+
+      .market-strip__header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .footer-links {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
-
-<div class="bg"></div>
-<div class="grid-bg"></div>
-
-<div class="float-coins">
-  <div class="coin">BTC</div>
-  <div class="coin">ETH</div>
-  <div class="coin">SOL</div>
-  <div class="coin">BNB</div>
-  <div class="coin">XRP</div>
-</div>
-
-<header class="topbar">
-  <div class="brand">
-    <h2>ZELLA</h2>
-    <span>AI</span>
-  </div>
-
-  <button class="launch-small" onclick="launchZella()">
-    LAUNCH ZELLA
-  </button>
-</header>
-
-<main class="container">
-
-<section class="hero">
-
-  <div class="hero-card">
-    <div class="eyebrow">AI CRYPTO TRADING ASSISTANT</div>
-
-    <h1>
-      Trade Smarter.<br>
-      <span>Profit Faster.</span>
-    </h1>
-
-    <p>
-      Zella helps traders scan markets, find opportunities, receive live signals,
-      track portfolios, follow market news and automate trading from one premium AI platform.
-    </p>
-
-    <button class="launch-btn" onclick="launchZella()">
-      LAUNCH ZELLA
-    </button>
-  </div>
-
-  <div class="orbital-card">
-    <div class="ai-orbit">
-      <div class="ai-ring r1"></div>
-      <div class="ai-ring r2"></div>
-      <div class="ai-ring r3"></div>
-      <div class="ai-ring r4"></div>
-      <div class="ai-core"></div>
-      <div class="scan-line"></div>
+  <div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
+    <div class="loader">
+      <div class="loader-core">
+        <span class="loader-dot"></span>
+      </div>
+      <span>Initializing Zella</span>
     </div>
   </div>
 
-</section>
+  <div class="page-background"></div>
+  <div class="ambient-orb ambient-orb--one"></div>
+  <div class="ambient-orb ambient-orb--two"></div>
 
-<section class="market-ribbon">
-  <div class="ticker" id="marketTicker">
-    <div class="ticker-item">BTC <span>Loading...</span></div>
-    <div class="ticker-item">ETH <span>Loading...</span></div>
-    <div class="ticker-item">SOL <span>Loading...</span></div>
-    <div class="ticker-item">BNB <span>Loading...</span></div>
-    <div class="ticker-item">XRP <span>Loading...</span></div>
-  </div>
-</section>
+  <header class="site-header" id="siteHeader">
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="Zella homepage">
+        <span class="brand-mark" aria-hidden="true"></span>
 
-<section class="section">
-  <div class="section-title">WHY ZELLA</div>
+        <span class="brand-copy">
+          <span class="brand-name">ZELLA</span>
+          <span class="brand-label">Artificial Intelligence</span>
+        </span>
+      </a>
 
-  <h2>Built for traders who want clarity, speed and confidence.</h2>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#intelligence">Intelligence</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#security">Security</a>
+        <a href="#pro">Zella Pro</a>
+        <a href="#faq">FAQ</a>
+      </nav>
 
-  <p class="lead">
-    Zella combines live market intelligence, AI trading support, portfolio visibility and automation tools
-    so users can make smarter decisions without jumping across multiple platforms.
-  </p>
+      <div class="header-actions">
+        <a class="button button--secondary" href="login.html">
+          Sign In
+        </a>
 
-  <div class="grid">
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/></svg>
+        <button
+          class="button button--primary"
+          type="button"
+          data-launch-zella
+        >
+          Launch Zella
+
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="m14 7 5 5-5 5"></path>
+          </svg>
+        </button>
+
+        <button
+          class="menu-button"
+          id="menuButton"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-controls="mobileMenu"
+          aria-expanded="false"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 17h16"></path>
+          </svg>
+        </button>
       </div>
-      <h3>Spot Opportunities Faster</h3>
-      <p>Scan key assets and discover high-confidence trade setups quickly.</p>
     </div>
+  </header>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><path d="M12 2V22"/><path d="M5 12H19"/><circle cx="12" cy="12" r="5"/></svg>
+  <nav
+    class="mobile-menu"
+    id="mobileMenu"
+    aria-label="Mobile navigation"
+  >
+    <div class="mobile-menu__links">
+      <a href="#intelligence">Intelligence</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#security">Security</a>
+      <a href="#pro">Zella Pro</a>
+      <a href="#faq">FAQ</a>
+      <a href="login.html">Sign In</a>
+      <a href="signup.html">Create Account</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-layout">
+          <div class="hero-content reveal">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              AI Market Intelligence Network
+            </div>
+
+            <h1>
+              Trade smarter.
+              <span>Profit faster.</span>
+            </h1>
+
+            <p class="hero-description">
+              Zella is an intelligent crypto trading copilot that combines
+              live market analysis, opportunity discovery, portfolio
+              intelligence, risk management and automated execution in one
+              premium command center.
+            </p>
+
+            <div class="hero-actions">
+              <button
+                class="button button--primary"
+                type="button"
+                data-launch-zella
+              >
+                Launch Zella
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14"></path>
+                  <path d="m14 7 5 5-5 5"></path>
+                </svg>
+              </button>
+
+              <a class="button button--secondary" href="#intelligence">
+                Explore Intelligence
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m7 10 5 5 5-5"></path>
+                </svg>
+              </a>
+            </div>
+
+            <div class="hero-trust">
+              <span class="trust-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                Secure account architecture
+              </span>
+
+              <span class="trust-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 12h4l2-6 4 12 2-6h4"></path>
+                </svg>
+                Live market intelligence
+              </span>
+
+              <span class="trust-item">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M12 7v5l3 2"></path>
+                </svg>
+                Continuous data refresh
+              </span>
+            </div>
+          </div>
+
+          <div class="intelligence-panel reveal">
+            <div class="panel-topbar">
+              <div class="panel-title">
+                <strong>Zella Intelligence Core</strong>
+                <span>Multi-engine market processing</span>
+              </div>
+
+              <div class="live-status">
+                Online
+              </div>
+            </div>
+
+            <div class="visual-stage">
+              <div class="data-node data-node--one">
+                <span>Market regime</span>
+                <strong id="regimeValue">Analyzing</strong>
+              </div>
+
+              <div class="data-node data-node--two">
+                <span>AI confidence</span>
+                <strong id="confidenceValue">Processing</strong>
+              </div>
+
+              <div class="data-node data-node--three">
+                <span>Risk control</span>
+                <strong>Active</strong>
+              </div>
+
+              <div class="orbit-system" aria-hidden="true">
+                <div class="orbit orbit--one"></div>
+                <div class="orbit orbit--two"></div>
+                <div class="orbit orbit--three"></div>
+                <div class="orbit orbit--four"></div>
+
+                <div class="ai-core">
+                  <span class="core-label">ZELLA</span>
+                </div>
+
+                <div class="scan-beam"></div>
+              </div>
+            </div>
+
+            <div class="panel-metrics">
+              <div class="panel-metric">
+                <span>Engine</span>
+                <strong>V17 Ultra</strong>
+              </div>
+
+              <div class="panel-metric">
+                <span>Data layer</span>
+                <strong>Multi-source</strong>
+              </div>
+
+              <div class="panel-metric">
+                <span>Status</span>
+                <strong>Operational</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="market-strip reveal" aria-label="Live market ticker">
+          <div class="market-strip__header">
+            <div class="market-strip__title">
+              Live Market Pulse
+            </div>
+
+            <div class="market-updated" id="marketUpdated">
+              Connecting to market engine
+            </div>
+          </div>
+
+          <div class="ticker-viewport">
+            <div class="ticker-track" id="marketTicker">
+              <div class="ticker-item">
+                <strong class="ticker-symbol">BTC</strong>
+
+                <span class="ticker-values">
+                  <span class="ticker-price">Loading</span>
+                  <span class="ticker-change">--</span>
+                </span>
+              </div>
+
+              <div class="ticker-item">
+                <strong class="ticker-symbol">ETH</strong>
+
+                <span class="ticker-values">
+                  <span class="ticker-price">Loading</span>
+                  <span class="ticker-change">--</span>
+                </span>
+              </div>
+
+              <div class="ticker-item">
+                <strong class="ticker-symbol">SOL</strong>
+
+                <span class="ticker-values">
+                  <span class="ticker-price">Loading</span>
+                  <span class="ticker-change">--</span>
+                </span>
+              </div>
+
+              <div class="ticker-item">
+                <strong class="ticker-symbol">BNB</strong>
+
+                <span class="ticker-values">
+                  <span class="ticker-price">Loading</span>
+                  <span class="ticker-change">--</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-      <h3>Trade With Confidence</h3>
-      <p>Use live signals, entry zones, stop loss and take profit levels.</p>
-    </div>
+    </section>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M16 12H21"/></svg>
+    <section class="section" id="intelligence">
+      <div class="container">
+        <div class="section-shell reveal">
+          <header class="section-header">
+            <div class="section-kicker">
+              Why Zella
+            </div>
+
+            <h2>
+              Intelligence designed for clarity, speed and control.
+            </h2>
+
+            <p class="section-description">
+              Zella transforms fragmented market data into structured trading
+              intelligence, helping users understand opportunities, assess
+              risk and act with stronger conviction.
+            </p>
+          </header>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 19V5"></path>
+                  <path d="M4 19h16"></path>
+                  <path d="m8 15 3-4 3 2 5-7"></path>
+                </svg>
+              </div>
+
+              <h3>Opportunity Discovery</h3>
+
+              <p>
+                Scan supported assets and rank market opportunities using
+                trend, momentum, volume, risk and confidence signals.
+              </p>
+
+              <div class="feature-meta">
+                Scanner Intelligence
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="8"></circle>
+                  <path d="M12 8v4l3 2"></path>
+                  <path d="M4 12H2"></path>
+                  <path d="M22 12h-2"></path>
+                </svg>
+              </div>
+
+              <h3>Live Decision Support</h3>
+
+              <p>
+                Receive structured entries, invalidation levels, stop-loss
+                logic, profit targets and clear AI-generated reasoning.
+              </p>
+
+              <div class="feature-meta">
+                Evidence-Based Verdicts
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 17 9 12l4 3 7-8"></path>
+                  <path d="M16 7h4v4"></path>
+                </svg>
+              </div>
+
+              <h3>Portfolio Intelligence</h3>
+
+              <p>
+                Track holdings, exposure, performance, allocation and
+                portfolio-level risk across connected accounts.
+              </p>
+
+              <div class="feature-meta">
+                Unified Portfolio Layer
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
-      <h3>Track Everything</h3>
-      <p>Keep portfolio, wallet sync, analytics and performance in one place.</p>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="section">
-  <div class="section-title">ZELLA ECOSYSTEM</div>
+    <section class="section" id="ecosystem">
+      <div class="container">
+        <div class="section-shell reveal">
+          <header class="section-header">
+            <div class="section-kicker">
+              Zella Ecosystem
+            </div>
 
-  <h2>Everything a trader needs inside one platform.</h2>
+            <h2>
+              One intelligent platform for the complete trading workflow.
+            </h2>
 
-  <p class="lead">
-    Zella brings together market scanning, AI copilot support, trading signals,
-    portfolio tracking, exchange connections, analytics, news and learning tools.
-  </p>
+            <p class="section-description">
+              Move from discovery to analysis, execution and performance
+              tracking without relying on disconnected tools.
+            </p>
+          </header>
 
-  <div class="grid">
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19H20"/><path d="M8 16L11 12L14 14L19 7"/></svg>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <path d="m20 20-4-4"></path>
+                  <path d="M8 13l2-2 2 1 3-4"></path>
+                </svg>
+              </div>
+
+              <h3>Institutional Scanner</h3>
+
+              <p>
+                Discover and compare crypto assets using opportunity,
+                liquidity, momentum and risk rankings.
+              </p>
+
+              <div class="feature-meta">
+                Market Discovery
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="4" y="5" width="16" height="14" rx="4"></rect>
+                  <path d="M8 10h.01"></path>
+                  <path d="M16 10h.01"></path>
+                  <path d="M9 15h6"></path>
+                </svg>
+              </div>
+
+              <h3>AI Copilot</h3>
+
+              <p>
+                Ask natural-language questions about assets, market
+                conditions, strategies and trading decisions.
+              </p>
+
+              <div class="feature-meta">
+                Conversational Intelligence
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 18V9"></path>
+                  <path d="M9 18V5"></path>
+                  <path d="M14 18v-7"></path>
+                  <path d="M19 18V3"></path>
+                </svg>
+              </div>
+
+              <h3>Live Markets</h3>
+
+              <p>
+                Monitor prices, volume, momentum, market regimes, news and
+                broader crypto conditions.
+              </p>
+
+              <div class="feature-meta">
+                Real-Time Market Layer
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="6" width="18" height="13" rx="3"></rect>
+                  <path d="M16 12h5"></path>
+                  <circle cx="16" cy="12" r="1"></circle>
+                </svg>
+              </div>
+
+              <h3>Wallet and Portfolio</h3>
+
+              <p>
+                View holdings, balances, allocation, profit and loss from one
+                unified portfolio dashboard.
+              </p>
+
+              <div class="feature-meta">
+                Asset Management
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 7h10"></path>
+                  <path d="M7 12h10"></path>
+                  <path d="M7 17h6"></path>
+                  <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+                </svg>
+              </div>
+
+              <h3>Exchange Connections</h3>
+
+              <p>
+                Connect supported exchanges through securely managed,
+                encrypted API credentials.
+              </p>
+
+              <div class="feature-meta">
+                Secure Integration
+              </div>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14"></path>
+                  <path d="m14 7 5 5-5 5"></path>
+                  <path d="M5 7v10"></path>
+                </svg>
+              </div>
+
+              <h3>AutoTrader</h3>
+
+              <p>
+                Configure automated execution with risk gates, exposure
+                limits and decision validation.
+              </p>
+
+              <div class="feature-meta">
+                Controlled Automation
+              </div>
+            </article>
+          </div>
+        </div>
       </div>
-      <h3>Scanner</h3>
-      <p>Find market opportunities and rank assets by live confidence.</p>
-    </div>
+    </section>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="11" rx="4"/><path d="M9 11H9.01"/><path d="M15 11H15.01"/></svg>
+    <section class="section">
+      <div class="container">
+        <div class="section-shell reveal">
+          <header class="section-header">
+            <div class="section-kicker">
+              How Zella Works
+            </div>
+
+            <h2>
+              From account setup to measurable trading performance.
+            </h2>
+
+            <p class="section-description">
+              Zella guides users through a structured workflow designed to
+              reduce confusion and improve decision quality.
+            </p>
+          </header>
+
+          <div class="workflow-grid">
+            <article class="workflow-step">
+              <div class="step-number">01</div>
+
+              <h3>Create your account</h3>
+
+              <p>
+                Register and access your personalized Zella command center.
+              </p>
+            </article>
+
+            <article class="workflow-step">
+              <div class="step-number">02</div>
+
+              <h3>Connect an exchange</h3>
+
+              <p>
+                Add supported exchange credentials with withdrawal access
+                disabled.
+              </p>
+            </article>
+
+            <article class="workflow-step">
+              <div class="step-number">03</div>
+
+              <h3>Scan the market</h3>
+
+              <p>
+                Discover opportunities, market regimes and ranked assets.
+              </p>
+            </article>
+
+            <article class="workflow-step">
+              <div class="step-number">04</div>
+
+              <h3>Validate decisions</h3>
+
+              <p>
+                Use Copilot, trade plans, risk analysis and AI Council
+                verdicts.
+              </p>
+            </article>
+
+            <article class="workflow-step">
+              <div class="step-number">05</div>
+
+              <h3>Track performance</h3>
+
+              <p>
+                Monitor portfolio results, analytics and trading journal
+                progress.
+              </p>
+            </article>
+          </div>
+        </div>
       </div>
-      <h3>Copilot</h3>
-      <p>Ask trading questions or regular questions naturally.</p>
-    </div>
+    </section>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><path d="M4 18V6"/><path d="M8 18V10"/><path d="M12 18V4"/><path d="M16 18V8"/></svg>
+    <section class="section" id="security">
+      <div class="container">
+        <div class="section-shell reveal">
+          <header class="section-header">
+            <div class="section-kicker">
+              Security Architecture
+            </div>
+
+            <h2>
+              Built around privacy, account protection and user control.
+            </h2>
+
+            <p class="section-description">
+              Zella combines authentication, cloud synchronization and secure
+              credential management while keeping users in control of their
+              exchange permissions.
+            </p>
+          </header>
+
+          <div class="security-grid">
+            <article class="security-primary">
+              <div class="security-visual">
+                <div class="shield">
+                  <svg viewBox="0 0 100 120" aria-hidden="true">
+                    <path
+                      d="M50 6 88 20v31c0 29-17 49-38 62C29 100 12 80 12 51V20L50 6Z"
+                    ></path>
+                    <path d="m33 58 11 11 24-27"></path>
+                  </svg>
+                </div>
+              </div>
+
+              <h3>Protected account access</h3>
+
+              <p>
+                Account-sensitive pages can use Firebase authentication,
+                identity verification and protected backend routes.
+              </p>
+            </article>
+
+            <div class="security-stack">
+              <article>
+                <div class="security-label">
+                  Encryption enabled
+                </div>
+
+                <h3>Secure exchange credentials</h3>
+
+                <p>
+                  Exchange API credentials are encrypted before storage and
+                  should always be created without withdrawal permission.
+                </p>
+              </article>
+
+              <article>
+                <div class="security-label">
+                  Cloud synchronization
+                </div>
+
+                <h3>Persistent user data</h3>
+
+                <p>
+                  User profiles, settings, journals and supported platform
+                  data can synchronize through the Zella cloud layer.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
       </div>
-      <h3>Market</h3>
-      <p>Track live prices, market status, volume and crypto news.</p>
-    </div>
+    </section>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M16 12H21"/></svg>
+    <section class="section" id="pro">
+      <div class="container">
+        <div class="section-shell pro-shell reveal">
+          <div class="pro-layout">
+            <div class="pro-copy">
+              <header class="section-header">
+                <div class="section-kicker">
+                  Zella Pro
+                </div>
+
+                <h2>
+                  Unlock the complete intelligence layer.
+                </h2>
+
+                <p class="section-description">
+                  Zella Pro expands your command center with stronger
+                  intelligence, deeper analytics and advanced execution
+                  controls.
+                </p>
+              </header>
+
+              <div class="pro-benefits">
+                <div class="pro-benefit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6"></path>
+                  </svg>
+
+                  Advanced signal and opportunity intelligence
+                </div>
+
+                <div class="pro-benefit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6"></path>
+                  </svg>
+
+                  Portfolio exposure and risk analytics
+                </div>
+
+                <div class="pro-benefit">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6"></path>
+                  </svg>
+
+                  Multi-exchange and AutoTrader controls
+                </div>
+              </div>
+            </div>
+
+            <article class="pro-card">
+              <div class="pro-card__badge">
+                Premium Intelligence
+              </div>
+
+              <h3>Zella Pro Command Center</h3>
+
+              <p>
+                Access advanced market intelligence, stronger signal
+                validation, portfolio analytics and automated trading
+                controls from one connected platform.
+              </p>
+
+              <button
+                class="button button--primary"
+                type="button"
+                data-launch-zella
+              >
+                Get Started
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 12h14"></path>
+                  <path d="m14 7 5 5-5 5"></path>
+                </svg>
+              </button>
+            </article>
+          </div>
+        </div>
       </div>
-      <h3>Wallet</h3>
-      <p>Sync exchange balances and view portfolio holdings.</p>
-    </div>
+    </section>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><path d="M7 7H17"/><path d="M7 12H17"/><path d="M7 17H17"/></svg>
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-shell reveal">
+          <header class="section-header">
+            <div class="section-kicker">
+              Frequently Asked Questions
+            </div>
+
+            <h2>
+              Essential information before using Zella.
+            </h2>
+          </header>
+
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>
+                Is Zella suitable for beginner traders?
+                <span class="faq-control" aria-hidden="true"></span>
+              </summary>
+
+              <div class="faq-answer">
+                Yes. Zella presents market information in a structured and
+                readable format while still providing advanced tools for
+                experienced traders.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                Can Zella execute trades automatically?
+                <span class="faq-control" aria-hidden="true"></span>
+              </summary>
+
+              <div class="faq-answer">
+                Auto trading can be enabled when a supported exchange is
+                connected, the required access level is active and all risk
+                controls are configured.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                Does Zella require withdrawal permission?
+                <span class="faq-control" aria-hidden="true"></span>
+              </summary>
+
+              <div class="faq-answer">
+                No. Withdrawal permission should remain disabled on every
+                exchange API key connected to Zella.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>
+                Does Zella guarantee profitable trades?
+                <span class="faq-control" aria-hidden="true"></span>
+              </summary>
+
+              <div class="faq-answer">
+                No trading platform can guarantee profits. Zella provides
+                market intelligence and decision-support tools, but users
+                remain responsible for their own trading decisions and risk.
+              </div>
+            </details>
+          </div>
+        </div>
       </div>
-      <h3>Exchange APIs</h3>
-      <p>Connect exchanges securely with encrypted API storage.</p>
-    </div>
+    </section>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><path d="M4 12H20"/><path d="M14 6L20 12L14 18"/></svg>
+    <section class="final-cta">
+      <div class="container">
+        <div class="cta-shell reveal">
+          <div class="cta-content">
+            <div class="section-kicker">
+              Start With Zella
+            </div>
+
+            <h2>
+              Your intelligent trading command center is ready.
+            </h2>
+
+            <p>
+              Create your Zella account and access AI-powered market
+              intelligence, analysis, portfolio tools and risk controls.
+            </p>
+
+            <button
+              class="button button--primary"
+              type="button"
+              data-launch-zella
+            >
+              Launch Zella
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14"></path>
+                <path d="m14 7 5 5-5 5"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
-      <h3>Auto Trader</h3>
-      <p>Configure execution, risk controls and automated trade settings.</p>
-    </div>
-  </div>
-</section>
+    </section>
+  </main>
 
-<section class="section">
-  <div class="section-title">HOW ZELLA WORKS</div>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true"></span>
 
-  <h2>From market discovery to portfolio tracking.</h2>
+            <span class="brand-copy">
+              <span class="brand-name">ZELLA</span>
+              <span class="brand-label">Artificial Intelligence</span>
+            </span>
+          </a>
 
-  <div class="steps">
-    <div class="step">
-      <strong>01</strong>
-      <h3>Create Account</h3>
-      <p>Sign up and access your Zella command center.</p>
-    </div>
+          <p>
+            AI-powered market intelligence built to help traders understand
+            markets, manage risk and make more structured decisions.
+          </p>
+        </div>
 
-    <div class="step">
-      <strong>02</strong>
-      <h3>Connect Exchange</h3>
-      <p>Add API keys with withdrawals disabled for safety.</p>
-    </div>
+        <div class="footer-links">
+          <div class="footer-column">
+            <strong>Platform</strong>
+            <a href="#intelligence">Intelligence</a>
+            <a href="#ecosystem">Ecosystem</a>
+            <a href="#security">Security</a>
+            <a href="#pro">Zella Pro</a>
+          </div>
 
-    <div class="step">
-      <strong>03</strong>
-      <h3>Scan Market</h3>
-      <p>View live opportunities, market signals and ranking.</p>
-    </div>
-
-    <div class="step">
-      <strong>04</strong>
-      <h3>Use Zella</h3>
-      <p>Ask Copilot, review entries, manage risk and plan trades.</p>
-    </div>
-
-    <div class="step">
-      <strong>05</strong>
-      <h3>Track Results</h3>
-      <p>Monitor portfolio, analytics and trade journal progress.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-title">SECURITY LAYER</div>
-
-  <h2>Designed for trust, privacy and control.</h2>
-
-  <p class="lead">
-    Zella uses Firebase authentication, Firestore cloud sync and encrypted exchange API storage.
-    Users should never enable withdrawal permissions on exchange API keys.
-  </p>
-
-  <div class="grid">
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><path d="M12 22S20 18 20 11V5L12 2L4 5V11C4 18 12 22 12 22Z"/></svg>
+          <div class="footer-column">
+            <strong>Account</strong>
+            <a href="login.html">Sign In</a>
+            <a href="signup.html">Create Account</a>
+            <a href="#faq">FAQ</a>
+          </div>
+        </div>
       </div>
-      <h3>Auth Protected</h3>
-      <p>Account pages are protected using authentication guards.</p>
-    </div>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7A4 4 0 0 1 16 7V10"/></svg>
+      <div class="footer-bottom">
+        <span>
+          © <span id="currentYear"></span> Zella AI. All rights reserved.
+        </span>
+
+        <span>
+          Trade smarter. Profit faster.
+        </span>
+
+        <span class="social-handle">
+          @ZELLA_OFFICIAL_
+        </span>
       </div>
-      <h3>Encrypted Keys</h3>
-      <p>Exchange credentials are encrypted before storage.</p>
     </div>
+  </footer>
 
-    <div class="feature-card">
-      <div class="icon-box">
-        <svg viewBox="0 0 24 24"><path d="M4 12A8 8 0 0 1 18 6"/><path d="M20 4V10H14"/><path d="M20 12A8 8 0 0 1 6 18"/><path d="M4 20V14H10"/></svg>
-      </div>
-      <h3>Cloud Synced</h3>
-      <p>Profiles, settings and journals can sync securely to cloud.</p>
-    </div>
-  </div>
-</section>
+  <script type="module">
+    // @ts-check
 
-<section class="section">
-  <div class="section-title">ZELLA PRO</div>
+    /**
+     * @typedef {Object} MarketAsset
+     * @property {string} symbol
+     * @property {string=} name
+     * @property {number|string} price
+     * @property {number|string=} change24h
+     * @property {number|string=} volume24h
+     * @property {number|string=} marketCap
+     */
 
-  <h2>Upgrade your trading command center.</h2>
+    /**
+     * @typedef {Object} MarketResponse
+     * @property {boolean} success
+     * @property {MarketAsset[]} assets
+     * @property {string=} regime
+     * @property {number=} confidence
+     */
 
-  <p class="lead">
-    Premium users unlock advanced signal access, auto trading tools,
-    multi-exchange features, portfolio intelligence and stronger analytics.
-  </p>
+    /**
+     * @typedef {{
+     *   marketLoading: boolean;
+     *   marketError: string | null;
+     *   assets: MarketAsset[];
+     *   lastUpdated: Date | null;
+     * }} AppState
+     */
 
-  <div class="grid">
-    <div class="feature-card">
-      <h3>Advanced Signals</h3>
-      <p>Access stronger signal intelligence for supported assets.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>Auto Trading</h3>
-      <p>Use connected exchanges with trade execution controls.</p>
-    </div>
-
-    <div class="feature-card">
-      <h3>Portfolio Intelligence</h3>
-      <p>Analyze performance, risk and synced exchange activity.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-title">FAQ</div>
-
-  <div class="feature-card">
-    <h3>Is Zella beginner friendly?</h3>
-    <p>Yes. Zella is built to help new traders understand markets while giving advanced users powerful tools.</p>
-  </div>
-
-  <div class="feature-card" style="margin-top:14px;">
-    <h3>Can Zella trade automatically?</h3>
-    <p>Yes, auto trading is available when exchange APIs and premium access are configured.</p>
-  </div>
-
-  <div class="feature-card" style="margin-top:14px;">
-    <h3>Does Zella need withdrawal access?</h3>
-    <p>No. Withdrawal permission should stay disabled for safety.</p>
-  </div>
-</section>
-
-<section class="section" style="text-align:center;">
-  <div class="section-title">START WITH ZELLA</div>
-
-  <h2>Ready to trade smarter?</h2>
-
-  <p class="lead" style="margin-left:auto;margin-right:auto;">
-    Launch Zella and start building your AI-powered trading command center.
-  </p>
-
-  <button class="launch-btn" onclick="launchZella()">
-    LAUNCH ZELLA
-  </button>
-</section>
-
-<footer class="section" style="text-align:center;margin-bottom:28px;">
-  <h2>ZELLA</h2>
-  <p class="lead" style="margin-left:auto;margin-right:auto;">
-    Trade smarter. Profit faster.
-    <br>
-    @ZELLA_OFFICIAL_
-  </p>
-</footer>
-
-</main>
-
-<script>
-const API_URL = "https://zella-backend.onrender.com";
-
-function launchZella(){
-  window.location.href = "signup.html";
-}
-
-function formatMoney(value){
-  const number = Number(value || 0);
-
-  if(number >= 1000){
-    return "$" + number.toLocaleString(undefined,{
-      maximumFractionDigits:2
+    const CONFIG = Object.freeze({
+      API_URL: "https://zella-backend.onrender.com",
+      SIGNUP_ROUTE: "signup.html",
+      MARKET_ENDPOINT: "/api/market/live",
+      MARKET_REFRESH_INTERVAL: 30000,
+      REQUEST_TIMEOUT: 12000
     });
-  }
 
-  return "$" + number.toFixed(4);
-}
+    /** @type {AppState} */
+    const state = {
+      marketLoading: true,
+      marketError: null,
+      assets: [],
+      lastUpdated: null
+    };
 
-async function loadTicker(){
-  try{
-    const response = await fetch(API_URL + "/api/market/live");
-    const data = await response.json();
+    const elements = {
+      siteHeader: document.getElementById("siteHeader"),
+      menuButton: document.getElementById("menuButton"),
+      mobileMenu: document.getElementById("mobileMenu"),
+      loadingOverlay: document.getElementById("loadingOverlay"),
+      marketTicker: document.getElementById("marketTicker"),
+      marketUpdated: document.getElementById("marketUpdated"),
+      regimeValue: document.getElementById("regimeValue"),
+      confidenceValue: document.getElementById("confidenceValue"),
+      currentYear: document.getElementById("currentYear")
+    };
 
-    if(!data.success || !Array.isArray(data.assets)){
-      throw new Error("Market unavailable");
+    /**
+     * @param {string} route
+     * @returns {void}
+     */
+    function navigateTo(route) {
+      window.location.assign(route);
     }
 
-    const ticker = document.getElementById("marketTicker");
+    /**
+     * @param {number | string | null | undefined} value
+     * @returns {string}
+     */
+    function formatMoney(value) {
+      const number = Number(value ?? 0);
 
-    const items = data.assets.map(asset=>{
-      const change = Number(asset.change24h || 0);
-      const sign = change >= 0 ? "+" : "";
+      if (!Number.isFinite(number)) {
+        return "$0.00";
+      }
+
+      if (Math.abs(number) >= 1_000_000_000) {
+        return `$${(number / 1_000_000_000).toFixed(2)}B`;
+      }
+
+      if (Math.abs(number) >= 1_000_000) {
+        return `$${(number / 1_000_000).toFixed(2)}M`;
+      }
+
+      if (Math.abs(number) >= 1_000) {
+        return `$${number.toLocaleString(undefined, {
+          maximumFractionDigits: 2
+        })}`;
+      }
+
+      if (Math.abs(number) >= 1) {
+        return `$${number.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4
+        })}`;
+      }
+
+      return `$${number.toFixed(6)}`;
+    }
+
+    /**
+     * @param {number | string | null | undefined} value
+     * @returns {string}
+     */
+    function formatPercentage(value) {
+      const number = Number(value ?? 0);
+
+      if (!Number.isFinite(number)) {
+        return "0.00%";
+      }
+
+      const sign = number > 0 ? "+" : "";
+
+      return `${sign}${number.toFixed(2)}%`;
+    }
+
+    /**
+     * @param {string} value
+     * @returns {string}
+     */
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    /**
+     * @param {string} endpoint
+     * @param {RequestInit=} options
+     * @returns {Promise<unknown>}
+     */
+    async function apiRequest(endpoint, options = {}) {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(
+        () => controller.abort(),
+        CONFIG.REQUEST_TIMEOUT
+      );
+
+      try {
+        const response = await fetch(`${CONFIG.API_URL}${endpoint}`, {
+          ...options,
+          signal: controller.signal,
+          headers: {
+            Accept: "application/json",
+            ...options.headers
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        return await response.json();
+      } finally {
+        window.clearTimeout(timeout);
+      }
+    }
+
+    /**
+     * @param {MarketAsset} asset
+     * @returns {string}
+     */
+    function createTickerItem(asset) {
+      const symbol = escapeHtml(asset.symbol || "ASSET");
+      const price = Number(asset.price ?? 0);
+      const change = Number(asset.change24h ?? 0);
+
+      const changeClass =
+        change > 0
+          ? "is-positive"
+          : change < 0
+            ? "is-negative"
+            : "";
 
       return `
-        <div class="ticker-item">
-          ${asset.symbol}
-          <span>${formatMoney(asset.price)} ${sign}${change.toFixed(2)}%</span>
-        </div>
+        <article class="ticker-item">
+          <strong class="ticker-symbol">${symbol}</strong>
+
+          <span class="ticker-values">
+            <span class="ticker-price">${formatMoney(price)}</span>
+
+            <span class="ticker-change ${changeClass}">
+              ${formatPercentage(change)}
+            </span>
+          </span>
+        </article>
       `;
-    }).join("");
+    }
 
-    ticker.innerHTML = items + items;
+    /**
+     * @param {MarketAsset[]} assets
+     * @returns {void}
+     */
+    function renderTicker(assets) {
+      if (!elements.marketTicker) {
+        return;
+      }
 
-  }catch(error){
-    document.getElementById("marketTicker").innerHTML =
-      `<div class="ticker-item">Live market temporarily unavailable</div>`;
-  }
-}
+      if (!assets.length) {
+        elements.marketTicker.innerHTML = `
+          <article class="ticker-item">
+            <strong class="ticker-symbol">MARKET</strong>
 
-loadTicker();
-setInterval(loadTicker,30000);
-</script>
+            <span class="ticker-values">
+              <span class="ticker-price">Unavailable</span>
+              <span class="ticker-change">Retrying</span>
+            </span>
+          </article>
+        `;
 
+        return;
+      }
+
+      const prioritizedSymbols = ["BTC", "ETH", "SOL", "BNB", "XRP"];
+
+      const sortedAssets = [...assets].sort((first, second) => {
+        const firstIndex = prioritizedSymbols.indexOf(
+          String(first.symbol).toUpperCase()
+        );
+
+        const secondIndex = prioritizedSymbols.indexOf(
+          String(second.symbol).toUpperCase()
+        );
+
+        if (firstIndex === -1 && secondIndex === -1) {
+          return 0;
+        }
+
+        if (firstIndex === -1) {
+          return 1;
+        }
+
+        if (secondIndex === -1) {
+          return -1;
+        }
+
+        return firstIndex - secondIndex;
+      });
+
+      const selectedAssets = sortedAssets.slice(0, 10);
+      const items = selectedAssets.map(createTickerItem).join("");
+
+      elements.marketTicker.innerHTML = items + items;
+    }
+
+    /**
+     * @param {MarketAsset[]} assets
+     * @returns {"Bullish" | "Bearish" | "Neutral"}
+     */
+    function calculateMarketRegime(assets) {
+      if (!assets.length) {
+        return "Neutral";
+      }
+
+      const changes = assets
+        .map((asset) => Number(asset.change24h ?? 0))
+        .filter(Number.isFinite);
+
+      if (!changes.length) {
+        return "Neutral";
+      }
+
+      const averageChange =
+        changes.reduce((total, value) => total + value, 0) /
+        changes.length;
+
+      if (averageChange >= 1.5) {
+        return "Bullish";
+      }
+
+      if (averageChange <= -1.5) {
+        return "Bearish";
+      }
+
+      return "Neutral";
+    }
+
+    /**
+     * @param {MarketAsset[]} assets
+     * @returns {number}
+     */
+    function calculateConfidence(assets) {
+      if (!assets.length) {
+        return 0;
+      }
+
+      const validAssets = assets.filter((asset) =>
+        Number.isFinite(Number(asset.price))
+      );
+
+      const dataCoverage = validAssets.length / assets.length;
+      const confidence = Math.round(70 + dataCoverage * 24);
+
+      return Math.min(96, Math.max(0, confidence));
+    }
+
+    /**
+     * @param {MarketResponse} data
+     * @returns {void}
+     */
+    function updateIntelligencePanel(data) {
+      const regime =
+        data.regime ||
+        calculateMarketRegime(data.assets);
+
+      const confidence =
+        Number.isFinite(Number(data.confidence))
+          ? Math.round(Number(data.confidence))
+          : calculateConfidence(data.assets);
+
+      if (elements.regimeValue) {
+        elements.regimeValue.textContent = regime;
+      }
+
+      if (elements.confidenceValue) {
+        elements.confidenceValue.textContent =
+          confidence > 0
+            ? `${confidence}%`
+            : "Processing";
+      }
+    }
+
+    /**
+     * @returns {Promise<void>}
+     */
+    async function loadTicker() {
+      state.marketLoading = true;
+      state.marketError = null;
+
+      try {
+        const rawData = await apiRequest(CONFIG.MARKET_ENDPOINT);
+
+        if (
+          !rawData ||
+          typeof rawData !== "object"
+        ) {
+          throw new Error("Invalid market response");
+        }
+
+        /** @type {MarketResponse} */
+        const data = /** @type {MarketResponse} */ (rawData);
+
+        if (!data.success || !Array.isArray(data.assets)) {
+          throw new Error("Market data is currently unavailable");
+        }
+
+        state.assets = data.assets;
+        state.lastUpdated = new Date();
+
+        renderTicker(state.assets);
+        updateIntelligencePanel(data);
+
+        if (elements.marketUpdated) {
+          elements.marketUpdated.textContent =
+            `Updated ${state.lastUpdated.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit"
+            })}`;
+        }
+      } catch (error) {
+        state.marketError =
+          error instanceof Error
+            ? error.message
+            : "Unknown market error";
+
+        renderTicker([]);
+
+        if (elements.marketUpdated) {
+          elements.marketUpdated.textContent =
+            "Live market temporarily unavailable";
+        }
+
+        if (elements.regimeValue) {
+          elements.regimeValue.textContent = "Monitoring";
+        }
+
+        if (elements.confidenceValue) {
+          elements.confidenceValue.textContent = "Reconnecting";
+        }
+
+        console.warn("[Zella Market]", state.marketError);
+      } finally {
+        state.marketLoading = false;
+      }
+    }
+
+    /**
+     * @param {boolean=} forceState
+     * @returns {void}
+     */
+    function toggleMobileMenu(forceState) {
+      const shouldOpen =
+        typeof forceState === "boolean"
+          ? forceState
+          : !elements.mobileMenu?.classList.contains("is-open");
+
+      elements.mobileMenu?.classList.toggle("is-open", shouldOpen);
+      elements.menuButton?.setAttribute(
+        "aria-expanded",
+        String(shouldOpen)
+      );
+
+      document.body.classList.toggle("menu-open", shouldOpen);
+    }
+
+    /**
+     * @returns {void}
+     */
+    function initializeNavigation() {
+      document
+        .querySelectorAll("[data-launch-zella]")
+        .forEach((button) => {
+          button.addEventListener("click", () => {
+            navigateTo(CONFIG.SIGNUP_ROUTE);
+          });
+        });
+
+      elements.menuButton?.addEventListener("click", () => {
+        toggleMobileMenu();
+      });
+
+      elements.mobileMenu
+        ?.querySelectorAll("a")
+        .forEach((link) => {
+          link.addEventListener("click", () => {
+            toggleMobileMenu(false);
+          });
+        });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          toggleMobileMenu(false);
+        }
+      });
+    }
+
+    /**
+     * @returns {void}
+     */
+    function initializeHeader() {
+      const updateHeader = () => {
+        elements.siteHeader?.classList.toggle(
+          "is-scrolled",
+          window.scrollY > 12
+        );
+      };
+
+      updateHeader();
+
+      window.addEventListener("scroll", updateHeader, {
+        passive: true
+      });
+    }
+
+    /**
+     * @returns {void}
+     */
+    function initializeRevealAnimations() {
+      const revealElements =
+        document.querySelectorAll(".reveal");
+
+      if (!("IntersectionObserver" in window)) {
+        revealElements.forEach((element) => {
+          element.classList.add("is-visible");
+        });
+
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries, currentObserver) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            entry.target.classList.add("is-visible");
+            currentObserver.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: "0px 0px -40px"
+        }
+      );
+
+      revealElements.forEach((element) => {
+        observer.observe(element);
+      });
+    }
+
+    /**
+     * @returns {void}
+     */
+    function initializeFaq() {
+      const faqItems =
+        document.querySelectorAll(".faq-item");
+
+      faqItems.forEach((item) => {
+        item.addEventListener("toggle", () => {
+          if (!(item instanceof HTMLDetailsElement) || !item.open) {
+            return;
+          }
+
+          faqItems.forEach((otherItem) => {
+            if (
+              otherItem !== item &&
+              otherItem instanceof HTMLDetailsElement
+            ) {
+              otherItem.open = false;
+            }
+          });
+        });
+      });
+    }
+
+    /**
+     * @returns {void}
+     */
+    function hideLoadingOverlay() {
+      window.setTimeout(() => {
+        elements.loadingOverlay?.classList.add("is-hidden");
+      }, 450);
+    }
+
+    /**
+     * @returns {Promise<void>}
+     */
+    async function initializeApplication() {
+      if (elements.currentYear) {
+        elements.currentYear.textContent =
+          String(new Date().getFullYear());
+      }
+
+      initializeNavigation();
+      initializeHeader();
+      initializeRevealAnimations();
+      initializeFaq();
+
+      await loadTicker();
+
+      window.setInterval(
+        loadTicker,
+        CONFIG.MARKET_REFRESH_INTERVAL
+      );
+
+      hideLoadingOverlay();
+    }
+
+    initializeApplication().catch((error) => {
+      console.error("[Zella Initialization]", error);
+      hideLoadingOverlay();
+    });
+  </script>
 </body>
 </html>

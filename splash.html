@@ -2,382 +2,2070 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zella Loading</title>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
+
+<meta
+  name="description"
+  content="Zella AI is preparing your personalized crypto trading command center."
+>
+
+<meta name="theme-color" content="#030712">
+<meta name="color-scheme" content="dark">
+
+<title>Launching Zella AI</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+:root{
+  color-scheme:dark;
+
+  --background:#030712;
+  --background-soft:#07101f;
+
+  --panel:rgba(9,17,34,.86);
+  --panel-strong:rgba(6,12,27,.96);
+  --surface:rgba(255,255,255,.035);
+
+  --border:rgba(148,163,184,.14);
+  --border-bright:rgba(56,189,248,.38);
+
+  --text:#f8fafc;
+  --muted:#94a3b8;
+  --muted-dark:#64748b;
+
+  --cyan:#38bdf8;
+  --cyan-light:#8be9ff;
+  --blue:#2563eb;
+  --violet:#7c3aed;
+  --green:#34d399;
+  --yellow:#fbbf24;
+  --red:#fb7185;
+
+  --gradient-primary:
+    linear-gradient(
+      90deg,
+      #67e8f9 0%,
+      #38bdf8 32%,
+      #2563eb 67%,
+      #7c3aed 100%
+    );
+
+  --gradient-success:
+    linear-gradient(
+      90deg,
+      #38bdf8,
+      #2563eb,
+      #34d399
+    );
+
+  --shadow:
+    0 34px 100px rgba(0,0,0,.5);
+
+  --transition:
+    260ms cubic-bezier(.22,1,.36,1);
+}
+
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  min-height:100%;
+  background:var(--background);
 }
 
 body{
-min-height:100vh;
-background:#020617;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
+  min-height:100vh;
+  min-height:100svh;
+  overflow:hidden;
+  color:var(--text);
+  background:var(--background);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
-.bg{
-position:fixed;
-inset:0;
-z-index:-3;
-background:
-radial-gradient(circle at 20% 10%,rgba(56,189,248,.25),transparent 30%),
-radial-gradient(circle at 80% 10%,rgba(99,102,241,.25),transparent 30%),
-radial-gradient(circle at 50% 100%,rgba(34,197,94,.10),transparent 35%),
-#020617;
+button{
+  font:inherit;
 }
 
-.grid-bg{
-position:fixed;
-inset:0;
-z-index:-2;
-background-image:
-linear-gradient(rgba(56,189,248,.05) 1px,transparent 1px),
-linear-gradient(90deg,rgba(56,189,248,.05) 1px,transparent 1px);
-background-size:40px 40px;
-animation:gridMove 20s linear infinite;
+svg{
+  display:block;
 }
 
-@keyframes gridMove{
-from{background-position:0 0;}
-to{background-position:0 400px;}
+::selection{
+  color:#03111b;
+  background:var(--cyan);
 }
 
-.wrapper{
-width:92%;
-max-width:520px;
+.background{
+  position:fixed;
+  inset:0;
+  z-index:-10;
+  overflow:hidden;
+  pointer-events:none;
+  background:
+    radial-gradient(
+      circle at 12% 6%,
+      rgba(56,189,248,.23),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 88% 10%,
+      rgba(124,58,237,.21),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(52,211,153,.09),
+      transparent 36%
+    ),
+    linear-gradient(
+      180deg,
+      #030712 0%,
+      #050b18 52%,
+      #030712 100%
+    );
 }
 
-.card{
-padding:35px;
-border-radius:34px;
-background:rgba(15,23,42,.88);
-border:1px solid rgba(148,163,184,.14);
-box-shadow:0 25px 70px rgba(0,0,0,.4);
-text-align:center;
+.background::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.48;
+  background-image:
+    linear-gradient(
+      rgba(56,189,248,.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(56,189,248,.045) 1px,
+      transparent 1px
+    );
+  background-size:56px 56px;
+  mask-image:
+    linear-gradient(
+      to bottom,
+      #000,
+      transparent 95%
+    );
+  animation:gridMovement 27s linear infinite;
+}
+
+.background::after{
+  content:"";
+  position:absolute;
+  width:780px;
+  height:780px;
+  left:50%;
+  top:32%;
+  border-radius:50%;
+  transform:translateX(-50%);
+  filter:blur(125px);
+  background:rgba(56,189,248,.07);
+}
+
+@keyframes gridMovement{
+  from{
+    background-position:0 0;
+  }
+
+  to{
+    background-position:0 560px;
+  }
+}
+
+.ambient{
+  position:fixed;
+  z-index:-8;
+  width:390px;
+  height:390px;
+  border-radius:50%;
+  filter:blur(105px);
+  pointer-events:none;
+  opacity:.15;
+}
+
+.ambient-one{
+  top:-180px;
+  left:-180px;
+  background:var(--cyan);
+  animation:ambientFloat 15s ease-in-out infinite alternate;
+}
+
+.ambient-two{
+  right:-190px;
+  bottom:-180px;
+  background:var(--violet);
+  animation:ambientFloat 18s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes ambientFloat{
+  from{
+    transform:translate3d(0,0,0) scale(.94);
+  }
+
+  to{
+    transform:translate3d(42px,34px,0) scale(1.08);
+  }
+}
+
+.particles{
+  position:fixed;
+  inset:0;
+  z-index:-5;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.particle{
+  position:absolute;
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);
+  opacity:.45;
+  animation:particleFloat linear infinite;
+}
+
+.particle:nth-child(1){
+  left:8%;
+  bottom:-20px;
+  animation-duration:13s;
+}
+
+.particle:nth-child(2){
+  left:20%;
+  bottom:-20px;
+  animation-duration:17s;
+  animation-delay:-7s;
+}
+
+.particle:nth-child(3){
+  left:35%;
+  bottom:-20px;
+  animation-duration:15s;
+  animation-delay:-4s;
+}
+
+.particle:nth-child(4){
+  left:52%;
+  bottom:-20px;
+  animation-duration:19s;
+  animation-delay:-10s;
+}
+
+.particle:nth-child(5){
+  left:68%;
+  bottom:-20px;
+  animation-duration:14s;
+  animation-delay:-6s;
+}
+
+.particle:nth-child(6){
+  left:82%;
+  bottom:-20px;
+  animation-duration:18s;
+  animation-delay:-9s;
+}
+
+.particle:nth-child(7){
+  left:92%;
+  bottom:-20px;
+  animation-duration:16s;
+  animation-delay:-3s;
+}
+
+@keyframes particleFloat{
+  from{
+    transform:translateY(0) scale(.8);
+    opacity:0;
+  }
+
+  15%{
+    opacity:.55;
+  }
+
+  85%{
+    opacity:.35;
+  }
+
+  to{
+    transform:translateY(-110vh) scale(1.4);
+    opacity:0;
+  }
+}
+
+.page-shell{
+  width:min(calc(100% - 28px),1120px);
+  min-height:100vh;
+  min-height:100svh;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  padding:
+    max(18px,env(safe-area-inset-top))
+    0
+    max(18px,env(safe-area-inset-bottom));
+}
+
+.boot-card{
+  position:relative;
+  width:100%;
+  max-width:920px;
+  max-height:calc(100svh - 36px);
+  display:grid;
+  grid-template-columns:minmax(300px,.88fr) minmax(0,1.12fr);
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:34px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(13,22,43,.93),
+      rgba(5,11,25,.97)
+    );
+  box-shadow:
+    var(--shadow),
+    inset 0 1px rgba(255,255,255,.05);
+}
+
+.boot-card::before{
+  content:"";
+  position:absolute;
+  width:360px;
+  height:360px;
+  top:-220px;
+  right:-180px;
+  border-radius:50%;
+  filter:blur(55px);
+  pointer-events:none;
+  background:rgba(56,189,248,.13);
+}
+
+.visual-side{
+  position:relative;
+  min-height:650px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  padding:36px 28px;
+  border-right:1px solid var(--border);
+  background:
+    radial-gradient(
+      circle at 50% 43%,
+      rgba(56,189,248,.13),
+      transparent 37%
+    ),
+    rgba(255,255,255,.012);
+}
+
+.visual-side::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.35;
+  background-image:
+    linear-gradient(
+      rgba(56,189,248,.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(56,189,248,.05) 1px,
+      transparent 1px
+    );
+  background-size:44px 44px;
+  mask-image:
+    radial-gradient(
+      circle at center,
+      black,
+      transparent 76%
+    );
 }
 
 .logo{
-font-size:42px;
-font-weight:950;
-letter-spacing:12px;
+  position:relative;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:13px;
+  margin-bottom:32px;
 }
 
-.logo span{
-color:#38bdf8;
+.logo-mark{
+  position:relative;
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(56,189,248,.3);
+  border-radius:15px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(56,189,248,.17),
+      rgba(124,58,237,.09)
+    );
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.09),
+    0 0 32px rgba(56,189,248,.14);
 }
 
-.orbit{
-width:260px;
-height:260px;
-margin:25px auto;
-position:relative;
+.logo-mark::before{
+  content:"";
+  position:absolute;
+  width:27px;
+  height:27px;
+  border:2px solid var(--cyan);
+  border-radius:50%;
+  box-shadow:0 0 19px rgba(56,189,248,.7);
 }
 
-.ring{
-position:absolute;
-border-radius:50%;
-border:1px solid rgba(56,189,248,.3);
-animation:spin 15s linear infinite;
+.logo-mark::after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:white;
+  box-shadow:
+    0 0 10px white,
+    0 0 25px var(--cyan);
 }
 
-.r1{inset:0;}
-.r2{inset:30px;animation-duration:18s;}
-.r3{inset:60px;animation-duration:22s;}
-.r4{inset:90px;animation-duration:28s;}
-
-.ring::before{
-content:"";
-position:absolute;
-top:12px;
-left:50%;
-width:12px;
-height:12px;
-border-radius:50%;
-background:#38bdf8;
-box-shadow:0 0 20px #38bdf8;
+.logo-copy{
+  display:grid;
+  line-height:1;
 }
 
-@keyframes spin{
-to{
-transform:rotate(360deg);
-}
-}
-
-.core{
-position:absolute;
-inset:95px;
-border-radius:50%;
-background:
-radial-gradient(circle,
-#dff7ff,
-#38bdf8 40%,
-#082f49 70%,
-#020617 100%);
-box-shadow:
-0 0 60px rgba(56,189,248,.9),
-inset 0 0 25px rgba(2,6,23,.8);
+.logo-name{
+  font-size:23px;
+  font-weight:950;
+  letter-spacing:.28em;
 }
 
-.scan{
-position:absolute;
-left:12%;
-right:12%;
-top:50%;
-height:3px;
-background:linear-gradient(90deg,transparent,#38bdf8,transparent);
-box-shadow:0 0 20px rgba(56,189,248,.9);
-animation:scan 3s ease-in-out infinite;
+.logo-label{
+  margin-top:6px;
+  color:var(--cyan);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.24em;
+  text-transform:uppercase;
 }
 
-@keyframes scan{
-0%,100%{
-transform:translateY(-40px);
-opacity:.3;
-}
-50%{
-transform:translateY(40px);
-opacity:1;
-}
+.orbit-system{
+  position:relative;
+  z-index:4;
+  width:min(300px,72vw);
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
 }
 
-.title{
-font-size:34px;
-font-weight:900;
-margin-top:10px;
+.orbit-ring{
+  position:absolute;
+  border:1px solid rgba(56,189,248,.24);
+  border-radius:50%;
+  animation:orbitSpin 17s linear infinite;
+}
+
+.orbit-ring::before{
+  content:"";
+  position:absolute;
+  top:11%;
+  left:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  transform:translateX(-50%);
+  background:var(--cyan);
+  box-shadow:
+    0 0 12px var(--cyan),
+    0 0 26px rgba(56,189,248,.7);
+}
+
+.orbit-ring-one{
+  inset:0;
+}
+
+.orbit-ring-two{
+  inset:29px;
+  border-style:dashed;
+  animation-duration:13s;
+  animation-direction:reverse;
+}
+
+.orbit-ring-three{
+  inset:62px;
+  border-color:rgba(124,58,237,.36);
+  animation-duration:21s;
+}
+
+.orbit-ring-four{
+  inset:94px;
+  border-color:rgba(52,211,153,.27);
+  animation-duration:27s;
+  animation-direction:reverse;
+}
+
+@keyframes orbitSpin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.ai-core{
+  position:relative;
+  z-index:5;
+  width:108px;
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(220,250,255,.45);
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle at 39% 31%,
+      #ffffff 0%,
+      #98efff 11%,
+      #38bdf8 31%,
+      #1d4d8e 62%,
+      #071127 100%
+    );
+  box-shadow:
+    0 0 36px rgba(56,189,248,.75),
+    0 0 95px rgba(37,99,235,.35),
+    inset 0 -22px 38px rgba(0,0,0,.5);
+  animation:corePulse 3s ease-in-out infinite;
+}
+
+.ai-core::before,
+.ai-core::after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:50%;
+}
+
+.ai-core::before{
+  inset:15px;
+}
+
+.ai-core::after{
+  inset:31px;
+}
+
+.core-label{
+  position:relative;
+  z-index:2;
+  color:#03111b;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.18em;
+}
+
+@keyframes corePulse{
+  0%,
+  100%{
+    transform:scale(.98);
+    filter:brightness(.92);
+  }
+
+  50%{
+    transform:scale(1.045);
+    filter:brightness(1.17);
+  }
+}
+
+.scan-line{
+  position:absolute;
+  z-index:6;
+  width:68%;
+  height:2px;
+  left:16%;
+  top:50%;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(56,189,248,.98),
+      transparent
+    );
+  box-shadow:
+    0 0 17px rgba(56,189,248,.9),
+    0 0 30px rgba(56,189,248,.55);
+  animation:scanMovement 3.2s ease-in-out infinite;
+}
+
+@keyframes scanMovement{
+  0%,
+  100%{
+    opacity:.2;
+    transform:translateY(-92px);
+  }
+
+  50%{
+    opacity:1;
+    transform:translateY(92px);
+  }
+}
+
+.core-status{
+  position:relative;
+  z-index:4;
+  width:100%;
+  max-width:290px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:31px;
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:rgba(2,6,18,.52);
+  backdrop-filter:blur(15px);
+}
+
+.core-status-left{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.status-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 15px var(--green);
+  animation:statusPulse 1.9s ease-in-out infinite;
+}
+
+@keyframes statusPulse{
+  0%,
+  100%{
+    opacity:.55;
+    transform:scale(.88);
+  }
+
+  50%{
+    opacity:1;
+    transform:scale(1.2);
+  }
+}
+
+.core-status span{
+  color:var(--muted);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.core-status strong{
+  color:var(--green);
+  font-size:9px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.content-side{
+  position:relative;
+  z-index:3;
+  min-height:650px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:clamp(28px,5vw,55px);
+  overflow-y:auto;
+}
+
+.eyebrow{
+  width:fit-content;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 11px;
+  border:1px solid rgba(56,189,248,.17);
+  border-radius:999px;
+  color:#b9f3ff;
+  background:rgba(56,189,248,.07);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+
+.content-side h1{
+  margin-top:20px;
+  font-size:clamp(35px,5vw,54px);
+  line-height:1.02;
+  letter-spacing:-.05em;
+}
+
+.content-side h1 span{
+  color:transparent;
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #8be9ff 48%,
+      #9b8cff 100%
+    );
+  background-clip:text;
+  -webkit-background-clip:text;
 }
 
 .subtitle{
-margin-top:12px;
-color:#94a3b8;
-line-height:1.7;
+  max-width:530px;
+  margin-top:15px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.75;
 }
 
-.progress-box{
-margin-top:28px;
+.user-chip{
+  width:fit-content;
+  max-width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:18px;
+  padding:9px 12px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:rgba(255,255,255,.026);
 }
 
-.progress-bar{
-height:14px;
-background:#0f172a;
-border-radius:999px;
-overflow:hidden;
-border:1px solid rgba(148,163,184,.15);
+.user-avatar{
+  width:30px;
+  height:30px;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  border-radius:10px;
+  color:#03111b;
+  background:var(--gradient-primary);
+  font-size:10px;
+  font-weight:950;
+}
+
+.user-details{
+  min-width:0;
+}
+
+.user-details span{
+  display:block;
+  color:var(--muted-dark);
+  font-size:8px;
+  font-weight:850;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.user-details strong{
+  display:block;
+  max-width:280px;
+  margin-top:3px;
+  overflow:hidden;
+  color:var(--text);
+  font-size:10px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.progress-section{
+  margin-top:28px;
+}
+
+.progress-meta{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.progress-copy span{
+  display:block;
+  color:var(--muted-dark);
+  font-size:8px;
+  font-weight:850;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.progress-copy strong{
+  display:block;
+  margin-top:5px;
+  color:#dbeafe;
+  font-size:13px;
+}
+
+.percentage{
+  color:var(--cyan);
+  font-size:31px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.04em;
+  text-shadow:0 0 23px rgba(56,189,248,.32);
+}
+
+.progress-track{
+  position:relative;
+  height:12px;
+  margin-top:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(2,6,18,.75);
 }
 
 .progress-fill{
-height:100%;
-width:0%;
-border-radius:999px;
-background:linear-gradient(90deg,#38bdf8,#2563eb,#22c55e);
-transition:width .7s ease;
+  position:relative;
+  width:0;
+  height:100%;
+  overflow:hidden;
+  border-radius:999px;
+  background:var(--gradient-success);
+  box-shadow:0 0 22px rgba(56,189,248,.38);
+  transition:width .42s cubic-bezier(.22,1,.36,1);
 }
 
-.percent{
-margin-top:15px;
-font-size:30px;
-font-weight:950;
-color:#38bdf8;
+.progress-fill::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  transform:translateX(-100%);
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.5),
+      transparent
+    );
+  animation:progressShimmer 1.7s linear infinite;
 }
 
-.loading-text{
-margin-top:12px;
-font-size:15px;
-color:#cbd5e1;
-min-height:24px;
+@keyframes progressShimmer{
+  to{
+    transform:translateX(100%);
+  }
+}
+
+.loading-message{
+  min-height:20px;
+  margin-top:12px;
+  color:#cbd5e1;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.steps-panel{
+  margin-top:24px;
+  padding:9px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:rgba(255,255,255,.018);
+}
+
+.boot-step{
+  position:relative;
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr) auto;
+  align-items:center;
+  gap:11px;
+  min-height:55px;
+  padding:8px 10px;
+  border-radius:14px;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+.boot-step + .boot-step{
+  margin-top:2px;
+}
+
+.step-icon{
+  width:31px;
+  height:31px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--muted-dark);
+  background:rgba(2,6,18,.48);
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background var(--transition),
+    box-shadow var(--transition);
+}
+
+.step-icon svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.step-copy strong{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  transition:color var(--transition);
+}
+
+.step-copy span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted-dark);
+  font-size:8px;
+}
+
+.step-status{
+  color:var(--muted-dark);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.boot-step.active{
+  background:rgba(56,189,248,.055);
+  transform:translateX(2px);
+}
+
+.boot-step.active .step-icon{
+  color:var(--cyan);
+  border-color:rgba(56,189,248,.32);
+  background:rgba(56,189,248,.08);
+  box-shadow:0 0 18px rgba(56,189,248,.08);
+}
+
+.boot-step.active .step-copy strong{
+  color:#e2f7ff;
+}
+
+.boot-step.active .step-status{
+  color:var(--cyan);
+}
+
+.boot-step.complete{
+  background:rgba(52,211,153,.035);
+}
+
+.boot-step.complete .step-icon{
+  color:var(--green);
+  border-color:rgba(52,211,153,.28);
+  background:rgba(52,211,153,.07);
+}
+
+.boot-step.complete .step-copy strong{
+  color:#d1fae5;
+}
+
+.boot-step.complete .step-status{
+  color:var(--green);
+}
+
+.boot-step.error .step-icon{
+  color:var(--red);
+  border-color:rgba(251,113,133,.28);
+  background:rgba(251,113,133,.07);
+}
+
+.boot-step.error .step-status{
+  color:var(--red);
+}
+
+.footer-note{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-top:20px;
+  color:var(--muted-dark);
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+
+.footer-note svg{
+  width:13px;
+  height:13px;
+  fill:none;
+  stroke:var(--green);
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.error-panel{
+  display:none;
+  margin-top:18px;
+  padding:14px;
+  border:1px solid rgba(251,113,133,.24);
+  border-radius:15px;
+  color:#fecdd3;
+  background:rgba(251,113,133,.085);
+  font-size:10px;
+  line-height:1.6;
+}
+
+.error-panel.show{
+  display:block;
+}
+
+.error-actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.error-button{
+  min-height:38px;
+  padding:0 13px;
+  border:1px solid rgba(251,113,133,.24);
+  border-radius:11px;
+  color:#fecdd3;
+  cursor:pointer;
+  background:rgba(251,113,133,.08);
+  font-size:9px;
+  font-weight:850;
+}
+
+.error-button.primary{
+  color:#03111b;
+  border-color:transparent;
+  background:var(--gradient-primary);
+}
+
+.fade-out{
+  animation:pageExit .52s ease forwards;
+}
+
+@keyframes pageExit{
+  to{
+    opacity:0;
+    transform:scale(1.015);
+    filter:blur(7px);
+  }
+}
+
+@media(max-width:850px){
+  body{
+    overflow:auto;
+  }
+
+  .page-shell{
+    min-height:100svh;
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+
+  .boot-card{
+    max-height:none;
+    grid-template-columns:1fr;
+  }
+
+  .visual-side{
+    min-height:390px;
+    padding:28px 22px;
+    border-right:0;
+    border-bottom:1px solid var(--border);
+  }
+
+  .orbit-system{
+    width:245px;
+  }
+
+  .logo{
+    margin-bottom:18px;
+  }
+
+  .core-status{
+    margin-top:18px;
+  }
+
+  .content-side{
+    min-height:auto;
+    padding:31px 24px;
+  }
+}
+
+@media(max-width:520px){
+  .page-shell{
+    width:min(calc(100% - 18px),1120px);
+  }
+
+  .boot-card{
+    border-radius:26px;
+  }
+
+  .visual-side{
+    min-height:350px;
+    padding:25px 18px;
+  }
+
+  .logo-mark{
+    width:41px;
+    height:41px;
+  }
+
+  .logo-name{
+    font-size:20px;
+  }
+
+  .orbit-system{
+    width:220px;
+  }
+
+  .orbit-ring-two{
+    inset:24px;
+  }
+
+  .orbit-ring-three{
+    inset:50px;
+  }
+
+  .orbit-ring-four{
+    inset:75px;
+  }
+
+  .ai-core{
+    width:87px;
+  }
+
+  .content-side{
+    padding:28px 19px;
+  }
+
+  .content-side h1{
+    font-size:37px;
+  }
+
+  .subtitle{
+    font-size:12px;
+  }
+
+  .boot-step{
+    grid-template-columns:32px minmax(0,1fr);
+  }
+
+  .step-status{
+    grid-column:2;
+    margin-top:-8px;
+  }
+
+  .percentage{
+    font-size:28px;
+  }
+}
+
+@media(max-height:760px) and (min-width:851px){
+  .visual-side,
+  .content-side{
+    min-height:580px;
+  }
+
+  .orbit-system{
+    width:250px;
+  }
+
+  .logo{
+    margin-bottom:18px;
+  }
+
+  .core-status{
+    margin-top:18px;
+  }
+
+  .content-side{
+    padding-top:28px;
+    padding-bottom:28px;
+  }
+
+  .steps-panel{
+    margin-top:18px;
+  }
+
+  .boot-step{
+    min-height:48px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
-<div class="grid-bg"></div>
+<div class="background"></div>
+<div class="ambient ambient-one"></div>
+<div class="ambient ambient-two"></div>
 
-<div class="wrapper">
-
-<div class="card">
-
-<div class="logo">
-ZELLA<span>.</span>
+<div class="particles" aria-hidden="true">
+  <span class="particle"></span>
+  <span class="particle"></span>
+  <span class="particle"></span>
+  <span class="particle"></span>
+  <span class="particle"></span>
+  <span class="particle"></span>
+  <span class="particle"></span>
 </div>
 
-<div class="orbit">
-<div class="ring r1"></div>
-<div class="ring r2"></div>
-<div class="ring r3"></div>
-<div class="ring r4"></div>
-<div class="core"></div>
-<div class="scan"></div>
-</div>
+<main class="page-shell" id="pageShell">
 
-<div class="title">
-Preparing Your Command Center
-</div>
+  <section class="boot-card">
 
-<div class="subtitle">
-Loading your AI-powered crypto trading workspace.
-</div>
+    <div class="visual-side">
 
-<div class="progress-box">
+      <div class="logo">
+        <span class="logo-mark" aria-hidden="true"></span>
 
-<div class="progress-bar">
-<div class="progress-fill" id="progressFill"></div>
-</div>
+        <span class="logo-copy">
+          <span class="logo-name">ZELLA</span>
+          <span class="logo-label">Intelligence Cortex</span>
+        </span>
+      </div>
 
-<div class="percent" id="percent">
-0%
-</div>
+      <div class="orbit-system" aria-hidden="true">
 
-<div class="loading-text" id="loadingText">
-Initializing Zella Core...
-</div>
+        <div class="orbit-ring orbit-ring-one"></div>
+        <div class="orbit-ring orbit-ring-two"></div>
+        <div class="orbit-ring orbit-ring-three"></div>
+        <div class="orbit-ring orbit-ring-four"></div>
 
-</div>
+        <div class="ai-core">
+          <span class="core-label">ZELLA</span>
+        </div>
 
-<div style="
-margin-top:30px;
-padding:20px;
-border-radius:24px;
-background:#0f172a;
-border:1px solid rgba(148,163,184,.12);
-text-align:left;
-">
+        <div class="scan-line"></div>
 
-<div id="step1" style="padding:8px 0;color:#64748b;">
-● User Authentication
-</div>
+      </div>
 
-<div id="step2" style="padding:8px 0;color:#64748b;">
-● Cloud Sync
-</div>
+      <div class="core-status">
 
-<div id="step3" style="padding:8px 0;color:#64748b;">
-● Market Intelligence
-</div>
+        <div class="core-status-left">
+          <span class="status-dot"></span>
+          <span>System status</span>
+        </div>
 
-<div id="step4" style="padding:8px 0;color:#64748b;">
-● AI Systems
-</div>
+        <strong id="systemStatus">Booting</strong>
 
-<div id="step5" style="padding:8px 0;color:#64748b;">
-● Command Center
-</div>
+      </div>
 
-</div>
+    </div>
 
-</div>
+    <div class="content-side">
 
-</div>
+      <div class="eyebrow">
+        Secure intelligence initialization
+      </div>
+
+      <h1>
+        Preparing your
+        <span>command center.</span>
+      </h1>
+
+      <p class="subtitle" id="subtitle">
+        Zella is connecting your account, AI systems and live market
+        intelligence.
+      </p>
+
+      <div class="user-chip" id="userChip">
+
+        <div class="user-avatar" id="userAvatar">ZU</div>
+
+        <div class="user-details">
+          <span>Initializing session for</span>
+          <strong id="userName">Zella User</strong>
+        </div>
+
+      </div>
+
+      <section class="progress-section" aria-label="Loading progress">
+
+        <div class="progress-meta">
+
+          <div class="progress-copy">
+            <span>Initialization status</span>
+            <strong id="stageName">Starting Zella Core</strong>
+          </div>
+
+          <div class="percentage" id="percentage">
+            0%
+          </div>
+
+        </div>
+
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          id="progressTrack"
+        >
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="loading-message" id="loadingMessage">
+          Establishing secure system environment...
+        </div>
+
+      </section>
+
+      <section class="steps-panel" aria-label="Initialization steps">
+
+        <div class="boot-step" id="step-authentication">
+
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+              <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+            </svg>
+          </div>
+
+          <div class="step-copy">
+            <strong>User authentication</strong>
+            <span>Verifying your secure Zella session</span>
+          </div>
+
+          <div class="step-status">Waiting</div>
+
+        </div>
+
+        <div class="boot-step" id="step-profile">
+
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="7" r="4"></circle>
+              <path d="M4 21a8 8 0 0 1 16 0"></path>
+            </svg>
+          </div>
+
+          <div class="step-copy">
+            <strong>Account profile</strong>
+            <span>Loading preferences and membership</span>
+          </div>
+
+          <div class="step-status">Waiting</div>
+
+        </div>
+
+        <div class="boot-step" id="step-market">
+
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 19V9"></path>
+              <path d="M10 19V5"></path>
+              <path d="M16 19v-7"></path>
+              <path d="M22 19V2"></path>
+            </svg>
+          </div>
+
+          <div class="step-copy">
+            <strong>Market intelligence</strong>
+            <span>Synchronizing live crypto data systems</span>
+          </div>
+
+          <div class="step-status">Waiting</div>
+
+        </div>
+
+        <div class="boot-step" id="step-ai">
+
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="5" y="5" width="14" height="14" rx="3"></rect>
+              <path d="M9 9h6v6H9z"></path>
+              <path d="M9 2v3"></path>
+              <path d="M15 2v3"></path>
+              <path d="M9 19v3"></path>
+              <path d="M15 19v3"></path>
+              <path d="M2 9h3"></path>
+              <path d="M2 15h3"></path>
+              <path d="M19 9h3"></path>
+              <path d="M19 15h3"></path>
+            </svg>
+          </div>
+
+          <div class="step-copy">
+            <strong>AI Cortex</strong>
+            <span>Preparing Copilot and analysis engines</span>
+          </div>
+
+          <div class="step-status">Waiting</div>
+
+        </div>
+
+        <div class="boot-step" id="step-dashboard">
+
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+            </svg>
+          </div>
+
+          <div class="step-copy">
+            <strong>Command center</strong>
+            <span>Finalizing your personalized dashboard</span>
+          </div>
+
+          <div class="step-status">Waiting</div>
+
+        </div>
+
+      </section>
+
+      <div class="error-panel" id="errorPanel">
+        <strong id="errorTitle">Zella could not complete startup.</strong>
+
+        <div id="errorMessage">
+          Check your connection and try again.
+        </div>
+
+        <div class="error-actions">
+          <button
+            class="error-button primary"
+            type="button"
+            onclick="restartBootSequence()"
+          >
+            Try again
+          </button>
+
+          <button
+            class="error-button"
+            type="button"
+            onclick="goToLogin()"
+          >
+            Return to login
+          </button>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"></path>
+          <path d="m9 12 2 2 4-4"></path>
+        </svg>
+
+        Secure session protected by Firebase authentication
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
 
 <script>
+// @ts-check
 
-const progressFill =
-document.getElementById("progressFill");
+/**
+ * @typedef {Object} StoredUser
+ * @property {string} [uid]
+ * @property {string} [email]
+ * @property {string} [displayName]
+ * @property {string} [photoURL]
+ */
 
-const percent =
-document.getElementById("percent");
+/**
+ * @typedef {Object} BootStage
+ * @property {string} id
+ * @property {number} start
+ * @property {number} end
+ * @property {string} title
+ * @property {string} message
+ * @property {number} duration
+ * @property {() => Promise<void>} [action]
+ */
 
-const loadingText =
-document.getElementById("loadingText");
+const DASHBOARD_ROUTE = "dashboard.html";
+const LOGIN_ROUTE = "signup.html#login";
+const MAXIMUM_BOOT_TIME = 18000;
 
-let progress = 0;
+const state = {
+  progress:0,
+  activeStageIndex:-1,
+  running:false,
+  timeoutId:0
+};
 
-const steps = [
+/**
+ * Returns a required element.
+ *
+ * @template {HTMLElement} T
+ * @param {string} id
+ * @returns {T}
+ */
+function getElement(id){
+  const element = document.getElementById(id);
 
-{
-percent:20,
-text:"Verifying User Account...",
-id:"step1"
-},
+  if(!element){
+    throw new Error(`Missing required element: ${id}`);
+  }
 
-{
-percent:40,
-text:"Loading Cloud Sync...",
-id:"step2"
-},
-
-{
-percent:60,
-text:"Loading Market Intelligence...",
-id:"step3"
-},
-
-{
-percent:80,
-text:"Preparing AI Copilot...",
-id:"step4"
-},
-
-{
-percent:100,
-text:"Command Center Ready.",
-id:"step5"
+  return /** @type {T} */ (element);
 }
 
-];
-
-function activateStep(id){
-
-const item =
-document.getElementById(id);
-
-item.style.color="#4ade80";
-item.innerHTML="✓ " + item.textContent.replace("● ","");
-
+/**
+ * Waits for the supplied number of milliseconds.
+ *
+ * @param {number} milliseconds
+ * @returns {Promise<void>}
+ */
+function wait(milliseconds){
+  return new Promise((resolve)=>{
+    window.setTimeout(resolve,milliseconds);
+  });
 }
 
-let currentStep = 0;
+/**
+ * Reads the locally stored Zella user.
+ *
+ * @returns {StoredUser | null}
+ */
+function readStoredUser(){
+  try{
+    const value = localStorage.getItem("zellaUser");
 
-const loader = setInterval(()=>{
+    if(!value){
+      return null;
+    }
 
-progress += 1;
-
-progressFill.style.width =
-progress + "%";
-
-percent.textContent =
-progress + "%";
-
-if(
-currentStep < steps.length &&
-progress >= steps[currentStep].percent
-){
-
-loadingText.textContent =
-steps[currentStep].text;
-
-activateStep(
-steps[currentStep].id
-);
-
-currentStep++;
-
+    return /** @type {StoredUser} */ (JSON.parse(value));
+  }catch(error){
+    console.warn("Unable to read stored Zella user.",error);
+    return null;
+  }
 }
 
-if(progress >= 100){
+/**
+ * Returns initials from a display name.
+ *
+ * @param {string} name
+ * @returns {string}
+ */
+function getInitials(name){
+  const parts = name
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
 
-clearInterval(loader);
+  if(parts.length === 0){
+    return "ZU";
+  }
 
-setTimeout(()=>{
+  if(parts.length === 1){
+    return parts[0].slice(0,2).toUpperCase();
+  }
 
-window.location.href =
-"dashboard.html";
-
-},1000);
-
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`
+    .toUpperCase();
 }
 
-},60);
+/**
+ * Loads stored user information into the interface.
+ */
+function loadUserDetails(){
+  const user = readStoredUser();
 
+  const name =
+    user?.displayName ||
+    user?.email?.split("@")[0] ||
+    "Zella User";
+
+  getElement("userName").textContent = name;
+  getElement("userAvatar").textContent = getInitials(name);
+}
+
+/**
+ * Updates visible progress.
+ *
+ * @param {number} value
+ */
+function setProgress(value){
+  const safeValue = Math.max(0,Math.min(100,Math.round(value)));
+
+  state.progress = safeValue;
+
+  getElement("progressFill").style.width = `${safeValue}%`;
+  getElement("percentage").textContent = `${safeValue}%`;
+
+  const progressTrack = getElement("progressTrack");
+  progressTrack.setAttribute("aria-valuenow",String(safeValue));
+}
+
+/**
+ * Animates progress between two values.
+ *
+ * @param {number} from
+ * @param {number} to
+ * @param {number} duration
+ * @returns {Promise<void>}
+ */
+async function animateProgress(from,to,duration){
+  const startTime = performance.now();
+
+  return new Promise((resolve)=>{
+    function frame(currentTime){
+      const elapsed = currentTime - startTime;
+      const ratio = Math.min(elapsed / duration,1);
+
+      const eased =
+        1 - Math.pow(1 - ratio,3);
+
+      const value =
+        from + ((to - from) * eased);
+
+      setProgress(value);
+
+      if(ratio < 1){
+        window.requestAnimationFrame(frame);
+      }else{
+        resolve();
+      }
+    }
+
+    window.requestAnimationFrame(frame);
+  });
+}
+
+/**
+ * Updates a boot step's visual state.
+ *
+ * @param {string} id
+ * @param {"waiting" | "active" | "complete" | "error"} status
+ */
+function setStepStatus(id,status){
+  const step = getElement(id);
+  const statusElement =
+    step.querySelector(".step-status");
+
+  step.classList.remove("active","complete","error");
+
+  if(status === "active"){
+    step.classList.add("active");
+  }
+
+  if(status === "complete"){
+    step.classList.add("complete");
+  }
+
+  if(status === "error"){
+    step.classList.add("error");
+  }
+
+  if(statusElement){
+    const labels = {
+      waiting:"Waiting",
+      active:"Loading",
+      complete:"Ready",
+      error:"Failed"
+    };
+
+    statusElement.textContent = labels[status];
+  }
+}
+
+/**
+ * Verifies that a local authentication session exists.
+ */
+async function verifyAuthentication(){
+  const token =
+    localStorage.getItem("zellaFirebaseToken");
+
+  const user =
+    localStorage.getItem("zellaUser");
+
+  await wait(280);
+
+  if(!token || !user){
+    console.warn(
+      "No complete local authentication session was found."
+    );
+  }
+}
+
+/**
+ * Loads local profile and membership data.
+ */
+async function loadProfile(){
+  loadUserDetails();
+
+  const membership =
+    localStorage.getItem("zellaMembership") || "FREE";
+
+  localStorage.setItem(
+    "zellaMembership",
+    membership
+  );
+
+  await wait(270);
+}
+
+/**
+ * Checks the Zella market backend without blocking startup.
+ */
+async function connectMarketIntelligence(){
+  const controller = new AbortController();
+
+  const timeout = window.setTimeout(()=>{
+    controller.abort();
+  },3500);
+
+  try{
+    const response = await fetch(
+      "https://zella-backend.onrender.com/api/market/live",
+      {
+        method:"GET",
+        headers:{
+          Accept:"application/json"
+        },
+        signal:controller.signal
+      }
+    );
+
+    if(!response.ok){
+      throw new Error(
+        `Market service returned ${response.status}.`
+      );
+    }
+
+    localStorage.setItem(
+      "zellaMarketStatus",
+      "connected"
+    );
+
+  }catch(error){
+    console.warn(
+      "Market intelligence connection will continue in the dashboard.",
+      error
+    );
+
+    localStorage.setItem(
+      "zellaMarketStatus",
+      "pending"
+    );
+  }finally{
+    window.clearTimeout(timeout);
+  }
+
+  await wait(250);
+}
+
+/**
+ * Prepares local AI system state.
+ */
+async function prepareAiSystems(){
+  const aiState = {
+    status:"ready",
+    initializedAt:new Date().toISOString(),
+    version:"V11 Ultra"
+  };
+
+  sessionStorage.setItem(
+    "zellaAiBootState",
+    JSON.stringify(aiState)
+  );
+
+  await wait(320);
+}
+
+/**
+ * Finalizes the command center session.
+ */
+async function finalizeDashboard(){
+  sessionStorage.setItem(
+    "zellaSplashCompleted",
+    "true"
+  );
+
+  await wait(300);
+}
+
+const bootStages = /** @type {BootStage[]} */ ([
+  {
+    id:"step-authentication",
+    start:0,
+    end:20,
+    title:"Verifying secure session",
+    message:"Confirming your Zella authentication credentials...",
+    duration:900,
+    action:verifyAuthentication
+  },
+  {
+    id:"step-profile",
+    start:20,
+    end:40,
+    title:"Loading account profile",
+    message:"Synchronizing your identity, membership and preferences...",
+    duration:850,
+    action:loadProfile
+  },
+  {
+    id:"step-market",
+    start:40,
+    end:63,
+    title:"Connecting market intelligence",
+    message:"Establishing access to live crypto market data...",
+    duration:1050,
+    action:connectMarketIntelligence
+  },
+  {
+    id:"step-ai",
+    start:63,
+    end:84,
+    title:"Preparing Zella AI Cortex",
+    message:"Activating Copilot, analytics and intelligence engines...",
+    duration:1000,
+    action:prepareAiSystems
+  },
+  {
+    id:"step-dashboard",
+    start:84,
+    end:100,
+    title:"Finalizing command center",
+    message:"Building your personalized Zella trading workspace...",
+    duration:850,
+    action:finalizeDashboard
+  }
+]);
+
+/**
+ * Runs one boot stage.
+ *
+ * @param {BootStage} stage
+ * @param {number} index
+ */
+async function runStage(stage,index){
+  state.activeStageIndex = index;
+
+  setStepStatus(stage.id,"active");
+
+  getElement("stageName").textContent =
+    stage.title;
+
+  getElement("loadingMessage").textContent =
+    stage.message;
+
+  if(stage.action){
+    await stage.action();
+  }
+
+  await animateProgress(
+    Math.max(state.progress,stage.start),
+    stage.end,
+    stage.duration
+  );
+
+  setStepStatus(stage.id,"complete");
+}
+
+/**
+ * Displays a startup error.
+ *
+ * @param {unknown} error
+ */
+function showBootError(error){
+  const message =
+    error instanceof Error
+      ? error.message
+      : "An unexpected initialization error occurred.";
+
+  getElement("systemStatus").textContent =
+    "Attention";
+
+  getElement("systemStatus").style.color =
+    "var(--red)";
+
+  getElement("errorMessage").textContent =
+    message;
+
+  getElement("errorPanel").classList.add("show");
+
+  if(state.activeStageIndex >= 0){
+    const stage =
+      bootStages[state.activeStageIndex];
+
+    setStepStatus(stage.id,"error");
+  }
+}
+
+/**
+ * Redirects to the dashboard with an exit animation.
+ */
+function redirectToDashboard(){
+  getElement("systemStatus").textContent =
+    "Ready";
+
+  getElement("systemStatus").style.color =
+    "var(--green)";
+
+  getElement("stageName").textContent =
+    "Command center ready";
+
+  getElement("loadingMessage").textContent =
+    "Welcome to Zella. Launching your dashboard now...";
+
+  const pageShell =
+    getElement("pageShell");
+
+  window.setTimeout(()=>{
+    pageShell.classList.add("fade-out");
+  },350);
+
+  window.setTimeout(()=>{
+    window.location.href = DASHBOARD_ROUTE;
+  },850);
+}
+
+/**
+ * Runs the complete boot process.
+ */
+async function startBootSequence(){
+  if(state.running){
+    return;
+  }
+
+  state.running = true;
+  state.progress = 0;
+  state.activeStageIndex = -1;
+
+  getElement("errorPanel").classList.remove("show");
+
+  getElement("systemStatus").textContent =
+    "Booting";
+
+  getElement("systemStatus").style.color =
+    "";
+
+  bootStages.forEach((stage)=>{
+    setStepStatus(stage.id,"waiting");
+  });
+
+  setProgress(0);
+  loadUserDetails();
+
+  state.timeoutId = window.setTimeout(()=>{
+    if(state.running){
+      state.running = false;
+
+      showBootError(
+        new Error(
+          "Zella is taking longer than expected. Check your connection and try again."
+        )
+      );
+    }
+  },MAXIMUM_BOOT_TIME);
+
+  try{
+    for(
+      let index = 0;
+      index < bootStages.length;
+      index += 1
+    ){
+      if(!state.running){
+        return;
+      }
+
+      await runStage(
+        bootStages[index],
+        index
+      );
+    }
+
+    window.clearTimeout(state.timeoutId);
+
+    state.running = false;
+
+    redirectToDashboard();
+
+  }catch(error){
+    window.clearTimeout(state.timeoutId);
+
+    state.running = false;
+
+    showBootError(error);
+  }
+}
+
+/**
+ * Restarts the startup process.
+ */
+function restartBootSequence(){
+  window.clearTimeout(state.timeoutId);
+
+  state.running = false;
+
+  void startBootSequence();
+}
+
+/**
+ * Returns the user to the login page.
+ */
+function goToLogin(){
+  window.location.href = LOGIN_ROUTE;
+}
+
+/**
+ * Initializes the splash page.
+ */
+function initializeSplash(){
+  loadUserDetails();
+
+  window.setTimeout(()=>{
+    void startBootSequence();
+  },350);
+}
+
+window.restartBootSequence =
+  restartBootSequence;
+
+window.goToLogin =
+  goToLogin;
+
+initializeSplash();
 </script>
 
 </body>
